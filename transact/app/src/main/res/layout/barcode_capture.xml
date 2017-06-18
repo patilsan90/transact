@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/topLayout"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:keepScreenOn="true">
+
+    <com.algo.transact.camera.CameraSourcePreview
+        android:id="@+id/preview"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/drawer_item_margin"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+    </com.algo.transact.camera.CameraSourcePreview>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/drawer_item_margin"
+        android:text="Point at QR/BAR code to select"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#111" />
+    <TextView
+        android:id="@+id/text_place_holder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/drawer_item_margin"
+        android:text="ITEM"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#111" />
+
+</LinearLayout>

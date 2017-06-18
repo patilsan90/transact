@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/item_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Item Name"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+            <TextView
+                android:id="@+id/actual_cost"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Actual Cost"
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+            <TextView
+                android:id="@+id/discounted_cost"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Discounted Cost"
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/total_cost"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Total cost"
+                android:gravity="bottom"
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:text="Total items "
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+            <ImageButton
+                android:id="@+id/decrease_item_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:cropToPadding="true"
+                android:padding="0dp"
+                android:src="@drawable/decrement_item" />
+
+            <EditText
+                android:id="@+id/total_items"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="3dp"
+                android:inputType="number"
+                android:paddingRight="3dp"
+                android:text=" 0 "
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+            <ImageButton
+                android:id="@+id/increase_item_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:cropToPadding="true"
+                android:padding="0dp"
+                android:src="@drawable/increase_item" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/trash_cart_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@null"
+            android:cropToPadding="true"
+            android:padding="0dp"
+            android:src="@drawable/trash_cart_item" />
+
+    </LinearLayout>
+
+</LinearLayout>

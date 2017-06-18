@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">Transact</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="drawer_open">open_drawer</string>
+    <string name="drawer_close">close_drawer</string>
+    <string name="title_activity_login">Cognition</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email_or_num">ENTER EMAIL ID / MOBILE NUMBER</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or Register</string>
+    <string name="action_register">Register me</string>
+
+    <string name="signin_using_gmail">Gmail</string>
+    <string name="signin_using_fb">Facebook</string>
+
+    <string name="action_sign_in_short">Sign in</string>
+
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+
+    <!-- Strings related to MainActivity-->
+    <string name="scan_barcode_button">Scan barcode</string>
+    <string name="no_barcode_captured">No barcode captured</string>
+    <string name="barcode_error_format">"Error reading barcode: %1$s"</string>
+
+    <!-- Strings related to barcode scanner -->
+    <string name="ok">OK</string>
+    <string name="permission_camera_rationale">Access to the camera is needed for detection</string>
+    <string name="no_camera_permission">This application cannot run because it does not have the camera permission.  The application will now exit.</string>
+    <string name="low_storage_error">Face detector dependencies cannot be downloaded due to low device storage</string>
+
+    <string name="loading">Loading…</string>
+
+    <string name="facebook_app_id">449526885383689</string>
+
+    <!--if your App ID is 1234567, you should use fb1234567 -->
+    <string name="fb_login_protocol_scheme">fb449526885383689</string>
+
+</resources>

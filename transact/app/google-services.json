@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "584874469176",
+    "project_id": "cognitionmall"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:584874469176:android:92c3619e10e345a9",
+        "android_client_info": {
+          "package_name": "com.algo.transact"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "584874469176-ib0ahj9vlp6hj2eule4q56875gop466o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.algo.transact",
+            "certificate_hash": "65ea988e17f1b168e42fed2b962d17730bae4b8a"
+          }
+        },
+        {
+          "client_id": "584874469176-3m68rasv3rfujopsjfpjuta83mfdr15o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB76cyhcynDAGHuQivXl9_ySkWwb4qnVbs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
