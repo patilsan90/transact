@@ -1,4 +1,4 @@
-package com.algo.transact.home.mycart;
+package com.algo.transact.home.shopatshop.mycart;
 
 
 import android.support.v7.app.AppCompatActivity;

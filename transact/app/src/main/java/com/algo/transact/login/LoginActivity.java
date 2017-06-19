@@ -10,7 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-import com.algo.transact.home.ShopAtShop;
+import com.algo.transact.home.shopatshop.ShopAtShop;
 import com.facebook.CallbackManager;
 import com.facebook.login.LoginManager;
 import com.facebook.login.widget.LoginButton;

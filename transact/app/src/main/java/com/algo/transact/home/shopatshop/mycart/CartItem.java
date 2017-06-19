@@ -1,4 +1,4 @@
-package com.algo.transact.home.mycart;
+package com.algo.transact.home.shopatshop.mycart;
 
 /**
  * Created by Sandeep Patil on 16/4/17.

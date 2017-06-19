@@ -1,4 +1,4 @@
-package com.algo.transact.home.mycart;
+package com.algo.transact.home.shopatshop.mycart;
 
 
 import android.os.Bundle;
@@ -11,11 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.algo.transact.support_packages.SwipeDetector;
-import com.algo.transact.AppState;
 import com.algo.transact.R;
-import com.algo.transact.home.mycart.CartItem;
-import com.algo.transact.home.mycart.MyCartAdapter;
-import com.algo.transact.support_packages.SwipeDetector;
 
 /**
  * A simple {@link Fragment} subclass.

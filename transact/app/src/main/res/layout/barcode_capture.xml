@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/topLayout"
@@ -7,6 +8,7 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:keepScreenOn="true">
+
 
     <com.algo.transact.camera.CameraSourcePreview
         android:id="@+id/preview"
@@ -17,20 +19,23 @@
     </com.algo.transact.camera.CameraSourcePreview>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/drawer_item_margin"
-        android:text="Point at QR/BAR code to select"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="#111" />
-    <TextView
         android:id="@+id/text_place_holder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:gravity="center"
         android:layout_marginBottom="@dimen/drawer_item_margin"
-        android:text="ITEM"
+        android:text="PlaceHolder"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#111" />
+
+    <TextView
+        android:id="@+id/barcode_scanner_cart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="TEMP_TEXT:: No cart available"
+        android:layout_marginBottom="@dimen/drawer_item_margin"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#111" />
 

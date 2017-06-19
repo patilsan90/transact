@@ -42,6 +42,7 @@ import com.algo.transact.AppState;
 import com.algo.transact.R;
 import com.algo.transact.camera.CameraSource;
 import com.algo.transact.camera.CameraSourcePreview;
+import com.algo.transact.home.shopatshop.ShopAtShop;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.CommonStatusCodes;
@@ -68,6 +69,9 @@ public final class BarcodeCaptureActivity extends AppCompatActivity
     private CameraSource mCameraSource;
     private CameraSourcePreview mPreview;
 
+    public static enum SCANNER_TYPE {SHOPatSHOP, ORDERitemAtShop, ORDERatRESTAURANT};
+    public static SCANNER_TYPE scanner_type;
+
     /**
      * Initializes the UI and creates the detector pipeline.
      */
@@ -89,10 +93,20 @@ public final class BarcodeCaptureActivity extends AppCompatActivity
         } else {
             requestCameraPermission();
         }
-        if(AppState.isProductScan == false)
+        if(scanner_type == SCANNER_TYPE.SHOPatSHOP)
         {
             tv= (TextView)findViewById(R.id.text_place_holder);
-            tv.setText("MALL");
+            tv.setText("Point at QR code to select shop \n OR \nContinue with below cart");
+        }
+        else if(scanner_type == SCANNER_TYPE.ORDERitemAtShop)
+        {
+            tv= (TextView)findViewById(R.id.text_place_holder);
+            tv.setText("Point at QR code to select Item");
+        }
+        else if(scanner_type == SCANNER_TYPE.ORDERatRESTAURANT)
+        {
+            tv= (TextView)findViewById(R.id.text_place_holder);
+            tv.setText("Point at QR code to select Restaurant");
         }
 
     }
@@ -104,6 +118,22 @@ public final class BarcodeCaptureActivity extends AppCompatActivity
             intent.putExtra(BarcodeObject, barcode);
             setResult(CommonStatusCodes.SUCCESS, intent);
             finish();
+            Log.i(AppState.TAG,"QR code detected Yeye");
+
+            if(scanner_type == SCANNER_TYPE.SHOPatSHOP)
+            {
+                Intent myIntent = new Intent(this, ShopAtShop.class);
+                myIntent.putExtra("name", "Sample name"); //Optional parameter pass parameters
+                startActivity(myIntent);
+            }
+            else if(scanner_type == SCANNER_TYPE.ORDERitemAtShop)
+            {
+            }
+            else if(scanner_type == SCANNER_TYPE.ORDERatRESTAURANT)
+            {
+            }
+
+
         }
     }
 

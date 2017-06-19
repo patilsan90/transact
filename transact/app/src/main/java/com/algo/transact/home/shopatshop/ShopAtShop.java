@@ -1,12 +1,10 @@
-package com.algo.transact.home;
+package com.algo.transact.home.shopatshop;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -16,13 +14,13 @@ import android.widget.Toast;
 
 import com.algo.transact.AppState;
 import com.algo.transact.barcode.BarcodeCaptureActivity;
-import com.algo.transact.home.mycart.ItemCountSelectionActivity;
-import com.algo.transact.home.mycart.MyCartFragment;
+import com.algo.transact.home.LocateCategories;
+import com.algo.transact.home.shopatshop.mycart.ItemCountSelectionActivity;
+import com.algo.transact.home.shopatshop.mycart.MyCartFragment;
 import com.algo.transact.home.offers.OffersFragment;
 import com.algo.transact.login.LoginActivity;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -44,8 +42,6 @@ public class ShopAtShop extends AppCompatActivity implements
     private boolean isBack = false;
     private Button showCartButton;
     private int back_press_counter = 0;
-    private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle mDrawerToggle;
     private GoogleApiClient mGoogleApiClient;
 
     @Override
@@ -53,19 +49,13 @@ public class ShopAtShop extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_at_shop);
 
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        showCartButton = (Button) findViewById(R.id.showCart);
         myCartFragment = new MyCartFragment();
         offersFragment = new OffersFragment();
         Log.i("Generic info ", " Activity onCreate ShopAtShop");
-        fragmentTransaction.add(R.id.home_fragment, offersFragment);
-        fragmentTransaction.commit();
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        createDrawer();
 
-
+/*
         // Configure sign-in to request the user's ID, email address, and basic
 // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -75,53 +65,31 @@ public class ShopAtShop extends AppCompatActivity implements
         // Build a GoogleApiClient with access to the Google Sign-In API and the
 // options specified by gso.
         mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
+                .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
+*/
 
-    }
+        //---------------------------
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.shop_at_shop_page_frame, myCartFragment);
+        fragmentTransaction.commit();
 
-    private void createDrawer() {
-        // DrawerLayout
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-
-                invalidateOptionsMenu();
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                super.onDrawerClosed(drawerView);
-                Log.d("Mall_Drawer", "onDrawerClosed: " + getTitle());
-
-                invalidateOptionsMenu();
-            }
-        };
-        mDrawerToggle.setDrawerIndicatorEnabled(true);
-
-        /* mDrawerLayout.setDrawerListener(mDrawerToggle); check if any issue comes because of addDrawerListener. */
-        mDrawerLayout.addDrawerListener(mDrawerToggle);
     }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
-        mDrawerToggle.syncState();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (mDrawerToggle.onOptionsItemSelected(item))
-            return true;
         return super.onOptionsItemSelected(item);
     }
 
-    public void scanProduct(View view) {
+        public void scanItemAtShop(View view) {
 
         if (AppState.checkProccedStatus() == false) {
             Toast.makeText(this, "Please select mall first !!!", Toast.LENGTH_SHORT).show();
@@ -129,8 +97,10 @@ public class ShopAtShop extends AppCompatActivity implements
         }
 
         AppState.isProductScan = true;
+            BarcodeCaptureActivity.scanner_type = BarcodeCaptureActivity.SCANNER_TYPE.ORDERitemAtShop;
         Intent intent = new Intent(getApplicationContext(), BarcodeCaptureActivity.class);
         startActivityForResult(intent, BARCODE_READER_REQUEST_CODE);
+
         /*
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -143,6 +113,7 @@ public class ShopAtShop extends AppCompatActivity implements
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.i(AppState.TAG,"Barcode onActivityResult");
         if (requestCode == BARCODE_READER_REQUEST_CODE) {
             if (resultCode == CommonStatusCodes.SUCCESS) {
                 if (data != null) {
@@ -151,13 +122,13 @@ public class ShopAtShop extends AppCompatActivity implements
                     //mResultTextView.setText(barcode.displayValue);
                     //} else
                     //  mResultTextView.setText(R.string.no_barcode_captured);
-
+                    Log.i(AppState.TAG,"Barcode scanned, Item selected");
                     if (AppState.isProductScan == false) {
                         // This indicates was executed to select mall
                         AppState.isMallSelected = true;
                     } else {
                         //Else condition indicates, scan executed to select item but not mall
-                        Intent intent = new Intent(getApplicationContext(), ItemCountSelectionActivity.class);
+                        Intent intent = new Intent(this, ItemCountSelectionActivity.class);
                         startActivity(intent);
                         /* TODO ::
                          * If ItemCountSelectionActivity is not required then
@@ -184,11 +155,11 @@ public class ShopAtShop extends AppCompatActivity implements
 
         if (isBack == false) {
             showCartButton.setText("Back");
-            fragmentTransaction.replace(R.id.home_fragment, myCartFragment);
+            fragmentTransaction.replace(R.id.shop_at_shop_page_frame, myCartFragment);
             isBack = true;
         } else {
             showCartButton.setText("My Cart");
-            fragmentTransaction.replace(R.id.home_fragment, offersFragment);
+            fragmentTransaction.replace(R.id.shop_at_shop_page_frame, offersFragment);
             isBack = false;
         }
 

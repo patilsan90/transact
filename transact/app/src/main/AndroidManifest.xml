@@ -28,7 +28,7 @@
 
         </activity>
 
-        <activity android:name=".home.ShopAtShop" />
+        <activity android:name=".home.shopatshop.ShopAtShop" />
         <activity
             android:name=".login.LoginActivity"
             android:label="@string/title_activity_login">
@@ -40,7 +40,7 @@
         <activity
             android:name=".barcode.BarcodeCaptureActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".home.mycart.ItemCountSelectionActivity" />
+        <activity android:name=".home.shopatshop.mycart.ItemCountSelectionActivity" />
         <activity android:name=".login.EnterMobileNoActivity" />
         <activity
             android:name="com.facebook.CustomTabActivity"

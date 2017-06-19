@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.algo.transact.AppState;
 import com.algo.transact.R;
@@ -30,8 +31,8 @@ public class HomeFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        Button sign_in_button = (Button) view.findViewById(R.id.sign_up_button);
-        sign_in_button.setOnClickListener(new HomeClickListener(this));
+        LinearLayout shop_at_shop = (LinearLayout) view.findViewById(R.id.shop_at_shop);
+        shop_at_shop.setOnClickListener(new HomeClickListener(this));
 
         return view;
     }

@@ -1,6 +1,6 @@
 package com.algo.transact;
 
-import com.algo.transact.home.mycart.CartItem;
+import com.algo.transact.home.shopatshop.mycart.CartItem;
 import com.algo.transact.home.offers.OfferItem;
 import com.algo.transact.login.LoginActivity;
 
@@ -16,6 +16,7 @@ public static enum LOGIN_STATE {LOGIN_VIEW, REGISTRATION_VIEW};
 
     public LOGIN_STATE loginState;
 
+    public static String TAG = "TRANSACT APP";
     public LoginActivity loginActivity;
 
     private ArrayList<CartItem> cartItemsList;
@@ -65,8 +66,8 @@ public static enum LOGIN_STATE {LOGIN_VIEW, REGISTRATION_VIEW};
 
     public static boolean checkProccedStatus()
     {
-        if(isMallSelected == false)
-            return false;
+      //  if(isMallSelected == false)
+       //     return false;
         return true;
     }
 
