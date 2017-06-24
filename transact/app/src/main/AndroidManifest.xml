@@ -25,14 +25,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
         <activity android:name=".home.shopatshop.ShopAtShop" />
         <activity
             android:name=".login.LoginActivity"
-            android:label="@string/title_activity_login">
-        </activity>
+            android:label="@string/title_activity_login" />
         <activity android:name=".login.VerifyMobileNoActivity" />
         <activity
             android:name=".home.LocateCategories"
@@ -54,7 +51,9 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-
+        <activity android:name=".home.shopatshop.SASCatalogActivity" />
+        <activity android:name=".home.shopatshop.SASOffersActivity" />
+        <activity android:name=".home.shopatshop.SASCheckoutActivity"></activity>
     </application>
 
 </manifest>

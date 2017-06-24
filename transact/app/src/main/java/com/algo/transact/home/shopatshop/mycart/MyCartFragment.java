@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.algo.transact.AppState;
 import com.algo.transact.support_packages.SwipeDetector;
 import com.algo.transact.R;
 
@@ -38,6 +39,7 @@ private  MyCartAdapter cartAdapter;
        // listView.setOnTouchListener(swipeDetector);
        // listView.setOnItemClickListener(this);
         Log.i("Generic info "," Activity onCreate MyCartFragment ....");
+        MyCartAdapter.list_type= AppState.LIST_TYPE.NORMAL_CART;
         cartAdapter = new MyCartAdapter(this.getActivity());
         listView.setAdapter(cartAdapter);
         return view;
@@ -57,6 +59,7 @@ private  MyCartAdapter cartAdapter;
     @Override
     public void onResume() {
         super.onResume();
+        MyCartAdapter.list_type= AppState.LIST_TYPE.NORMAL_CART;
         cartAdapter.notifyDataSetChanged();
     }
 }

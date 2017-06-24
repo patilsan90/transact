@@ -12,7 +12,8 @@ import java.util.ArrayList;
 
 public class AppState {
 
-public static enum LOGIN_STATE {LOGIN_VIEW, REGISTRATION_VIEW};
+    public static enum LOGIN_STATE {LOGIN_VIEW, REGISTRATION_VIEW};
+    public static enum LIST_TYPE  {NORMAL_CART,CHECKOUT_CART}
 
     public LOGIN_STATE loginState;
 

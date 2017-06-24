@@ -32,7 +32,8 @@
             android:gravity="center"
             android:orientation="vertical"
             android:paddingLeft="5dp"
-            android:paddingRight="5dp">
+            android:paddingRight="5dp"
+            android:onClick="gotoHomefromSAS">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -58,6 +59,7 @@
             android:orientation="vertical"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
+            android:onClick="browseCatalog"
 
             >
 
@@ -113,6 +115,7 @@
             android:orientation="vertical"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
+            android:onClick="browseOffers"
 
             >
 
@@ -140,6 +143,7 @@
             android:orientation="vertical"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
+            android:onClick="checkoutCart"
 
             >
 

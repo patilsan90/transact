@@ -14,11 +14,14 @@ import android.widget.TextView;
 import com.algo.transact.AppState;
 import com.algo.transact.R;
 
+
 public class MyCartAdapter extends BaseAdapter implements View.OnClickListener {
 
     //  public static boolean load=true;
     private static int item_counter;
     private Activity activity;
+
+    public static AppState.LIST_TYPE list_type;
 
     public MyCartAdapter(Activity activity) {
         this.activity = activity;
@@ -45,11 +48,15 @@ public class MyCartAdapter extends BaseAdapter implements View.OnClickListener {
         if (view == null) {
 
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-            view = inflater.inflate(R.layout.list_item_view_mycart, parent, false);
+            if(list_type == AppState.LIST_TYPE.NORMAL_CART)
+                view = inflater.inflate(R.layout.list_item_view_mycart, parent, false);
+            else
+                view = inflater.inflate(R.layout.list_item_view_mycart_checkout, parent, false);
+
         }
 
         CartItem cartItem;
-        Log.i("TESTTING", item_counter + " :: item_counter + size ::" + AppState.getInstance().getCartItemList().size());
+        Log.i("TESTING", item_counter + " :: item_counter + size ::" + AppState.getInstance().getCartItemList().size());
         item_counter++;
         if (item_counter == AppState.getInstance().getCartItemList().size()) {
             item_counter = 0;
@@ -79,37 +86,66 @@ public class MyCartAdapter extends BaseAdapter implements View.OnClickListener {
 
         item_view.setText("Total Cost: " + total_cost);
 
-        final TextView total_items_view = (EditText) view.findViewById(R.id.total_items);
-        total_items_view.setText("" + cartItem.getItem_quantity());
+        TextView total_items_view = (TextView) view.findViewById(R.id.total_items);
 
-        view.setOnClickListener(this);
+        if(list_type == AppState.LIST_TYPE.NORMAL_CART)
+            total_items_view.setText("" + cartItem.getItem_quantity());
+        else
+            total_items_view.setText("Total Items: " + cartItem.getItem_quantity());
 
-        ImageButton trashCartItem = (ImageButton) view.findViewById(R.id.trash_cart_item);
-        trashCartItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AppState.getInstance().getCartItemList().remove(index);
-                notifyDataSetChanged();
-                double cart_total = 0;
-                CartItem cartItem;
-                int noOfItems = AppState.getInstance().getCartItemList().size();
-                for (int i = 0; i < noOfItems; i++) {
-                    cartItem = AppState.getInstance().getCartItemList().get(i);
-                    cart_total = cart_total + cartItem.getDiscounted_cost() * cartItem.getItem_quantity();
+
+
+            if(list_type == AppState.LIST_TYPE.NORMAL_CART) {
+            view.setOnClickListener(this);
+
+            ImageButton trashCartItem = (ImageButton) view.findViewById(R.id.trash_cart_item);
+            trashCartItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppState.getInstance().getCartItemList().remove(index);
+                    notifyDataSetChanged();
+                    double cart_total = 0;
+                    CartItem cartItem;
+                    int noOfItems = AppState.getInstance().getCartItemList().size();
+                    for (int i = 0; i < noOfItems; i++) {
+                        cartItem = AppState.getInstance().getCartItemList().get(i);
+                        cart_total = cart_total + cartItem.getDiscounted_cost() * cartItem.getItem_quantity();
+                    }
+                    TextView cart_total_view = (TextView) activity.findViewById(R.id.cart_total);
+                    cart_total_view.setText("Cart Total: " + cart_total);
+
                 }
-                TextView cart_total_view = (TextView) activity.findViewById(R.id.cart_total);
-                cart_total_view.setText("Cart Total: " + cart_total);
+            });
 
-            }
-        });
+            ImageButton decreaseCartItem = (ImageButton) view.findViewById(R.id.decrease_item_count);
+            decreaseCartItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CartItem item = AppState.getInstance().getCartItemList().get(index);
+                    if (item.getItem_quantity() > 1) {
+                        item.decreaseItem_quantity();
+                        notifyDataSetChanged();
+                        int noOfItems = AppState.getInstance().getCartItemList().size();
+                        double cart_total = 0;
+                        CartItem cartItem;
+                        for (int i = 0; i < noOfItems; i++) {
+                            cartItem = AppState.getInstance().getCartItemList().get(i);
+                            cart_total = cart_total + cartItem.getDiscounted_cost() * cartItem.getItem_quantity();
+                        }
+                        TextView cart_total_view = (TextView) activity.findViewById(R.id.cart_total);
+                        cart_total_view.setText("Cart Total: " + cart_total);
 
-        ImageButton decreaseCartItem = (ImageButton) view.findViewById(R.id.decrease_item_count);
-        decreaseCartItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CartItem item = AppState.getInstance().getCartItemList().get(index);
-                if (item.getItem_quantity() > 1) {
-                    item.decreaseItem_quantity();
+
+                    }
+                }
+            });
+
+            ImageButton increaseCartItem = (ImageButton) view.findViewById(R.id.increase_item_count);
+            increaseCartItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CartItem item = AppState.getInstance().getCartItemList().get(index);
+                    item.increaseItem_quantity();
                     notifyDataSetChanged();
                     int noOfItems = AppState.getInstance().getCartItemList().size();
                     double cart_total = 0;
@@ -121,31 +157,9 @@ public class MyCartAdapter extends BaseAdapter implements View.OnClickListener {
                     TextView cart_total_view = (TextView) activity.findViewById(R.id.cart_total);
                     cart_total_view.setText("Cart Total: " + cart_total);
 
-
                 }
-            }
-        });
-
-        ImageButton increaseCartItem = (ImageButton) view.findViewById(R.id.increase_item_count);
-        increaseCartItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CartItem item = AppState.getInstance().getCartItemList().get(index);
-                item.increaseItem_quantity();
-                notifyDataSetChanged();
-                int noOfItems = AppState.getInstance().getCartItemList().size();
-                double cart_total = 0;
-                CartItem cartItem;
-                for (int i = 0; i < noOfItems; i++) {
-                    cartItem = AppState.getInstance().getCartItemList().get(i);
-                    cart_total = cart_total + cartItem.getDiscounted_cost() * cartItem.getItem_quantity();
-                }
-                TextView cart_total_view = (TextView) activity.findViewById(R.id.cart_total);
-                cart_total_view.setText("Cart Total: " + cart_total);
-
-            }
-        });
-
+            });
+        }
         return view;
     }
 

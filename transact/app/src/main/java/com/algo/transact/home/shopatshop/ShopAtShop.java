@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.algo.transact.AppState;
 import com.algo.transact.barcode.BarcodeCaptureActivity;
 import com.algo.transact.home.LocateCategories;
+import com.algo.transact.home.MainActivity;
 import com.algo.transact.home.shopatshop.mycart.ItemCountSelectionActivity;
 import com.algo.transact.home.shopatshop.mycart.MyCartFragment;
 import com.algo.transact.home.offers.OffersFragment;
@@ -184,16 +185,31 @@ public class ShopAtShop extends AppCompatActivity implements
 
     }
 
-    @Override
-    public void onBackPressed() {
-        back_press_counter++;
-        if (back_press_counter == 2) {
-            this.finish();
-            back_press_counter = 0;
-            super.onBackPressed();
-            return;
-        }
-        Toast.makeText(this, "Press again to close App", Toast.LENGTH_SHORT).show();
+    public void gotoHomefromSAS(View v)
+    {
+        Log.i("Home", "Select mall Clicked");
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivityForResult(intent, BARCODE_READER_REQUEST_CODE);
+        this.finish();
+    }
+
+    public void browseCatalog(View v)
+    {
+        Log.i("Home", "Select mall Clicked");
+        Intent intent = new Intent(getApplicationContext(), SASCatalogActivity.class);
+        startActivityForResult(intent, BARCODE_READER_REQUEST_CODE);
+    }
+    public void browseOffers(View v)
+    {
+        Log.i("Home", "Select mall Clicked");
+        Intent intent = new Intent(getApplicationContext(), SASOffersActivity.class);
+        startActivityForResult(intent, BARCODE_READER_REQUEST_CODE);
+    }
+    public void checkoutCart(View v)
+    {
+        Log.i("Home", "Select mall Clicked");
+        Intent intent = new Intent(getApplicationContext(), SASCheckoutActivity.class);
+        startActivityForResult(intent, BARCODE_READER_REQUEST_CODE);
     }
 
     @Override
