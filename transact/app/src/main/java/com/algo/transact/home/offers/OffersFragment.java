@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.algo.transact.AppState;
+import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.R;
 import com.algo.transact.interfaces.IMall;
 

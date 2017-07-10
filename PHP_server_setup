@@ -1,0 +1,31 @@
+
+Installation steps to follow::
+
+http://howtoubuntu.org/how-to-install-lamp-on-ubuntu
+
+Below is the tutorial for beginners:
+
+https://www.codeproject.com/Articles/759094/Step-by-Step-PHP-Tutorials-for-Beginners-Creating
+
+
+commands::
+
+sudo /etc/init.d/apache2 restart
+sudo /etc/init.d/apache2 stop
+
+To start xampp server
+sudo /opt/lampp/lampp start
+
+XAMPP terminal:: sudo /opt/lampp/manager-linux-x64.run
+
+
+Latest API's Definition
+
+https://downloads.mysql.com/docs/apis-php-en.a4.pdf
+
+
+
+
+Android application To PHP - mysql :: Tutorial 
+http://www.androidhive.info/2012/01/android-login-and-registration-with-php-mysql-and-sqlite/
+

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.algo.transact.AppState;
+import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.support_packages.SwipeDetector;
 import com.algo.transact.R;
 

@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
-import com.algo.transact.AppState;
+import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.home.shopatshop.ShopAtShop;
 import com.algo.transact.R;
 

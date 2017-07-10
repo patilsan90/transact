@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.algo.transact.AppState;
+import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.R;
 import com.algo.transact.home.shopatshop.mycart.MyCartAdapter;
 import com.instamojo.android.Instamojo;

@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.algo.transact.AppState;
+import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.R;
 
 /**

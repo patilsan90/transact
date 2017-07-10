@@ -5,7 +5,7 @@ import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.algo.transact.AppState;
+import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.server_communication.UserAuthentication;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -14,8 +14,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
-import com.algo.transact.AppState;
-import com.algo.transact.server_communication.UserAuthentication;
 
 /**
  * Created by Sandeep Patil on 8/5/17.

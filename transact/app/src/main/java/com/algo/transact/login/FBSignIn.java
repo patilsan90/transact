@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.algo.transact.AppState;
+import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.server_communication.UserAuthentication;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -15,8 +15,6 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.algo.transact.AppState;
-import com.algo.transact.server_communication.UserAuthentication;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -2,6 +2,7 @@ package com.algo.transact.home;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +11,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.algo.transact.AppConfig.AppState;
+import com.algo.transact.AppConfig.SQLiteHandler;
+import com.algo.transact.AppConfig.SessionManager;
 import com.algo.transact.R;
+import com.algo.transact.login.LoginActivity;
 import com.algo.transact.login.LoginFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
     private HomeFragment homeFragment;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
+
+    private SQLiteHandler db;
+    public SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +38,20 @@ public class MainActivity extends AppCompatActivity {
         homeFragment = new HomeFragment();
         fragmentTransaction.add(R.id.home_page_frame, homeFragment);
         fragmentTransaction.commit();
+
+        AppState.getInstance().mainActivity=this;
+        db = new SQLiteHandler(getApplicationContext());
+        session= new SessionManager(getApplicationContext());
+
+        if(!session.isLoggedIn())
+        {
+            Log.i(AppState.TAG, "Logged in check");
+            session.logoutUser(db,session);
+            Intent intent= new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+            this.finish();
+        }
+
 
        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         createDrawer();

@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.algo.transact.AppState;
+import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.barcode.BarcodeCaptureActivity;
 import com.algo.transact.home.LocateCategories;
 import com.algo.transact.home.MainActivity;

@@ -8,8 +8,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
+import com.algo.transact.AppConfig.SQLiteHandler;
+import com.algo.transact.AppConfig.SessionManager;
+import com.algo.transact.home.MainActivity;
 import com.algo.transact.home.shopatshop.ShopAtShop;
 import com.facebook.CallbackManager;
 import com.facebook.login.LoginManager;
@@ -18,7 +22,7 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.algo.transact.AppState;
+import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.R;
 import com.algo.transact.server_communication.UserAuthentication;
 
@@ -44,12 +48,13 @@ public class LoginActivity extends AppCompatActivity implements
     boolean isRegistrationForm = false;
     LoginFragment loginFragment;
     RegisterUserFragment registerUserFragment;
-    EditText email;
-    EditText mobNo;
     CallbackManager callbackManager;
     private GmailSignIn gmailSignIn;
     private LoginButton fbloginButton;
     private FBSignIn fbSignIn;
+
+    public SQLiteHandler db;
+    public SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,12 +74,23 @@ public class LoginActivity extends AppCompatActivity implements
 
         File sessionFile = new File(AppState.sessionFile);
 
-        if (UserAuthentication.getInstance().authenticateUser(sessionFile))
+
+    //    if (UserAuthentication.getInstance().authenticateUser(sessionFile))
+      //      startMainActivity();
+
+        db = new SQLiteHandler(getApplicationContext());
+        session= new SessionManager(getApplicationContext());
+
+        if(session.isLoggedIn())
+        {
             startMainActivity();
+            this.finish();
+        }
+
 
 
         findViewById(R.id.signin_using_gmail).setOnClickListener(this);
-        //findViewById(R.id.signin_using_fb).setOnClickListener(this);
+        findViewById(R.id.signin_using_fb).setOnClickListener(this);
 
         fbloginButton = (LoginButton) findViewById(R.id.signin_using_fb);
         fbloginButton.setReadPermissions("email");
@@ -88,7 +104,7 @@ public class LoginActivity extends AppCompatActivity implements
     }
 
     void startMainActivity() {
-        Intent myIntent = new Intent(this, ShopAtShop.class);
+        Intent myIntent = new Intent(this, MainActivity.class);
         myIntent.putExtra("name", "Sample name"); //Optional parameter pass parameters
         startActivity(myIntent);
         this.finish();
@@ -172,6 +188,8 @@ public class LoginActivity extends AppCompatActivity implements
                 break;*/
         }
     }
+
+
 
 
     public void signinByFB() {

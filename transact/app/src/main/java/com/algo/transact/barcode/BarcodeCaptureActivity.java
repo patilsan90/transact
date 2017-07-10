@@ -38,7 +38,7 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.algo.transact.AppState;
+import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.R;
 import com.algo.transact.camera.CameraSource;
 import com.algo.transact.camera.CameraSourcePreview;

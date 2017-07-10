@@ -4,11 +4,10 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 
-import com.algo.transact.AppState;
+import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.R;
 import com.algo.transact.barcode.BarcodeCaptureActivity;
 import com.algo.transact.home.shopatshop.ShopAtShop;
-import com.algo.transact.login.VerifyMobileNoActivity;
 
 /**
  * Created by sandeep on 18/6/17.

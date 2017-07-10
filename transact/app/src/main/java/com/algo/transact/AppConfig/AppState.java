@@ -1,5 +1,6 @@
-package com.algo.transact;
+package com.algo.transact.AppConfig;
 
+import com.algo.transact.home.MainActivity;
 import com.algo.transact.home.shopatshop.mycart.CartItem;
 import com.algo.transact.home.offers.OfferItem;
 import com.algo.transact.login.LoginActivity;
@@ -19,6 +20,8 @@ public class AppState {
 
     public static String TAG = "TRANSACT APP";
     public LoginActivity loginActivity;
+    public MainActivity mainActivity;
+
 
     private ArrayList<CartItem> cartItemsList;
     private ArrayList<OfferItem> offersList;
