@@ -40,8 +40,17 @@ public class SessionManager {
         return pref.getBoolean(KEY_IS_LOGGEDIN, false);
     }
 
-    public void logoutUser(SQLiteHandler db, SessionManager session)
+    public boolean logoutUser(SQLiteHandler db, SessionManager session)
     {
+        session.setLogin(false);
+
+        db.deleteUsers();
+
+        return true;
+        // Launching the login activity
+       // Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        //startActivity(intent);
+        //finish();
 
     }
 }

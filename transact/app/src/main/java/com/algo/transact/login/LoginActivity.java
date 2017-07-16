@@ -8,13 +8,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 
 import com.algo.transact.AppConfig.SQLiteHandler;
 import com.algo.transact.AppConfig.SessionManager;
 import com.algo.transact.home.MainActivity;
-import com.algo.transact.home.shopatshop.ShopAtShop;
 import com.facebook.CallbackManager;
 import com.facebook.login.LoginManager;
 import com.facebook.login.widget.LoginButton;
@@ -24,7 +21,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.R;
-import com.algo.transact.server_communication.UserAuthentication;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -43,7 +39,7 @@ public class LoginActivity extends AppCompatActivity implements
 
     private static final String TAG = "CognitionMall";
     public GoogleApiClient mGoogleApiClient;
-    public SessionInfo sessionInfo;
+    public UserDetails sessionInfo;
     public ProgressDialog mProgressDialog;
     boolean isRegistrationForm = false;
     LoginFragment loginFragment;
@@ -63,7 +59,7 @@ public class LoginActivity extends AppCompatActivity implements
 
         AppState.getInstance().loginActivity = this;
         AppState.AppCacheFolder = getCacheDir().getAbsolutePath() + File.pathSeparator + "MallAppInfo";
-        AppState.sessionFile = AppState.AppCacheFolder + File.pathSeparator + "SessionInfo.txt";
+        AppState.sessionFile = AppState.AppCacheFolder + File.pathSeparator + "UserDetails.txt";
         callbackManager = CallbackManager.Factory.create();
 
         FragmentManager fragmentManager = getFragmentManager();
@@ -72,7 +68,7 @@ public class LoginActivity extends AppCompatActivity implements
         fragmentTransaction.add(R.id.login_fragment_place, loginFragment);
         fragmentTransaction.commit();
 
-        File sessionFile = new File(AppState.sessionFile);
+     //   File sessionFile = new File(AppState.sessionFile);
 
 
     //    if (UserAuthentication.getInstance().authenticateUser(sessionFile))
@@ -207,10 +203,10 @@ public class LoginActivity extends AppCompatActivity implements
         String mob_no = "9999999999";
         String user_name = "Temporary Man";
 
-        SessionInfo sessionInfo = new SessionInfo();
+        UserDetails sessionInfo = new UserDetails();
         sessionInfo.emailID = email_id;
         sessionInfo.mobNo = mob_no;
-        sessionInfo.logged_in_by = SessionInfo.LOGIN_OTIONS.FB;
+        sessionInfo.logged_in_by = UserDetails.LOGIN_OTIONS.FB;
         AppState.getInstance().loginActivity.sessionInfo = sessionInfo;
         Log.i(TAG, "Creating session using FB credentials");
 
@@ -221,7 +217,7 @@ public class LoginActivity extends AppCompatActivity implements
     }
 
 
-    boolean writeSessionFile(SessionInfo info) {
+    boolean writeSessionFile(UserDetails info) {
         File projDir = new File(AppState.AppCacheFolder);
         if (!projDir.exists())
             projDir.mkdirs();

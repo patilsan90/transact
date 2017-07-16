@@ -85,13 +85,13 @@ public class GmailSignIn {
 
         Toast.makeText(AppState.getInstance().loginActivity, "Welcome " + displayName, Toast.LENGTH_SHORT).show();
 
-        SessionInfo sessionInfo = new SessionInfo();
+        UserDetails sessionInfo = new UserDetails();
         sessionInfo.displayName = displayName;
         sessionInfo.familyName = familyName;
         sessionInfo.firstName = givenName;
         sessionInfo.emailID = email;
         sessionInfo.profilePhotoURL = photoURL;
-        sessionInfo.logged_in_by = SessionInfo.LOGIN_OTIONS.GMAIL;
+        sessionInfo.loggedInUsing = UserDetails.LOGIN_OTIONS.GMAIL;
         AppState.getInstance().loginActivity.sessionInfo = sessionInfo;
         Log.i("TAG", "Creating session using GMAIL credentials");
 

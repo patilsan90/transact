@@ -70,7 +70,7 @@ public class FBSignIn {
                     }
 
                     private Bundle getFacebookData(JSONObject object) {
-                        SessionInfo sessionInfo = new SessionInfo();
+                        UserDetails sessionInfo = new UserDetails();
                         try {
                             Bundle bundle = new Bundle();
                             String id = object.getString("id");
@@ -107,7 +107,7 @@ public class FBSignIn {
                             //  bundle.putString("location", object.getJSONObject("location").getString("name"));
 
                             sessionInfo.displayName = sessionInfo.firstName + " " + sessionInfo.familyName;
-                            sessionInfo.logged_in_by = SessionInfo.LOGIN_OTIONS.FB;
+                            sessionInfo.loggedInUsing = UserDetails.LOGIN_OTIONS.FB;
 
                             verifyFbSignin(sessionInfo);
                             AppState.getInstance().loginActivity.mProgressDialog.dismiss();
@@ -136,7 +136,7 @@ public class FBSignIn {
 
     }//configure end
 
-    public boolean verifyFbSignin(SessionInfo sessionInfo) {
+    public boolean verifyFbSignin(UserDetails sessionInfo) {
 
         Toast.makeText(AppState.getInstance().loginActivity, "Welcome " + sessionInfo.displayName, Toast.LENGTH_SHORT).show();
 

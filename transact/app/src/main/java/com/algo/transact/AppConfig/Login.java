@@ -3,10 +3,12 @@ package com.algo.transact.AppConfig;
 import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.algo.transact.home.MainActivity;
 import com.algo.transact.login.LoginActivity;
 import com.algo.transact.login.LoginFragment;
+import com.algo.transact.login.UserDetails;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -41,7 +43,7 @@ public class Login {
         activity.showDialog();
 
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                HTTPReqController.URL_LOGIN, new Response.Listener<String>() {
+                HTTPReqURLConfig.URL_LOGIN, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -51,7 +53,7 @@ public class Login {
                 try {
                     JSONObject jObj = new JSONObject(response);
                     boolean error = jObj.getBoolean("error");
-
+                    UserDetails loggedInUser=new UserDetails();
                     // Check for error node in json
                     if (!error) {
                         // user successfully logged in
@@ -61,17 +63,26 @@ public class Login {
                         AppState.getInstance().mainActivity.session.setLogin(true);
 
                         // Now store the user in SQLite
-                        String uid = jObj.getString("uid");
+                       // String uid = jObj.getString("uid");
 
                         JSONObject user = jObj.getJSONObject("user");
-                        String name = user.getString("name");
-                        String email = user.getString("email");
-                        String created_at = user
-                                .getString("created_at");
+
+                        loggedInUser.emailID = user.getString("email");
+                        loggedInUser.mobNo = user.getString("mobile_num");
+                        loggedInUser.countryCode = user.getString("country_code");
+                        loggedInUser.loggedInUsing = loggedInUser.loggedInUsingToEnum(user.getString("logged_in_using"));
+                        loggedInUser.displayName = user.getString("display_name");
+                        loggedInUser.firstName = user.getString("first_name");
+                        loggedInUser.familyName = user.getString("family_name");
+                        loggedInUser.createdAt = user.getString("created_at");
+                        loggedInUser.updatedAt = user.getString("updated_at");
+
+                        Log.i(AppState.TAG,"Logged in user:: "+loggedInUser.toString());
 
                         // Inserting row in users table
-                        AppState.getInstance().loginActivity.db.addUser(name, email, uid, created_at);
-
+                      AppState.getInstance().loginActivity.db.addUser(loggedInUser);
+                        Toast.makeText(activity.getActivity(),
+                                "Welcome "+loggedInUser.displayName, Toast.LENGTH_SHORT).show();
                         // Launch main activity
                         Intent intent = new Intent(AppState.getInstance().loginActivity,
                                 MainActivity.class);
@@ -80,8 +91,8 @@ public class Login {
                     } else {
                         // Error in login. Get the error message
                         String errorMsg = jObj.getString("error_msg");
-                        //Toast.makeText(getApplicationContext(),
-                          //      "Error MSG:: "+errorMsg, Toast.LENGTH_LONG).show();
+                        Toast.makeText(activity.getActivity(),
+                                ""+errorMsg, Toast.LENGTH_LONG).show();
                         Log.i(AppState.TAG,"Error :: "+errorMsg);
 
                     }
@@ -111,7 +122,7 @@ public class Login {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("email", email);
                 params.put("password", password);
-
+                Log.i(AppState.TAG, "Login details in getParams " + email+"  "+password );
                 return params;
             }
 

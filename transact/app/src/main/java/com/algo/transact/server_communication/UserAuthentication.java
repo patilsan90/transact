@@ -1,6 +1,6 @@
 package com.algo.transact.server_communication;
 
-import com.algo.transact.login.SessionInfo;
+import com.algo.transact.login.UserDetails;
 
 import java.io.File;
 
@@ -22,7 +22,7 @@ public class UserAuthentication {
         return authentication;
     }
 
-    public String verifyMobileNumber(SessionInfo info) {
+    public String verifyMobileNumber(UserDetails info) {
         String mobNumber = verifyMobileNumberFromServer(info);
         return mobNumber;
 
@@ -39,7 +39,7 @@ public class UserAuthentication {
     }
 
 
-    private String verifyMobileNumberFromServer(SessionInfo info) {
+    private String verifyMobileNumberFromServer(UserDetails info) {
 
         /*
         * Todo

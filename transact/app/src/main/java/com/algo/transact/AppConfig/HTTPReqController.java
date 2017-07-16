@@ -16,9 +16,6 @@ public class HTTPReqController extends Application{
 
     public static final String TAG = HTTPReqController.class.getSimpleName();
 
-    public static String URL_LOGIN = "http://www.futureinduction.com/mobile_app_access/login.php";
-    public static String URL_REGISTER = "http://www.futureinduction.com/mobile_app_access/register.php";
-
     private RequestQueue requestQueue;
     private static HTTPReqController httpReqController;
 

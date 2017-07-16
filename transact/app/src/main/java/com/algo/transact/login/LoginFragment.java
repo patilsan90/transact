@@ -57,21 +57,22 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
 
-        Log.i(AppState.TAG, "Clickeddddd ");
+        Log.i(AppState.TAG, "Clicked");
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         if (registerUserFragment == null)
             registerUserFragment = new RegisterUserFragment();
 
-        signin();
+        if(!signin())
+        {
+            fragmentTransaction.replace(R.id.login_fragment_place, registerUserFragment);
+            fragmentTransaction.commit();
 
-      //  fragmentTransaction.replace(R.id.login_fragment_place, registerUserFragment);
-       // fragmentTransaction.commit();
-
+        }
     }
 
-        private void signin() {
+        private boolean signin() {
             String emailStr = email.getText().toString().trim();
             String password = mobNo.getText().toString().trim();
 
@@ -79,7 +80,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
             if(!emailStr.isEmpty() && !password.isEmpty())
             {
                 checkLogin(emailStr, password);
+                return true;
             }
+            return false;
     }
 
     private void checkLogin(String emailStr, String password) {

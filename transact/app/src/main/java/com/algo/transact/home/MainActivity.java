@@ -8,7 +8,9 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.algo.transact.AppConfig.AppState;
@@ -23,9 +25,11 @@ public class MainActivity extends AppCompatActivity {
     private HomeFragment homeFragment;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
+    boolean isDrawerOpen= false;
 
     private SQLiteHandler db;
     public SessionManager session;
+    private Button btLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,21 +70,37 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-
+                Log.i(AppState.TAG, "onDrawerOpened " + getTitle());
                 invalidateOptionsMenu();
             }
 
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
-                Log.d("Mall_Drawer", "onDrawerClosed: " + getTitle());
-
+                Log.i(AppState.TAG, "onDrawerClosed: " + getTitle());
                 invalidateOptionsMenu();
             }
         };
         mDrawerToggle.setDrawerIndicatorEnabled(true);
-
-        /* mDrawerLayout.setDrawerListener(mDrawerToggle); check if any issue comes because of addDrawerListener. */
+        mDrawerToggle.syncState();
+        // mDrawerLayout.setDrawerListener(mDrawerToggle); /*check if any issue comes because of addDrawerListener.*/
         mDrawerLayout.addDrawerListener(mDrawerToggle);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.i(AppState.TAG, "onOptionsItemSelected: "+item.getItemId());
+          if(mDrawerToggle.onOptionsItemSelected(item))
+              return true;
+
+        return super.onOptionsItemSelected(item);
+    }
+
+ public void logout(View v)
+    {
+        session.logoutUser(db, session);
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
