@@ -34,6 +34,7 @@ public class AppState {
     public static String AppCacheFolder;
 
     public static boolean isProductScan;
+    //public SessionManager session;
 
     private AppState()
     {

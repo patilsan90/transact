@@ -31,7 +31,10 @@ public class FBSignIn {
     public static final int RC_SIGN_IN = 64206;
     private static final String TAG = "CognitionMall";
 
+   // private UserDetails signInUser;
+
     public FBSignIn(LoginActivity loginActivity) {
+        //signInUser = new UserDetails();
     }
 
     public void configure() {
@@ -70,7 +73,7 @@ public class FBSignIn {
                     }
 
                     private Bundle getFacebookData(JSONObject object) {
-                        UserDetails sessionInfo = new UserDetails();
+                        UserDetails signInUser = new UserDetails();
                         try {
                             Bundle bundle = new Bundle();
                             String id = object.getString("id");
@@ -79,7 +82,8 @@ public class FBSignIn {
                                 URL profile_pic = new URL("https://graph.facebook.com/" + id + "/picture?width=200&height=150");
                                 Log.i("profile_pic", profile_pic + "");
                                 bundle.putString("profile_pic", profile_pic.toString());
-                                sessionInfo.profilePhotoURL = Uri.parse(profile_pic.toString());
+                                //signInUser.profilePhotoURL = Uri.parse(profile_pic.toString());
+                                signInUser.profilePhotoURL = profile_pic.toString();
 
                             } catch (MalformedURLException e) {
                                 AppState.getInstance().loginActivity.mProgressDialog.dismiss();
@@ -90,15 +94,15 @@ public class FBSignIn {
                             bundle.putString("idFacebook", id);
                             if (object.has("first_name"))
                                 // bundle.putString("first_name", object.getString("first_name"));
-                                sessionInfo.firstName = object.getString("first_name");
+                                signInUser.firstName = object.getString("first_name");
 
                             if (object.has("last_name"))
                                 // bundle.putString("last_name", object.getString("last_name"));
-                                sessionInfo.familyName = object.getString("last_name");
+                                signInUser.familyName = object.getString("last_name");
 
                             if (object.has("email"))
                                 //    bundle.putString("email", object.getString("email"));
-                                sessionInfo.emailID = object.getString("email");
+                                signInUser.emailID = object.getString("email");
                             // if (object.has("gender"))
                             //   bundle.putString("gender", object.getString("gender"));
                             //if (object.has("birthday"))
@@ -106,10 +110,11 @@ public class FBSignIn {
                             //if (object.has("location"))
                             //  bundle.putString("location", object.getJSONObject("location").getString("name"));
 
-                            sessionInfo.displayName = sessionInfo.firstName + " " + sessionInfo.familyName;
-                            sessionInfo.loggedInUsing = UserDetails.LOGIN_OTIONS.FB;
+                            signInUser.displayName = signInUser.firstName + " " + signInUser.familyName;
+                            signInUser.loggedInUsing = UserDetails.LOGIN_OTIONS.FB;
+                           // signInUser.countryCode = "+91";
 
-                            verifyFbSignin(sessionInfo);
+                            verifyFbSignin(signInUser);
                             AppState.getInstance().loginActivity.mProgressDialog.dismiss();
                             return bundle;
                         } catch (JSONException e) {
@@ -136,23 +141,27 @@ public class FBSignIn {
 
     }//configure end
 
-    public boolean verifyFbSignin(UserDetails sessionInfo) {
+    public boolean verifyFbSignin(UserDetails signInUser) {
 
-        Toast.makeText(AppState.getInstance().loginActivity, "Welcome " + sessionInfo.displayName, Toast.LENGTH_SHORT).show();
+        Toast.makeText(AppState.getInstance().loginActivity, "Welcome " + signInUser.displayName, Toast.LENGTH_SHORT).show();
 
-        AppState.getInstance().loginActivity.sessionInfo = sessionInfo;
-        Log.i("TAG", "Creating session using GMAIL credentials");
+        AppState.getInstance().loginActivity.sessionInfo = signInUser;
+        Log.i("TAG", "Creating session using FB credentials");
 
-        if (UserAuthentication.getInstance().verifyMobileNumber(sessionInfo) != null) {
-            if (AppState.getInstance().loginActivity.writeSessionFile(sessionInfo))
+
+      /*  if (UserAuthentication.getInstance().verifyMobileNumber(signInUser) != null) {
+            if (AppState.getInstance().loginActivity.writeSessionFile(signInUser))
                 AppState.getInstance().loginActivity.startMainActivity();
         } else {
             Intent myIntent = new Intent(AppState.getInstance().loginActivity, EnterMobileNoActivity.class);
             myIntent.putExtra("name", "Sample name"); //Optional parameter pass parameters
             AppState.getInstance().loginActivity.startActivity(myIntent);
-        }
+        }*/
+
+        Intent myIntent = new Intent(AppState.getInstance().loginActivity, EnterMobileNoActivity.class);
+        myIntent.putExtra("newUser", signInUser);
+        AppState.getInstance().loginActivity.startActivity(myIntent);
 
         return true;
-
     }
 }

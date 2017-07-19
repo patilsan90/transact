@@ -25,9 +25,17 @@ public class UserDetails implements Serializable {
     public String updatedAt;
 
     public String sessionID;
-    public Uri profilePhotoURL;
+    //public Uri profilePhotoURL;
+    public String profilePhotoURL;
     public LOGIN_OTIONS loggedInUsing;
 
+    public UserDetails()
+    {
+        countryCode= "+91";
+        firstName= "test_firstname";
+        familyName= "test_family name";
+        password= "test";
+    }
     public enum LOGIN_OTIONS {FB, GMAIL, OTHER}
 
     @Override

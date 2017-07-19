@@ -67,6 +67,7 @@ public class RegisterUserFragment extends Fragment {
             newUser.mobNo = etMobileNo.getText().toString();
             newUser.emailID = etEmail.getText().toString();
             newUser.password = etPassword.getText().toString();
+            newUser.loggedInUsing = UserDetails.LOGIN_OTIONS.OTHER;
 
             Intent myIntent = new Intent(getActivity(), VerifyMobileNoActivity.class);
             myIntent.putExtra("newUser", newUser); //Optional parameter pass parameters

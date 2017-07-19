@@ -48,19 +48,19 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_LOGIN_TABLE = "CREATE TABLE " + TABLE_USER + "("
-                + KEY_EMAIL + " TEXT UNIQUE," + KEY_MOBILE_NUM + " TEXT UNIQUE,"
-                + KEY_COUNTRY_CODE + " TEXT"
-                + KEY_LOGGED_IN_USING + " TEXT"
-                + KEY_DISPLAY_NAME + " TEXT"
-                + KEY_FIRST_NAME + " TEXT"
-                + KEY_FAMILY_NAME + " TEXT"
-                + KEY_CREATED_AT + " TEXT"
-                + KEY_UPDATED_AT + " TEXT"+
+        String CREATE_LOGIN_TABLE = "CREATE TABLE " + TABLE_USER + " ( "
+                + KEY_EMAIL + " TEXT UNIQUE, " + KEY_MOBILE_NUM + " TEXT UNIQUE, "
+                + KEY_COUNTRY_CODE + " TEXT ,"
+                + KEY_LOGGED_IN_USING + " TEXT, "
+                + KEY_DISPLAY_NAME + " TEXT, "
+                + KEY_FIRST_NAME + " TEXT, "
+                + KEY_FAMILY_NAME + " TEXT, "
+                + KEY_CREATED_AT + " TEXT, "
+                + KEY_UPDATED_AT + " TEXT "+
                 ")";
         db.execSQL(CREATE_LOGIN_TABLE);
 
-        Log.d(TAG, "Database tables created");
+        Log.d(TAG, "Database tables created....................................................");
     }
 
     // Upgrading database
@@ -76,7 +76,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     /**
      * Storing user details in database
      * */
-    public void addUser(UserDetails newUser) {
+    public boolean addUser(UserDetails newUser) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -96,6 +96,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         db.close(); // Closing database connection
 
         Log.d(TAG, "New user inserted into sqlite: " + id);
+        return true;
     }
 
     /**

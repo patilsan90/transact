@@ -41,7 +41,6 @@ public class GmailSignIn {
                 .enableAutoManage(AppState.getInstance().loginActivity /* FragmentActivity */, AppState.getInstance().loginActivity /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
-
     }
 
 /* This function receives click event from button. */
@@ -85,18 +84,18 @@ public class GmailSignIn {
 
         Toast.makeText(AppState.getInstance().loginActivity, "Welcome " + displayName, Toast.LENGTH_SHORT).show();
 
-        UserDetails sessionInfo = new UserDetails();
-        sessionInfo.displayName = displayName;
-        sessionInfo.familyName = familyName;
-        sessionInfo.firstName = givenName;
-        sessionInfo.emailID = email;
-        sessionInfo.profilePhotoURL = photoURL;
-        sessionInfo.loggedInUsing = UserDetails.LOGIN_OTIONS.GMAIL;
-        AppState.getInstance().loginActivity.sessionInfo = sessionInfo;
-        Log.i("TAG", "Creating session using GMAIL credentials");
+        UserDetails signInUser = new UserDetails();
+        signInUser.displayName = displayName;
+        signInUser.familyName = familyName;
+        signInUser.firstName = givenName;
+        signInUser.emailID = email;
+        signInUser.profilePhotoURL = photoURL.toString();
+        signInUser.loggedInUsing = UserDetails.LOGIN_OTIONS.GMAIL;
+        AppState.getInstance().loginActivity.sessionInfo = signInUser;
+        Log.i(AppState.TAG, "Creating session using GMAIL credentials");
 
-        if (UserAuthentication.getInstance().verifyMobileNumber(sessionInfo) != null) {
-            if (AppState.getInstance().loginActivity.writeSessionFile(sessionInfo))
+        if (UserAuthentication.getInstance().verifyMobileNumber(signInUser) != null) {
+            if (AppState.getInstance().loginActivity.writeSessionFile(signInUser))
                 AppState.getInstance().loginActivity.startMainActivity();
         } else {
             Intent myIntent = new Intent(AppState.getInstance().loginActivity, EnterMobileNoActivity.class);

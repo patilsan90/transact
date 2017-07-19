@@ -52,10 +52,12 @@ public class LoginActivity extends AppCompatActivity implements
     public SQLiteHandler db;
     public SessionManager session;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
 
         AppState.getInstance().loginActivity = this;
         AppState.AppCacheFolder = getCacheDir().getAbsolutePath() + File.pathSeparator + "MallAppInfo";
