@@ -39,8 +39,8 @@ public class OffersFragment extends Fragment implements IMall {
 
         locate = (Button) view.findViewById(R.id.locate_categories);
 
-        if(AppState.isMallSelected == false)
-            locate.setVisibility(View.INVISIBLE);
+        //if(AppState.isMallSelected == false)
+          //  locate.setVisibility(View.INVISIBLE);
 
         return view;
     }
@@ -48,7 +48,7 @@ public class OffersFragment extends Fragment implements IMall {
     @Override
     public void onResume() {
         super.onResume();
-        if(AppState.isMallSelected == true)
+      //  if(AppState.isMallSelected == true)
             locate.setVisibility(View.VISIBLE);
     }
 

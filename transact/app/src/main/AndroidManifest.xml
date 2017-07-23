@@ -8,48 +8,43 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
-
     //General permissions
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     //required for Juspay to read the OTP from the SMS sent to the device
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <meta-data android:name="com.google.android.gms.vision.DEPENDENCIES" android:value="barcode"/>
 
     <application
+        android:name=".AppConfig.HTTPReqController"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name=".AppConfig.HTTPReqController"
-        >
-        <!--android:name="com.instamojo.android.InstamojoApplication"-->
+        android:theme="@style/AppTheme">
+
+        <!-- android:name="com.instamojo.android.InstamojoApplication" -->
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".home.MainActivity"
-            android:label="@string/title_activity_login" >
-            <intent-filter>
+        <activity
+            android:name=".home.MainActivity"
+            android:label="@string/title_activity_login">
+           <!-- <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
         <activity android:name=".home.shopatshop.ShopAtShop" />
-        <activity
-            android:name=".login.LoginActivity"
-            />
+        <activity android:name=".login.LoginActivity" />
         <activity android:name=".login.VerifyMobileNoActivity" />
         <activity
             android:name=".home.LocateCategories"
             android:label="Locate Categories" />
-        <activity
-            android:name=".barcode.BarcodeCaptureActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".home.shopatshop.mycart.ItemCountSelectionActivity" />
         <activity android:name=".login.EnterMobileNoActivity" />
         <activity
@@ -66,7 +61,14 @@
         </activity>
         <activity android:name=".home.shopatshop.SASCatalogActivity" />
         <activity android:name=".home.shopatshop.SASOffersActivity" />
-        <activity android:name=".home.shopatshop.SASCheckoutActivity"></activity>
+        <activity android:name=".home.shopatshop.SASCheckoutActivity" />
+        <activity android:name=".barcode.TestBarcodeScannerActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

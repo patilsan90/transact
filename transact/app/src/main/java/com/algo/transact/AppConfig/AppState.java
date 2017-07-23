@@ -26,14 +26,13 @@ public class AppState {
     private ArrayList<CartItem> cartItemsList;
     private ArrayList<OfferItem> offersList;
 
-    public static boolean isMallSelected = false;
+    //public static boolean isMallSelected = false;
 
     private static AppState state;
 
     public static String sessionFile;
     public static String AppCacheFolder;
 
-    public static boolean isProductScan;
     //public SessionManager session;
 
     private AppState()

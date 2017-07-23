@@ -3,7 +3,6 @@ package com.algo.transact.home.shopatshop;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -13,7 +12,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.algo.transact.AppConfig.AppState;
-import com.algo.transact.barcode.BarcodeCaptureActivity;
+import com.algo.transact.barcode.BarcodeRequestType;
+import com.algo.transact.barcode.TestBarcodeScannerActivity;
 import com.algo.transact.home.LocateCategories;
 import com.algo.transact.home.MainActivity;
 import com.algo.transact.home.shopatshop.mycart.ItemCountSelectionActivity;
@@ -27,7 +27,6 @@ import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.vision.barcode.Barcode;
 import com.algo.transact.R;
 
 import java.io.File;
@@ -83,6 +82,8 @@ public class ShopAtShop extends AppCompatActivity implements
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
+        Intent intent = new Intent(getApplicationContext(), TestBarcodeScannerActivity.class);
+        startActivityForResult(intent, BarcodeRequestType.REQUEST_SELECT_SHOP);
     }
 
     @Override
@@ -90,17 +91,15 @@ public class ShopAtShop extends AppCompatActivity implements
         return super.onOptionsItemSelected(item);
     }
 
-        public void scanItemAtShop(View view) {
+    public void scanItemAtShop(View view) {
 
         if (AppState.checkProccedStatus() == false) {
             Toast.makeText(this, "Please select mall first !!!", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        AppState.isProductScan = true;
-            BarcodeCaptureActivity.scanner_type = BarcodeCaptureActivity.SCANNER_TYPE.ORDERitemAtShop;
-        Intent intent = new Intent(getApplicationContext(), BarcodeCaptureActivity.class);
-        startActivityForResult(intent, BARCODE_READER_REQUEST_CODE);
+        Intent intent = new Intent(getApplicationContext(), TestBarcodeScannerActivity.class);
+        startActivityForResult(intent, BarcodeRequestType.REQUEST_SELECT_ITEM_FROM_SHOP);
 
         /*
         FragmentManager fragmentManager = getFragmentManager();
@@ -109,38 +108,27 @@ public class ShopAtShop extends AppCompatActivity implements
         fragmentTransaction.replace(R.id.home_fragment, scanProduct);
         fragmentTransaction.commit();
         */
-
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.i(AppState.TAG,"Barcode onActivityResult");
-        if (requestCode == BARCODE_READER_REQUEST_CODE) {
-            if (resultCode == CommonStatusCodes.SUCCESS) {
-                if (data != null) {
-                    Barcode barcode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
-                    Point[] p = barcode.cornerPoints;
-                    //mResultTextView.setText(barcode.displayValue);
-                    //} else
-                    //  mResultTextView.setText(R.string.no_barcode_captured);
-                    Log.i(AppState.TAG,"Barcode scanned, Item selected");
-                    if (AppState.isProductScan == false) {
-                        // This indicates was executed to select mall
-                        AppState.isMallSelected = true;
-                    } else {
-                        //Else condition indicates, scan executed to select item but not mall
-                        Intent intent = new Intent(this, ItemCountSelectionActivity.class);
-                        startActivity(intent);
-                        /* TODO ::
-                         * If ItemCountSelectionActivity is not required then
-                         * add item to cart at this place itself
-                         */
-                    }
-
-                } else Log.e(LOG_TAG, String.format(getString(R.string.barcode_error_format),
-                        CommonStatusCodes.getStatusCodeString(resultCode)));
-            } else super.onActivityResult(requestCode, resultCode, data);
+        Log.i(AppState.TAG, "Barcode onActivityResult");
+        if (resultCode != RESULT_OK) {
+            Log.e(AppState.TAG, "Error in OnActivityResult of ShopAtShop");
+            this.finish();
+            return;
         }
+
+        Toast.makeText(this, "ReqCode" + requestCode + " DATA " + data.getStringExtra(BarcodeRequestType.SCANNER_RESPONSE), Toast.LENGTH_LONG).show();
+        if (requestCode == BarcodeRequestType.REQUEST_SELECT_ITEM_FROM_SHOP) {
+            if (data != null) {
+                // Barcode barcode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
+                //Point[] p = barcode.cornerPoints;
+                Intent intent = new Intent(this, ItemCountSelectionActivity.class);
+                startActivity(intent);
+            }
+        } else
+            Log.e(LOG_TAG, String.format(getString(R.string.barcode_error_format), CommonStatusCodes.getStatusCodeString(resultCode)));
     }
 
     public void showMyCart(View view) {
@@ -176,37 +164,34 @@ public class ShopAtShop extends AppCompatActivity implements
 
     public void selectMall(View view) {
         Log.i("Home", "Select mall Clicked");
-        AppState.isProductScan = false;
-        Intent intent = new Intent(getApplicationContext(), BarcodeCaptureActivity.class);
-        startActivityForResult(intent, BARCODE_READER_REQUEST_CODE);
+        Intent intent = new Intent(getApplicationContext(), TestBarcodeScannerActivity.class);
+        startActivityForResult(intent, BarcodeRequestType.REQUEST_SELECT_SHOP);
 
 //        Intent myIntent = new Intent(this, MallSelectionActivity.class);
         //      this.startActivity(myIntent);
 
     }
 
-    public void gotoHomefromSAS(View v)
-    {
+    public void gotoHomefromSAS(View v) {
         Log.i("Home", "Select mall Clicked");
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivityForResult(intent, BARCODE_READER_REQUEST_CODE);
         this.finish();
     }
 
-    public void browseCatalog(View v)
-    {
+    public void browseCatalog(View v) {
         Log.i("Home", "Select mall Clicked");
         Intent intent = new Intent(getApplicationContext(), SASCatalogActivity.class);
         startActivityForResult(intent, BARCODE_READER_REQUEST_CODE);
     }
-    public void browseOffers(View v)
-    {
+
+    public void browseOffers(View v) {
         Log.i("Home", "Select mall Clicked");
         Intent intent = new Intent(getApplicationContext(), SASOffersActivity.class);
         startActivityForResult(intent, BARCODE_READER_REQUEST_CODE);
     }
-    public void checkoutCart(View v)
-    {
+
+    public void checkoutCart(View v) {
         Log.i("Home", "Select mall Clicked");
         Intent intent = new Intent(getApplicationContext(), SASCheckoutActivity.class);
         startActivityForResult(intent, BARCODE_READER_REQUEST_CODE);
