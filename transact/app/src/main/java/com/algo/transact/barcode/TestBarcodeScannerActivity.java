@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.algo.transact.AppConfig.AppState;
+import com.algo.transact.AppConfig.IntentRequestResponseType;
 import com.algo.transact.R;
 
 public class TestBarcodeScannerActivity extends AppCompatActivity implements IQRResult {
@@ -30,7 +31,7 @@ public class TestBarcodeScannerActivity extends AppCompatActivity implements IQR
     public void scannerResult(String barcodeResult) {
         Log.i(AppState.TAG, "in ScannerResult " + barcodeResult);
         Intent intent = new Intent();
-        intent.putExtra(BarcodeRequestType.SCANNER_RESPONSE, barcodeResult);
+       // intent.putExtra(IntentRequestResponseType.SCANNER_RESPONSE, barcodeResult);
         setResult(RESULT_OK, intent);
         finish();
     }

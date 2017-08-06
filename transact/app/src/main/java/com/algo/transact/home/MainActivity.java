@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+      // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         createDrawer();
 
     }

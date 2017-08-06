@@ -1,6 +1,5 @@
 package com.algo.transact.home.shopatshop.mycart;
 
-
 import android.app.Activity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,7 +11,7 @@ import android.widget.TextView;
 
 import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.R;
-
+import com.algo.transact.home.shopatshop.data_beans.CartItem;
 
 public class MyCartAdapter extends BaseAdapter implements View.OnClickListener {
 

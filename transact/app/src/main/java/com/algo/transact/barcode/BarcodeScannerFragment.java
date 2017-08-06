@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.util.SparseArray;
@@ -20,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.algo.transact.AppConfig.AppState;
+import com.algo.transact.AppConfig.Permissions;
 import com.algo.transact.R;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
@@ -34,13 +36,13 @@ import java.io.IOException;
 public class BarcodeScannerFragment extends Fragment {
 
     // Permission request codes need to be < 256
-    private static final int RC_HANDLE_CAMERA_PERM = 2;
+
     IQRResult iQRResult;
-    boolean automic = true;
     private SurfaceView cameraView;
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
 
+    private String previousScanResult="";
     public BarcodeScannerFragment() {
         // Required empty public constructor
     }
@@ -79,17 +81,19 @@ public class BarcodeScannerFragment extends Fragment {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
 
-                try {
                     final String[] permissions = new String[]{android.Manifest.permission.CAMERA};
                     if (ActivityCompat.checkSelfPermission(getActivity(),
                             android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(getActivity(), permissions, RC_HANDLE_CAMERA_PERM);
+                        ActivityCompat.requestPermissions(getActivity(), permissions, Permissions.RC_HANDLE_CAMERA_PERM);
                     }
-                    cameraSource.start(cameraView.getHolder());
-                } catch (IOException ie) {
-                    Log.e(AppState.TAG, "CAMERA SOURCE " + ie.getMessage());
-                }
-
+                    else
+                    {
+                        try {
+                            cameraSource.start(cameraView.getHolder());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
             }
 
             @Override
@@ -112,11 +116,12 @@ public class BarcodeScannerFragment extends Fragment {
             public void receiveDetections(Detector.Detections<Barcode> detections) {
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
                 if (barcodes.size() != 0) {
-                    if (automic) {
-                        automic = false;
+                    if (!previousScanResult.equals(barcodes.valueAt(0).displayValue)) {
                         iQRResult.scannerResult(barcodes.valueAt(0).displayValue);
                     }
+                    previousScanResult = barcodes.valueAt(0).displayValue;
                 }
+
             }
         });
 
@@ -131,7 +136,8 @@ public class BarcodeScannerFragment extends Fragment {
 
         if (!ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
                 Manifest.permission.CAMERA)) {
-            ActivityCompat.requestPermissions(getActivity(), permissions, RC_HANDLE_CAMERA_PERM);
+            ActivityCompat.requestPermissions(getActivity(), permissions, Permissions.RC_HANDLE_CAMERA_PERM);
+            //requestPermissions(permissions,Permissions.RC_HANDLE_CAMERA_PERM);
         }
     }
 
@@ -139,5 +145,33 @@ public class BarcodeScannerFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         iQRResult = (IQRResult) getActivity();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        Log.i(AppState.TAG,"onRequestPermissionsResult fragment");
+        /* TODO
+        * Call this fragments method from Actual activity onRequestPermissionsResult method, else it wont get called.
+        * */
+        switch (requestCode)
+        {
+            case Permissions.RC_HANDLE_CAMERA_PERM:
+            {
+                if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                {
+                    Log.i(AppState.TAG,"Setting camera resources");
+                    try {
+                        final String[] permissionss = new String[]{android.Manifest.permission.CAMERA};
+                        if (ActivityCompat.checkSelfPermission(getActivity(),
+                                android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(getActivity(), permissionss, Permissions.RC_HANDLE_CAMERA_PERM);
+                        }
+                        cameraSource.start(cameraView.getHolder());
+                    } catch (IOException ie) {
+                        Log.e(AppState.TAG, "CAMERA SOURCE " + ie.getMessage());
+                    }
+                }
+            }
+        }
     }
 }

@@ -14,7 +14,12 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <meta-data android:name="com.google.android.gms.vision.DEPENDENCIES" android:value="barcode"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <meta-data
+        android:name="com.google.android.gms.vision.DEPENDENCIES"
+        android:value="barcode" />
 
     <application
         android:name=".AppConfig.HTTPReqController"
@@ -22,7 +27,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/NoActionBarTheme">
 
         <!-- android:name="com.instamojo.android.InstamojoApplication" -->
 
@@ -33,11 +38,11 @@
         <activity
             android:name=".home.MainActivity"
             android:label="@string/title_activity_login">
-           <!-- <intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
         </activity>
         <activity android:name=".home.shopatshop.ShopAtShop" />
         <activity android:name=".login.LoginActivity" />
@@ -63,12 +68,16 @@
         <activity android:name=".home.shopatshop.SASOffersActivity" />
         <activity android:name=".home.shopatshop.SASCheckoutActivity" />
         <activity android:name=".barcode.TestBarcodeScannerActivity">
+
+            <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            -->
         </activity>
+        <activity android:name=".home.shopatshop.ShopScannerActivity"></activity>
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.algo.transact.home.shopatshop.mycart;
+package com.algo.transact.home.shopatshop.data_beans;
 
 /**
  * Created by Sandeep Patil on 16/4/17.

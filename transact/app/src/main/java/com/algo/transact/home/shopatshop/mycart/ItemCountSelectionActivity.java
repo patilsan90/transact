@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.R;
+import com.algo.transact.home.shopatshop.data_beans.CartItem;
 
 
 public class ItemCountSelectionActivity extends AppCompatActivity {
