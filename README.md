@@ -10,3 +10,5 @@
  git remote add origin https://github.com/patilsan90/transact.git
  git push -u origin master
 
+
+ git clone https://github.com/patilsan90/transact
