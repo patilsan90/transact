@@ -68,12 +68,4 @@ public class AppState {
         return offersList;
     }
 
-    public static boolean checkProccedStatus()
-    {
-      //  if(isMallSelected == false)
-       //     return false;
-        return true;
-    }
-
-
 }

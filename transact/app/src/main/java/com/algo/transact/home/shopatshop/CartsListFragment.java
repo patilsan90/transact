@@ -47,7 +47,7 @@ public class CartsListFragment extends Fragment implements IGenericAdapter{
         View view=inflater.inflate(R.layout.fragment_carts_list, container, false);
 
         lvCartsList=(ListView)view.findViewById(R.id.carts_list_lv_carts_list);
-        alCartsList= DataRetriver.getInstance().retriveStoredCarts();
+        alCartsList= DataRetriver.retriveStoredCarts();
 
         //Activity activity, IGenericAdapter listener, ListView listView, ArrayList list, int listViewItemId
         genericAdapter= new GenericAdapter(this.getActivity(),this, lvCartsList, alCartsList,R.layout.list_item_view_incomplete_cart);

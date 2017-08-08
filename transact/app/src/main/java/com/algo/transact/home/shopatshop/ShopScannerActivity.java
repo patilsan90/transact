@@ -1,6 +1,7 @@
 package com.algo.transact.home.shopatshop;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.Toast;
 
 import com.algo.transact.AppConfig.AppState;
@@ -25,7 +27,9 @@ import com.algo.transact.R;
 import com.algo.transact.barcode.BarcodeDetails;
 import com.algo.transact.barcode.BarcodeScannerFragment;
 import com.algo.transact.barcode.IQRResult;
+import com.algo.transact.generic_structures.JSON_Extractor;
 import com.algo.transact.gps_location.GPSTracker;
+import com.algo.transact.home.shopatshop.mycart.ItemCountSelectionActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,12 +42,13 @@ public class ShopScannerActivity extends AppCompatActivity implements IQRResult 
     GPSTracker gpsTracker;
     Location currentGPSlocation;
 
+    int shopID;
     TabLayout tabLayout;
     ViewPager viewPager;
     private BarcodeScannerFragment barcodeScannerFragment;
 
     private int requestType;
-
+private Activity activity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +58,7 @@ public class ShopScannerActivity extends AppCompatActivity implements IQRResult 
         barcodeScannerFragment = new BarcodeScannerFragment();
         fragmentTransaction.add(R.id.shop_scanner_ll_qr_scanner, barcodeScannerFragment);
         fragmentTransaction.commit();
-
+        activity=this;
         gpsTracker = new GPSTracker(getApplicationContext(), this);
 
         if (gpsTracker.canGetLocation()) {
@@ -68,7 +73,7 @@ public class ShopScannerActivity extends AppCompatActivity implements IQRResult 
                 Log.i(AppState.TAG, "Location getLongitude " + currentGPSlocation.getLongitude());
                 Log.i(AppState.TAG, "Location getLatitude " + currentGPSlocation.getLatitude());
                 Log.i(AppState.TAG, "Location getProvider " + currentGPSlocation.getProvider());
-                Toast.makeText(this, "Alt :: " + currentGPSlocation.getAltitude() + " Lon " + currentGPSlocation.getLongitude() + " Lat " + currentGPSlocation.getLatitude(), Toast.LENGTH_LONG).show();
+               // Toast.makeText(this, "Alt :: " + currentGPSlocation.getAltitude() + " Lon " + currentGPSlocation.getLongitude() + " Lat " + currentGPSlocation.getLatitude(), Toast.LENGTH_LONG).show();
             }
         } else
             gpsTracker.showSettingsAlert();
@@ -83,7 +88,7 @@ public class ShopScannerActivity extends AppCompatActivity implements IQRResult 
             tabLayout.setupWithViewPager(viewPager);
         } else if (requestType == IntentPutExtras.REQUEST_SELECT_ITEM_FROM_SHOP) {
             Log.i(AppState.TAG, "ShopScanner for " + IntentPutExtras.REQUEST_SELECT_ITEM_FROM_SHOP);
-
+            shopID = getIntent().getIntExtra(IntentPutExtras.ID,0);
         }
 
     }
@@ -100,18 +105,45 @@ public class ShopScannerActivity extends AppCompatActivity implements IQRResult 
         Log.i(AppState.TAG, "In ShopScannerActivity ScannerResult " + barcodeResult);
 
         if (requestType == IntentPutExtras.REQUEST_SELECT_SHOP)
+        {
+            Log.i(AppState.TAG, "In ShopScannerActivity ScannerResult requestType:: REQUEST_SELECT_SHOP ");
             handleShopSelctionRequest(barcodeResult);
+        }
         else if (requestType == IntentPutExtras.REQUEST_SELECT_ITEM_FROM_SHOP)
+        {
+            Log.i(AppState.TAG, "In ShopScannerActivity ScannerResult requestType:: REQUEST_SELECT_ITEM_FROM_SHOP ");
             handleShopItemSelctionRequest(barcodeResult);
+        }
     }
 
     private void handleShopItemSelctionRequest(String barcodeResult) {
 
-                Intent intent = new Intent();
-                intent.putExtra(IntentPutExtras.REQUEST_TYPE, IntentPutExtras.REQUEST_SELECT_ITEM_FROM_SHOP);
-                intent.putExtra(IntentPutExtras.QR_DATA,barcodeResult);
-                setResult(RESULT_OK, intent);
-                finish();
+        //        Intent intent = new Intent();
+
+        String itemId = JSON_Extractor.extractShopItemIdAndVerify(barcodeResult,ModuleType.SHOP, shopID);
+        Log.i(AppState.TAG, "handleShopItemSelctionRequest itemId :: "+itemId);
+
+        if(itemId != null)
+        {
+        Intent intent = new Intent(this, ItemCountSelectionActivity.class);
+        intent.putExtra(IntentPutExtras.REQUEST_TYPE, IntentPutExtras.REQUEST_SELECT_ITEM_FROM_SHOP);
+        intent.putExtra(IntentPutExtras.MODULE_ID,shopID);
+        intent.putExtra(IntentPutExtras.ID,itemId);
+        setResult(RESULT_OK, intent);
+        startActivity(intent);
+        finish();
+        }
+        else
+        {
+            Log.i(AppState.TAG, "Invalid Code, this product doesnt belong to this shop");
+            activity.runOnUiThread(new Runnable() {
+                public void run() {
+                    Toast toast = Toast.makeText(activity, "Invalid Code, this product doesnt belong to this shop", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER_VERTICAL,0,0);
+                    toast.show();
+                }
+            });
+        }
     }
 
     private void handleShopSelctionRequest(String barcodeResult) {

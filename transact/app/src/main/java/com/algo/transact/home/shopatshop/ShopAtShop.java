@@ -35,14 +35,15 @@ import java.io.File;
 
 public class ShopAtShop extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener {
+    private static int shopID;
     private static final String TAG = "CognitionMall";
 
     private static final int BARCODE_READER_REQUEST_CODE = 1;
     private static final String LOG_TAG = ShopAtShop.class.getSimpleName();
     public MyCartFragment myCartFragment;
-    public OffersFragment offersFragment;
+    //public OffersFragment offersFragment;
     private boolean isBack = false;
-    private Button showCartButton;
+   // private Button showCartButton;
     private int back_press_counter = 0;
     private GoogleApiClient mGoogleApiClient;
 
@@ -52,7 +53,7 @@ public class ShopAtShop extends AppCompatActivity implements
         setContentView(R.layout.activity_shop_at_shop);
 
         myCartFragment = new MyCartFragment();
-        offersFragment = new OffersFragment();
+      //  offersFragment = new OffersFragment();
         Log.i(AppState.TAG, " Activity onCreate ShopAtShop");
 
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -97,13 +98,15 @@ public class ShopAtShop extends AppCompatActivity implements
 
     public void scanItemAtShop(View view) {
 
-        if (AppState.checkProccedStatus() == false) {
+        /*if (AppState.checkProccedStatus() == false) {
             Toast.makeText(this, "Please select mall first !!!", Toast.LENGTH_SHORT).show();
             return;
         }
-
+*/
         Intent intent = new Intent(getApplicationContext(), ShopScannerActivity.class);
         intent.putExtra(IntentPutExtras.REQUEST_TYPE,IntentPutExtras.REQUEST_SELECT_ITEM_FROM_SHOP);
+        intent.putExtra(IntentPutExtras.ID,shopID);
+
         startActivityForResult(intent, IntentRequestResponseType.REQUEST_SELECT_ITEM_FROM_SHOP);
 
         /*
@@ -119,8 +122,8 @@ public class ShopAtShop extends AppCompatActivity implements
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.i(AppState.TAG, "onActivityResult ShopAtShop");
         if (resultCode != RESULT_OK) {
-            Log.e(AppState.TAG, "Error in OnActivityResult of ShopAtShop");
-            this.finish();
+            Log.e(AppState.TAG, "Error in OnActivityResult of ShopAtShop RequestCode: "+requestCode);
+            //this.finish();
             return;
         }
 
@@ -131,12 +134,12 @@ public class ShopAtShop extends AppCompatActivity implements
         switch (request_type)
         {
             case IntentPutExtras.REQUEST_SELECT_SHOP: {
-                int selectedShop = data.getIntExtra(IntentPutExtras.ID,0);
-                Log.i(AppState.TAG, "onActivityResult ShopAtShop SelectedShopID "+selectedShop);
+                shopID = data.getIntExtra(IntentPutExtras.ID,0);
+                Log.i(AppState.TAG, "onActivityResult ShopAtShop SelectedShopID " + shopID);
                 break;
 
             }
-            case IntentPutExtras.REQUEST_SELECT_ITEM_FROM_SHOP: {
+        /*    case IntentPutExtras.REQUEST_SELECT_ITEM_FROM_SHOP: {
                 if (data != null) {
                     // Barcode barcode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
                     //Point[] p = barcode.cornerPoints;
@@ -144,7 +147,7 @@ public class ShopAtShop extends AppCompatActivity implements
                     startActivity(intent);
                 }
                 break;
-            }
+            }*/
             default:
 //                Log.e(AppState.TAG, String.format(getString(R.string.barcode_error_format), CommonStatusCodes.getStatusCodeString(resultCode)));
                 Log.e(AppState.TAG,"Error in ShopAtShop onActivityResult");
@@ -152,6 +155,7 @@ public class ShopAtShop extends AppCompatActivity implements
         }
     }
 
+    /*
     public void showMyCart(View view) {
 
         if (AppState.checkProccedStatus() == false) {
@@ -175,7 +179,7 @@ public class ShopAtShop extends AppCompatActivity implements
 
         fragmentTransaction.commit();
     }
-
+*/
     public void locateCategories(View view) {
         Log.i("Home", "locateCategories Clicked");
         Intent myIntent = new Intent(this, LocateCategories.class);
@@ -195,8 +199,8 @@ public class ShopAtShop extends AppCompatActivity implements
 
     public void gotoHomefromSAS(View v) {
         Log.i("Home", "Select mall Clicked");
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivityForResult(intent, BARCODE_READER_REQUEST_CODE);
+       // Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+       // startActivityForResult(intent, BARCODE_READER_REQUEST_CODE);
         this.finish();
     }
 
@@ -240,6 +244,13 @@ public class ShopAtShop extends AppCompatActivity implements
         } else {
             Log.i("Home", "Logout, file does not exists, its a error case");
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Log.i(AppState.TAG,"onBackPressed of ShopAtShop");
+
     }
 
     // [START signOut]

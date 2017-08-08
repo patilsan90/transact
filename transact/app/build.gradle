@@ -31,7 +31,6 @@ dependencies {
     // Android SDK
     //compile 'com.journeyapps:zxing-android-embedded:3.4.0'
 
-
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.android.support:recyclerview-v7:25.3.1'

@@ -48,4 +48,8 @@ public class CartItem {
         item_quantity--;
     }
 
+    public void setItem_quantity(int quantity) {
+        item_quantity=quantity;
+    }
+
 }

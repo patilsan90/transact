@@ -10,7 +10,8 @@ public class IntentPutExtras {
 
     public static final String REQUEST_TYPE = "REQUEST_TYPE";
 
-    public static final String ID = "ID";
+    public static final String ID = "MODULE_ID";
+    public static final String MODULE_ID = "MODULE_ID";
     public static final String QR_DATA = "QR_DATA";
 
 

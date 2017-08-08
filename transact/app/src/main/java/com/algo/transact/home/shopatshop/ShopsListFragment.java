@@ -46,7 +46,7 @@ public class ShopsListFragment extends Fragment implements IGenericAdapter {
 
         View view = inflater.inflate(R.layout.fragment_shops_list, container, false);
         lvShopsList = (ListView) view.findViewById(R.id.shops_list_lv_shops_list);
-        alShops10Closest = DataRetriver.getInstance().retriveClosest10Shops();
+        alShops10Closest = DataRetriver.retriveClosest10Shops();
 
         //Activity activity, IGenericAdapter listener, ListView listView, ArrayList list, int listViewItemId
         genericAdapter = new GenericAdapter(this.getActivity(), this, lvShopsList, alShops10Closest, R.layout.list_item_view_10_closest_shops);

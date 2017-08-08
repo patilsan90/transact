@@ -14,28 +14,28 @@
             >
 
             <TextView
-                android:id="@+id/item_name"
+                android:id="@+id/count_selection_item_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Item Name"
                 android:textAppearance="?android:attr/textAppearanceMedium"/>
 
             <TextView
-                android:id="@+id/actual_cost"
+                android:id="@+id/count_selection_actual_cost"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Actual Cost"
                 android:textAppearance="?android:attr/textAppearanceSmall"/>
 
             <TextView
-                android:id="@+id/discounted_cost"
+                android:id="@+id/count_selection_discounted_cost"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Discounted Cost"
                 android:textAppearance="?android:attr/textAppearanceSmall"/>
 
             <TextView
-                android:id="@+id/total_cost"
+                android:id="@+id/count_selection_total_cost"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Total cost"
@@ -67,7 +67,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"/>
 
             <ImageButton
-                android:id="@+id/decrease_item_count"
+                android:id="@+id/count_selection_decrease_item_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"
@@ -76,7 +76,7 @@
                 android:src="@drawable/decrement_item" />
 
             <EditText
-                android:id="@+id/total_items"
+                android:id="@+id/count_selection_total_items"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -90,7 +90,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"/>
 
             <ImageButton
-                android:id="@+id/increase_item_count"
+                android:id="@+id/count_selection_increase_item_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"
@@ -108,6 +108,7 @@
         android:orientation="horizontal"
         android:gravity="center_vertical">
         <Button
+            android:id="@+id/count_selection_item1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
@@ -115,6 +116,7 @@
             android:layout_weight=".2"
             android:text="1"/>
         <Button
+            android:id="@+id/count_selection_item2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
@@ -123,6 +125,7 @@
 
             android:text="2"/>
         <Button
+            android:id="@+id/count_selection_item3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
@@ -131,6 +134,7 @@
 
             android:text="3"/>
         <Button
+            android:id="@+id/count_selection_item4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
@@ -139,6 +143,7 @@
 
             android:text="4"/>
         <Button
+            android:id="@+id/count_selection_item5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
@@ -155,6 +160,7 @@
         android:orientation="horizontal"
         android:gravity="center_vertical">
         <Button
+            android:id="@+id/count_selection_item6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
@@ -162,6 +168,7 @@
             android:layout_weight=".2"
             android:text="6"/>
         <Button
+            android:id="@+id/count_selection_item7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
@@ -170,6 +177,7 @@
 
             android:text="7"/>
         <Button
+            android:id="@+id/count_selection_item8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
@@ -178,6 +186,7 @@
 
             android:text="8"/>
         <Button
+            android:id="@+id/count_selection_item9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
@@ -186,6 +195,7 @@
 
             android:text="9"/>
         <Button
+            android:id="@+id/count_selection_item10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
