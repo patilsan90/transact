@@ -1,8 +1,7 @@
-package com.algo.transact.home.shopatshop.mycart;
+package com.algo.transact.home.shopatshop;
 
 
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,9 +14,12 @@ import android.widget.Toast;
 
 import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.AppConfig.IntentPutExtras;
+import com.algo.transact.AppConfig.IntentResultCode;
 import com.algo.transact.R;
 import com.algo.transact.home.shopatshop.data_beans.CartItem;
 import com.algo.transact.home.shopatshop.data_retrivals.DataRetriver;
+
+import java.io.Serializable;
 
 
 public class ItemCountSelectionActivity extends AppCompatActivity implements View.OnClickListener{
@@ -47,7 +49,7 @@ public class ItemCountSelectionActivity extends AppCompatActivity implements Vie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item_count_selection);
+        setContentView(R.layout.activity_sas_item_count_selection);
 
         tvItemName=(TextView) findViewById(R.id.count_selection_item_name);
         tvActualCost =(TextView) findViewById(R.id.count_selection_actual_cost);
@@ -90,6 +92,7 @@ public class ItemCountSelectionActivity extends AppCompatActivity implements Vie
             Log.i(AppState.TAG, "ItemCountSelectionActivity Request Type:: " + IntentPutExtras.REQUEST_SELECT_ITEM_FROM_SHOP);
            itemID = getIntent().getStringExtra(IntentPutExtras.MODULE_ID);
            shopID = getIntent().getIntExtra(IntentPutExtras.ID,0);
+
            newItem = DataRetriver.getItemDetailsFromShop(shopID, itemID);
 
            tvItemName.setText(newItem.getItem_name());
@@ -110,6 +113,13 @@ public class ItemCountSelectionActivity extends AppCompatActivity implements Vie
        // CartItem item = DataRetriver.getItemDetailsFromShop(shopID, itemID);
 
         //AppState.getInstance().addCartItem(temporary_item);
+        Log.e(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        }.getClass().getEnclosingMethod().getName()+" NewItem is null? -> "+(newItem==null));
+
+        Intent intent = new Intent();
+        intent.putExtra(IntentPutExtras.REQUEST_TYPE, IntentPutExtras.RESPONSE_NEW_ITEM_SELECTED);
+        intent.putExtra(IntentPutExtras.NEW_ITEM_DATA, newItem);
+        setResult(IntentResultCode.RESULT_OK_NEW_ITEM_ADDITION, intent);
         this.finish();
     }
 
@@ -121,7 +131,8 @@ public class ItemCountSelectionActivity extends AppCompatActivity implements Vie
                 newItem.increaseItem_quantity();
                 break;
             case R.id.count_selection_decrease_item_count:
-                newItem.decreaseItem_quantity();
+                if(newItem.getItem_quantity()>1)
+                  newItem.decreaseItem_quantity();
                 break;
             case R.id.count_selection_item1:
                 newItem.setItem_quantity(1);
@@ -153,8 +164,8 @@ public class ItemCountSelectionActivity extends AppCompatActivity implements Vie
             case R.id.count_selection_item10:
                 newItem.setItem_quantity(10);
                 break;
-
         }
+
         tvTotalItems.setText(""+newItem.getItem_quantity());
         tvTotalCost.setText("Total Cost : " + (newItem.getDiscounted_cost()*newItem.getItem_quantity()));
 

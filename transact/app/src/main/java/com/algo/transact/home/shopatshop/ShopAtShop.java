@@ -8,44 +8,40 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
 import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.AppConfig.IntentPutExtras;
 import com.algo.transact.AppConfig.IntentRequestResponseType;
+import com.algo.transact.AppConfig.IntentResultCode;
 import com.algo.transact.home.LocateCategories;
-import com.algo.transact.home.MainActivity;
-import com.algo.transact.home.shopatshop.mycart.ItemCountSelectionActivity;
+import com.algo.transact.home.shopatshop.data_beans.CartItem;
 import com.algo.transact.home.shopatshop.mycart.MyCartFragment;
-import com.algo.transact.home.offers.OffersFragment;
 import com.algo.transact.login.LoginActivity;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.algo.transact.R;
 
-import org.json.JSONObject;
-
 import java.io.File;
+
+import static com.algo.transact.AppConfig.IntentResultCode.RESULT_CANCELLED_SHOP_SELECTION;
 
 public class ShopAtShop extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener {
-    private static int shopID;
     private static final String TAG = "CognitionMall";
-
     private static final int BARCODE_READER_REQUEST_CODE = 1;
     private static final String LOG_TAG = ShopAtShop.class.getSimpleName();
     public MyCartFragment myCartFragment;
+    private int shopID;
     //public OffersFragment offersFragment;
     private boolean isBack = false;
-   // private Button showCartButton;
+    // private Button showCartButton;
     private int back_press_counter = 0;
     private GoogleApiClient mGoogleApiClient;
+    private String requestType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +49,26 @@ public class ShopAtShop extends AppCompatActivity implements
         setContentView(R.layout.activity_shop_at_shop);
 
         myCartFragment = new MyCartFragment();
-      //  offersFragment = new OffersFragment();
+        //  offersFragment = new OffersFragment();
         Log.i(AppState.TAG, " Activity onCreate ShopAtShop");
 
+        requestType = getIntent().getStringExtra(IntentPutExtras.REQUEST_TYPE);
+        shopID = getIntent().getIntExtra(IntentPutExtras.ID, 0);
+
+/*        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        }.getClass().getEnclosingMethod().getName() + " Calling sequence is wrong "+shopID);*/
+
+        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        }.getClass().getEnclosingMethod().getName() + "Selected ShopID "+shopID);
+
+
+        /*if (requestType.equals(IntentPutExtras.REQUEST_SELECT_SHOP)) {
+            shopID = getIntent().getIntExtra(IntentPutExtras.ID, 0);
+        } else {
+            Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+            }.getClass().getEnclosingMethod().getName() + " Calling sequence is wrong");
+            this.finish();
+        }*/
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 /*
@@ -86,9 +99,9 @@ public class ShopAtShop extends AppCompatActivity implements
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
-        Intent intent = new Intent(getApplicationContext(), ShopScannerActivity.class);
-        intent.putExtra(IntentPutExtras.REQUEST_TYPE,IntentPutExtras.REQUEST_SELECT_SHOP);
-        startActivityForResult(intent, IntentRequestResponseType.REQUEST_SELECT_SHOP);
+        // Intent intent = new Intent(getApplicationContext(), ShopScannerActivity.class);
+        // intent.putExtra(IntentPutExtras.REQUEST_TYPE,IntentPutExtras.REQUEST_SELECT_SHOP);
+        //  startActivityForResult(intent, IntentRequestResponseType.REQUEST_SELECT_SHOP);
     }
 
     @Override
@@ -104,8 +117,8 @@ public class ShopAtShop extends AppCompatActivity implements
         }
 */
         Intent intent = new Intent(getApplicationContext(), ShopScannerActivity.class);
-        intent.putExtra(IntentPutExtras.REQUEST_TYPE,IntentPutExtras.REQUEST_SELECT_ITEM_FROM_SHOP);
-        intent.putExtra(IntentPutExtras.ID,shopID);
+        intent.putExtra(IntentPutExtras.REQUEST_TYPE, IntentPutExtras.REQUEST_SELECT_ITEM_FROM_SHOP);
+        intent.putExtra(IntentPutExtras.ID, shopID);
 
         startActivityForResult(intent, IntentRequestResponseType.REQUEST_SELECT_ITEM_FROM_SHOP);
 
@@ -121,36 +134,45 @@ public class ShopAtShop extends AppCompatActivity implements
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.i(AppState.TAG, "onActivityResult ShopAtShop");
-        if (resultCode != RESULT_OK) {
-            Log.e(AppState.TAG, "Error in OnActivityResult of ShopAtShop RequestCode: "+requestCode);
+        if (resultCode == RESULT_CANCELLED_SHOP_SELECTION) {
+            Log.e(AppState.TAG, "Error in OnActivityResult of ShopAtShop RequestCode: " + requestCode + " Shop Selection cancelled");
+            this.finish();
+            return;
+        } /*else if (resultCode != RESULT_OK) {
+            Log.e(AppState.TAG, "Error in OnActivityResult of ShopAtShop RequestCode: " + requestCode);
             //this.finish();
             return;
-        }
+        }*/
 
         //Toast.makeText(this, "ReqCode" + requestCode + " DATA " + data.getStringExtra(IntentPutExtras.SCANNER_RESPONSE), Toast.LENGTH_LONG).show();
 
-        int request_type = data.getIntExtra(IntentPutExtras.REQUEST_TYPE,0);
+        int request_type = data.getIntExtra(IntentPutExtras.REQUEST_TYPE, 0);
 
-        switch (request_type)
-        {
-            case IntentPutExtras.REQUEST_SELECT_SHOP: {
+        switch (request_type) {
+            /* case IntentPutExtras.REQUEST_SELECT_SHOP: {
                 shopID = data.getIntExtra(IntentPutExtras.ID,0);
                 Log.i(AppState.TAG, "onActivityResult ShopAtShop SelectedShopID " + shopID);
                 break;
+            }*/
 
-            }
-        /*    case IntentPutExtras.REQUEST_SELECT_ITEM_FROM_SHOP: {
+            case IntentPutExtras.RESPONSE_NEW_ITEM_SELECTED: {
                 if (data != null) {
-                    // Barcode barcode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
-                    //Point[] p = barcode.cornerPoints;
-                    Intent intent = new Intent(this, ItemCountSelectionActivity.class);
-                    startActivity(intent);
+                    CartItem newItem = (CartItem)data.getSerializableExtra(IntentPutExtras.NEW_ITEM_DATA);
+                    Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+                    }.getClass().getEnclosingMethod().getName()+"REQUEST_SELECT_ITEM_FROM_SHOP adding new item");
+                    if(newItem!=null)
+                    {
+                        myCartFragment.addItemToCart(newItem);
+                    }
+                    else
+                        Log.e(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+                        }.getClass().getEnclosingMethod().getName()+"Item is null... oo");
                 }
                 break;
-            }*/
+            }
             default:
 //                Log.e(AppState.TAG, String.format(getString(R.string.barcode_error_format), CommonStatusCodes.getStatusCodeString(resultCode)));
-                Log.e(AppState.TAG,"Error in ShopAtShop onActivityResult");
+                Log.e(AppState.TAG, "Error in ShopAtShop onActivityResult");
                 break;
         }
     }
@@ -199,8 +221,8 @@ public class ShopAtShop extends AppCompatActivity implements
 
     public void gotoHomefromSAS(View v) {
         Log.i("Home", "Select mall Clicked");
-       // Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-       // startActivityForResult(intent, BARCODE_READER_REQUEST_CODE);
+        // Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        // startActivityForResult(intent, BARCODE_READER_REQUEST_CODE);
         this.finish();
     }
 
@@ -219,7 +241,12 @@ public class ShopAtShop extends AppCompatActivity implements
     public void checkoutCart(View v) {
         Log.i("Home", "Select mall Clicked");
         Intent intent = new Intent(getApplicationContext(), SASCheckoutActivity.class);
-        startActivityForResult(intent, BARCODE_READER_REQUEST_CODE);
+
+        intent.putExtra(IntentPutExtras.REQUEST_TYPE, IntentPutExtras.REQUEST_SELECT_SHOP);
+        intent.putExtra(IntentPutExtras.ID, shopID);
+        this.startActivityForResult(intent, IntentResultCode.RESULT_OK_SHOP_SELECTION);
+
+       // startActivityForResult(intent, BARCODE_READER_REQUEST_CODE);
     }
 
     @Override
@@ -249,7 +276,7 @@ public class ShopAtShop extends AppCompatActivity implements
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Log.i(AppState.TAG,"onBackPressed of ShopAtShop");
+        Log.i(AppState.TAG, "onBackPressed of ShopAtShop");
 
     }
 

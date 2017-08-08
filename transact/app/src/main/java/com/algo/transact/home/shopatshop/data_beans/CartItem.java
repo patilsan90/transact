@@ -1,10 +1,12 @@
 package com.algo.transact.home.shopatshop.data_beans;
 
+import java.io.Serializable;
+
 /**
  * Created by Sandeep Patil on 16/4/17.
  */
 
-public class CartItem {
+public class CartItem implements Serializable{
 
     private String item_id;
     private String item_name;

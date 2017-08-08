@@ -11,12 +11,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
+            android:layout_margin="10dp"
             >
 
             <TextView
                 android:id="@+id/count_selection_item_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
                 android:text="Item Name"
                 android:textAppearance="?android:attr/textAppearanceMedium"/>
 
@@ -24,6 +26,7 @@
                 android:id="@+id/count_selection_actual_cost"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
                 android:text="Actual Cost"
                 android:textAppearance="?android:attr/textAppearanceSmall"/>
 
@@ -31,6 +34,7 @@
                 android:id="@+id/count_selection_discounted_cost"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
                 android:text="Discounted Cost"
                 android:textAppearance="?android:attr/textAppearanceSmall"/>
 
@@ -45,6 +49,7 @@
         </LinearLayout>
 
     <LinearLayout
+        android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

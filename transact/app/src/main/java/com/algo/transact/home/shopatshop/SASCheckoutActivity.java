@@ -4,28 +4,47 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.algo.transact.AppConfig.AppState;
+import com.algo.transact.AppConfig.IntentPutExtras;
 import com.algo.transact.R;
+import com.algo.transact.generic_structures.GenericAdapter;
+import com.algo.transact.generic_structures.IGenericAdapter;
+import com.algo.transact.home.shopatshop.data_beans.Cart;
+import com.algo.transact.home.shopatshop.data_beans.CartItem;
+import com.algo.transact.home.shopatshop.data_retrivals.CartsFactory;
 import com.algo.transact.home.shopatshop.mycart.MyCartAdapter;
 import com.instamojo.android.Instamojo;
 import com.instamojo.android.models.Order;
 
-public class SASCheckoutActivity extends AppCompatActivity {
+public class SASCheckoutActivity extends AppCompatActivity implements IGenericAdapter{
 
-    ListView checkout_cart_list;
-    private MyCartAdapter cartAdapter;
+    ListView lvcheckoutCart;
+    private int shopID;
+    private String requestType;
+    private Cart cart;
+    private GenericAdapter genericAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sas_checkout);
-        checkout_cart_list = (ListView) findViewById(R.id.checkout_cart_list);
-        MyCartAdapter.list_type= AppState.LIST_TYPE.CHECKOUT_CART;
-        cartAdapter = new MyCartAdapter(this);
-        checkout_cart_list.setAdapter(cartAdapter);
+        lvcheckoutCart = (ListView) findViewById(R.id.checkout_cart_list);
+
+        requestType = getIntent().getStringExtra(IntentPutExtras.REQUEST_TYPE);
+        shopID = getIntent().getIntExtra(IntentPutExtras.ID, 0);
+
+        cart = CartsFactory.getInstance().getCart(shopID);
+        genericAdapter = new GenericAdapter(this, this, lvcheckoutCart, cart.getCartList(), R.layout.list_item_view_mycart_checkout);
+
+       // MyCartAdapter.list_type= AppState.LIST_TYPE.CHECKOUT_CART;
+        //cartAdapter = new MyCartAdapter(this);
+        //lvcheckoutCart.setAdapter(cartAdapter);
+
         Instamojo.initialize(this);
     }
 
@@ -83,5 +102,37 @@ public class SASCheckoutActivity extends AppCompatActivity {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public View addViewItemToList(View view, Object listItem, int index) {
+        CartItem cartItem =(CartItem) listItem;
+        TextView item_view = (TextView) view.findViewById(R.id.item_name);
+        item_view.setText(" " + cartItem.getItem_name());
+
+        item_view = (TextView) view.findViewById(R.id.actual_cost);
+        item_view.setText("Actual Cost: " + cartItem.getActual_cost());
+
+        item_view = (TextView) view.findViewById(R.id.discounted_cost);
+        item_view.setText("Disc. Cost: " + cartItem.getDiscounted_cost());
+
+        item_view = (TextView) view.findViewById(R.id.total_cost);
+        double total_cost = cartItem.getDiscounted_cost() * cartItem.getItem_quantity();
+
+        item_view.setText("Total Cost: " + total_cost);
+
+        TextView total_items_view = (TextView) view.findViewById(R.id.total_items);
+
+
+        total_items_view.setText("Total Items: " + cartItem.getItem_quantity());
+    /*    Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        }.getClass().getEnclosingMethod().getName());
+    */
+        return view;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
     }
 }

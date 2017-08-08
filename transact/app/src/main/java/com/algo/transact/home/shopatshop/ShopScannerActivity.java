@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.AppConfig.IntentPutExtras;
+import com.algo.transact.AppConfig.IntentRequestResponseType;
+import com.algo.transact.AppConfig.IntentResultCode;
 import com.algo.transact.AppConfig.ModuleType;
 import com.algo.transact.AppConfig.Permissions;
 import com.algo.transact.R;
@@ -29,13 +31,15 @@ import com.algo.transact.barcode.BarcodeScannerFragment;
 import com.algo.transact.barcode.IQRResult;
 import com.algo.transact.generic_structures.JSON_Extractor;
 import com.algo.transact.gps_location.GPSTracker;
-import com.algo.transact.home.shopatshop.mycart.ItemCountSelectionActivity;
+import com.algo.transact.home.shopatshop.data_beans.CartItem;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.algo.transact.AppConfig.IntentResultCode.RESULT_CANCELLED_SHOP_SELECTION;
 
 public class ShopScannerActivity extends AppCompatActivity implements IQRResult {
 
@@ -113,6 +117,30 @@ private Activity activity;
         {
             Log.i(AppState.TAG, "In ShopScannerActivity ScannerResult requestType:: REQUEST_SELECT_ITEM_FROM_SHOP ");
             handleShopItemSelctionRequest(barcodeResult);
+
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        int request_type = data.getIntExtra(IntentPutExtras.REQUEST_TYPE, 0);
+        CartItem newItem = (CartItem) data.getSerializableExtra(IntentPutExtras.NEW_ITEM_DATA);
+        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        }.getClass().getEnclosingMethod().getName());
+        switch (request_type)
+        {
+            case IntentPutExtras.RESPONSE_NEW_ITEM_SELECTED:
+            {
+                Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+                }.getClass().getEnclosingMethod().getName()+"  RESPONSE_NEW_ITEM_SELECTED");
+                Intent intent = new Intent();
+                intent.putExtra(IntentPutExtras.REQUEST_TYPE, IntentPutExtras.RESPONSE_NEW_ITEM_SELECTED);
+                intent.putExtra(IntentPutExtras.NEW_ITEM_DATA, newItem);
+                setResult(IntentResultCode.RESULT_OK_NEW_ITEM_ADDITION, intent);
+                finish();
+                break;
+            }
         }
     }
 
@@ -125,13 +153,13 @@ private Activity activity;
 
         if(itemId != null)
         {
-        Intent intent = new Intent(this, ItemCountSelectionActivity.class);
+        Intent intent = new Intent(getApplicationContext(), ItemCountSelectionActivity.class);
         intent.putExtra(IntentPutExtras.REQUEST_TYPE, IntentPutExtras.REQUEST_SELECT_ITEM_FROM_SHOP);
         intent.putExtra(IntentPutExtras.MODULE_ID,shopID);
         intent.putExtra(IntentPutExtras.ID,itemId);
-        setResult(RESULT_OK, intent);
-        startActivity(intent);
-        finish();
+        //setResult(RESULT_OK, intent);
+        startActivityForResult(intent, IntentRequestResponseType.REQUEST_SELECT_ITEM_FROM_SHOP);
+        //finish();
         }
         else
         {
@@ -146,6 +174,18 @@ private Activity activity;
         }
     }
 
+    @Override
+    public void onBackPressed() {
+
+        Log.i(AppState.TAG, "Class: "+ this.getClass().getSimpleName()+ " Method: "+new Object(){}.getClass().getEnclosingMethod().getName());
+        if (requestType == IntentPutExtras.REQUEST_SELECT_SHOP)
+        {
+            Intent intent = new Intent();
+            setResult(RESULT_CANCELLED_SHOP_SELECTION, intent);
+        }
+        finish();
+    }
+
     private void handleShopSelctionRequest(String barcodeResult) {
         JSONObject jObj = null;
         try {
@@ -156,10 +196,12 @@ private Activity activity;
             Log.i(AppState.TAG, "In ShopScannerActivity ScannerResult ID:: " + shopID);
 
             if (ModuleType.SHOP.equals(type)) {
-                Intent intent = new Intent();
+                Intent intent = new Intent(this, ShopAtShop.class);
                 intent.putExtra(IntentPutExtras.REQUEST_TYPE, IntentPutExtras.REQUEST_SELECT_SHOP);
                 intent.putExtra(IntentPutExtras.ID, shopID);
-                setResult(RESULT_OK, intent);
+                this.startActivityForResult(intent, IntentResultCode.RESULT_OK_SHOP_SELECTION);
+                //this.startActivity(intent);
+                //setResult(RESULT_OK, intent);
                 finish();
             }
         } catch (JSONException e) {

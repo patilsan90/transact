@@ -58,7 +58,7 @@ public class GenericAdapter extends BaseAdapter {
                    view = inflater.inflate(listViewItemId, parent, false);
         }
 
-        view= listener.addViewItemToList(view,list.get(index));
+        view= listener.addViewItemToList(view,list.get(index), index);
 
       //  TextView shop_display_name = (TextView) view.findViewById(R.id.closest_shop_shop_display_name);
     //    TextView shop_name = (TextView) view.findViewById(R.id.closest_shop_shop_display_name);

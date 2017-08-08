@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.AppConfig.IntentPutExtras;
+import com.algo.transact.AppConfig.IntentResultCode;
 import com.algo.transact.R;
 import com.algo.transact.generic_structures.GenericAdapter;
 import com.algo.transact.generic_structures.IGenericAdapter;
@@ -57,7 +58,7 @@ public class CartsListFragment extends Fragment implements IGenericAdapter{
     }
 
     @Override
-    public View addViewItemToList(View view, Object listItem) {
+    public View addViewItemToList(View view, Object listItem, int index) {
         TextView shop_display_name = (TextView) view.findViewById(R.id.incomplete_cart_display_name);
         TextView shop_name = (TextView) view.findViewById(R.id.incomplete_cart_shop_name);
 
@@ -82,10 +83,11 @@ public class CartsListFragment extends Fragment implements IGenericAdapter{
         else
             Log.i(AppState.TAG, "onItemClick IncompleteCart  ShopID::" + shopID + " has cart stored");
 
-        Intent intent = new Intent();
+        Intent intent = new Intent(getActivity(), ShopAtShop.class);
         intent.putExtra(IntentPutExtras.REQUEST_TYPE, IntentPutExtras.REQUEST_SELECT_SHOP);
         intent.putExtra(IntentPutExtras.ID, shopID);
-        getActivity().setResult(Activity.RESULT_OK, intent);
+        getActivity().startActivityForResult(intent, IntentResultCode.RESULT_OK_SHOP_SELECTION);
+        //getActivity().setResult(Activity.RESULT_OK, intent);
         getActivity().finish();
 
     }

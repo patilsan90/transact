@@ -9,6 +9,6 @@ import android.widget.AdapterView;
 
 public interface IGenericAdapter extends AdapterView.OnItemClickListener{
 
-    public View addViewItemToList(View view, Object listItem);
+    public View addViewItemToList(View view, Object listItem, int index);
 
 }

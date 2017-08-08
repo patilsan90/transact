@@ -50,7 +50,7 @@
         <activity
             android:name=".home.LocateCategories"
             android:label="Locate Categories" />
-        <activity android:name=".home.shopatshop.mycart.ItemCountSelectionActivity" />
+        <activity android:name=".home.shopatshop.ItemCountSelectionActivity" />
         <activity android:name=".login.EnterMobileNoActivity" />
         <activity
             android:name="com.facebook.CustomTabActivity"
@@ -78,6 +78,14 @@
             -->
         </activity>
         <activity android:name=".home.shopatshop.ShopScannerActivity"></activity>
+
+        <receiver android:name=".gps_location.GpsLocationReceiver">
+            <intent-filter>
+                <action android:name="android.location.PROVIDERS_CHANGED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>
