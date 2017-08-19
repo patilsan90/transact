@@ -1,8 +1,10 @@
 package com.algo.transact.home.shopatshop.mycart;
 
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,15 +16,15 @@ import android.widget.TextView;
 
 import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.AppConfig.IntentPutExtras;
+import com.algo.transact.AppConfig.IntentResultCode;
 import com.algo.transact.generic_structures.GenericAdapter;
 import com.algo.transact.generic_structures.IGenericAdapter;
+import com.algo.transact.home.shopatshop.SASCheckoutActivity;
 import com.algo.transact.home.shopatshop.data_beans.Cart;
-import com.algo.transact.home.shopatshop.data_beans.CartItem;
+import com.algo.transact.home.shopatshop.data_beans.Item;
 import com.algo.transact.home.shopatshop.data_retrivals.CartsFactory;
 import com.algo.transact.support_packages.SwipeDetector;
 import com.algo.transact.R;
-
-import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,6 +41,8 @@ public class MyCartFragment extends Fragment implements AdapterView.OnItemClickL
 
     ListView lvCartsList;
     Cart cart;
+    FloatingActionButton fabCheckout;
+    Fragment fragment;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -46,14 +50,28 @@ public class MyCartFragment extends Fragment implements AdapterView.OnItemClickL
 
         View view = inflater.inflate(R.layout.fragment_my_cart, container, false);
         lvCartsList = (ListView) view.findViewById(R.id.my_cart_list);
-
+        fragment = this;
+        fabCheckout = (FloatingActionButton) view.findViewById(R.id.my_cart_fab_checkout);
+        fabCheckout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Click action
+                Log.i("Home", "checkoutCart Clicked");
+                Intent intent = new Intent(fragment.getActivity(), SASCheckoutActivity.class);
+                intent.putExtra(IntentPutExtras.REQUEST_TYPE, IntentPutExtras.REQUEST_SELECT_SHOP);
+                intent.putExtra(IntentPutExtras.ID, shopID);
+                //this.startActivityForResult(intent, IntentResultCode.RESULT_OK_SHOP_SELECTION);
+                //startActivity(intent);
+                startActivityForResult(intent, IntentResultCode.RESULT_OK_SHOP_SELECTION);
+            }
+        });
 
         shopID = getActivity().getIntent().getIntExtra(IntentPutExtras.ID, 0);
 
         Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName() + "Selected ShopID "+shopID);
 
-
+  //      lvCartsList.addFooterView(view.findViewById(R.id.my_cart_checkout));
         // swipeDetector = new SwipeDetector();
        // listView.setOnTouchListener(swipeDetector);
        // listView.setOnItemClickListener(this);
@@ -88,7 +106,7 @@ public class MyCartFragment extends Fragment implements AdapterView.OnItemClickL
 
     @Override
     public View addViewItemToList(final View view, Object listItem, final int index) {
-        CartItem cartItem =(CartItem) listItem;
+        Item cartItem =(Item) listItem;
         TextView item_view = (TextView) view.findViewById(R.id.item_name);
         item_view.setText(" " + cartItem.getItem_name());
 
@@ -118,12 +136,12 @@ public class MyCartFragment extends Fragment implements AdapterView.OnItemClickL
                 cart.getCartList().remove(index);
                 genericAdapter.notifyDataSetChanged();
                 double cart_total = 0;
-                CartItem cartItem;
+                Item item;
               //  int noOfItems = AppState.getInstance().getCartItemList().size();
                 int noOfItems = cart.getCartList().size();
                 for (int i = 0; i < noOfItems; i++) {
-                    cartItem = cart.getCartList().get(i);
-                    cart_total = cart_total + cartItem.getDiscounted_cost() * cartItem.getItem_quantity();
+                    item = cart.getCartList().get(i);
+                    cart_total = cart_total + item.getDiscounted_cost() * item.getItem_quantity();
                 }
              //   TextView cart_total_view = (TextView) .findViewById(R.id.cart_total);
               //  cart_total_view.setText("Cart Total: " + cart_total);
@@ -135,14 +153,14 @@ public class MyCartFragment extends Fragment implements AdapterView.OnItemClickL
         decreaseCartItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //CartItem item = AppState.getInstance().getCartItemList().get(index);
-                CartItem item = cart.getCartList().get(index);
+                //Item item = AppState.getInstance().getCartItemList().get(index);
+                Item item = cart.getCartList().get(index);
                 if (item.getItem_quantity() > 1) {
                     item.decreaseItem_quantity();
                     genericAdapter.notifyDataSetChanged();
                     int noOfItems = cart.getCartList().size();
                     double cart_total = 0;
-                    CartItem cartItem;
+                    Item cartItem;
                     for (int i = 0; i < noOfItems; i++) {
                         cartItem = cart.getCartList().get(i);
                         cart_total = cart_total + cartItem.getDiscounted_cost() * cartItem.getItem_quantity();
@@ -159,12 +177,12 @@ public class MyCartFragment extends Fragment implements AdapterView.OnItemClickL
         increaseCartItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CartItem item = cart.getCartList().get(index);
+                Item item = cart.getCartList().get(index);
                 item.increaseItem_quantity();
                 genericAdapter.notifyDataSetChanged();
                 int noOfItems = cart.getCartList().size();
                 double cart_total = 0;
-                CartItem cartItem;
+                Item cartItem;
                 for (int i = 0; i < noOfItems; i++) {
                     cartItem = cart.getCartList().get(i);
                     cart_total = cart_total + cartItem.getDiscounted_cost() * cartItem.getItem_quantity();
@@ -182,7 +200,7 @@ public class MyCartFragment extends Fragment implements AdapterView.OnItemClickL
         return view;
     }
 
-    public void addItemToCart(CartItem newItem) {
+    public void addItemToCart(Item newItem) {
         cart.getCartList().add(newItem);
         genericAdapter.notifyDataSetChanged();
         Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {

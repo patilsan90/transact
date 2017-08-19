@@ -5,7 +5,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="drawer_open">open_drawer</string>
     <string name="drawer_close">close_drawer</string>
-    <string name="title_activity_login">Cognition</string>
+    <string name="title_activity_main">Transact</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email_or_num">ENTER EMAIL ID / MOBILE NUMBER</string>
@@ -44,4 +44,11 @@
     <!--if your App ID is 1234567, you should use fb1234567 -->
     <string name="fb_login_protocol_scheme">fb449526885383689</string>
 
+    <string-array name="plannets">
+        <item> planet 1</item>
+        <item> planet 2</item>
+        <item> planet 3</item>
+        <item> planet 4</item>
+        <item> planet 5</item>
+    </string-array>
 </resources>

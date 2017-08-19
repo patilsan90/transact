@@ -8,17 +8,16 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 
 import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.AppConfig.SQLiteHandler;
 import com.algo.transact.AppConfig.SessionManager;
 import com.algo.transact.R;
 import com.algo.transact.login.LoginActivity;
-import com.algo.transact.login.LoginFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_home);
       //  LinearLayout ll_sat = (LinearLayout) findViewById(R.id.shop_at_shop);
        // ll_sat.setOnClickListener();
         FragmentManager fragmentManager = getFragmentManager();
@@ -96,6 +95,13 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void openDrawer(View view)
+    {
+        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        }.getClass().getEnclosingMethod().getName());
+
+        mDrawerLayout.openDrawer(Gravity.LEFT);
+    }
  public void logout(View v)
     {
         session.logoutUser(db, session);

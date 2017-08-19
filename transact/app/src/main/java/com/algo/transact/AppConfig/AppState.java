@@ -1,7 +1,7 @@
 package com.algo.transact.AppConfig;
 
 import com.algo.transact.home.MainActivity;
-import com.algo.transact.home.shopatshop.data_beans.CartItem;
+import com.algo.transact.home.shopatshop.data_beans.Item;
 import com.algo.transact.home.offers.OfferItem;
 import com.algo.transact.login.LoginActivity;
 
@@ -23,7 +23,7 @@ public class AppState {
     public MainActivity mainActivity;
 
 
-    private ArrayList<CartItem> cartItemsList;
+    private ArrayList<Item> itemsList;
     private ArrayList<OfferItem> offersList;
 
     //public static boolean isMallSelected = false;
@@ -37,7 +37,7 @@ public class AppState {
 
     private AppState()
     {
-        cartItemsList = new ArrayList<CartItem>();
+        itemsList = new ArrayList<Item>();
         offersList = new ArrayList<OfferItem>();
     }
 
@@ -49,14 +49,14 @@ public class AppState {
         return state;
     }
 
-    public void addCartItem(CartItem cartItem)
+    public void addCartItem(Item item)
     {
-        cartItemsList.add(cartItem);
+        itemsList.add(item);
 
     }
-    public ArrayList<CartItem> getCartItemList()
+    public ArrayList<Item> getCartItemList()
     {
-        return cartItemsList;
+        return itemsList;
     }
 
     public void addOfferItem(OfferItem cartItem)

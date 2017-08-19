@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Cart {
     public int shopID;
     public String cartCreationDateTime;
-    public ArrayList<CartItem> cartList;
+    public ArrayList<Item> cartList;
     public String cartTestShopDisplayName; // This is testing variable, May be we need to delete it
     public String cartTestShopName; // This is testing variable, May be we need to delete it
 
@@ -17,7 +17,7 @@ public class Cart {
         return cartCreationDateTime;
     }
 
-    public ArrayList<CartItem> getCartList() {
+    public ArrayList<Item> getCartList() {
         return cartList;
     }
 

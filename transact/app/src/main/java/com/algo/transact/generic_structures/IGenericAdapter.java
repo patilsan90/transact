@@ -7,7 +7,7 @@ import android.widget.AdapterView;
  * Created by sandeep on 5/8/17.
  */
 
-public interface IGenericAdapter extends AdapterView.OnItemClickListener{
+public interface IGenericAdapter extends AdapterView.OnItemClickListener {
 
     public View addViewItemToList(View view, Object listItem, int index);
 

@@ -37,7 +37,7 @@
 
         <activity
             android:name=".home.MainActivity"
-            android:label="@string/title_activity_login">
+            android:label="@string/title_activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -64,7 +64,6 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".home.shopatshop.SASCatalogActivity" />
         <activity android:name=".home.shopatshop.SASOffersActivity" />
         <activity android:name=".home.shopatshop.SASCheckoutActivity" />
         <activity android:name=".barcode.TestBarcodeScannerActivity">
@@ -87,5 +86,6 @@
         </receiver>
 
     </application>
+
 
 </manifest>

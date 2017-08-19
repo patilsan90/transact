@@ -16,17 +16,15 @@ import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.AppConfig.IntentPutExtras;
 import com.algo.transact.AppConfig.IntentResultCode;
 import com.algo.transact.R;
-import com.algo.transact.home.shopatshop.data_beans.CartItem;
+import com.algo.transact.home.shopatshop.data_beans.Item;
 import com.algo.transact.home.shopatshop.data_retrivals.DataRetriver;
-
-import java.io.Serializable;
 
 
 public class ItemCountSelectionActivity extends AppCompatActivity implements View.OnClickListener{
 
     String itemID;
     int shopID;
-    CartItem newItem;
+    Item newItem;
     private TextView tvItemName;
     private TextView tvActualCost;
     private TextView tvDiscountedCost;
@@ -110,7 +108,7 @@ public class ItemCountSelectionActivity extends AppCompatActivity implements Vie
    public void itemSelected(View view)
     {
     //add item to cart here
-       // CartItem item = DataRetriver.getItemDetailsFromShop(shopID, itemID);
+       // Item item = DataRetriver.getItemDetailsFromShop(shopID, itemID);
 
         //AppState.getInstance().addCartItem(temporary_item);
         Log.e(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {

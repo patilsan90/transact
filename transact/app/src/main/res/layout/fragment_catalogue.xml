@@ -1,0 +1,22 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.algo.transact.home.shopatshop.CatalogueFragment"
+    android:orientation="vertical"
+    >
+
+
+    <include layout="@layout/content_main_catalogue" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/catalogue_fab_collapse_catalogue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="10dp"
+        android:src="@drawable/ic_collapse_catalogue"
+        />
+
+
+</android.support.design.widget.CoordinatorLayout>

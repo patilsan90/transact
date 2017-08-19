@@ -1,7 +1,7 @@
 package com.algo.transact.home.shopatshop.data_retrivals;
 
 import com.algo.transact.home.shopatshop.data_beans.Cart;
-import com.algo.transact.home.shopatshop.data_beans.CartItem;
+import com.algo.transact.home.shopatshop.data_beans.Item;
 import com.algo.transact.home.shopatshop.data_beans.ShopDetails;
 
 import java.util.ArrayList;
@@ -23,7 +23,6 @@ public class DataRetriver {
         shopsList.add(new ShopDetails("BigBaz Silk", 5));
         shopsList.add(new ShopDetails("BigBaz BTM", 6));
 
-
         return shopsList;
     }
 
@@ -35,9 +34,8 @@ public class DataRetriver {
         return CartsFactory.getInstance().getCart(shopID);
     }
 
-
-    public static CartItem getItemDetailsFromShop(int shopID, String itemID) {
-        CartItem temporary_item = new CartItem(itemID, "Example "+(++tempCount), 30, 25, 1);
+    public static Item getItemDetailsFromShop(int shopID, String itemID) {
+        Item temporary_item = new Item(1,20, itemID, "Example "+(++tempCount), 250, 230, Item.ITEM_QUANTITY_TYPE.GRAM,500, 0);
         return temporary_item;
     }
 }

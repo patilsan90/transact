@@ -1,7 +1,7 @@
 package com.algo.transact.home.shopatshop.data_retrivals;
 
 import com.algo.transact.home.shopatshop.data_beans.Cart;
-import com.algo.transact.home.shopatshop.data_beans.CartItem;
+import com.algo.transact.home.shopatshop.data_beans.Item;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -62,10 +62,10 @@ public class CartsFactory {
 
     private Cart createTestCart(String displayName, String shopName, int shopID)
     {
-        ArrayList<CartItem> cartItemList = new ArrayList<CartItem>();
+        ArrayList<Item> itemList = new ArrayList<Item>();
         //  String item_id, String item_name, double actual_cost, double discounted_cost, int item_quantity
-        cartItemList.add(new CartItem("21", "Badam"+shopID, 250, 230, 1));
-        cartItemList.add(new CartItem("21", "Pista"+shopID, 200, 200, 1));
+        itemList.add(new Item(1,20, "21", "Badam"+shopID, 250, 230, Item.ITEM_QUANTITY_TYPE.GRAM,500, 0));
+        itemList.add(new Item(1,20, "23", "Refined"+shopID, 250, 230, Item.ITEM_QUANTITY_TYPE.MILLILITERS,500, 0));
 
         Cart cart =new Cart();
         cart.shopID=shopID;
@@ -73,7 +73,7 @@ public class CartsFactory {
         cart.cartTestShopName = shopName;
         SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd_HHmmss");
         cart.cartCreationDateTime = sdf.toString();
-        cart.cartList=cartItemList;
+        cart.cartList= itemList;
         return  cart;
     }
 

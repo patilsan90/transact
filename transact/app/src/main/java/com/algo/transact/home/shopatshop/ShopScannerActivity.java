@@ -31,7 +31,7 @@ import com.algo.transact.barcode.BarcodeScannerFragment;
 import com.algo.transact.barcode.IQRResult;
 import com.algo.transact.generic_structures.JSON_Extractor;
 import com.algo.transact.gps_location.GPSTracker;
-import com.algo.transact.home.shopatshop.data_beans.CartItem;
+import com.algo.transact.home.shopatshop.data_beans.Item;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -94,7 +94,6 @@ private Activity activity;
             Log.i(AppState.TAG, "ShopScanner for " + IntentPutExtras.REQUEST_SELECT_ITEM_FROM_SHOP);
             shopID = getIntent().getIntExtra(IntentPutExtras.ID,0);
         }
-
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -125,7 +124,7 @@ private Activity activity;
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         int request_type = data.getIntExtra(IntentPutExtras.REQUEST_TYPE, 0);
-        CartItem newItem = (CartItem) data.getSerializableExtra(IntentPutExtras.NEW_ITEM_DATA);
+        Item newItem = (Item) data.getSerializableExtra(IntentPutExtras.NEW_ITEM_DATA);
         Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName());
         switch (request_type)

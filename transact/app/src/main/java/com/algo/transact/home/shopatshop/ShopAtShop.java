@@ -1,11 +1,16 @@
 package com.algo.transact.home.shopatshop;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -14,7 +19,7 @@ import com.algo.transact.AppConfig.IntentPutExtras;
 import com.algo.transact.AppConfig.IntentRequestResponseType;
 import com.algo.transact.AppConfig.IntentResultCode;
 import com.algo.transact.home.LocateCategories;
-import com.algo.transact.home.shopatshop.data_beans.CartItem;
+import com.algo.transact.home.shopatshop.data_beans.Item;
 import com.algo.transact.home.shopatshop.mycart.MyCartFragment;
 import com.algo.transact.login.LoginActivity;
 import com.facebook.login.LoginManager;
@@ -26,6 +31,8 @@ import com.google.android.gms.common.api.Status;
 import com.algo.transact.R;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.algo.transact.AppConfig.IntentResultCode.RESULT_CANCELLED_SHOP_SELECTION;
 
@@ -42,12 +49,18 @@ public class ShopAtShop extends AppCompatActivity implements
     private int back_press_counter = 0;
     private GoogleApiClient mGoogleApiClient;
     private String requestType;
+    private DrawerLayout mDrawerLayout;
+    private ViewPager viewPager;
+    private TabLayout tabLayout;
+    private NestedScrollView nscScroll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_at_shop);
-
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.shop_at_shop_drawerPane);
+      //  nscScroll = (NestedScrollView) findViewById(R.id.shop_at_shop_nsv_scroll);
+      //  nscScroll.smoothScrollTo(0,0);
         myCartFragment = new MyCartFragment();
         //  offersFragment = new OffersFragment();
         Log.i(AppState.TAG, " Activity onCreate ShopAtShop");
@@ -88,11 +101,23 @@ public class ShopAtShop extends AppCompatActivity implements
 
         //---------------------------
 
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.shop_at_shop_page_frame, myCartFragment);
-        fragmentTransaction.commit();
+   //     FragmentManager fragmentManager = getFragmentManager();
+   //     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+   //     fragmentTransaction.add(R.id.shop_at_shop_page_frame, myCartFragment);
+   //     fragmentTransaction.commit();
 
+        viewPager = (ViewPager) findViewById(R.id.shop_at_shop_viewpager);
+        setupViewPager(viewPager);
+        tabLayout = (TabLayout) findViewById(R.id.shop_at_shop_tabs);
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new CatalogueFragment(), "Catalogue");
+        adapter.addFragment(myCartFragment, "Cart");
+       // nscScroll.smoothScrollTo(0,0);
+        viewPager.setAdapter(adapter);
     }
 
     @Override
@@ -146,7 +171,10 @@ public class ShopAtShop extends AppCompatActivity implements
 
         //Toast.makeText(this, "ReqCode" + requestCode + " DATA " + data.getStringExtra(IntentPutExtras.SCANNER_RESPONSE), Toast.LENGTH_LONG).show();
 
-        int request_type = data.getIntExtra(IntentPutExtras.REQUEST_TYPE, 0);
+        int request_type = -1;
+
+        if (data != null)
+            request_type = data.getIntExtra(IntentPutExtras.REQUEST_TYPE, 0);
 
         switch (request_type) {
             /* case IntentPutExtras.REQUEST_SELECT_SHOP: {
@@ -157,7 +185,7 @@ public class ShopAtShop extends AppCompatActivity implements
 
             case IntentPutExtras.RESPONSE_NEW_ITEM_SELECTED: {
                 if (data != null) {
-                    CartItem newItem = (CartItem)data.getSerializableExtra(IntentPutExtras.NEW_ITEM_DATA);
+                    Item newItem = (Item)data.getSerializableExtra(IntentPutExtras.NEW_ITEM_DATA);
                     Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
                     }.getClass().getEnclosingMethod().getName()+"REQUEST_SELECT_ITEM_FROM_SHOP adding new item");
                     if(newItem!=null)
@@ -175,6 +203,14 @@ public class ShopAtShop extends AppCompatActivity implements
                 Log.e(AppState.TAG, "Error in ShopAtShop onActivityResult");
                 break;
         }
+    }
+
+    public void openDrawer(View v)
+    {
+        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        }.getClass().getEnclosingMethod().getName());
+
+        mDrawerLayout.openDrawer(Gravity.LEFT);
     }
 
     /*
@@ -226,12 +262,6 @@ public class ShopAtShop extends AppCompatActivity implements
         this.finish();
     }
 
-    public void browseCatalog(View v) {
-        Log.i("Home", "Select mall Clicked");
-        Intent intent = new Intent(getApplicationContext(), SASCatalogActivity.class);
-        startActivityForResult(intent, BARCODE_READER_REQUEST_CODE);
-    }
-
     public void browseOffers(View v) {
         Log.i("Home", "Select mall Clicked");
         Intent intent = new Intent(getApplicationContext(), SASOffersActivity.class);
@@ -239,7 +269,7 @@ public class ShopAtShop extends AppCompatActivity implements
     }
 
     public void checkoutCart(View v) {
-        Log.i("Home", "Select mall Clicked");
+        Log.i("Home", "checkoutCart Clicked");
         Intent intent = new Intent(getApplicationContext(), SASCheckoutActivity.class);
 
         intent.putExtra(IntentPutExtras.REQUEST_TYPE, IntentPutExtras.REQUEST_SELECT_SHOP);
@@ -270,6 +300,35 @@ public class ShopAtShop extends AppCompatActivity implements
             this.finish();
         } else {
             Log.i("Home", "Logout, file does not exists, its a error case");
+        }
+    }
+
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(android.support.v4.app.FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
         }
     }
 

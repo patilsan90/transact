@@ -66,7 +66,6 @@ public class CartsListFragment extends Fragment implements IGenericAdapter{
         shop_display_name.setText(" " + details.getCartShopDisplayName());
         shop_name.setText(" " + details.getCartShopName());
         //Log.i(AppState.TAG,"addViewItemToList incompleteCart "+details.getCartShopDisplayName() +"  "+details.getCartShopName());
-
         return view;
     }
 
