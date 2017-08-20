@@ -1,7 +1,6 @@
 package com.algo.transact.home.shopatshop;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -50,7 +49,7 @@ public class ShopsListFragment extends Fragment implements IGenericAdapter {
         alShops10Closest = DataRetriver.retriveClosest10Shops();
 
         //Activity activity, IGenericAdapter listener, ListView listView, ArrayList list, int listViewItemId
-        genericAdapter = new GenericAdapter(this.getActivity(), this, lvShopsList, alShops10Closest, R.layout.list_item_view_10_closest_shops);
+        genericAdapter = new GenericAdapter(this.getActivity(), this, lvShopsList, alShops10Closest, R.layout.list_item_view_nearby_outlets);
 
         return view;
     }

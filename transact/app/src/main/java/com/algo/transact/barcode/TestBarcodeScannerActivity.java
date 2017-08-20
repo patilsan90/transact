@@ -28,7 +28,7 @@ public class TestBarcodeScannerActivity extends AppCompatActivity implements IQR
     }
 
     @Override
-    public void scannerResult(String barcodeResult) {
+    public void codeScannerResult(String barcodeResult) {
         Log.i(AppState.TAG, "in ScannerResult " + barcodeResult);
         Intent intent = new Intent();
        // intent.putExtra(IntentRequestResponseType.SCANNER_RESPONSE, barcodeResult);

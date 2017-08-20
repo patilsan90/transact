@@ -21,7 +21,15 @@ public class DataRetriver {
         shopsList.add(new ShopDetails("BigBaz Agr", 3));
         shopsList.add(new ShopDetails("BigBaz Bel", 4));
         shopsList.add(new ShopDetails("BigBaz Silk", 5));
-        shopsList.add(new ShopDetails("BigBaz BTM", 6));
+        shopsList.add(new ShopDetails("BigBaz BTM", 7));
+        shopsList.add(new ShopDetails("BigBaz BTM1", 8));
+        shopsList.add(new ShopDetails("BigBaz BTM2", 9));
+        shopsList.add(new ShopDetails("BigBaz BTM3", 10));
+        shopsList.add(new ShopDetails("BigBaz BTM4", 11));
+        shopsList.add(new ShopDetails("BigBaz BTM5", 12));
+        shopsList.add(new ShopDetails("BigBaz BTM6", 13));
+        shopsList.add(new ShopDetails("BigBaz BTM7", 14));
+
 
         return shopsList;
     }

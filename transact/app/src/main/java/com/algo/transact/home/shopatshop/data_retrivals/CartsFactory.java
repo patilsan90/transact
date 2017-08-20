@@ -55,8 +55,7 @@ public class CartsFactory {
 
         cartsList.add(createTestCart("Big B1", "Big Bazar", 1));
         cartsList.add(createTestCart("Big B2", "Big Bazar", 2));
-        cartsList.add(createTestCart("Big B3", "Big Bazar", 3));
-        cartsList.add(createTestCart("Big B4", "Big Bazar", 4));
+
         return cartsList;
     }
 

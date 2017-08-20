@@ -29,6 +29,7 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
+import java.security.Policy;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,6 +55,15 @@ public class BarcodeScannerFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_barcode_scanner, container, false);
         cameraView = (SurfaceView) view.findViewById(R.id.barcode_scanner_sv_camera_view);
 
+
+/*
+        Camera cam = Camera.open();
+        Policy.Parameters p = cam.getParameters();
+        p.setFlashMode(Parameters.FLASH_MODE_TORCH);
+        cam.setParameters(p);
+        cam.startPreview();
+*/
+
         barcodeDetector =
                 new BarcodeDetector.Builder(this.getActivity())
                         .setBarcodeFormats(Barcode.ALL_FORMATS)
@@ -63,8 +73,10 @@ public class BarcodeScannerFragment extends Fragment {
         Point size = new Point();
         display.getSize(size);
         int width = size.x;
-        view.findViewById(R.id.barcode_scanner_sv_camera_view).getLayoutParams().height = width - 10;
-        view.findViewById(R.id.barcode_scanner_sv_camera_view).getLayoutParams().width = width - 10;
+        int height = size.y;
+
+        view.findViewById(R.id.barcode_scanner_sv_camera_view).getLayoutParams().height = height;
+        view.findViewById(R.id.barcode_scanner_sv_camera_view).getLayoutParams().width = width;
 
         int rc = ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA);
         if (rc != PackageManager.PERMISSION_GRANTED) {
@@ -73,7 +85,7 @@ public class BarcodeScannerFragment extends Fragment {
 
         cameraSource = new CameraSource
                 .Builder(this.getActivity(), barcodeDetector)
-                .setRequestedPreviewSize(width, width)
+                .setRequestedPreviewSize(width, height)
                 .setAutoFocusEnabled(true)
                 .setFacing(CameraSource.CAMERA_FACING_BACK)
                 .build();
@@ -117,7 +129,7 @@ public class BarcodeScannerFragment extends Fragment {
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
                 if (barcodes.size() != 0) {
                     if (!previousScanResult.equals(barcodes.valueAt(0).displayValue)) {
-                        iQRResult.scannerResult(barcodes.valueAt(0).displayValue);
+                        iQRResult.codeScannerResult(barcodes.valueAt(0).displayValue);
                     }
                     previousScanResult = barcodes.valueAt(0).displayValue;
                 }

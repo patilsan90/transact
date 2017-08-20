@@ -32,10 +32,15 @@
 
     </LinearLayout>
 
-    <com.algo.transact.utils.NonScrollListView
+  <!--  <com.algo.transact.utils.NonScrollListView
+        android:id="@+id/shops_list_lv_shops_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp" />-->
+
+    <ListView
         android:id="@+id/shops_list_lv_shops_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp" />
-
 </LinearLayout>

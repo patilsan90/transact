@@ -16,6 +16,11 @@
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- Allows access to the flashlight -->
+    <permission android:name="android.permission.FLASHLIGHT"
+        android:permissionGroup="android.permission-group.HARDWARE_CONTROLS"
+        android:protectionLevel="normal"  />
+
 
     <meta-data
         android:name="com.google.android.gms.vision.DEPENDENCIES"
@@ -40,7 +45,6 @@
             android:label="@string/title_activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -76,16 +80,24 @@
             </intent-filter>
             -->
         </activity>
-        <activity android:name=".home.shopatshop.ShopScannerActivity"></activity>
+        <activity android:name=".home.shopatshop.ShopScannerActivity" />
+        <activity android:name=".home.shopatshop.OutletSelectorActivity" />
 
         <receiver android:name=".gps_location.GpsLocationReceiver">
             <intent-filter>
                 <action android:name="android.location.PROVIDERS_CHANGED" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
 
-    </application>
+        <activity android:name=".barcode.CodeScannerActivity">
+      <!--      <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+    </application>
 
 </manifest>

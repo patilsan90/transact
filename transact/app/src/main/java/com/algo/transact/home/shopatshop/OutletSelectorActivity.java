@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.Toast;
 
 import com.algo.transact.AppConfig.AppState;
@@ -28,6 +30,7 @@ import com.algo.transact.AppConfig.Permissions;
 import com.algo.transact.R;
 import com.algo.transact.barcode.BarcodeDetails;
 import com.algo.transact.barcode.BarcodeScannerFragment;
+import com.algo.transact.barcode.CodeScannerActivity;
 import com.algo.transact.barcode.IQRResult;
 import com.algo.transact.generic_structures.JSON_Extractor;
 import com.algo.transact.gps_location.GPSTracker;
@@ -41,7 +44,7 @@ import java.util.List;
 
 import static com.algo.transact.AppConfig.IntentResultCode.RESULT_CANCELLED_SHOP_SELECTION;
 
-public class ShopScannerActivity extends AppCompatActivity implements IQRResult {
+public class OutletSelectorActivity extends AppCompatActivity implements IQRResult, View.OnClickListener {
 
     GPSTracker gpsTracker;
     Location currentGPSlocation;
@@ -50,18 +53,17 @@ public class ShopScannerActivity extends AppCompatActivity implements IQRResult 
     TabLayout tabLayout;
     ViewPager viewPager;
     private BarcodeScannerFragment barcodeScannerFragment;
-
+    private FloatingActionButton fabCodeScanner;
     private int requestType;
 private Activity activity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shop_scanner);
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        barcodeScannerFragment = new BarcodeScannerFragment();
-        fragmentTransaction.add(R.id.shop_scanner_ll_qr_scanner, barcodeScannerFragment);
-        fragmentTransaction.commit();
+        setContentView(R.layout.activity_outlet_selector);
+
+        fabCodeScanner = (FloatingActionButton)findViewById(R.id.outlet_fab_barcode_scanner);
+        fabCodeScanner.setOnClickListener(this);
+
         activity=this;
         gpsTracker = new GPSTracker(getApplicationContext(), this);
 
@@ -73,10 +75,14 @@ private Activity activity;
                 ActivityCompat.requestPermissions(this, permissions, Permissions.RC_HANDLE_GPS_PERM);
             } else {
                 currentGPSlocation = gpsTracker.getCurrentLocation();
-                Log.i(AppState.TAG, "Location getAltitude " + currentGPSlocation.getAltitude());
-                Log.i(AppState.TAG, "Location getLongitude " + currentGPSlocation.getLongitude());
-                Log.i(AppState.TAG, "Location getLatitude " + currentGPSlocation.getLatitude());
-                Log.i(AppState.TAG, "Location getProvider " + currentGPSlocation.getProvider());
+                if(currentGPSlocation!=null) {
+                    Log.i(AppState.TAG, "Location getAltitude " + currentGPSlocation.getAltitude());
+                    Log.i(AppState.TAG, "Location getLongitude " + currentGPSlocation.getLongitude());
+                    Log.i(AppState.TAG, "Location getLatitude " + currentGPSlocation.getLatitude());
+                    Log.i(AppState.TAG, "Location getProvider " + currentGPSlocation.getProvider());
+                }
+                else
+                    Log.e(AppState.TAG,"Error in acquiring GPS signal");
                // Toast.makeText(this, "Alt :: " + currentGPSlocation.getAltitude() + " Lon " + currentGPSlocation.getLongitude() + " Lat " + currentGPSlocation.getLatitude(), Toast.LENGTH_LONG).show();
             }
         } else
@@ -86,9 +92,9 @@ private Activity activity;
 
         if (requestType == IntentPutExtras.REQUEST_SELECT_SHOP) {
             Log.i(AppState.TAG, "ShopScanner for " + IntentPutExtras.REQUEST_SELECT_SHOP);
-            viewPager = (ViewPager) findViewById(R.id.viewpager);
+            viewPager = (ViewPager) findViewById(R.id.outlet_seletor_viewpager);
             setupViewPager(viewPager);
-            tabLayout = (TabLayout) findViewById(R.id.tabs);
+            tabLayout = (TabLayout) findViewById(R.id.outlet_seletor_tabs);
             tabLayout.setupWithViewPager(viewPager);
         } else if (requestType == IntentPutExtras.REQUEST_SELECT_ITEM_FROM_SHOP) {
             Log.i(AppState.TAG, "ShopScanner for " + IntentPutExtras.REQUEST_SELECT_ITEM_FROM_SHOP);
@@ -98,7 +104,7 @@ private Activity activity;
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new ShopsListFragment(), "Select Shop \n from List");
+        adapter.addFragment(new ShopsListFragment(), "NearBy \nShops");
         adapter.addFragment(new CartsListFragment(), "Continue with \nIncomplete Cart");
         viewPager.setAdapter(adapter);
     }
@@ -116,13 +122,18 @@ private Activity activity;
         {
             Log.i(AppState.TAG, "In ShopScannerActivity ScannerResult requestType:: REQUEST_SELECT_ITEM_FROM_SHOP ");
             handleShopItemSelctionRequest(barcodeResult);
-
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+        if(data==null)
+        {
+            Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+            }.getClass().getEnclosingMethod().getName()+"  No Data Received");
+            return;
+        }
         int request_type = data.getIntExtra(IntentPutExtras.REQUEST_TYPE, 0);
         Item newItem = (Item) data.getSerializableExtra(IntentPutExtras.NEW_ITEM_DATA);
         Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
@@ -226,6 +237,20 @@ private Activity activity;
                 break;
             }
 
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId())
+        {
+            case R.id.outlet_fab_barcode_scanner:
+            {
+                Intent intent = new Intent(this, CodeScannerActivity.class);
+                intent.putExtra(IntentPutExtras.REQUEST_TYPE, IntentPutExtras.REQUEST_SELECT_SHOP);
+                this.startActivityForResult(intent, IntentResultCode.RESULT_OK_SHOP_SELECTION);
+                break;
+            }
         }
     }
 

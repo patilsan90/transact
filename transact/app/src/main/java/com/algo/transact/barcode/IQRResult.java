@@ -6,5 +6,5 @@ package com.algo.transact.barcode;
 
 public interface IQRResult {
 
-    public void scannerResult(String barcodeResult);
+    public void codeScannerResult(String barcodeResult);
 }
