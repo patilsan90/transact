@@ -2,9 +2,11 @@ package com.algo.transact.home.shopatshop;
 
 
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -81,6 +83,9 @@ public class CatalogueFragment extends Fragment implements IGenericAdapterSpinne
 
         rvCatalogueList = (RecyclerView) view.findViewById(R.id.catalogue_rv_catalogue);
         rvGenericAdapter = new GenericAdapterRecyclerView(this.getContext(), this, rvCatalogueList, alSubCaterory, R.layout.list_item_view_header, 1, true);
+
+
+
         return view;
     }
 

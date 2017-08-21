@@ -1,0 +1,49 @@
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/shop_at_shop_drawerPane"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F0FFF0">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="false">
+
+    <include layout="@layout/content_main_outlet_front" />
+
+    </android.support.design.widget.CoordinatorLayout>
+
+    <!-- The navigation drawer -->
+    <LinearLayout
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="#ffffff"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/drawer_item_user_margin"
+            android:background="#2F4F4F"
+            android:paddingBottom="@dimen/drawer_item_margin"
+            android:paddingLeft="@dimen/drawer_item_margin"
+            android:paddingTop="@dimen/drawer_item_margin"
+            android:text="Offers"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#D3D3D3"
+            android:textStyle="bold" />
+
+        <ListView
+            android:id="@+id/sas_catalog_menu_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+
+</android.support.v4.widget.DrawerLayout>

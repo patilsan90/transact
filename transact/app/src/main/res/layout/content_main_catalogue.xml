@@ -1,24 +1,53 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    tools:ignore="RtlHardcoded">
 
-    <Spinner
-        android:id="@+id/catalogue_spinner_cat_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:padding="5dp"
-        android:spinnerMode="dropdown"
-        android:text="All Categories" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/catalogue_rv_catalogue"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:nestedScrollingEnabled="false"
-        android:scrollbars="vertical" />
+        android:orientation="vertical">
 
-</LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="#6495ED"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/catalogue_drawer_open"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5sp"
+                android:background="@null"
+                android:onClick="openDrawer"
+                android:gravity="center_vertical"
+                android:src="@drawable/ic_action_drawer_open" />
+
+            <Spinner
+                android:id="@+id/catalogue_spinner_cat_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20sp"
+                android:gravity="center_vertical"
+                android:layout_weight="1"
+                android:padding="0dp"
+                android:spinnerMode="dropdown"
+                android:text="All Categories" />
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/catalogue_rv_catalogue"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:nestedScrollingEnabled="true"
+            android:scrollbars="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

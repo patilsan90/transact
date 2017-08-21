@@ -206,7 +206,7 @@ private Activity activity;
             Log.i(AppState.TAG, "In ShopScannerActivity ScannerResult ID:: " + shopID);
 
             if (ModuleType.SHOP.equals(type)) {
-                Intent intent = new Intent(this, ShopAtShop.class);
+                Intent intent = new Intent(this, OutletFront.class);
                 intent.putExtra(IntentPutExtras.REQUEST_TYPE, IntentPutExtras.REQUEST_SELECT_SHOP);
                 intent.putExtra(IntentPutExtras.ID, shopID);
                 this.startActivityForResult(intent, IntentResultCode.RESULT_OK_SHOP_SELECTION);

@@ -49,6 +49,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".home.shopatshop.ShopAtShop" />
+        <activity android:name=".home.shopatshop.OutletFront" />
+
         <activity android:name=".login.LoginActivity" />
         <activity android:name=".login.VerifyMobileNoActivity" />
         <activity

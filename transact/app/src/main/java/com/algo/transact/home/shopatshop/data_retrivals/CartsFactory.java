@@ -63,8 +63,8 @@ public class CartsFactory {
     {
         ArrayList<Item> itemList = new ArrayList<Item>();
         //  String item_id, String item_name, double actual_cost, double discounted_cost, int item_quantity
-        itemList.add(new Item(1,20, "21", "Badam"+shopID, 250, 230, Item.ITEM_QUANTITY_TYPE.GRAM,500, 0));
-        itemList.add(new Item(1,20, "23", "Refined"+shopID, 250, 230, Item.ITEM_QUANTITY_TYPE.MILLILITERS,500, 0));
+        itemList.add(new Item(1,20, "21", "Badam"+shopID, 250, 230, Item.ITEM_QUANTITY_TYPE.GRAM,500, 2));
+        itemList.add(new Item(1,20, "23", "Refined"+shopID, 250, 230, Item.ITEM_QUANTITY_TYPE.MILLILITERS,500, 1));
 
         Cart cart =new Cart();
         cart.shopID=shopID;

@@ -43,6 +43,7 @@ public class MyCartFragment extends Fragment implements AdapterView.OnItemClickL
     Cart cart;
     FloatingActionButton fabCheckout;
     Fragment fragment;
+    TextView tvCartTotal;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -50,6 +51,7 @@ public class MyCartFragment extends Fragment implements AdapterView.OnItemClickL
 
         View view = inflater.inflate(R.layout.fragment_my_cart, container, false);
         lvCartsList = (ListView) view.findViewById(R.id.my_cart_list);
+        tvCartTotal = (TextView) view.findViewById(R.id.cart_total);
         fragment = this;
         fabCheckout = (FloatingActionButton) view.findViewById(R.id.my_cart_fab_checkout);
         fabCheckout.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +85,16 @@ public class MyCartFragment extends Fragment implements AdapterView.OnItemClickL
         cart = CartsFactory.getInstance().getCart(shopID);
         genericAdapter = new GenericAdapter(this.getActivity(), this, lvCartsList, cart.getCartList(), R.layout.list_item_view_mycart);
 
+
+        int noOfItems = cart.getCartList().size();
+            double cart_total = 0;
+            Item item;
+            for (int i = 0; i < noOfItems; i++) {
+                item = cart.getCartList().get(i);
+                cart_total = cart_total + item.getDiscounted_cost() * item.getItem_count();
+            }
+            tvCartTotal.setText("Cart Total: " + cart_total+" Rs.");
+
        // lvCartsList.setAdapter(cartAdapter);
         return view;
     }
@@ -106,9 +118,16 @@ public class MyCartFragment extends Fragment implements AdapterView.OnItemClickL
 
     @Override
     public View addViewItemToList(final View view, Object listItem, final int index) {
+
+        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        }.getClass().getEnclosingMethod().getName() + "Selected ShopID " + shopID);
+
         Item cartItem =(Item) listItem;
         TextView item_view = (TextView) view.findViewById(R.id.item_name);
         item_view.setText(" " + cartItem.getItem_name());
+
+        item_view = (TextView) view.findViewById(R.id.item_quantity);
+        item_view.setText("("+cartItem.getItem_quantity()+" "+cartItem.qtTypeInString(cartItem.getItem_form())+")");
 
         item_view = (TextView) view.findViewById(R.id.actual_cost);
         item_view.setText("Actual Cost: " + cartItem.getActual_cost());
@@ -117,13 +136,13 @@ public class MyCartFragment extends Fragment implements AdapterView.OnItemClickL
         item_view.setText("Disc. Cost: " + cartItem.getDiscounted_cost());
 
         item_view = (TextView) view.findViewById(R.id.total_cost);
-        double total_cost = cartItem.getDiscounted_cost() * cartItem.getItem_quantity();
+        double total_cost = cartItem.getDiscounted_cost() * cartItem.getItem_count();
 
         item_view.setText("Total Cost: " + total_cost);
 
         TextView total_items_view = (TextView) view.findViewById(R.id.total_items);
 
-        total_items_view.setText("" + cartItem.getItem_quantity());
+        total_items_view.setText("" + cartItem.getItem_count());
 
 
         //view.setOnClickListener(this);
@@ -141,8 +160,9 @@ public class MyCartFragment extends Fragment implements AdapterView.OnItemClickL
                 int noOfItems = cart.getCartList().size();
                 for (int i = 0; i < noOfItems; i++) {
                     item = cart.getCartList().get(i);
-                    cart_total = cart_total + item.getDiscounted_cost() * item.getItem_quantity();
+                    cart_total = cart_total + item.getDiscounted_cost() * item.getItem_count();
                 }
+                tvCartTotal.setText("Cart Total: " + cart_total+" Rs.");
              //   TextView cart_total_view = (TextView) .findViewById(R.id.cart_total);
               //  cart_total_view.setText("Cart Total: " + cart_total);
 
@@ -155,20 +175,19 @@ public class MyCartFragment extends Fragment implements AdapterView.OnItemClickL
             public void onClick(View v) {
                 //Item item = AppState.getInstance().getCartItemList().get(index);
                 Item item = cart.getCartList().get(index);
-                if (item.getItem_quantity() > 1) {
-                    item.decreaseItem_quantity();
+                if (item.getItem_count() > 1) {
+                    item.decreaseItem_count();
                     genericAdapter.notifyDataSetChanged();
                     int noOfItems = cart.getCartList().size();
                     double cart_total = 0;
                     Item cartItem;
                     for (int i = 0; i < noOfItems; i++) {
                         cartItem = cart.getCartList().get(i);
-                        cart_total = cart_total + cartItem.getDiscounted_cost() * cartItem.getItem_quantity();
+                        cart_total = cart_total + cartItem.getDiscounted_cost() * cartItem.getItem_count();
                     }
+                    tvCartTotal.setText("Cart Total: " + cart_total+" Rs.");
                    // TextView cart_total_view = (TextView) activity.findViewById(R.id.cart_total);
                     //cart_total_view.setText("Cart Total: " + cart_total);
-
-
                 }
             }
         });
@@ -178,15 +197,16 @@ public class MyCartFragment extends Fragment implements AdapterView.OnItemClickL
             @Override
             public void onClick(View v) {
                 Item item = cart.getCartList().get(index);
-                item.increaseItem_quantity();
+                item.increaseItem_count();
                 genericAdapter.notifyDataSetChanged();
                 int noOfItems = cart.getCartList().size();
                 double cart_total = 0;
                 Item cartItem;
                 for (int i = 0; i < noOfItems; i++) {
                     cartItem = cart.getCartList().get(i);
-                    cart_total = cart_total + cartItem.getDiscounted_cost() * cartItem.getItem_quantity();
+                    cart_total = cart_total + cartItem.getDiscounted_cost() * cartItem.getItem_count();
                 }
+                tvCartTotal.setText("Cart Total: " + cart_total+" Rs.");
              //   TextView cart_total_view = (TextView) activity.findViewById(R.id.cart_total);
               //  cart_total_view.setText("Cart Total: " + cart_total);
 

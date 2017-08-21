@@ -80,16 +80,16 @@ public class MyCartAdapter extends BaseAdapter implements View.OnClickListener {
         item_view.setText("Disc. Cost: " + cartItem.getDiscounted_cost());
 
         item_view = (TextView) view.findViewById(R.id.total_cost);
-        double total_cost = cartItem.getDiscounted_cost() * cartItem.getItem_quantity();
+        double total_cost = cartItem.getDiscounted_cost() * cartItem.getItem_count();
 
         item_view.setText("Total Cost: " + total_cost);
 
         TextView total_items_view = (TextView) view.findViewById(R.id.total_items);
 
         if(list_type == AppState.LIST_TYPE.NORMAL_CART)
-            total_items_view.setText("" + cartItem.getItem_quantity());
+            total_items_view.setText("" + cartItem.getItem_count());
         else
-            total_items_view.setText("Total Items: " + cartItem.getItem_quantity());
+            total_items_view.setText("Total Items: " + cartItem.getItem_count());
 
 
 
@@ -121,19 +121,17 @@ public class MyCartAdapter extends BaseAdapter implements View.OnClickListener {
                 public void onClick(View v) {
                     Item item = AppState.getInstance().getCartItemList().get(index);
                     if (item.getItem_quantity() > 1) {
-                        item.decreaseItem_quantity();
+                        item.decreaseItem_count();
                         notifyDataSetChanged();
                         int noOfItems = AppState.getInstance().getCartItemList().size();
                         double cart_total = 0;
                         Item cartItem;
                         for (int i = 0; i < noOfItems; i++) {
                             cartItem = AppState.getInstance().getCartItemList().get(i);
-                            cart_total = cart_total + cartItem.getDiscounted_cost() * cartItem.getItem_quantity();
+                            cart_total = cart_total + cartItem.getDiscounted_cost() * cartItem.getItem_count();
                         }
                         TextView cart_total_view = (TextView) activity.findViewById(R.id.cart_total);
                         cart_total_view.setText("Cart Total: " + cart_total);
-
-
                     }
                 }
             });
@@ -143,14 +141,14 @@ public class MyCartAdapter extends BaseAdapter implements View.OnClickListener {
                 @Override
                 public void onClick(View v) {
                     Item item = AppState.getInstance().getCartItemList().get(index);
-                    item.increaseItem_quantity();
+                    item.increaseItem_count();
                     notifyDataSetChanged();
                     int noOfItems = AppState.getInstance().getCartItemList().size();
                     double cart_total = 0;
                     Item cartItem;
                     for (int i = 0; i < noOfItems; i++) {
                         cartItem = AppState.getInstance().getCartItemList().get(i);
-                        cart_total = cart_total + cartItem.getDiscounted_cost() * cartItem.getItem_quantity();
+                        cart_total = cart_total + cartItem.getDiscounted_cost() * cartItem.getItem_count();
                     }
                     TextView cart_total_view = (TextView) activity.findViewById(R.id.cart_total);
                     cart_total_view.setText("Cart Total: " + cart_total);

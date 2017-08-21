@@ -126,11 +126,11 @@ public class ItemCountSelectionActivity extends AppCompatActivity implements Vie
         switch (v.getId())
         {
             case R.id.count_selection_increase_item_count:
-                newItem.increaseItem_quantity();
+                newItem.increaseItem_count();
                 break;
             case R.id.count_selection_decrease_item_count:
                 if(newItem.getItem_quantity()>1)
-                  newItem.decreaseItem_quantity();
+                  newItem.decreaseItem_count();
                 break;
             case R.id.count_selection_item1:
                 newItem.setItem_quantity(1);
@@ -165,7 +165,7 @@ public class ItemCountSelectionActivity extends AppCompatActivity implements Vie
         }
 
         tvTotalItems.setText(""+newItem.getItem_quantity());
-        tvTotalCost.setText("Total Cost : " + (newItem.getDiscounted_cost()*newItem.getItem_quantity()));
+        tvTotalCost.setText("Total Cost : " + (newItem.getDiscounted_cost()*newItem.getItem_count()));
 
     }
 }

@@ -73,12 +73,12 @@ public class Item implements Serializable{
         return item_quantity;
     }
 
-    public void increaseItem_quantity() {
-        item_quantity++;
+    public void increaseItem_count() {
+        item_count++;
     }
 
-    public void decreaseItem_quantity() {
-        item_quantity--;
+    public void decreaseItem_count() {
+        item_count--;
     }
 
     public void setItem_quantity(int quantity) {
@@ -99,7 +99,7 @@ public class Item implements Serializable{
         switch (type)
         {
             case GRAM:
-                return "grm";
+                return "gm";
             case KG:
                 return "kg";
             case LITERS:

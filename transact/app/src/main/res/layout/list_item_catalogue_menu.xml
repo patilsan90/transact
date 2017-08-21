@@ -18,7 +18,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Catalogue item"
-                android:textColor="#649FFF"
+                android:textColor="#FFFFFF"
                 android:textStyle="bold"
                 android:gravity="center_vertical"
                 android:textAppearance="?android:attr/textAppearanceSmall"/>

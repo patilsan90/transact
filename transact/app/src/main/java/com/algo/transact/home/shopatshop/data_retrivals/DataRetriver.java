@@ -43,7 +43,7 @@ public class DataRetriver {
     }
 
     public static Item getItemDetailsFromShop(int shopID, String itemID) {
-        Item temporary_item = new Item(1,20, itemID, "Example "+(++tempCount), 250, 230, Item.ITEM_QUANTITY_TYPE.GRAM,500, 0);
+        Item temporary_item = new Item(1,20, itemID, "Example "+(++tempCount), 250, 230, Item.ITEM_QUANTITY_TYPE.GRAM,500, 1);
         return temporary_item;
     }
 }

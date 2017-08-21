@@ -82,7 +82,7 @@ public class CartsListFragment extends Fragment implements IGenericAdapter{
         else
             Log.i(AppState.TAG, "onItemClick IncompleteCart  ShopID::" + shopID + " has cart stored");
 
-        Intent intent = new Intent(getActivity(), ShopAtShop.class);
+        Intent intent = new Intent(getActivity(), OutletFront.class);
         intent.putExtra(IntentPutExtras.REQUEST_TYPE, IntentPutExtras.REQUEST_SELECT_SHOP);
         intent.putExtra(IntentPutExtras.ID, shopID);
         getActivity().startActivityForResult(intent, IntentResultCode.RESULT_OK_SHOP_SELECTION);
