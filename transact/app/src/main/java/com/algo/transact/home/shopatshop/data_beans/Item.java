@@ -93,6 +93,10 @@ public class Item implements Serializable{
         return item_count;
     }
 
+    public void setItem_count(int item_count) {
+        this.item_count = item_count;
+    }
+
     public String qtTypeInString(ITEM_QUANTITY_TYPE type)
     {
         String str;

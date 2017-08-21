@@ -3,7 +3,8 @@
     android:id="@+id/shop_at_shop_drawerPane"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0FFF0">
+    android:background="@color/appBackgroundColor"
+    >
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"

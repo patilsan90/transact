@@ -30,7 +30,7 @@ public class ItemCountSelectionActivity extends AppCompatActivity implements Vie
     private TextView tvActualCost;
     private TextView tvDiscountedCost;
     private TextView tvTotalCost;
-    private EditText tvTotalItems;
+    private TextView tvTotalItems;
     private ImageButton ibIncreaseItems;
     private ImageButton ibDecreaseItems;
 
@@ -54,8 +54,8 @@ public class ItemCountSelectionActivity extends AppCompatActivity implements Vie
         tvActualCost =(TextView) findViewById(R.id.count_selection_actual_cost);
         tvDiscountedCost =(TextView) findViewById(R.id.count_selection_discounted_cost);
         tvTotalCost =(TextView) findViewById(R.id.count_selection_total_cost);
-        tvTotalItems =(EditText) findViewById(R.id.count_selection_total_items);
-
+        tvTotalItems =(TextView) findViewById(R.id.count_selection_total_items);
+        tvTotalItems.setText(""+1);
         ibIncreaseItems =(ImageButton) findViewById(R.id.count_selection_increase_item_count);
         ibIncreaseItems.setOnClickListener(this);
         ibDecreaseItems =(ImageButton) findViewById(R.id.count_selection_decrease_item_count);
@@ -135,42 +135,42 @@ public class ItemCountSelectionActivity extends AppCompatActivity implements Vie
                 newItem.increaseItem_count();
                 break;
             case R.id.count_selection_decrease_item_count:
-                if(newItem.getItem_quantity()>1)
+                if(newItem.getItem_count()>1)
                   newItem.decreaseItem_count();
                 break;
             case R.id.count_selection_item1:
-                newItem.setItem_quantity(1);
+                newItem.setItem_count(1);
                 break;
             case R.id.count_selection_item2:
-                newItem.setItem_quantity(2);
+                newItem.setItem_count(2);
                 break;
             case R.id.count_selection_item3:
-                newItem.setItem_quantity(3);
+                newItem.setItem_count(3);
                 break;
             case R.id.count_selection_item4:
-                newItem.setItem_quantity(4);
+                newItem.setItem_count(4);
                 break;
             case R.id.count_selection_item5:
-                newItem.setItem_quantity(5);
+                newItem.setItem_count(5);
                 break;
             case R.id.count_selection_item6:
-                newItem.setItem_quantity(6);
+                newItem.setItem_count(6);
                 break;
             case R.id.count_selection_item7:
-                newItem.setItem_quantity(7);
+                newItem.setItem_count(7);
                 break;
             case R.id.count_selection_item8:
-                newItem.setItem_quantity(8);
+                newItem.setItem_count(8);
                 break;
             case R.id.count_selection_item9:
-                newItem.setItem_quantity(9);
+                newItem.setItem_count(9);
                 break;
             case R.id.count_selection_item10:
-                newItem.setItem_quantity(10);
+                newItem.setItem_count(10);
                 break;
         }
 
-        tvTotalItems.setText(""+newItem.getItem_quantity());
+        tvTotalItems.setText(""+newItem.getItem_count());
         tvTotalCost.setText("Total Cost : " + (newItem.getDiscounted_cost()*newItem.getItem_count()));
 
     }

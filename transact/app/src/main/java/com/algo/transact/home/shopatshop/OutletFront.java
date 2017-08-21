@@ -122,8 +122,10 @@ public class OutletFront extends AppCompatActivity implements
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new CatalogueFragment(), "Catalogue");
         adapter.addFragment(myCartFragment, "Cart");
+
        // nscScroll.smoothScrollTo(0,0);
         viewPager.setAdapter(adapter);
+
     }
 
     @Override
@@ -175,6 +177,7 @@ public class OutletFront extends AppCompatActivity implements
                     }.getClass().getEnclosingMethod().getName()+"REQUEST_SELECT_ITEM_FROM_SHOP adding new item");
                     if(newItem!=null)
                     {
+                        viewPager.setCurrentItem(2,true);
                         myCartFragment.addItemToCart(newItem);
                     }
                     else

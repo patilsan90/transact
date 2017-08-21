@@ -124,7 +124,7 @@ public class MyCartFragment extends Fragment implements AdapterView.OnItemClickL
 
         Item cartItem =(Item) listItem;
         TextView item_view = (TextView) view.findViewById(R.id.item_name);
-        item_view.setText(" " + cartItem.getItem_name());
+        item_view.setText("" + cartItem.getItem_name());
 
         item_view = (TextView) view.findViewById(R.id.item_quantity);
         item_view.setText("("+cartItem.getItem_quantity()+" "+cartItem.qtTypeInString(cartItem.getItem_form())+")");

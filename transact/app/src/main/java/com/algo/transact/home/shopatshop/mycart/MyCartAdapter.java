@@ -73,11 +73,16 @@ public class MyCartAdapter extends BaseAdapter implements View.OnClickListener {
         TextView item_view = (TextView) view.findViewById(R.id.item_name);
         item_view.setText(" " + cartItem.getItem_name());
 
-        item_view = (TextView) view.findViewById(R.id.actual_cost);
-        item_view.setText("Actual Cost: " + cartItem.getActual_cost());
+        if(list_type == AppState.LIST_TYPE.NORMAL_CART) {
+            item_view = (TextView) view.findViewById(R.id.actual_cost);
+            item_view.setText("Actual Cost: " + cartItem.getActual_cost());
+        }
 
         item_view = (TextView) view.findViewById(R.id.discounted_cost);
-        item_view.setText("Disc. Cost: " + cartItem.getDiscounted_cost());
+        if(list_type == AppState.LIST_TYPE.NORMAL_CART)
+            item_view.setText("Disc. Cost: " + cartItem.getDiscounted_cost());
+        else
+            item_view.setText("Cost: " + cartItem.getDiscounted_cost());
 
         item_view = (TextView) view.findViewById(R.id.total_cost);
         double total_cost = cartItem.getDiscounted_cost() * cartItem.getItem_count();

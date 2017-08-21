@@ -20,13 +20,14 @@ import com.algo.transact.home.shopatshop.data_retrivals.CartsFactory;
 import com.instamojo.android.Instamojo;
 import com.instamojo.android.models.Order;
 
-public class SASCheckoutActivity extends AppCompatActivity implements IGenericAdapter{
+public class SASCheckoutActivity extends AppCompatActivity implements IGenericAdapter {
 
     ListView lvcheckoutCart;
     private int shopID;
     private String requestType;
     private Cart cart;
     private GenericAdapter genericAdapter;
+    private TextView tvCartTotal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,60 +38,65 @@ public class SASCheckoutActivity extends AppCompatActivity implements IGenericAd
         requestType = getIntent().getStringExtra(IntentPutExtras.DATA_TYPE);
         shopID = getIntent().getIntExtra(IntentPutExtras.ID, 0);
 
+        tvCartTotal = (TextView) findViewById(R.id.cart_total);
+
         cart = CartsFactory.getInstance().getCart(shopID);
         genericAdapter = new GenericAdapter(this, this, lvcheckoutCart, cart.getCartList(), R.layout.list_item_view_mycart_checkout);
 
-       // MyCartAdapter.list_type= AppState.LIST_TYPE.CHECKOUT_CART;
-        //cartAdapter = new MyCartAdapter(this);
-        //lvcheckoutCart.setAdapter(cartAdapter);
+        int noOfItems = cart.getCartList().size();
+        double cart_total = 0;
+        Item item;
+        for (int i = 0; i < noOfItems; i++) {
+            item = cart.getCartList().get(i);
+            cart_total = cart_total + item.getDiscounted_cost() * item.getItem_count();
+        }
+        tvCartTotal.setText("Cart Total: " + cart_total + " Rs.");
+
 
         Instamojo.initialize(this);
     }
 
-    public void onCheckout(View v)
-    {
-        Log.i(AppState.TAG,"Checkout cart Initiated");
+    public void onCheckout(View v) {
+        Log.i(AppState.TAG, "Checkout cart Initiated");
         Order order = new Order("Tran", "1234", "San_transact", "san27deep@gmail.com", "9423306174", "11", "Trasact_san");
         order.setWebhook("http://www.futureinduction.com/webhook/");
-        if(!validateOrder(order))
-        {
+        if (!validateOrder(order)) {
             Log.e("App", "Order not valid");
             return;
         }
 
     }
 
-    boolean validateOrder(Order order)
-    {
+    boolean validateOrder(Order order) {
         //Validate the Order
-        if (!order.isValid()){
+        if (!order.isValid()) {
             //oops order validation failed. Pinpoint the issue(s).
 
-            if (!order.isValidName()){
+            if (!order.isValidName()) {
                 Log.e("App", "Buyer name is invalid");
             }
 
-            if (!order.isValidEmail()){
+            if (!order.isValidEmail()) {
                 Log.e("App", "Buyer email is invalid");
             }
 
-            if (!order.isValidPhone()){
+            if (!order.isValidPhone()) {
                 Log.e("App", "Buyer phone is invalid");
             }
 
-            if (!order.isValidAmount()){
+            if (!order.isValidAmount()) {
                 Log.e("App", "Amount is invalid");
             }
 
-            if (!order.isValidDescription()){
+            if (!order.isValidDescription()) {
                 Log.e("App", "description is invalid");
             }
 
-            if (!order.isValidTransactionID()){
+            if (!order.isValidTransactionID()) {
                 Log.e("App", "Transaction ID is invalid");
             }
 
-            if (!order.isValidRedirectURL()){
+            if (!order.isValidRedirectURL()) {
                 Log.e("App", "Redirection URL is invalid");
             }
 
@@ -105,26 +111,27 @@ public class SASCheckoutActivity extends AppCompatActivity implements IGenericAd
 
     @Override
     public View addViewItemToList(View view, Object listItem, int index) {
-        Item item =(Item) listItem;
+        Item item = (Item) listItem;
         TextView item_view = (TextView) view.findViewById(R.id.item_name);
-        item_view.setText(" " + item.getItem_name());
+        item_view.setText("" + item.getItem_name());
 
+/*
         item_view = (TextView) view.findViewById(R.id.actual_cost);
         item_view.setText("Actual Cost: " + item.getActual_cost());
+*/
 
         item_view = (TextView) view.findViewById(R.id.discounted_cost);
-        item_view.setText("Disc. Cost: " + item.getDiscounted_cost());
+        item_view.setText("Cost per item: " + item.getDiscounted_cost());
 
         item_view = (TextView) view.findViewById(R.id.total_cost);
-        double total_cost = item.getDiscounted_cost() * item.getItem_quantity();
+        double total_cost = item.getDiscounted_cost() * item.getItem_count();
 
         item_view.setText("Total Cost: " + total_cost);
 
         TextView total_items_view = (TextView) view.findViewById(R.id.total_items);
+        total_items_view.setText("Total Items: " + item.getItem_count());
 
-
-        total_items_view.setText("Total Items: " + item.getItem_quantity());
-    /*    Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+  /*      Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName());
     */
         return view;

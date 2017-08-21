@@ -55,7 +55,7 @@ public class GenericAdapterRecyclerView extends RecyclerView.Adapter {
         this.listener = listener;
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(mContext, noOfColumns);
         this.listView.setLayoutManager(mLayoutManager);
-       // this.listView.addItemDecoration(new GridSpacingItemDecoration(noOfColumns, dpToPx(0), true));
+        this.listView.addItemDecoration(new GridSpacingItemDecoration(noOfColumns, dpToPx(0), true));
         this.listView.setItemAnimator(new DefaultItemAnimator());
         this.listView.setAdapter(this);
         this.isExpandableList = isExpandableList;

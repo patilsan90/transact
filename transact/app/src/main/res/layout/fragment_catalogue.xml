@@ -4,8 +4,8 @@
     android:layout_height="match_parent"
     tools:context="com.algo.transact.home.shopatshop.CatalogueFragment"
     android:orientation="vertical"
+    android:background="@color/appBackgroundColor"
     >
-
 
     <include layout="@layout/content_main_catalogue" />
 
