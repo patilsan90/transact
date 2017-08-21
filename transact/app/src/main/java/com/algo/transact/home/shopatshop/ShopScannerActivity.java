@@ -23,7 +23,7 @@ import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.AppConfig.IntentPutExtras;
 import com.algo.transact.AppConfig.IntentRequestResponseType;
 import com.algo.transact.AppConfig.IntentResultCode;
-import com.algo.transact.AppConfig.ModuleType;
+import com.algo.transact.AppConfig.OutletType;
 import com.algo.transact.AppConfig.Permissions;
 import com.algo.transact.R;
 import com.algo.transact.barcode.BarcodeDetails;
@@ -39,11 +39,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.algo.transact.AppConfig.IntentResultCode.RESULT_CANCELLED_SHOP_SELECTION;
-
 public class ShopScannerActivity extends AppCompatActivity implements IQRResult {
+    @Override
+    public void codeScannerResult(String barcodeResult) {
 
-    GPSTracker gpsTracker;
+    }
+
+/*    GPSTracker gpsTracker;
     Location currentGPSlocation;
 
     int shopID;
@@ -147,7 +149,7 @@ private Activity activity;
 
         //        Intent intent = new Intent();
 
-        String itemId = JSON_Extractor.extractShopItemIdAndVerify(barcodeResult,ModuleType.SHOP, shopID);
+        String itemId = JSON_Extractor.extractShopItemIdAndVerify(barcodeResult, OutletType.SHOP, shopID);
         Log.i(AppState.TAG, "handleShopItemSelctionRequest itemId :: "+itemId);
 
         if(itemId != null)
@@ -189,12 +191,12 @@ private Activity activity;
         JSONObject jObj = null;
         try {
             jObj = new JSONObject(barcodeResult);
-            String type = jObj.getString(BarcodeDetails.MODULE_TYPE);
-            int shopID = jObj.getInt(BarcodeDetails.MODULE_ID);
+            String type = "3";//jObj.getString(BarcodeDetails.MODULE_TYPE);
+            int shopID = 2;//jObj.getInt(BarcodeDetails.MODULE_ID);
             Log.i(AppState.TAG, "In ShopScannerActivity ScannerResult TYPE:: " + type);
             Log.i(AppState.TAG, "In ShopScannerActivity ScannerResult ID:: " + shopID);
 
-            if (ModuleType.SHOP.equals(type)) {
+            if (OutletType.SHOP.equals(type)) {
                 Intent intent = new Intent(this, ShopAtShop.class);
                 intent.putExtra(IntentPutExtras.REQUEST_TYPE, IntentPutExtras.REQUEST_SELECT_SHOP);
                 intent.putExtra(IntentPutExtras.ID, shopID);
@@ -256,5 +258,5 @@ private Activity activity;
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
-    }
+    }*/
 }

@@ -84,10 +84,10 @@ public class ShopsListFragment extends Fragment implements IGenericAdapter {
             Log.i(AppState.TAG, "onItemClick ShopList  ShopID::" + shopID + " has cart stored");
 
         Intent intent = new Intent(getActivity(), OutletFront.class);
-        intent.putExtra(IntentPutExtras.REQUEST_TYPE, IntentPutExtras.REQUEST_SELECT_SHOP);
+        intent.putExtra(IntentPutExtras.DATA_TYPE, IntentPutExtras.ID);
         intent.putExtra(IntentPutExtras.ID, shopID);
         //getActivity().setResult(Activity.RESULT_OK, intent);
-        getActivity().startActivityForResult(intent, IntentResultCode.RESULT_OK_SHOP_SELECTION);
+        getActivity().startActivityForResult(intent, IntentResultCode.TRANSACT_RESULT_OK);
         getActivity().finish();
     }
 

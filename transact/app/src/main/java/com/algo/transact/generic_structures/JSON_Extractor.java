@@ -10,7 +10,8 @@ import org.json.JSONObject;
  */
 
 public class JSON_Extractor {
-    public static String extractShopItemIdAndVerify(String inputString, String moduleType, int moduleID)
+
+/*    public static String extractShopItemIdAndVerify(String inputString, String moduleType, int moduleID)
     {
         JSONObject jObj = null;
 
@@ -26,5 +27,6 @@ public class JSON_Extractor {
             e.printStackTrace();
         }
         return null;
-    }
+    }*/
+
 }

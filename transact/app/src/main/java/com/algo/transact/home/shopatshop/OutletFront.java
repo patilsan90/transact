@@ -20,6 +20,7 @@ import com.algo.transact.AppConfig.IntentPutExtras;
 import com.algo.transact.AppConfig.IntentRequestResponseType;
 import com.algo.transact.AppConfig.IntentResultCode;
 import com.algo.transact.R;
+import com.algo.transact.barcode.BarcodeDetails;
 import com.algo.transact.barcode.CodeScannerActivity;
 import com.algo.transact.home.LocateCategories;
 import com.algo.transact.home.shopatshop.data_beans.Item;
@@ -36,8 +37,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.algo.transact.AppConfig.IntentResultCode.RESULT_CANCELLED_SHOP_SELECTION;
-
 public class OutletFront extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
     private static final String TAG = "CognitionMall";
@@ -50,7 +49,7 @@ public class OutletFront extends AppCompatActivity implements
     // private Button showCartButton;
     private int back_press_counter = 0;
     private GoogleApiClient mGoogleApiClient;
-    private String requestType;
+    private String dataType;
     private DrawerLayout mDrawerLayout;
     private ViewPager viewPager;
     private TabLayout tabLayout;
@@ -72,7 +71,7 @@ public class OutletFront extends AppCompatActivity implements
         //  offersFragment = new OffersFragment();
         Log.i(AppState.TAG, " Activity onCreate ShopAtShop");
 
-        requestType = getIntent().getStringExtra(IntentPutExtras.REQUEST_TYPE);
+        dataType = getIntent().getStringExtra(IntentPutExtras.DATA_TYPE);
         shopID = getIntent().getIntExtra(IntentPutExtras.ID, 0);
 
 /*        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
@@ -143,12 +142,16 @@ public class OutletFront extends AppCompatActivity implements
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.i(AppState.TAG, "onActivityResult ShopAtShop");
-        if (resultCode == RESULT_CANCELLED_SHOP_SELECTION) {
-            Log.e(AppState.TAG, "Error in OnActivityResult of ShopAtShop RequestCode: " + requestCode + " Shop Selection cancelled");
+        Log.i(AppState.TAG, "onActivityResult Outlet");
+        if (resultCode == IntentResultCode.TRANSACT_RESULT_CANCEL) {
+            Log.e(AppState.TAG, "Error in OnActivityResult of OutletFront RequestCode: " + requestCode + " Shop Selection cancelled");
             this.finish();
             return;
-        } /*else if (resultCode != RESULT_OK) {
+        }
+        if (data == null)
+            return;
+
+        /*else if (resultCode != RESULT_OK) {
             Log.e(AppState.TAG, "Error in OnActivityResult of ShopAtShop RequestCode: " + requestCode);
             //this.finish();
             return;
@@ -156,19 +159,16 @@ public class OutletFront extends AppCompatActivity implements
 
         //Toast.makeText(this, "ReqCode" + requestCode + " DATA " + data.getStringExtra(IntentPutExtras.SCANNER_RESPONSE), Toast.LENGTH_LONG).show();
 
-        int request_type = -1;
+        String dataType = data.getStringExtra(IntentPutExtras.DATA_TYPE);
 
-        if (data != null)
-            request_type = data.getIntExtra(IntentPutExtras.REQUEST_TYPE, 0);
-
-        switch (request_type) {
+        switch (dataType) {
             /* case IntentPutExtras.REQUEST_SELECT_SHOP: {
                 shopID = data.getIntExtra(IntentPutExtras.ID,0);
                 Log.i(AppState.TAG, "onActivityResult ShopAtShop SelectedShopID " + shopID);
                 break;
             }*/
 
-            case IntentPutExtras.RESPONSE_NEW_ITEM_SELECTED: {
+            case IntentPutExtras.NEW_ITEM_DATA: {
                 if (data != null) {
                     Item newItem = (Item)data.getSerializableExtra(IntentPutExtras.NEW_ITEM_DATA);
                     Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
@@ -183,9 +183,27 @@ public class OutletFront extends AppCompatActivity implements
                 }
                 break;
             }
+            case IntentPutExtras.CODE_OBJECT: {
+                BarcodeDetails details = (BarcodeDetails)data.getSerializableExtra(IntentPutExtras.CODE_OBJECT);
+               if(details.getItemID()==null)
+               {
+                   Intent intent = new Intent(getApplicationContext(), CodeScannerActivity.class);
+                   intent.putExtra(IntentPutExtras.DATA_TYPE, IntentPutExtras.ID);
+                   intent.putExtra(IntentPutExtras.ID, shopID);
+                   startActivityForResult(intent, IntentResultCode.TRANSACT_REQUEST);
+                   return;
+               }
+                Intent intent = new Intent(getApplicationContext(), ItemCountSelectionActivity.class);
+                intent.putExtra(IntentPutExtras.DATA_TYPE, IntentPutExtras.CODE_OBJECT);
+                intent.putExtra(IntentPutExtras.CODE_OBJECT,details);
+                //setResult(RESULT_OK, intent);
+                startActivityForResult(intent, IntentResultCode.TRANSACT_RESULT_OK);
+
+                break;
+            }
             default:
 //                Log.e(AppState.TAG, String.format(getString(R.string.barcode_error_format), CommonStatusCodes.getStatusCodeString(resultCode)));
-                Log.e(AppState.TAG, "Error in ShopAtShop onActivityResult");
+                Log.e(AppState.TAG, "Error in Outlet Default onActivityResult");
                 break;
         }
     }
@@ -230,16 +248,6 @@ public class OutletFront extends AppCompatActivity implements
 
     }
 
-    public void selectMall(View view) {
-        Log.i("Home", "Select mall Clicked");
-        Intent intent = new Intent(getApplicationContext(), ShopScannerActivity.class);
-        startActivityForResult(intent, IntentRequestResponseType.REQUEST_SELECT_SHOP);
-
-//        Intent myIntent = new Intent(this, MallSelectionActivity.class);
-        //      this.startActivity(myIntent);
-
-    }
-
     public void gotoHomefromSAS(View v) {
         Log.i("Home", "Select mall Clicked");
         // Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -257,9 +265,9 @@ public class OutletFront extends AppCompatActivity implements
         Log.i("Home", "checkoutCart Clicked");
         Intent intent = new Intent(getApplicationContext(), SASCheckoutActivity.class);
 
-        intent.putExtra(IntentPutExtras.REQUEST_TYPE, IntentPutExtras.REQUEST_SELECT_SHOP);
+        intent.putExtra(IntentPutExtras.DATA_TYPE, IntentPutExtras.ID);
         intent.putExtra(IntentPutExtras.ID, shopID);
-        this.startActivityForResult(intent, IntentResultCode.RESULT_OK_SHOP_SELECTION);
+        this.startActivityForResult(intent, IntentResultCode.TRANSACT_REQUEST);
 
        // startActivityForResult(intent, BARCODE_READER_REQUEST_CODE);
     }
@@ -295,9 +303,9 @@ public class OutletFront extends AppCompatActivity implements
             case R.id.outlet_front_fab_code_scanner:
             {
                 Intent intent = new Intent(getApplicationContext(), CodeScannerActivity.class);
-                intent.putExtra(IntentPutExtras.REQUEST_TYPE, IntentPutExtras.REQUEST_SELECT_ITEM_FROM_SHOP);
+                intent.putExtra(IntentPutExtras.DATA_TYPE, IntentPutExtras.ID);
                 intent.putExtra(IntentPutExtras.ID, shopID);
-                startActivityForResult(intent, IntentRequestResponseType.REQUEST_SELECT_ITEM_FROM_SHOP);
+                startActivityForResult(intent, IntentResultCode.TRANSACT_REQUEST);
                 break;
             }
         }

@@ -82,7 +82,10 @@ public class CartsFactory {
             if(cartsList.get(i).getShopID()==shopID)
                 return cartsList.get(i);
         }
-        return null;
+        Cart cart=new Cart();
+        cart.shopID = shopID;
+        cartsList.add(cart);
+        return cart;
     }
 
 }

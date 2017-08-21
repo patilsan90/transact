@@ -34,7 +34,7 @@ public class SASCheckoutActivity extends AppCompatActivity implements IGenericAd
         setContentView(R.layout.activity_sas_checkout);
         lvcheckoutCart = (ListView) findViewById(R.id.checkout_cart_list);
 
-        requestType = getIntent().getStringExtra(IntentPutExtras.REQUEST_TYPE);
+        requestType = getIntent().getStringExtra(IntentPutExtras.DATA_TYPE);
         shopID = getIntent().getIntExtra(IntentPutExtras.ID, 0);
 
         cart = CartsFactory.getInstance().getCart(shopID);

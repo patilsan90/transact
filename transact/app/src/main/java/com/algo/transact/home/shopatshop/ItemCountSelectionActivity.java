@@ -16,6 +16,7 @@ import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.AppConfig.IntentPutExtras;
 import com.algo.transact.AppConfig.IntentResultCode;
 import com.algo.transact.R;
+import com.algo.transact.barcode.BarcodeDetails;
 import com.algo.transact.home.shopatshop.data_beans.Item;
 import com.algo.transact.home.shopatshop.data_retrivals.DataRetriver;
 
@@ -84,12 +85,17 @@ public class ItemCountSelectionActivity extends AppCompatActivity implements Vie
 
 
 
-        int requestType = getIntent().getIntExtra(IntentPutExtras.REQUEST_TYPE,0);
+        String dataType = getIntent().getStringExtra(IntentPutExtras.DATA_TYPE);
 
-       if (requestType == IntentPutExtras.REQUEST_SELECT_ITEM_FROM_SHOP) {
-            Log.i(AppState.TAG, "ItemCountSelectionActivity Request Type:: " + IntentPutExtras.REQUEST_SELECT_ITEM_FROM_SHOP);
+       if (dataType.equals(IntentPutExtras.CODE_OBJECT)) {
+            Log.i(AppState.TAG, "ItemCountSelectionActivity Request Type:: " + IntentPutExtras.CODE_OBJECT);
+           BarcodeDetails barcodeDetails = (BarcodeDetails) getIntent().getSerializableExtra(IntentPutExtras.CODE_OBJECT);
+           /*
            itemID = getIntent().getStringExtra(IntentPutExtras.MODULE_ID);
            shopID = getIntent().getIntExtra(IntentPutExtras.ID,0);
+            */
+           itemID = barcodeDetails.getItemID();
+           shopID = barcodeDetails.getOutletID();
 
            newItem = DataRetriver.getItemDetailsFromShop(shopID, itemID);
 
@@ -115,9 +121,9 @@ public class ItemCountSelectionActivity extends AppCompatActivity implements Vie
         }.getClass().getEnclosingMethod().getName()+" NewItem is null? -> "+(newItem==null));
 
         Intent intent = new Intent();
-        intent.putExtra(IntentPutExtras.REQUEST_TYPE, IntentPutExtras.RESPONSE_NEW_ITEM_SELECTED);
+        intent.putExtra(IntentPutExtras.DATA_TYPE, IntentPutExtras.NEW_ITEM_DATA);
         intent.putExtra(IntentPutExtras.NEW_ITEM_DATA, newItem);
-        setResult(IntentResultCode.RESULT_OK_NEW_ITEM_ADDITION, intent);
+        setResult(IntentResultCode.TRANSACT_RESULT_OK, intent);
         this.finish();
     }
 

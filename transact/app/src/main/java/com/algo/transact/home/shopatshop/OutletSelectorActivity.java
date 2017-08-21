@@ -2,8 +2,6 @@ package com.algo.transact.home.shopatshop;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -25,7 +23,7 @@ import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.AppConfig.IntentPutExtras;
 import com.algo.transact.AppConfig.IntentRequestResponseType;
 import com.algo.transact.AppConfig.IntentResultCode;
-import com.algo.transact.AppConfig.ModuleType;
+import com.algo.transact.AppConfig.OutletType;
 import com.algo.transact.AppConfig.Permissions;
 import com.algo.transact.R;
 import com.algo.transact.barcode.BarcodeDetails;
@@ -42,19 +40,17 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.algo.transact.AppConfig.IntentResultCode.RESULT_CANCELLED_SHOP_SELECTION;
-
-public class OutletSelectorActivity extends AppCompatActivity implements IQRResult, View.OnClickListener {
+public class OutletSelectorActivity extends AppCompatActivity implements View.OnClickListener {
 
     GPSTracker gpsTracker;
     Location currentGPSlocation;
 
-    int shopID;
+    int outletID;
     TabLayout tabLayout;
     ViewPager viewPager;
     private BarcodeScannerFragment barcodeScannerFragment;
     private FloatingActionButton fabCodeScanner;
-    private int requestType;
+
 private Activity activity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,18 +84,10 @@ private Activity activity;
         } else
             gpsTracker.showSettingsAlert();
 
-        requestType = getIntent().getIntExtra(IntentPutExtras.REQUEST_TYPE,0);
-
-        if (requestType == IntentPutExtras.REQUEST_SELECT_SHOP) {
-            Log.i(AppState.TAG, "ShopScanner for " + IntentPutExtras.REQUEST_SELECT_SHOP);
             viewPager = (ViewPager) findViewById(R.id.outlet_seletor_viewpager);
             setupViewPager(viewPager);
             tabLayout = (TabLayout) findViewById(R.id.outlet_seletor_tabs);
             tabLayout.setupWithViewPager(viewPager);
-        } else if (requestType == IntentPutExtras.REQUEST_SELECT_ITEM_FROM_SHOP) {
-            Log.i(AppState.TAG, "ShopScanner for " + IntentPutExtras.REQUEST_SELECT_ITEM_FROM_SHOP);
-            shopID = getIntent().getIntExtra(IntentPutExtras.ID,0);
-        }
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -109,7 +97,7 @@ private Activity activity;
         viewPager.setAdapter(adapter);
     }
 
-    @Override
+/*    @Override
     public void codeScannerResult(String barcodeResult) {
         Log.i(AppState.TAG, "In ShopScannerActivity ScannerResult " + barcodeResult);
 
@@ -123,7 +111,7 @@ private Activity activity;
             Log.i(AppState.TAG, "In ShopScannerActivity ScannerResult requestType:: REQUEST_SELECT_ITEM_FROM_SHOP ");
             handleShopItemSelctionRequest(barcodeResult);
         }
-    }
+    }*/
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -134,38 +122,65 @@ private Activity activity;
             }.getClass().getEnclosingMethod().getName()+"  No Data Received");
             return;
         }
-        int request_type = data.getIntExtra(IntentPutExtras.REQUEST_TYPE, 0);
-        Item newItem = (Item) data.getSerializableExtra(IntentPutExtras.NEW_ITEM_DATA);
+        BarcodeDetails barcodeDetails = (BarcodeDetails)data.getSerializableExtra(IntentPutExtras.CODE_OBJECT);
+       // Item newItem = (Item) data.getSerializableExtra(IntentPutExtras.NEW_ITEM_DATA);
         Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName());
-        switch (request_type)
+        switch (barcodeDetails.getActionType())
         {
-            case IntentPutExtras.RESPONSE_NEW_ITEM_SELECTED:
+            case OUTLET_SELECTOR:
+            case OUTLET_ITEM_SELECTOR:
             {
-                Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+                /*Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
                 }.getClass().getEnclosingMethod().getName()+"  RESPONSE_NEW_ITEM_SELECTED");
                 Intent intent = new Intent();
                 intent.putExtra(IntentPutExtras.REQUEST_TYPE, IntentPutExtras.RESPONSE_NEW_ITEM_SELECTED);
                 intent.putExtra(IntentPutExtras.NEW_ITEM_DATA, newItem);
                 setResult(IntentResultCode.RESULT_OK_NEW_ITEM_ADDITION, intent);
                 finish();
+                */
+
+                Intent intent = new Intent(this, OutletFront.class);
+                intent.putExtra(IntentPutExtras.DATA_TYPE, IntentPutExtras.ID);
+                intent.putExtra(IntentPutExtras.ID, barcodeDetails.getOutletID());
+                this.startActivityForResult(intent, IntentResultCode.TRANSACT_RESULT_OK);
+
+                //this.startActivity(intent);
+                //setResult(RESULT_OK, intent);
+                finish();
+
                 break;
             }
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId())
+        {
+            case R.id.outlet_fab_barcode_scanner:
+            {
+                Intent intent = new Intent(this, CodeScannerActivity.class);
+             //   intent.putExtra(IntentPutExtras.REQUEST_TYPE, IntentPutExtras.REQUEST_SELECT_SHOP);
+                this.startActivityForResult(intent, IntentResultCode.TRANSACT_RESULT_OK);
+                break;
+            }
+        }
+    }
+
+/*
     private void handleShopItemSelctionRequest(String barcodeResult) {
 
         //        Intent intent = new Intent();
 
-        String itemId = JSON_Extractor.extractShopItemIdAndVerify(barcodeResult,ModuleType.SHOP, shopID);
+        String itemId = JSON_Extractor.extractShopItemIdAndVerify(barcodeResult, OutletType.SHOP, outletID);
         Log.i(AppState.TAG, "handleShopItemSelctionRequest itemId :: "+itemId);
 
         if(itemId != null)
         {
         Intent intent = new Intent(getApplicationContext(), ItemCountSelectionActivity.class);
         intent.putExtra(IntentPutExtras.REQUEST_TYPE, IntentPutExtras.REQUEST_SELECT_ITEM_FROM_SHOP);
-        intent.putExtra(IntentPutExtras.MODULE_ID,shopID);
+        intent.putExtra(IntentPutExtras.MODULE_ID,outletID);
         intent.putExtra(IntentPutExtras.ID,itemId);
         //setResult(RESULT_OK, intent);
         startActivityForResult(intent, IntentRequestResponseType.REQUEST_SELECT_ITEM_FROM_SHOP);
@@ -183,32 +198,22 @@ private Activity activity;
             });
         }
     }
+*/
 
-    @Override
-    public void onBackPressed() {
 
-        Log.i(AppState.TAG, "Class: "+ this.getClass().getSimpleName()+ " Method: "+new Object(){}.getClass().getEnclosingMethod().getName());
-        if (requestType == IntentPutExtras.REQUEST_SELECT_SHOP)
-        {
-            Intent intent = new Intent();
-            setResult(RESULT_CANCELLED_SHOP_SELECTION, intent);
-        }
-        finish();
-    }
-
-    private void handleShopSelctionRequest(String barcodeResult) {
+/*    private void handleShopSelctionRequest(String barcodeResult) {
         JSONObject jObj = null;
         try {
             jObj = new JSONObject(barcodeResult);
             String type = jObj.getString(BarcodeDetails.MODULE_TYPE);
-            int shopID = jObj.getInt(BarcodeDetails.MODULE_ID);
+            int outletID = jObj.getInt(BarcodeDetails.MODULE_ID);
             Log.i(AppState.TAG, "In ShopScannerActivity ScannerResult TYPE:: " + type);
-            Log.i(AppState.TAG, "In ShopScannerActivity ScannerResult ID:: " + shopID);
+            Log.i(AppState.TAG, "In ShopScannerActivity ScannerResult ID:: " + outletID);
 
-            if (ModuleType.SHOP.equals(type)) {
+            if (OutletType.SHOP.equals(type)) {
                 Intent intent = new Intent(this, OutletFront.class);
                 intent.putExtra(IntentPutExtras.REQUEST_TYPE, IntentPutExtras.REQUEST_SELECT_SHOP);
-                intent.putExtra(IntentPutExtras.ID, shopID);
+                intent.putExtra(IntentPutExtras.ID, outletID);
                 this.startActivityForResult(intent, IntentResultCode.RESULT_OK_SHOP_SELECTION);
                 //this.startActivity(intent);
                 //setResult(RESULT_OK, intent);
@@ -217,6 +222,18 @@ private Activity activity;
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }*/
+
+    @Override
+    public void onBackPressed() {
+
+        Log.i(AppState.TAG, "Class: "+ this.getClass().getSimpleName()+ " Method: "+new Object(){}.getClass().getEnclosingMethod().getName());
+/*        if (requestType == IntentPutExtras.REQUEST_SELECT_SHOP)
+        {
+            Intent intent = new Intent();
+            setResult(RESULT_CANCELLED_SHOP_SELECTION, intent);
+        }*/
+        finish();
     }
 
     @Override
@@ -240,19 +257,7 @@ private Activity activity;
         }
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId())
-        {
-            case R.id.outlet_fab_barcode_scanner:
-            {
-                Intent intent = new Intent(this, CodeScannerActivity.class);
-                intent.putExtra(IntentPutExtras.REQUEST_TYPE, IntentPutExtras.REQUEST_SELECT_SHOP);
-                this.startActivityForResult(intent, IntentResultCode.RESULT_OK_SHOP_SELECTION);
-                break;
-            }
-        }
-    }
+
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();

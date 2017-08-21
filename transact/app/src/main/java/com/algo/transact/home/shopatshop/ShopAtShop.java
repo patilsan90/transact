@@ -2,6 +2,7 @@ package com.algo.transact.home.shopatshop;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -34,10 +35,13 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.algo.transact.AppConfig.IntentResultCode.RESULT_CANCELLED_SHOP_SELECTION;
-
 public class ShopAtShop extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener {
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+/*
     private static final String TAG = "CognitionMall";
     private static final int BARCODE_READER_REQUEST_CODE = 1;
     private static final String LOG_TAG = ShopAtShop.class.getSimpleName();
@@ -68,22 +72,27 @@ public class ShopAtShop extends AppCompatActivity implements
         requestType = getIntent().getStringExtra(IntentPutExtras.REQUEST_TYPE);
         shopID = getIntent().getIntExtra(IntentPutExtras.ID, 0);
 
+*/
 /*        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
-        }.getClass().getEnclosingMethod().getName() + " Calling sequence is wrong "+shopID);*/
+        }.getClass().getEnclosingMethod().getName() + " Calling sequence is wrong "+shopID);*//*
+
 
         Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName() + "Selected ShopID "+shopID);
 
 
-        /*if (requestType.equals(IntentPutExtras.REQUEST_SELECT_SHOP)) {
+        */
+/*if (requestType.equals(IntentPutExtras.REQUEST_SELECT_SHOP)) {
             shopID = getIntent().getIntExtra(IntentPutExtras.ID, 0);
         } else {
             Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
             }.getClass().getEnclosingMethod().getName() + " Calling sequence is wrong");
             this.finish();
-        }*/
+        }*//*
+
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+*/
 /*
         // Configure sign-in to request the user's ID, email address, and basic
 // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -97,7 +106,8 @@ public class ShopAtShop extends AppCompatActivity implements
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
-*/
+*//*
+
 
         //---------------------------
 
@@ -136,24 +146,28 @@ public class ShopAtShop extends AppCompatActivity implements
 
     public void scanItemAtShop(View view) {
 
-        /*if (AppState.checkProccedStatus() == false) {
+        */
+/*if (AppState.checkProccedStatus() == false) {
             Toast.makeText(this, "Please select mall first !!!", Toast.LENGTH_SHORT).show();
             return;
         }
-*/
+*//*
+
         Intent intent = new Intent(getApplicationContext(), ShopScannerActivity.class);
         intent.putExtra(IntentPutExtras.REQUEST_TYPE, IntentPutExtras.REQUEST_SELECT_ITEM_FROM_SHOP);
         intent.putExtra(IntentPutExtras.ID, shopID);
 
         startActivityForResult(intent, IntentRequestResponseType.REQUEST_SELECT_ITEM_FROM_SHOP);
 
-        /*
+        */
+/*
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         fragmentTransaction.replace(R.id.home_fragment, scanProduct);
         fragmentTransaction.commit();
-        */
+        *//*
+
     }
 
     @Override
@@ -163,11 +177,13 @@ public class ShopAtShop extends AppCompatActivity implements
             Log.e(AppState.TAG, "Error in OnActivityResult of ShopAtShop RequestCode: " + requestCode + " Shop Selection cancelled");
             this.finish();
             return;
-        } /*else if (resultCode != RESULT_OK) {
+        } */
+/*else if (resultCode != RESULT_OK) {
             Log.e(AppState.TAG, "Error in OnActivityResult of ShopAtShop RequestCode: " + requestCode);
             //this.finish();
             return;
-        }*/
+        }*//*
+
 
         //Toast.makeText(this, "ReqCode" + requestCode + " DATA " + data.getStringExtra(IntentPutExtras.SCANNER_RESPONSE), Toast.LENGTH_LONG).show();
 
@@ -177,11 +193,13 @@ public class ShopAtShop extends AppCompatActivity implements
             request_type = data.getIntExtra(IntentPutExtras.REQUEST_TYPE, 0);
 
         switch (request_type) {
-            /* case IntentPutExtras.REQUEST_SELECT_SHOP: {
+            */
+/* case IntentPutExtras.REQUEST_SELECT_SHOP: {
                 shopID = data.getIntExtra(IntentPutExtras.ID,0);
                 Log.i(AppState.TAG, "onActivityResult ShopAtShop SelectedShopID " + shopID);
                 break;
-            }*/
+            }*//*
+
 
             case IntentPutExtras.RESPONSE_NEW_ITEM_SELECTED: {
                 if (data != null) {
@@ -213,7 +231,8 @@ public class ShopAtShop extends AppCompatActivity implements
         mDrawerLayout.openDrawer(Gravity.LEFT);
     }
 
-    /*
+    */
+/*
     public void showMyCart(View view) {
 
         if (AppState.checkProccedStatus() == false) {
@@ -237,7 +256,8 @@ public class ShopAtShop extends AppCompatActivity implements
 
         fragmentTransaction.commit();
     }
-*/
+*//*
+
     public void locateCategories(View view) {
         Log.i("Home", "locateCategories Clicked");
         Intent myIntent = new Intent(this, LocateCategories.class);
@@ -352,4 +372,5 @@ public class ShopAtShop extends AppCompatActivity implements
                 });
     }
 // [END signOut]
+*/
 }

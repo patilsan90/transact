@@ -60,11 +60,11 @@ public class MyCartFragment extends Fragment implements AdapterView.OnItemClickL
                 // Click action
                 Log.i("Home", "checkoutCart Clicked");
                 Intent intent = new Intent(fragment.getActivity(), SASCheckoutActivity.class);
-                intent.putExtra(IntentPutExtras.REQUEST_TYPE, IntentPutExtras.REQUEST_SELECT_SHOP);
+                intent.putExtra(IntentPutExtras.DATA_TYPE, IntentPutExtras.ID);
                 intent.putExtra(IntentPutExtras.ID, shopID);
                 //this.startActivityForResult(intent, IntentResultCode.RESULT_OK_SHOP_SELECTION);
                 //startActivity(intent);
-                startActivityForResult(intent, IntentResultCode.RESULT_OK_SHOP_SELECTION);
+                startActivityForResult(intent, IntentResultCode.TRANSACT_RESULT_OK);
             }
         });
 
@@ -223,6 +223,15 @@ public class MyCartFragment extends Fragment implements AdapterView.OnItemClickL
     public void addItemToCart(Item newItem) {
         cart.getCartList().add(newItem);
         genericAdapter.notifyDataSetChanged();
+        Item cartItem;
+        int noOfItems = cart.getCartList().size();
+        double cart_total = 0;
+        for (int i = 0; i < noOfItems; i++) {
+            cartItem = cart.getCartList().get(i);
+            cart_total = cart_total + cartItem.getDiscounted_cost() * cartItem.getItem_count();
+        }
+        tvCartTotal.setText("Cart Total: " + cart_total+" Rs.");
+
         Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName()+" adding new item");
 

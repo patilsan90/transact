@@ -186,4 +186,6 @@ public class BarcodeScannerFragment extends Fragment {
             }
         }
     }
+
+
 }
