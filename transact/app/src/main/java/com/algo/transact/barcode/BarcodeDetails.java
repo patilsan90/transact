@@ -3,7 +3,7 @@ package com.algo.transact.barcode;
 import android.util.Log;
 
 import com.algo.transact.AppConfig.AppState;
-import com.algo.transact.AppConfig.OutletType;
+import com.algo.transact.home.outlet.OutletType;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -14,12 +14,15 @@ public interface IGenericAdapterRecyclerView {
 
     RecyclerView.ViewHolder addRecyclerViewHolder(View itemView, GenericAdapterRecyclerView genericAdapterRecyclerView);
 
+
     void bindViewHolder(RecyclerView.ViewHolder holder, ArrayList list, int position, GenericAdapterRecyclerView genericAdapterRecyclerView);
 
-    public void onRVClick(View view, int position, Boolean collapseState);
+    void rvListUpdateCompleteNotification(ArrayList list, GenericAdapterRecyclerView genericAdapterRecyclerView);
 
-    public void onRVLongClick(View view, int position);
+    void onRVClick(View view, int position, Boolean collapseState);
 
-    public void onRVExpand(View view, ArrayList list, int position, View rvPrevExpanded);
+    void onRVLongClick(View view, int position);
+
+    void onRVExpand(View view, ArrayList list, int position, View rvPrevExpanded);
 
 }

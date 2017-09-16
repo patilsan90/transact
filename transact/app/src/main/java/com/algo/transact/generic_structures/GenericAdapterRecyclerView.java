@@ -1,7 +1,6 @@
 package com.algo.transact.generic_structures;
 
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Rect;
@@ -16,20 +15,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseExpandableListAdapter;
-import android.widget.ExpandableListView;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.R;
-import com.algo.transact.home.shopatshop.CatalogueFragment;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Ravi Tamada on 18/05/16.
@@ -108,6 +100,9 @@ public class GenericAdapterRecyclerView extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         listener.bindViewHolder(holder, list, position, this);
+        Log.i(AppState.TAG, "In onBindViewHolder "+position);
+        if(position==(list.size()-1))
+            listener.rvListUpdateCompleteNotification(list, this);
 
     }
 

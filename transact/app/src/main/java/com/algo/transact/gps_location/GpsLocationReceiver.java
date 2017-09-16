@@ -15,6 +15,7 @@ import com.google.android.gms.location.LocationListener;
 
 public class GpsLocationReceiver extends BroadcastReceiver implements LocationListener {
 
+    public static GPSListener listener;
     @Override
     public void onLocationChanged(Location location) {
         Log.i(AppState.TAG,"GpsLocationReceiver onLocationChanged");
@@ -26,6 +27,8 @@ public class GpsLocationReceiver extends BroadcastReceiver implements LocationLi
         if (intent.getAction().matches("android.location.PROVIDERS_CHANGED")) {
             // react on GPS provider change action
             Log.i(AppState.TAG,"GpsLocationReceiver onReceive PROVIDERS_CHANGED");
+            if(listener != null)
+            listener.onGPSenable();
         }
     }
 

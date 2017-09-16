@@ -60,6 +60,11 @@ public class GenericAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
+
+        Log.i(AppState.TAG, "In getItem "+position);
+        if(position==(list.size()-1))
+           listener.listUpdateCompleteNotification(list, this);
+
         return getItem(position);
     }
 
@@ -75,14 +80,20 @@ public class GenericAdapter extends BaseAdapter {
             view = inflater.inflate(listViewItemId, parent, false);
         }
         if (listener != null)
+        {
+            if(index ==(list.size()-1))
+                listener.listUpdateCompleteNotification(list, this);
+
             view = listener.addViewItemToList(view, list.get(index), index);
+
+        }
         else if (spinnerListener != null)
             view = spinnerListener.addViewItemToList(view, list.get(index), index);
 
         //  TextView shop_display_name = (TextView) view.findViewById(R.id.closest_shop_shop_display_name);
         //    TextView shop_name = (TextView) view.findViewById(R.id.closest_shop_shop_display_name);
 
-//        ShopDetails details=(ShopDetails) list.get(index);
+//        Outlet details=(Outlet) list.get(index);
         //       shop_display_name.setText(" " + details.getShopDisplayName());
         //      shop_name.setText(" " + details.getShopName());
 

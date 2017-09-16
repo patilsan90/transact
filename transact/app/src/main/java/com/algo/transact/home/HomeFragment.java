@@ -28,8 +28,8 @@ public class HomeFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        LinearLayout shop_at_shop = (LinearLayout) view.findViewById(R.id.shop_at_shop);
-        shop_at_shop.setOnClickListener(new HomeClickListener(this));
+        LinearLayout restaurants = (LinearLayout) view.findViewById(R.id.fragment_home_restaurants);
+        restaurants.setOnClickListener(new HomeClickListener(this));
 
         return view;
     }

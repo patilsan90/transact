@@ -1,4 +1,5 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,309 +18,608 @@
             android:paddingTop="0dp">
 
             <LinearLayout
-                android:id="@+id/wallet_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="0dp"
-                android:background="#6495ED"
-                android:orientation="horizontal"
-                android:padding="5dp">
+                android:background="@color/appBarColor"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/home_page_sections_margin">
 
-                <LinearLayout
-                    android:id="@+id/add_wallet_money"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".3"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp">
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/home_page_sections_margin"
+                    android:layout_marginRight="@dimen/home_page_sections_margin"
+                    android:layout_marginTop="@dimen/home_page_sections_margin"
+                    android:elevation="3dp"
+                    card_view:cardCornerRadius="0dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/ic_add_wallet_money" />
+                        android:background="@color/appBackgroundColor"
+                        android:paddingTop="@dimen/home_page_sections_padding"
+                        android:paddingBottom="@dimen/home_page_sections_padding"
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="Add\n Money"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="#FFFFFF"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_weight="1"></Space>
 
-                <LinearLayout
-                    android:id="@+id/receive_wallet_money"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".3"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp">
+                        <LinearLayout
+                            android:id="@+id/fragment_home_wallet_add_money"
+                            android:layout_width="@dimen/home_page_smart_cards_dimension"
+                            android:layout_height="@dimen/home_page_smart_cards_dimension"
+                            android:layout_margin="@dimen/home_page_smart_cards_margin"
+                            android:background="@color/appBackgroundColor2"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="@dimen/home_page_smart_cards_padding">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/ic_add_wallet_money" />
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/ic_restaurant" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="Receive\n Money"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="#FFFFFF"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Add\nMoney"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@color/home_page_smart_cards_text_color"
+                                android:textSize="@dimen/home_page_smart_cards_text_size" />
+                        </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/passbook_wallet_money"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".3"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp">
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_weight="1"></Space>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/ic_passbook_wallet" />
+                        <LinearLayout
+                            android:id="@+id/fragment_home_wallet_receive_money"
+                            android:layout_width="@dimen/home_page_smart_cards_dimension"
+                            android:layout_height="@dimen/home_page_smart_cards_dimension"
+                            android:layout_margin="@dimen/home_page_smart_cards_margin"
+                            android:background="@color/appBackgroundColor2"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="@dimen/home_page_smart_cards_padding">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="Passbook"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="#FFFFFF"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/ic_restaurant" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Accept\nPayment"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@color/home_page_smart_cards_text_color"
+                                android:textSize="@dimen/home_page_smart_cards_text_size" />
+                        </LinearLayout>
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_weight="1"></Space>
+
+                        <LinearLayout
+                            android:id="@+id/fragment_home_wallet_passbook"
+                            android:layout_width="@dimen/home_page_smart_cards_dimension"
+                            android:layout_height="@dimen/home_page_smart_cards_dimension"
+
+                            android:layout_margin="@dimen/home_page_smart_cards_margin"
+                            android:background="@color/appBackgroundColor2"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="@dimen/home_page_smart_cards_padding">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/ic_restaurant" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Passbook"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@color/home_page_smart_cards_text_color"
+                                android:textSize="@dimen/home_page_smart_cards_text_size" />
+                        </LinearLayout>
+
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_weight="1"></Space>
+
+                        <LinearLayout
+                            android:id="@+id/fragment_home_wallet_money_transfer"
+                            android:layout_width="@dimen/home_page_smart_cards_dimension"
+                            android:layout_height="@dimen/home_page_smart_cards_dimension"
+                            android:layout_margin="@dimen/home_page_smart_cards_margin"
+                            android:background="@color/appBackgroundColor2"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="@dimen/home_page_smart_cards_padding">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/ic_restaurant" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Money\nTransfer"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@color/home_page_smart_cards_text_color"
+                                android:textSize="@dimen/home_page_smart_cards_text_size" />
+                        </LinearLayout>
 
 
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_weight="1"></Space>
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
             </LinearLayout>
+
 
             <LinearLayout
                 android:id="@+id/main_products_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:background="#F0FFF0"
-                android:orientation="horizontal"
-                android:padding="5dp">
-
-                <LinearLayout
-                    android:id="@+id/shop_at_shop"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".3"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/ic_shop_at_shop" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="S @\nS"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="#2327E5"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/order_at_restaurant"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".3"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/ic_shop_at_shop" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="O @\n R"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="#2327E5"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/shop_online"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".3"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/ic_shop_at_shop" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:onClick="showMyCart"
-                        android:text="S \n O"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="#2327E5"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/my_house"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".3"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/ic_shop_at_shop" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="My \n H"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="#2327E5"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/book_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:background="#F0FFF0"
+                android:layout_marginLeft="@dimen/home_page_sections_margin"
+                android:layout_marginRight="@dimen/home_page_sections_margin"
+                android:background="@color/appBackgroundColor2"
                 android:orientation="vertical"
-                android:padding="5dp">
-
+                android:padding="@dimen/home_page_sections_padding"
+                >
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Book"
+                    android:text="Online Stores"
+                    android:layout_marginTop="@dimen/home_page_sections_padding"
+                    android:paddingLeft="@dimen/home_page_smart_cards_padding"
+                    android:background="@color/appBackgroundColor"
+                    android:paddingTop="@dimen/home_page_sections_padding"
                     android:textColor="#2327E5" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="2dp"
+                    android:background="@color/appBackgroundColor"
                     android:orientation="horizontal">
 
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"></Space>
 
                     <LinearLayout
-                        android:id="@+id/book_marriage_hall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".3"
+                        android:id="@+id/fragment_home_restaurants"
+                        android:layout_width="@dimen/home_page_smart_cards_dimension"
+                        android:layout_height="@dimen/home_page_smart_cards_dimension"
+                        android:layout_margin="@dimen/home_page_smart_cards_margin"
+                        android:background="@color/appBackgroundColor2"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:paddingLeft="5dp"
-                        android:paddingRight="5dp">
+                        android:padding="@dimen/home_page_smart_cards_padding">
 
-                        <TextView
+                        <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/ic_shop_at_shop" />
+                            android:background="@drawable/ic_restaurant" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="M\n H"
+                            android:text="Restaurants"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textColor="#2327E5"
-                            android:textStyle="bold" />
+                            android:textColor="@color/home_page_smart_cards_text_color"
+                            android:textSize="@dimen/home_page_smart_cards_text_size" />
                     </LinearLayout>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"></Space>
+
+                    <LinearLayout
+                        android:id="@+id/fragment_home_groceries"
+                        android:layout_width="@dimen/home_page_smart_cards_dimension"
+                        android:layout_height="@dimen/home_page_smart_cards_dimension"
+                        android:layout_margin="@dimen/home_page_smart_cards_margin"
+                        android:background="@color/appBackgroundColor2"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="@dimen/home_page_smart_cards_padding">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ic_restaurant" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Groceries"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/home_page_smart_cards_text_color"
+                            android:textSize="@dimen/home_page_smart_cards_text_size" />
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"></Space>
+
+                    <LinearLayout
+                        android:id="@+id/fragment_home_vegetables"
+                        android:layout_width="@dimen/home_page_smart_cards_dimension"
+                        android:layout_height="@dimen/home_page_smart_cards_dimension"
+                        android:layout_margin="@dimen/home_page_smart_cards_margin"
+                        android:background="@color/appBackgroundColor2"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="@dimen/home_page_smart_cards_padding">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ic_restaurant" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Vegetables"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/home_page_smart_cards_text_color"
+                            android:textSize="@dimen/home_page_smart_cards_text_size" />
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"></Space>
+
+                    <LinearLayout
+                        android:id="@+id/fragment_home_stationary"
+                        android:layout_width="@dimen/home_page_smart_cards_dimension"
+                        android:layout_height="@dimen/home_page_smart_cards_dimension"
+
+                        android:layout_margin="@dimen/home_page_smart_cards_margin"
+                        android:background="@color/appBackgroundColor2"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="@dimen/home_page_smart_cards_padding">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ic_restaurant" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Stationary"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/home_page_smart_cards_text_color"
+                            android:textSize="@dimen/home_page_smart_cards_text_size" />
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"></Space>
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/appBackgroundColor"
+                    android:paddingBottom="@dimen/home_page_sections_padding"
+                    android:orientation="horizontal">
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"></Space>
+
+                    <LinearLayout
+                        android:id="@+id/fragment_home_meat"
+                        android:layout_width="@dimen/home_page_smart_cards_dimension"
+                        android:layout_height="@dimen/home_page_smart_cards_dimension"
+                        android:layout_margin="@dimen/home_page_smart_cards_margin"
+                        android:background="@color/appBackgroundColor2"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="@dimen/home_page_smart_cards_padding">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ic_restaurant" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Meat"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/home_page_smart_cards_text_color"
+                            android:textSize="@dimen/home_page_smart_cards_text_size" />
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"></Space>
+
+                    <LinearLayout
+                        android:id="@+id/fragment_home_newspapers"
+                        android:layout_width="@dimen/home_page_smart_cards_dimension"
+                        android:layout_height="@dimen/home_page_smart_cards_dimension"
+                        android:layout_margin="@dimen/home_page_smart_cards_margin"
+                        android:background="@color/appBackgroundColor2"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="@dimen/home_page_smart_cards_padding">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ic_restaurant" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Newspapers"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/home_page_smart_cards_text_color"
+                            android:textSize="@dimen/home_page_smart_cards_text_size" />
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"></Space>
+
+                    <LinearLayout
+                        android:id="@+id/fragment_home_laundry"
+                        android:layout_width="@dimen/home_page_smart_cards_dimension"
+                        android:layout_height="@dimen/home_page_smart_cards_dimension"
+                        android:layout_margin="@dimen/home_page_smart_cards_margin"
+                        android:background="@color/appBackgroundColor2"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="@dimen/home_page_smart_cards_padding">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ic_restaurant" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Laundry"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/home_page_smart_cards_text_color"
+                            android:textSize="@dimen/home_page_smart_cards_text_size" />
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"></Space>
+
+                    <LinearLayout
+                        android:layout_width="@dimen/home_page_smart_cards_dimension"
+                        android:layout_height="@dimen/home_page_smart_cards_dimension"
+
+                        android:layout_margin="@dimen/home_page_smart_cards_margin"
+                        android:background="@color/appBackgroundColor"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="@dimen/home_page_smart_cards_padding">
+
+                        <!--                        <ImageView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:background="@drawable/ic_restaurant" />
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:gravity="center"
+                                                    android:text="Stationary"
+                                                    android:textAppearance="?android:attr/textAppearanceSmall"
+                                                    android:textSize="@dimen/home_page_smart_cards_text_size"
+                                                    android:textColor="@color/home_page_smart_cards_text_color" />-->
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"></Space>
+
+                </LinearLayout>
 
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/food_court_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:background="#F0FFF0"
+                android:layout_marginLeft="@dimen/home_page_sections_margin"
+                android:layout_marginRight="@dimen/home_page_sections_margin"
+                android:background="@color/appBackgroundColor2"
                 android:orientation="vertical"
-                android:padding="5dp">
+                android:padding="@dimen/home_page_sections_padding">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Food Court"
+                    android:text="Smart Solutions"
+                    android:layout_marginTop="@dimen/home_page_sections_padding"
+                    android:paddingLeft="@dimen/home_page_smart_cards_padding"
+                    android:background="@color/appBackgroundColor"
+                    android:paddingTop="@dimen/home_page_sections_padding"
                     android:textColor="#2327E5" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="2dp"
+                    android:background="@color/appBackgroundColor"
+                    android:paddingBottom="@dimen/home_page_sections_padding"
                     android:orientation="horizontal">
 
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"></Space>
 
                     <LinearLayout
-                        android:id="@+id/poha_order"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".3"
+                        android:id="@+id/fragment_home_smart_home"
+                        android:layout_width="@dimen/home_page_smart_cards_dimension"
+                        android:layout_height="@dimen/home_page_smart_cards_dimension"
+                        android:layout_margin="@dimen/home_page_smart_cards_margin"
+                        android:background="@color/appBackgroundColor2"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:paddingLeft="5dp"
-                        android:paddingRight="5dp">
+                        android:padding="@dimen/home_page_smart_cards_padding">
 
-                        <TextView
+                        <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/ic_shop_at_shop" />
+                            android:background="@drawable/ic_restaurant" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="Po"
+                            android:text="Smart Home"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textColor="#2327E5"
-                            android:textStyle="bold" />
+                            android:textColor="@color/home_page_smart_cards_text_color"
+                            android:textSize="@dimen/home_page_smart_cards_text_size" />
                     </LinearLayout>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"></Space>
+
+                    <LinearLayout
+                        android:id="@+id/fragment_home_smart_bike"
+                        android:layout_width="@dimen/home_page_smart_cards_dimension"
+                        android:layout_height="@dimen/home_page_smart_cards_dimension"
+                        android:layout_margin="@dimen/home_page_smart_cards_margin"
+                        android:background="@color/appBackgroundColor2"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="@dimen/home_page_smart_cards_padding">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ic_restaurant" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Bike Lock"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/home_page_smart_cards_text_color"
+                            android:textSize="@dimen/home_page_smart_cards_text_size" />
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"></Space>
+
+                    <LinearLayout
+
+                        android:layout_width="@dimen/home_page_smart_cards_dimension"
+                        android:layout_height="@dimen/home_page_smart_cards_dimension"
+                        android:layout_margin="@dimen/home_page_smart_cards_margin"
+                        android:background="@color/appBackgroundColor"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="@dimen/home_page_smart_cards_padding">
+
+                        <!--
+                                                <ImageView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:background="@drawable/ic_restaurant" />
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:gravity="center"
+                                                    android:text="Laundry"
+                                                    android:textAppearance="?android:attr/textAppearanceSmall"
+                                                    android:textSize="@dimen/home_page_smart_cards_text_size"
+                                                    android:textColor="@color/home_page_smart_cards_text_color" />
+                        -->
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"></Space>
+
+                    <LinearLayout
+                        android:layout_width="@dimen/home_page_smart_cards_dimension"
+                        android:layout_height="@dimen/home_page_smart_cards_dimension"
+
+                        android:layout_margin="@dimen/home_page_smart_cards_margin"
+                        android:background="@color/appBackgroundColor"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="@dimen/home_page_smart_cards_padding">
+
+                        <!--                        <ImageView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:background="@drawable/ic_restaurant" />
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:gravity="center"
+                                                    android:text="Stationary"
+                                                    android:textAppearance="?android:attr/textAppearanceSmall"
+                                                    android:textSize="@dimen/home_page_smart_cards_text_size"
+                                                    android:textColor="@color/home_page_smart_cards_text_color" />-->
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"></Space>
+
                 </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>

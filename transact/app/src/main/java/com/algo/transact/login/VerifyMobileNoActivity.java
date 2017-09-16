@@ -14,7 +14,6 @@ import com.algo.transact.AppConfig.HTTPReqURLConfig;
 import com.algo.transact.AppConfig.SQLiteHandler;
 import com.algo.transact.AppConfig.SessionManager;
 import com.algo.transact.home.MainActivity;
-import com.algo.transact.home.shopatshop.ShopAtShop;
 import com.algo.transact.R;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -67,7 +66,7 @@ public class VerifyMobileNoActivity extends AppCompatActivity {
     public void submitOTP(View view) {
         Log.i("Login", "Submitting OTP");
 
-        //Intent myIntent = new Intent(this, ShopAtShop.class);
+        //Intent myIntent = new Intent(this, OutletFront.class);
         //myIntent.putExtra("isVerifySuccess", "YES"); //Optional parameters
         ///this.startActivity(myIntent);
         //finishActivities();

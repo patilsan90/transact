@@ -1,7 +1,7 @@
 package com.algo.transact.AppConfig;
 
 import com.algo.transact.home.MainActivity;
-import com.algo.transact.home.shopatshop.data_beans.Item;
+import com.algo.transact.home.outlet.data_beans.Item;
 import com.algo.transact.home.offers.OfferItem;
 import com.algo.transact.login.LoginActivity;
 

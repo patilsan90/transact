@@ -5,17 +5,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/appBackgroundColor"
-    tools:context=".home.shopatshop.mycart.MyCartFragment">
+    tools:context=".home.outlet.outlet_front.MyCartFragment">
 
   <include layout="@layout/content_main_my_cart" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/my_cart_fab_checkout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="10dp"
-        android:src="@drawable/ic_cart_checkout"
-        />
 
 </android.support.design.widget.CoordinatorLayout>

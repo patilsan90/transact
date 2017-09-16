@@ -44,11 +44,8 @@
     <!--if your App ID is 1234567, you should use fb1234567 -->
     <string name="fb_login_protocol_scheme">fb449526885383689</string>
 
-    <string-array name="plannets">
-        <item> planet 1</item>
-        <item> planet 2</item>
-        <item> planet 3</item>
-        <item> planet 4</item>
-        <item> planet 5</item>
-    </string-array>
+    <string name="outlets_list_placeholder">Please enable GPS to populate closest outlets list</string>
+    <string name="carts_list_placeholder"> You don\'t have any incomplete carts</string>
+    <string name="my_cart_placeholder">Your cart is empty \n\n Please add some items using QR/BAR code scanner \n or \nCatalogue list</string>
+
 </resources>

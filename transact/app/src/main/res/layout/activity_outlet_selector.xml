@@ -8,7 +8,7 @@
     android:scrollX="0dp"
     android:scrollY="0dp"
     android:background="@color/appBackgroundColor"
-    tools:context="com.algo.transact.home.shopatshop.ShopScannerActivity">
+    tools:context="com.algo.transact.home.outlet.ShopScannerActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

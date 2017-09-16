@@ -3,23 +3,28 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="10dp">
+    android:background="@color/appBackgroundColor"
+    android:padding="10dp"
+    android:layout_marginRight="10sp"
+    android:layout_marginLeft="10sp">
 
             <ImageView
                 android:id="@+id/catalogue_menu_item_image"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_cast_on_light"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="10sp"
+                android:layout_marginLeft="10sp"
                 android:textAppearance="?android:attr/textAppearanceMedium"/>
 
             <TextView
                 android:id="@+id/catalogue_menu_item_name"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:text="Catalogue item"
-                android:textColor="#FFFFFF"
+                android:textColor="#6495ED"
                 android:textStyle="bold"
+                android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:textAppearance="?android:attr/textAppearanceSmall"/>
 

@@ -48,15 +48,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".home.shopatshop.ShopAtShop" />
-        <activity android:name=".home.shopatshop.OutletFront" />
+        <activity android:name=".home.outlet.outlet_front.OutletFront" />
 
         <activity android:name=".login.LoginActivity" />
         <activity android:name=".login.VerifyMobileNoActivity" />
         <activity
             android:name=".home.LocateCategories"
             android:label="Locate Categories" />
-        <activity android:name=".home.shopatshop.ItemCountSelectionActivity" />
+        <activity android:name=".home.outlet.ItemCountSelectionActivity" />
         <activity android:name=".login.EnterMobileNoActivity" />
         <activity
             android:name="com.facebook.CustomTabActivity"
@@ -70,8 +69,8 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".home.shopatshop.SASOffersActivity" />
-        <activity android:name=".home.shopatshop.SASCheckoutActivity" />
+        <activity android:name=".home.outlet.SASOffersActivity" />
+        <activity android:name=".home.outlet.SASCheckoutActivity" />
         <activity android:name=".barcode.TestBarcodeScannerActivity">
 
             <!--
@@ -82,8 +81,8 @@
             </intent-filter>
             -->
         </activity>
-        <activity android:name=".home.shopatshop.ShopScannerActivity" />
-        <activity android:name=".home.shopatshop.OutletSelectorActivity" />
+        <activity android:name=".home.outlet.ShopScannerActivity" />
+        <activity android:name=".home.outlet.outlet_selection.OutletSelectorActivity" />
 
         <receiver android:name=".gps_location.GpsLocationReceiver">
             <intent-filter>

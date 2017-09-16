@@ -10,36 +10,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_gravity="center_vertical"
-            android:background="#6495ED"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/catalogue_drawer_open"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5sp"
-                android:background="@null"
-                android:onClick="openDrawer"
-                android:gravity="center_vertical"
-                android:src="@drawable/ic_action_drawer_open" />
-
-            <Spinner
-                android:id="@+id/catalogue_spinner_cat_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20sp"
-                android:gravity="center_vertical"
-                android:layout_weight="1"
-                android:padding="0dp"
-                android:spinnerMode="dropdown"
-                android:text="All Categories" />
-        </LinearLayout>
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/catalogue_rv_catalogue"
             android:layout_width="match_parent"
@@ -47,7 +17,10 @@
             android:layout_weight="1"
             android:nestedScrollingEnabled="true"
             android:scrollbars="vertical"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            android:paddingBottom="100sp"
+            android:clipToPadding="false"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            />
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

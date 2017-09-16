@@ -1,0 +1,31 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+tools:context="com.algo.transact.home.outlet.outlet_selection.IncompleteCartsListFragment">
+
+<!--
+<com.algo.transact.utils.NonScrollListView
+    android:id="@+id/carts_list_lv_carts_list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp" />
+-->
+    <ListView
+        android:id="@+id/carts_list_lv_carts_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:divider="@null"
+        />
+
+    <TextView android:id="@+id/carts_list_list_tv_placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_margin="15sp"
+        android:text="@string/carts_list_placeholder" />
+
+</LinearLayout>
