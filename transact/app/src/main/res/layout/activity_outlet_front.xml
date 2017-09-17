@@ -26,23 +26,7 @@
         android:dividerHeight="0dp"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/drawer_item_user_margin"
-            android:background="#2F4F4F"
-            android:paddingBottom="@dimen/drawer_item_margin"
-            android:paddingLeft="@dimen/drawer_item_margin"
-            android:paddingTop="@dimen/drawer_item_margin"
-            android:text="Offers"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#D3D3D3"
-            android:textStyle="bold" />
-
-        <ListView
-            android:id="@+id/sas_catalog_menu_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+        <include layout="@layout/content_main_outlet_front_drawer" />
 
     </LinearLayout>
 

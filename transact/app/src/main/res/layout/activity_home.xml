@@ -35,7 +35,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/drawer_item_user_margin"
+            android:layout_marginBottom="@dimen/drawer_item_margin"
             android:background="#2F4F4F"
             android:paddingBottom="@dimen/drawer_item_margin"
             android:paddingLeft="@dimen/drawer_item_margin"

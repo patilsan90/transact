@@ -1,6 +1,7 @@
 package com.algo.transact.home.outlet.outlet_front;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.AppConfig.IntentPutExtras;
@@ -21,7 +23,7 @@ import com.algo.transact.home.outlet.ListItemHeaderHolder;
 import com.algo.transact.home.outlet.data_beans.Cart;
 import com.algo.transact.home.outlet.data_beans.Item;
 import com.algo.transact.home.outlet.data_beans.Outlet;
-import com.algo.transact.home.outlet.data_beans.SubCategoryItem;
+import com.algo.transact.home.outlet.data_beans.SubCategory;
 import com.algo.transact.home.outlet.data_retrivals.CartsFactory;
 import com.algo.transact.home.outlet.data_retrivals.CatalogueRetriver;
 
@@ -34,22 +36,25 @@ import java.util.HashMap;
 public class CatalogueFragment extends Fragment implements IGenericAdapterRecyclerView {
 
 
-   // ArrayList<CategoryItem> alCaterory;
-    HashMap<SubCategoryItem, ArrayList<Item>> hmCatalogueItems = new HashMap<>();
+   // ArrayList<Category> alCaterory;
+    HashMap<SubCategory, ArrayList<Item>> hmCatalogueItems = new HashMap<>();
     private int shopID;
     private int selectedCatagory;
   //  private GenericAdapter genericAdapter;
-    private GenericAdapterRecyclerView rvGenericAdapter;
+    private GenericAdapterRecyclerView rvSubCategoryAdapter;
     private GenericAdapterRecyclerView rvItemsAdapter;
     private RecyclerView rvCatalogueList;
     private RecyclerView rvItemsList;
     private View vPrevExpanded;
     private View vCurrentExpanded;
     private ArrayList<Boolean> alisExpanded = new ArrayList<>();
-    private ArrayList<SubCategoryItem> alSubCaterory;
+    private ArrayList<SubCategory> alSubCaterory;
     private int scrollState;
     private Outlet outlet;
+    private TextView tvcataloguePlaceholder;
+    private Cart currentCart;
 
+   // ProgressDialog catalogueItemsLoadingdialog;
     public CatalogueFragment() {
         // Required empty public constructor
     }
@@ -63,24 +68,50 @@ public class CatalogueFragment extends Fragment implements IGenericAdapterRecycl
         shopID = getActivity().getIntent().getIntExtra(IntentPutExtras.ID, 0);
         outlet  = (Outlet) getActivity().getIntent().getSerializableExtra(IntentPutExtras.OUTLET_OBJECT);
 
-        Spinner catalogueMenu = (Spinner) view.findViewById(R.id.catalogue_spinner_cat_list);
+        currentCart = CartsFactory.getInstance().getCart(outlet);
+
+       // Spinner catalogueMenu = (Spinner) view.findViewById(R.id.catalogue_spinner_cat_list);
+
        // alCaterory = CatalogueRetriver.getCategories(shopID);
        // genericAdapter = new GenericAdapter(this.getActivity(), this, catalogueMenu, alCaterory, R.layout.list_item_catalogue_menu);
 
-
-        alSubCaterory = CatalogueRetriver.getSubCategories(shopID, 1);
-
-        for (int i = 0; i < alSubCaterory.size(); i++) {
-            alisExpanded.add(false);
-            hmCatalogueItems.put(alSubCaterory.get(i), null);
-        }
-
         rvCatalogueList = (RecyclerView) view.findViewById(R.id.catalogue_rv_catalogue);
-        rvGenericAdapter = new GenericAdapterRecyclerView(this.getContext(), this, rvCatalogueList, alSubCaterory, R.layout.list_item_view_header, 1, true);
+        tvcataloguePlaceholder = (TextView) view.findViewById(R.id.catalogue_tv_placeholder);
 
-
+       // catalogueItemsLoadingdialog = ProgressDialog.show(getActivity(), "Catalogue", "Loading...", true);
 
         return view;
+    }
+
+void updateSubCategory(int category)
+    {
+        if(selectedCatagory != category) {
+            selectedCatagory = category;
+            alSubCaterory = CatalogueRetriver.getSubCategories(shopID, selectedCatagory);
+
+            if(alSubCaterory.size()==0)
+            {
+                rvCatalogueList.setVisibility(View.GONE);
+                tvcataloguePlaceholder.setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                tvcataloguePlaceholder.setVisibility(View.GONE);
+                rvCatalogueList.setVisibility(View.VISIBLE);
+            }
+
+            initializeHashMap(alSubCaterory);
+
+            rvSubCategoryAdapter = new GenericAdapterRecyclerView(this.getContext(), this, rvCatalogueList, alSubCaterory, R.layout.list_item_view_header, 1, true);
+        }
+    }
+
+void initializeHashMap(ArrayList<SubCategory> sc)
+    {
+        for (int i = 0; i < sc.size(); i++) {
+            alisExpanded.add(false);
+            hmCatalogueItems.put(sc.get(i), null);
+        }
     }
 
     @Override
@@ -88,7 +119,7 @@ public class CatalogueFragment extends Fragment implements IGenericAdapterRecycl
    /*     Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName() + " Selected ShopID " + shopID);
 */
-        if (genericAdapterRecyclerView == rvGenericAdapter)
+        if (genericAdapterRecyclerView == rvSubCategoryAdapter)
             return new ListItemHeaderHolder(itemView, this);
         if (genericAdapterRecyclerView == rvItemsAdapter) {
             rvCatalogueList.scrollToPosition(scrollState);
@@ -101,20 +132,35 @@ public class CatalogueFragment extends Fragment implements IGenericAdapterRecycl
     @Override
     public void bindViewHolder(RecyclerView.ViewHolder holder, ArrayList list, int position, GenericAdapterRecyclerView genericAdapterRecyclerView) {
 
-
-  /*      Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+ /*      Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName() + " Selected ShopID " + shopID);
 */
-        if (genericAdapterRecyclerView == rvGenericAdapter) {
-            SubCategoryItem subCat = (SubCategoryItem) list.get(position);
+        if (genericAdapterRecyclerView == rvSubCategoryAdapter) {
+            SubCategory subCat = (SubCategory) list.get(position);
             final ListItemHeaderHolder viewHolder = (ListItemHeaderHolder) holder;
-            viewHolder.tvItemName.setText(subCat.getCategoryName());
+            viewHolder.tvItemName.setText(subCat.getSubCategoryName());
+
+            Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+            }.getClass().getEnclosingMethod().getName() + " Selected ShopID " + shopID +" SubCategoryAdapter");
         } else {
             if (genericAdapterRecyclerView == rvItemsAdapter) {
+                Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+                }.getClass().getEnclosingMethod().getName() + " Selected ShopID " + shopID +" ItemsAdapter");
                 final Item item = (Item) list.get(position);
                 final ItemViewHolder viewHolder = (ItemViewHolder) holder;
                 viewHolder.tvItemName.setText("" + item.getItem_name());
-                viewHolder.tvNoOfItems.setText("" + item.getItem_count());
+                int cartSize= currentCart.getCartList().size();
+                int total_items_in_cart=0;
+
+                for(int i =0; i< cartSize;i++)
+                {
+                    if(currentCart.getCartList().get(i).getItem_id() == item.getItem_id())
+                    {
+                        total_items_in_cart = currentCart.getCartList().get(i).getItem_count();
+                    }
+                }
+
+                viewHolder.tvNoOfItems.setText("" + total_items_in_cart);
                 viewHolder.tvQuantity.setText("" + item.getItem_quantity() + " " + item.qtTypeInString(item.getItem_form()));
                 viewHolder.tvCost.setText("" + item.getActual_cost());
                 viewHolder.ivIncrease.setOnClickListener(new View.OnClickListener() {
@@ -226,7 +272,9 @@ public class CatalogueFragment extends Fragment implements IGenericAdapterRecycl
                 alisExpanded.set(position, true);
                 ArrayList<Item> alItemsList = hmCatalogueItems.get(alSubCaterory.get(position));
                 if (alItemsList == null) {
-                    alItemsList = CatalogueRetriver.getItems(shopID, selectedCatagory, position);
+                    Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+                    }.getClass().getEnclosingMethod().getName() + " Category :: "+selectedCatagory +" Sub Category:: "+alSubCaterory.get(position).getSubCategoryID());
+                    alItemsList = CatalogueRetriver.getCatalogueItems(shopID, selectedCatagory,alSubCaterory.get(position).getSubCategoryID());
                     hmCatalogueItems.put(alSubCaterory.get(position), alItemsList);
                 }
                 ivCollapseState = (ImageView) view.findViewById(R.id.header_iv_indicator);
@@ -239,7 +287,7 @@ public class CatalogueFragment extends Fragment implements IGenericAdapterRecycl
                 Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
                 }.getClass().getEnclosingMethod().getName() + " Line Number: " + new Throwable().getStackTrace()[0].getLineNumber());
                 alisExpanded.set(position, false);
-                ArrayList<SubCategoryItem> alEmptySubCaterory = new ArrayList<>();
+                ArrayList<SubCategory> alEmptySubCaterory = new ArrayList<>();
                 ivCollapseState = (ImageView) view.findViewById(R.id.header_iv_indicator);
                 ivCollapseState.setImageResource(R.drawable.ic_header_collapsed_arrow);
                 new GenericAdapterRecyclerView(this.getContext(), this, rvItemsList, alEmptySubCaterory, R.layout.list_item_view_header, 1, false);
@@ -254,6 +302,40 @@ public class CatalogueFragment extends Fragment implements IGenericAdapterRecycl
                         }
                 }
             }
+    }
+
+    public void onLostFocusNotification()
+    {
+        if (rvItemsList != null) {
+            int size =expandedViewList.size()-1;
+            for (int i = 0; i < size; i++)
+                alisExpanded.set(i, false);
+
+
+            for (int i=0;i< size;i++)
+            {
+                Log.i(AppState.TAG, "Removing Item --------------------------------------------------");
+
+                View rView = expandedViewList.get(i);
+                ImageView ivCollapseState = (ImageView) rView.findViewById(R.id.header_iv_indicator);
+                RecyclerView rvList = (RecyclerView) rView.findViewById(R.id.header_rv_items_list);
+                ivCollapseState.setImageResource(R.drawable.ic_header_collapsed_arrow);
+                ArrayList<SubCategory> alEmptySubCaterory = new ArrayList<>();
+                new GenericAdapterRecyclerView(this.getContext(), this, rvList, alEmptySubCaterory, R.layout.list_item_view_header, 1, false);
+            }
+
+            while(expandedViewList.size()>1)
+            {
+                Log.i(AppState.TAG, "Removing Item ----------------------------------------------fff----");
+                expandedViewList.remove(0);
+            }
+        }
+
+    }
+    public void onFocusNotification()
+    {
+        if(rvItemsAdapter!=null)
+            rvItemsAdapter.notifyDataSetChanged();
     }
 
 public void collapseList(View view)
@@ -271,7 +353,7 @@ public void collapseList(View view)
                 ImageView ivCollapseState = (ImageView) rView.findViewById(R.id.header_iv_indicator);
                 RecyclerView rvList = (RecyclerView) rView.findViewById(R.id.header_rv_items_list);
                 ivCollapseState.setImageResource(R.drawable.ic_header_collapsed_arrow);
-                ArrayList<SubCategoryItem> alEmptySubCaterory = new ArrayList<>();
+                ArrayList<SubCategory> alEmptySubCaterory = new ArrayList<>();
                 new GenericAdapterRecyclerView(this.getContext(), this, rvList, alEmptySubCaterory, R.layout.list_item_view_header, 1, false);
                 //expandedViewList.remove(0);
                // rvItemsList = null;
@@ -289,7 +371,7 @@ public void collapseList(View view)
 /*
             ImageView ivCollapseState = (ImageView) vCurrentExpanded.findViewById(R.id.header_iv_indicator);
             ivCollapseState.setImageResource(R.drawable.ic_header_collapsed_arrow);
-            ArrayList<SubCategoryItem> alEmptySubCaterory = new ArrayList<>();
+            ArrayList<SubCategory> alEmptySubCaterory = new ArrayList<>();
             new GenericAdapterRecyclerView(this.getContext(), this, rvItemsList, alEmptySubCaterory, R.layout.list_item_view_header, 1, false);
             rvItemsList = null;
 */

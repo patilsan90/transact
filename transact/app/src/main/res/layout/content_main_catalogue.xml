@@ -14,13 +14,21 @@
             android:id="@+id/catalogue_rv_catalogue"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:paddingBottom="100sp"
             android:nestedScrollingEnabled="true"
             android:scrollbars="vertical"
-            android:paddingBottom="100sp"
-            android:clipToPadding="false"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            />
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"            />
+
+        <TextView android:id="@+id/catalogue_tv_placeholder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_margin="15sp"
+            android:text="@string/catalogue_list_placeholder" />
+
     </LinearLayout>
+
 
 </android.support.design.widget.CoordinatorLayout>

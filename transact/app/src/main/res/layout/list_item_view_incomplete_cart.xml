@@ -106,6 +106,7 @@ android:layout_height="wrap_content">
                 android:textColor="#778899" />
 
             <ImageView
+                android:id="@+id/incomplete_cart_trash"
                 android:layout_width="25sp"
                 android:layout_height="25sp"
                 android:layout_marginRight="5dp"

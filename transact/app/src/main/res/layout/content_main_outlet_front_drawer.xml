@@ -1,0 +1,89 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/outlet_front_drawer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appBackgroundColor"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:minHeight="100sp"
+        android:background="@color/appBarColor">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:layout_marginBottom="3sp"
+        android:paddingLeft="@dimen/drawer_item_margin"
+        android:paddingTop="@dimen/drawer_item_margin"
+        android:text="Welcome To"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#D3D3D3"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/outlet_front_drawer_outlet_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/drawer_item_margin"
+        android:layout_marginBottom="@dimen/drawer_item_margin"
+        android:background="@null"
+        android:paddingBottom="@dimen/drawer_item_margin"
+        android:paddingLeft="@dimen/drawer_item_margin"
+
+        android:text="Store Name"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold" />
+
+   </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/drawer_item_margin"
+        android:layout_marginTop="@dimen/drawer_item_margin"
+        android:text="Offers"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:paddingLeft="@dimen/drawer_item_margin"
+/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:paddingLeft="@dimen/drawer_item_margin"
+        android:background="#DDDDDD"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/drawer_item_margin"
+        android:layout_marginTop="@dimen/drawer_item_margin"
+        android:text="Give us feedback"
+        android:paddingLeft="@dimen/drawer_item_margin"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:paddingLeft="@dimen/drawer_item_margin"
+        android:background="#DDDDDD"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/drawer_item_margin"
+        android:layout_marginTop="@dimen/drawer_item_margin"
+        android:text="About Us"
+        android:paddingLeft="@dimen/drawer_item_margin"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:paddingLeft="@dimen/drawer_item_margin"
+        android:background="#DDDDDD"/>
+
+
+</LinearLayout>

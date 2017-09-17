@@ -11,8 +11,8 @@ public class Item implements Serializable{
     private String item_id;
     private String item_name;
 
-    private int item_category;
-    private int item_subCategory;
+    private int item_category_id;
+    private int item_subCategory_id;
 
     private double actual_cost;
     private double discounted_cost;
@@ -29,20 +29,15 @@ public class Item implements Serializable{
         KG
     }
 
-    public int getItem_category() {
-        return item_category;
-    }
 
-    public int getItem_subCategory() {
-        return item_subCategory;
-    }
+    public Item(SubCategory subCategory, String item_id, String item_name, double actual_cost, double discounted_cost, ITEM_QUANTITY_TYPE item_form, float item_quantity, int item_count) {
 
-    public Item(int item_category, int item_subCategory, String item_id, String item_name, double actual_cost, double discounted_cost, ITEM_QUANTITY_TYPE item_form, float item_quantity, int item_count) {
-        this.item_category = item_category;
-        this.item_subCategory = item_subCategory;
+        this.item_category_id = subCategory.getCategoryID();
+        this.item_subCategory_id = subCategory.getSubCategoryID();
 
         this.item_id = item_id;
         this.item_name = item_name;
+
         this.actual_cost = actual_cost;
         this.discounted_cost = discounted_cost;
 
@@ -95,6 +90,14 @@ public class Item implements Serializable{
 
     public void setItem_count(int item_count) {
         this.item_count = item_count;
+    }
+
+    public int getItem_category_id() {
+        return item_category_id;
+    }
+
+    public int getItem_subCategory_id() {
+        return item_subCategory_id;
     }
 
     public String qtTypeInString(ITEM_QUANTITY_TYPE type)

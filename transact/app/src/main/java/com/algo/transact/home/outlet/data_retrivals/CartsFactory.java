@@ -2,8 +2,10 @@ package com.algo.transact.home.outlet.data_retrivals;
 
 import com.algo.transact.home.outlet.OutletType;
 import com.algo.transact.home.outlet.data_beans.Cart;
+import com.algo.transact.home.outlet.data_beans.Category;
 import com.algo.transact.home.outlet.data_beans.Item;
 import com.algo.transact.home.outlet.data_beans.Outlet;
+import com.algo.transact.home.outlet.data_beans.SubCategory;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ public class CartsFactory {
         cartsList =createCartsList();
     }
 
+    static int temp_count;
     public static CartsFactory getInstance()
     {
         if(cartsFactory == null)
@@ -65,8 +68,8 @@ public class CartsFactory {
     {
         ArrayList<Item> itemList = new ArrayList<Item>();
         //  String item_id, String item_name, double actual_cost, double discounted_cost, int item_quantity
-        itemList.add(new Item(1,20, "21", "Badam"+shopID, 250, 230, Item.ITEM_QUANTITY_TYPE.GRAM,500, 2));
-        itemList.add(new Item(1,20, "23", "Refined"+shopID, 250, 230, Item.ITEM_QUANTITY_TYPE.MILLILITERS,500, 1));
+        SubCategory sc = new SubCategory(new Category(1, 11, null), 111, null);
+        itemList.add(new Item(sc, "23"+(temp_count++), "Refined"+shopID, 250, 230, Item.ITEM_QUANTITY_TYPE.MILLILITERS,500, 1));
 
         Outlet outlet = new Outlet(shopID, shopName, displayName, OutletType.OUTLET_TYPE.GROCERY_STORE, "HSR Sector 1, HSR Layout");
         Cart cart =new Cart(outlet);

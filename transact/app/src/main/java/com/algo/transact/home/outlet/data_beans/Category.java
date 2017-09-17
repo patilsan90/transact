@@ -4,16 +4,16 @@ package com.algo.transact.home.outlet.data_beans;
  * Created by sandeep on 6/8/17.
  */
 
-public class SubCategoryItem {
+public class Category {
 
+    public int outletID;
     public String categoryName;
     public int categoryID ;
-    public int subCategoryID ;
+    public Category(int outletID, int categoryID, String categoryName) {
 
-    public SubCategoryItem(String categoryName,  int subCategoryID,int categoryID) {
+        this.outletID = outletID;
         this.categoryName = categoryName;
         this.categoryID = categoryID;
-        this.subCategoryID = subCategoryID;
     }
 
     public String getCategoryName() {
@@ -24,8 +24,7 @@ public class SubCategoryItem {
         return categoryID;
     }
 
-    public int getSubCategoryID() {
-        return subCategoryID;
+    public int getOutletID() {
+        return outletID;
     }
 }
-

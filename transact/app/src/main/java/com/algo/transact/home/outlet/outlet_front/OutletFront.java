@@ -16,6 +16,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -32,10 +33,9 @@ import com.algo.transact.generic_structures.GenericAdapter;
 import com.algo.transact.generic_structures.IGenericAdapterSpinner;
 import com.algo.transact.home.LocateCategories;
 import com.algo.transact.home.outlet.ItemCountSelectionActivity;
-import com.algo.transact.home.outlet.SASCheckoutActivity;
 import com.algo.transact.home.outlet.SASOffersActivity;
 import com.algo.transact.home.outlet.data_beans.Cart;
-import com.algo.transact.home.outlet.data_beans.CategoryItem;
+import com.algo.transact.home.outlet.data_beans.Category;
 import com.algo.transact.home.outlet.data_beans.Item;
 import com.algo.transact.home.outlet.data_beans.Outlet;
 import com.algo.transact.home.outlet.data_retrivals.CartsFactory;
@@ -80,6 +80,9 @@ public class OutletFront extends AppCompatActivity implements
     private static OutletFront outletFront;
     private Intent codeScannerIntent;
     private Outlet outlet;
+    private ArrayList<Category> alCaterory;
+    private int selectedCategoryIndex;
+    private TextView tvDrawerOutletName;
 
     public static OutletFront getInstance() {
         if (outletFront != null)
@@ -180,14 +183,36 @@ public class OutletFront extends AppCompatActivity implements
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View bar = inflater.inflate(R.layout.app_bar_catalogue, null);
         appBar.removeAllViews();
+
+/*
+        ViewGroup.LayoutParams spinnerLayoutParams = appBar.getLayoutParams();
+        spinnerLayoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        appBar.setLayoutParams(spinnerLayoutParams);
+*/
+
         appBar.addView(bar);
         Spinner catalogueMenu = (Spinner) bar.findViewById(R.id.catalogue_spinner_cat_list);
-        ArrayList alCaterory = CatalogueRetriver.getCategories(shopID);
+
+/*
+        ViewGroup.LayoutParams spinnerLayoutParams = catalogueMenu.getLayoutParams();
+        spinnerLayoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        catalogueMenu.setLayoutParams(spinnerLayoutParams);
+*/
+
+        alCaterory = CatalogueRetriver.getCategories(shopID);
         GenericAdapter genericAdapter = new GenericAdapter(this, this, catalogueMenu, alCaterory, R.layout.list_item_catalogue_menu);
-
-
+        setNavigationLayoutItems();
     }
 
+    void setNavigationLayoutItems()
+    {
+    /*    View header = mNavigationView.getHeaderView(0);
+        mNameTextView = (TextView) header.findViewById(R.id.nameTextView);
+        mNameTextView.setText("XYZ");*/
+
+        tvDrawerOutletName = (TextView) findViewById(R.id.outlet_front_drawer_outlet_name);
+        tvDrawerOutletName.setText(outlet.getOutletName());
+    }
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -301,13 +326,6 @@ public class OutletFront extends AppCompatActivity implements
 
     }
 
-    public void gotoHomefromSAS(View v) {
-        Log.i("Home", "Select mall Clicked");
-        // Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        // startActivityForResult(intent, BARCODE_READER_REQUEST_CODE);
-        this.finish();
-    }
-
     public void browseOffers(View v) {
         Log.i("Home", "Select mall Clicked");
         Intent intent = new Intent(getApplicationContext(), SASOffersActivity.class);
@@ -394,14 +412,14 @@ public class OutletFront extends AppCompatActivity implements
                 Spinner catalogueMenu = (Spinner) bar.findViewById(R.id.catalogue_spinner_cat_list);
                 ArrayList alCaterory = CatalogueRetriver.getCategories(shopID);
                 GenericAdapter genericAdapter = new GenericAdapter(this, this, catalogueMenu, alCaterory, R.layout.list_item_catalogue_menu);
-
+                catalogueMenu.setSelection(selectedCategoryIndex);
                 fabMultiAction.setImageResource(R.drawable.ic_collapse_catalogue);
-
+                catalogueFragment.onFocusNotification();
                 break;
 
             case 1:
 
-
+                catalogueFragment.onLostFocusNotification();
                 updateCartTotal();
                 fabMultiAction.setImageResource(R.drawable.ic_cart_checkout);
                 break;
@@ -441,26 +459,31 @@ public class OutletFront extends AppCompatActivity implements
         ImageView tvCatalogueItemImage = (ImageView) view.findViewById(R.id.catalogue_menu_item_image);
         TextView tvCatalogueItemName = (TextView) view.findViewById(R.id.catalogue_menu_item_name);
 
-        CategoryItem item = (CategoryItem) listItem;
+        Category item = (Category) listItem;
         tvCatalogueItemName.setText("" + item.getCategoryName());
 
         return view;
-
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        }.getClass().getEnclosingMethod().getName());
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        }.getClass().getEnclosingMethod().getName()+" position ::"+position);
 
+        selectedCategoryIndex = position;
+        catalogueFragment.updateSubCategory(alCaterory.get(position).getCategoryID());
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
+        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        }.getClass().getEnclosingMethod().getName());
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import com.algo.transact.AppConfig.IntentResultCode;
 import com.algo.transact.R;
 import com.algo.transact.generic_structures.GenericAdapter;
 import com.algo.transact.generic_structures.IGenericAdapter;
+import com.algo.transact.home.outlet.data_beans.Item;
 import com.algo.transact.home.outlet.outlet_front.OutletFront;
 import com.algo.transact.home.outlet.data_beans.Cart;
 import com.algo.transact.home.outlet.data_retrivals.CartsFactory;
@@ -35,7 +37,7 @@ public class IncompleteCartsListFragment extends Fragment implements IGenericAda
 
     private ListView lvCartsList;
     private ArrayList<Cart> alCartsList;
-    private GenericAdapter genericAdapter;
+    private GenericAdapter cartsListGenericAdapter;
     private TextView tvCartsListPlaceholder;
 
     public IncompleteCartsListFragment() {
@@ -56,20 +58,31 @@ public class IncompleteCartsListFragment extends Fragment implements IGenericAda
         alCartsList= DataRetriver.retriveStoredCarts();
 
         //Activity activity, IGenericAdapter listener, ListView listView, ArrayList list, int listViewItemId
-        genericAdapter= new GenericAdapter(this.getActivity(),this, lvCartsList, alCartsList,R.layout.list_item_view_incomplete_cart);
+        cartsListGenericAdapter= new GenericAdapter(this.getActivity(),this, lvCartsList, alCartsList,R.layout.list_item_view_incomplete_cart);
 
         // Inflate the layout for this fragment
         return view;
     }
 
     @Override
-    public View addViewItemToList(View view, Object listItem, int index) {
+    public View addViewItemToList(View view, Object listItem, final int index) {
         TextView shop_display_name = (TextView) view.findViewById(R.id.incomplete_cart_outlet_display_name);
         TextView shop_name = (TextView) view.findViewById(R.id.incomplete_cart_outlet_name);
 
         TextView outlet_location = (TextView) view.findViewById(R.id.incomplete_cart_outlet_location);
         TextView total_items = (TextView) view.findViewById(R.id.incomplete_cart_total_items);
         TextView total_order_cost = (TextView) view.findViewById(R.id.incomplete_cart_total_cost);
+
+        ImageView trash = (ImageView) view.findViewById(R.id.incomplete_cart_trash);
+
+        trash.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // AppState.getInstance().getCartItemList().remove(index);
+                alCartsList.remove(index);
+                cartsListGenericAdapter.notifyDataSetChanged();
+            }
+        });
 
         Cart cart=(Cart) listItem;
         shop_display_name.setText(" " + cart.getOutletDisplayName());

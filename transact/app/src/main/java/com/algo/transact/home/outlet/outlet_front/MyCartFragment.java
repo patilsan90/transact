@@ -167,40 +167,17 @@ public class MyCartFragment extends Fragment implements AdapterView.OnItemClickL
 
         total_items_view.setText("" + cartItem.getItem_count());
 
-       // OutletFront.getInstance().updateCartTotal();
-       /* int noOfItems = cart.getCartList().size();
-        if(noOfItems == (index+1))
-        {
-            double cart_total = 0;
-            for (int i = 0; i < noOfItems; i++) {
-                cartItem = cart.getCartList().get(i);
-                cart_total = cart_total + cartItem.getDiscounted_cost() * cartItem.getItem_count();
-            }
-            tvCartTotal.setText("Cart Total: " + cart_total+" Rs.");
-        }
-*/
-
-        //view.setOnClickListener(this);
-
         ImageButton trashCartItem = (ImageButton) view.findViewById(R.id.trash_cart_item);
         trashCartItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                // AppState.getInstance().getCartItemList().remove(index);
+
+                Item item = cart.getCartList().get(index);
+                item.setItem_count(0);
                 cart.getCartList().remove(index);
                 genericAdapter.notifyDataSetChanged();
                 OutletFront.getInstance().updateCartTotal();
-        /*        double cart_total = 0;
-                Item item;
-              //  int noOfItems = AppState.getInstance().getCartItemList().size();
-                int noOfItems = cart.getCartList().size();
-                for (int i = 0; i < noOfItems; i++) {
-                    item = cart.getCartList().get(i);
-                    cart_total = cart_total + item.getDiscounted_cost() * item.getItem_count();
-                }
-                tvCartTotal.setText("Cart Total: " + cart_total+" Rs.");
-         */    //   TextView cart_total_view = (TextView) .findViewById(R.id.cart_total);
-              //  cart_total_view.setText("Cart Total: " + cart_total);
 
             }
         });
@@ -215,16 +192,6 @@ public class MyCartFragment extends Fragment implements AdapterView.OnItemClickL
                     item.decreaseItem_count();
                     genericAdapter.notifyDataSetChanged();
                     OutletFront.getInstance().updateCartTotal();
-/*                    int noOfItems = cart.getCartList().size();
-                    double cart_total = 0;
-                    Item cartItem;
-                    for (int i = 0; i < noOfItems; i++) {
-                        cartItem = cart.getCartList().get(i);
-                        cart_total = cart_total + cartItem.getDiscounted_cost() * cartItem.getItem_count();
-                    }
-                    tvCartTotal.setText("Cart Total: " + cart_total+" Rs.");*/
-                   // TextView cart_total_view = (TextView) activity.findViewById(R.id.cart_total);
-                    //cart_total_view.setText("Cart Total: " + cart_total);
                 }
             }
         });
@@ -237,24 +204,13 @@ public class MyCartFragment extends Fragment implements AdapterView.OnItemClickL
                 item.increaseItem_count();
                 genericAdapter.notifyDataSetChanged();
                 OutletFront.getInstance().updateCartTotal();
-/*                int noOfItems = cart.getCartList().size();
-                double cart_total = 0;
-                Item cartItem;
-                for (int i = 0; i < noOfItems; i++) {
-                    cartItem = cart.getCartList().get(i);
-                    cart_total = cart_total + cartItem.getDiscounted_cost() * cartItem.getItem_count();
-                }
-                tvCartTotal.setText("Cart Total: " + cart_total+" Rs.");*/
-             //   TextView cart_total_view = (TextView) activity.findViewById(R.id.cart_total);
-              //  cart_total_view.setText("Cart Total: " + cart_total);
-
             }
         });
 
 
-    /*    Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName());
-    */
+
         return view;
     }
 

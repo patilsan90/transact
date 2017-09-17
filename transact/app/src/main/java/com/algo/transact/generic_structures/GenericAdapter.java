@@ -37,7 +37,7 @@ public class GenericAdapter extends BaseAdapter {
         this.listener = listener;
         this.listView.setAdapter(this);
         this.listView.setOnItemClickListener(this.listener);
-        Log.i(AppState.TAG, " Object creation of Generic Adapter");
+        Log.i(AppState.TAG, " Object creation of Generic Adapter from "+activity.getClass().getSimpleName());
 
     }
 
@@ -49,7 +49,7 @@ public class GenericAdapter extends BaseAdapter {
         this.spinnerListener = listener;
         this.spinnerView.setAdapter(this);
         this.spinnerView.setOnItemSelectedListener(listener);
-        Log.i(AppState.TAG, " Object creation of Generic Adapter");
+        Log.i(AppState.TAG, " Object creation of Generic Adapter from "+activity.getClass());
 
     }
 

@@ -83,8 +83,7 @@ public class GenericAdapterRecyclerView extends RecyclerView.Adapter {
             }
         }));*/
 
-        Log.i(AppState.TAG, " Object creation of GenericRecyclerView Adapter");
-
+        Log.i(AppState.TAG, "::GARV:: Object creation of GenericRecyclerView Adapter from "+mContext.getClass().getSimpleName());
     }
 
     @Override
