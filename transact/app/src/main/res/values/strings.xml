@@ -45,7 +45,7 @@
     <string name="fb_login_protocol_scheme">fb449526885383689</string>
 
     <string name="outlets_list_placeholder">Please enable GPS to populate closest outlets list</string>
-    <string name="carts_list_placeholder"> You don\'t have any incomplete carts</string>
+    <string name="carts_list_placeholder"> You don\'t have any incomplete cart</string>
     <string name="catalogue_list_placeholder"> We are going to add items in this category very soon, \n\n Sorry for inconvenience caused</string>
 
     <string name="my_cart_placeholder">Your cart is empty \n\n Please add some items using QR/BAR code scanner \n or \nCatalogue list</string>

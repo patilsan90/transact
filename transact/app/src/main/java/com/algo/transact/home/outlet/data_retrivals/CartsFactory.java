@@ -15,11 +15,11 @@ import java.util.ArrayList;
  */
 
 public class CartsFactory {
-    private ArrayList<Cart> cartsList;
+    private ArrayList<Cart> cartsList = new ArrayList<Cart>();
     private static CartsFactory cartsFactory;
     private CartsFactory()
     {
-        cartsList =createCartsList();
+      //  cartsList =createCartsList();
     }
 
     static int temp_count;
@@ -54,6 +54,7 @@ public class CartsFactory {
     }
 
 
+/*
     private ArrayList<Cart> createCartsList()
     {
         ArrayList<Cart> cartsList = new ArrayList<Cart>();
@@ -64,7 +65,7 @@ public class CartsFactory {
         return cartsList;
     }
 
-    private Cart createTestCart(String displayName, String shopName, int shopID)
+    private Cart createTestCart2(String displayName, String shopName, int shopID)
     {
         ArrayList<Item> itemList = new ArrayList<Item>();
         //  String item_id, String item_name, double actual_cost, double discounted_cost, int item_quantity
@@ -82,6 +83,7 @@ public class CartsFactory {
 
         return  cart;
     }
+*/
 
     public Cart getCart(Outlet outlet) {
 

@@ -15,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -76,15 +78,7 @@ public class NearByOutletsListFragment extends Fragment implements IGenericAdapt
         return view;
     }
 
-    public class MyAsyn extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            return null;
-        }
-    }
-
-    public void retriveList() {
+     public void retrieveList() {
         alShops10Closest = DataRetriver.retriveClosest10Shops();
         genericAdapter = new GenericAdapter(this.getActivity(), this, lvShopsList, alShops10Closest, R.layout.list_item_view_nearby_outlets);
 
@@ -115,7 +109,7 @@ public class NearByOutletsListFragment extends Fragment implements IGenericAdapt
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        retriveList();
+                        retrieveList();
                     }
                 });
             } else {
@@ -235,11 +229,37 @@ public class NearByOutletsListFragment extends Fragment implements IGenericAdapt
         TextView shop_display_name = (TextView) view.findViewById(R.id.closest_shop_shop_display_name);
         TextView shop_name = (TextView) view.findViewById(R.id.closest_shop_shop_name);
         TextView outlet_location = (TextView) view.findViewById(R.id.nearby_outlets_location);
+       // TextView min_order = (TextView) view.findViewById(R.id.nearby_outlets_min_order);
+
+        TextView delivery_status = (TextView) view.findViewById(R.id.nearby_outlets_delivery_status);
+        ImageView outlet_open_status = (ImageView) view.findViewById(R.id.nearby_outlets_open_status);
+
 
         Outlet details = (Outlet) listItem;
         shop_display_name.setText(" " + details.getOutletDisplayName());
         shop_name.setText(" " + details.getOutletName());
         outlet_location.setText(" " + details.getLocation());
+        if(!details.isShopOpen())
+            outlet_open_status.setVisibility(View.VISIBLE);
+        else
+        {
+            outlet_open_status.setVisibility(View.INVISIBLE);
+            outlet_open_status.setMaxHeight(0);
+            outlet_open_status.setMaxWidth(0);
+        }
+
+        if(details.isProvidesDelivery()) {
+          //  min_order.setText("Min Order: " + details.getCurrency() + " " + details.getMinOrder());
+            delivery_status.setText("Free Delivery for Min Order of " + details.getCurrency() + " " + details.getMinOrder());
+        }
+        else
+        {
+           // min_order.setText(" ");
+           // min_order.setWidth(0);
+            delivery_status.setText("We don\'t provide Delivery");
+        }
+
+
 
         //  Log.i(AppState.TAG, "addViewItemToList  " + details.getShopDisplayName() + "  " + details.getShopName());
         /*ScrollView scrollView=(ScrollView)view.findViewById(R.id.shop_scanner_scrollView);
