@@ -13,7 +13,7 @@ import com.algo.transact.AppConfig.HTTPReqController;
 import com.algo.transact.AppConfig.HTTPReqURLConfig;
 import com.algo.transact.AppConfig.SQLiteHandler;
 import com.algo.transact.AppConfig.SessionManager;
-import com.algo.transact.home.MainActivity;
+import com.algo.transact.home.HomeActivity;
 import com.algo.transact.R;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -52,7 +52,7 @@ public class VerifyMobileNoActivity extends AppCompatActivity {
         if (session.isLoggedIn()) {
             // User is already logged in. Take him to main activity
             Intent intent = new Intent(VerifyMobileNoActivity.this,
-                    MainActivity.class);
+                    HomeActivity.class);
             startActivity(intent);
             finish();
         }
@@ -148,7 +148,7 @@ public class VerifyMobileNoActivity extends AppCompatActivity {
                         // Launch login activity
                         Intent intent = new Intent(
                                 VerifyMobileNoActivity.this,
-                                MainActivity.class);
+                                HomeActivity.class);
                         startActivity(intent);
                         finish();
                     } else {

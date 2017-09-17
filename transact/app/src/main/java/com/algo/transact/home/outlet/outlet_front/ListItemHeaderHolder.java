@@ -1,4 +1,4 @@
-package com.algo.transact.home.outlet;
+package com.algo.transact.home.outlet.outlet_front;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -20,6 +20,7 @@ public class ListItemHeaderHolder extends RecyclerView.ViewHolder implements Vie
     public ImageView ivIndicator;
     public RecyclerView rvItemsListView;
     public LinearLayout llHeader;
+    public ImageView ivLocation;
 
     public View vParentView;
     IGenericAdapterRecyclerView listener;
@@ -32,6 +33,8 @@ public class ListItemHeaderHolder extends RecyclerView.ViewHolder implements Vie
         ivIndicator = (ImageView) view.findViewById(R.id.header_iv_indicator);
         rvItemsListView = (RecyclerView) view.findViewById(R.id.header_rv_items_list);
         llHeader = (LinearLayout) view.findViewById(R.id.header_ll_header);
+        ivLocation = (ImageView) view.findViewById(R.id.header_iv_location);
+
         llHeader.setOnClickListener(this);
         this.listener = listener;
         vParentView = view;

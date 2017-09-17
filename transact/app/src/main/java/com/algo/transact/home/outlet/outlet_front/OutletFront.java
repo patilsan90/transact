@@ -16,7 +16,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,9 +30,6 @@ import com.algo.transact.barcode.BarcodeDetails;
 import com.algo.transact.barcode.CodeScannerActivity;
 import com.algo.transact.generic_structures.GenericAdapter;
 import com.algo.transact.generic_structures.IGenericAdapterSpinner;
-import com.algo.transact.home.LocateCategories;
-import com.algo.transact.home.outlet.ItemCountSelectionActivity;
-import com.algo.transact.home.outlet.SASOffersActivity;
 import com.algo.transact.home.outlet.data_beans.Cart;
 import com.algo.transact.home.outlet.data_beans.Category;
 import com.algo.transact.home.outlet.data_beans.Item;
@@ -57,6 +53,8 @@ public class OutletFront extends AppCompatActivity implements
     private static final String TAG = "CognitionMall";
     private static final int BARCODE_READER_REQUEST_CODE = 1;
     private static final String LOG_TAG = OutletFront.class.getSimpleName();
+    public static GenericAdapter cartAdapter;
+    private static OutletFront outletFront;
     public MyCartFragment myCartFragment;
     private int shopID;
     //public OffersFragment offersFragment;
@@ -70,19 +68,18 @@ public class OutletFront extends AppCompatActivity implements
     private TabLayout tabLayout;
     private NestedScrollView nscScroll;
     private FloatingActionButton outlet_fab_code_scanner;
-
     private FloatingActionButton fabMultiAction;
-
-
-    public static GenericAdapter cartAdapter;
     private CatalogueFragment catalogueFragment;
     private TextView tvCartTotal;
-    private static OutletFront outletFront;
     private Intent codeScannerIntent;
     private Outlet outlet;
     private ArrayList<Category> alCaterory;
     private int selectedCategoryIndex;
     private TextView tvDrawerOutletName;
+
+    private ImageView ivLocateCategory;
+    private LocateCategoriesDialogue locateCategoriesDialogue;
+
 
     public static OutletFront getInstance() {
         if (outletFront != null)
@@ -113,10 +110,10 @@ public class OutletFront extends AppCompatActivity implements
         dataType = getIntent().getStringExtra(IntentPutExtras.DATA_TYPE);
         shopID = getIntent().getIntExtra(IntentPutExtras.ID, 0);
 
-        outlet  = (Outlet) getIntent().getSerializableExtra(IntentPutExtras.OUTLET_OBJECT);
+        outlet = (Outlet) getIntent().getSerializableExtra(IntentPutExtras.OUTLET_OBJECT);
 
         Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
-        }.getClass().getEnclosingMethod().getName() + " Outlet OBJ:: "+(outlet == null));
+        }.getClass().getEnclosingMethod().getName() + " Outlet OBJ:: " + (outlet == null));
 
 
 /*        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
@@ -168,6 +165,7 @@ public class OutletFront extends AppCompatActivity implements
         cartTab.setCustomView(R.layout.tab_view_cart);
 
 
+        locateCategoriesDialogue = new LocateCategoriesDialogue(this);
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -193,6 +191,7 @@ public class OutletFront extends AppCompatActivity implements
         appBar.addView(bar);
         Spinner catalogueMenu = (Spinner) bar.findViewById(R.id.catalogue_spinner_cat_list);
 
+
 /*
         ViewGroup.LayoutParams spinnerLayoutParams = catalogueMenu.getLayoutParams();
         spinnerLayoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
@@ -200,12 +199,21 @@ public class OutletFront extends AppCompatActivity implements
 */
 
         alCaterory = CatalogueRetriver.getCategories(shopID);
+        ivLocateCategory = (ImageView) bar.findViewById(R.id.catalogue_location);
+
+        if (alCaterory.get(selectedCategoryIndex).getCategoryLocation() == null)
+            ivLocateCategory.setVisibility(View.INVISIBLE);
+        else if (alCaterory.get(selectedCategoryIndex).getCategoryLocation().trim().length() == 0)
+            ivLocateCategory.setVisibility(View.INVISIBLE);
+        else {
+            ivLocateCategory.setOnClickListener(this);
+        }
+
         GenericAdapter genericAdapter = new GenericAdapter(this, this, catalogueMenu, alCaterory, R.layout.list_item_catalogue_menu);
         setNavigationLayoutItems();
     }
 
-    void setNavigationLayoutItems()
-    {
+    void setNavigationLayoutItems() {
     /*    View header = mNavigationView.getHeaderView(0);
         mNameTextView = (TextView) header.findViewById(R.id.nameTextView);
         mNameTextView.setText("XYZ");*/
@@ -213,13 +221,10 @@ public class OutletFront extends AppCompatActivity implements
         tvDrawerOutletName = (TextView) findViewById(R.id.outlet_front_drawer_outlet_name);
         tvDrawerOutletName.setText(outlet.getOutletName());
     }
+
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
-        // Intent intent = new Intent(getApplicationContext(), ShopScannerActivity.class);
-        // intent.putExtra(IntentPutExtras.REQUEST_TYPE,IntentPutExtras.REQUEST_SELECT_SHOP);
-        //  startActivityForResult(intent, IntentRequestResponseType.REQUEST_SELECT_SHOP);
     }
 
     @Override
@@ -321,15 +326,9 @@ public class OutletFront extends AppCompatActivity implements
 */
     public void locateCategories(View view) {
         Log.i("Home", "locateCategories Clicked");
-        Intent myIntent = new Intent(this, LocateCategories.class);
+        Intent myIntent = new Intent(this, LocateCategoriesDialogue.class);
         this.startActivity(myIntent);
 
-    }
-
-    public void browseOffers(View v) {
-        Log.i("Home", "Select mall Clicked");
-        Intent intent = new Intent(getApplicationContext(), SASOffersActivity.class);
-        startActivityForResult(intent, BARCODE_READER_REQUEST_CODE);
     }
 
     @Override
@@ -377,7 +376,11 @@ public class OutletFront extends AppCompatActivity implements
                 }
                 break;
             }
-
+            case R.id.catalogue_location:
+                Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+                }.getClass().getEnclosingMethod().getName() + "  Show catalogue location click event");
+                locateCategoriesDialogue.showDialogue(alCaterory.get(selectedCategoryIndex).getCategoryName(), alCaterory.get(selectedCategoryIndex).getCategoryLocation());
+                break;
 
         }
     }
@@ -410,7 +413,9 @@ public class OutletFront extends AppCompatActivity implements
                 appBar.removeAllViews();
                 appBar.addView(bar);
                 Spinner catalogueMenu = (Spinner) bar.findViewById(R.id.catalogue_spinner_cat_list);
-                ArrayList alCaterory = CatalogueRetriver.getCategories(shopID);
+                ivLocateCategory = (ImageView) bar.findViewById(R.id.catalogue_location);
+
+
                 GenericAdapter genericAdapter = new GenericAdapter(this, this, catalogueMenu, alCaterory, R.layout.list_item_catalogue_menu);
                 catalogueMenu.setSelection(selectedCategoryIndex);
                 fabMultiAction.setImageResource(R.drawable.ic_collapse_catalogue);
@@ -474,16 +479,47 @@ public class OutletFront extends AppCompatActivity implements
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
-        }.getClass().getEnclosingMethod().getName()+" position ::"+position);
+        }.getClass().getEnclosingMethod().getName() + " position ::" + position);
 
         selectedCategoryIndex = position;
         catalogueFragment.updateSubCategory(alCaterory.get(position).getCategoryID());
+
+        if (ivLocateCategory != null) {
+            if (alCaterory.get(selectedCategoryIndex).getCategoryLocation() == null)
+                ivLocateCategory.setVisibility(View.INVISIBLE);
+            else if (alCaterory.get(selectedCategoryIndex).getCategoryLocation().trim().length() == 0)
+                ivLocateCategory.setVisibility(View.INVISIBLE);
+            else {
+                ivLocateCategory.setVisibility(View.VISIBLE);
+                ivLocateCategory.setOnClickListener(this);
+            }
+        }
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
         Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName());
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Log.i(AppState.TAG, "onBackPressed of OutletFront");
+
+    }
+
+    // [START signOut]
+    private void signOutFromGmail() {
+        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(Status status) {
+                        // [START_EXCLUDE]
+                        //  updateUI(false);
+                        // [END_EXCLUDE]
+                    }
+                });
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -513,26 +549,6 @@ public class OutletFront extends AppCompatActivity implements
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Log.i(AppState.TAG, "onBackPressed of OutletFront");
-
-    }
-
-    // [START signOut]
-    private void signOutFromGmail() {
-        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
-                new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(Status status) {
-                        // [START_EXCLUDE]
-                        //  updateUI(false);
-                        // [END_EXCLUDE]
-                    }
-                });
     }
 // [END signOut]
 }

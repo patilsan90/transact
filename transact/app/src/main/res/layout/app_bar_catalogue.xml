@@ -28,4 +28,13 @@ android:orientation="horizontal">
     android:spinnerMode="dropdown"
     android:background="@color/appBackgroundColor"
     android:text="All Categories" />
+
+    <ImageView
+        android:id="@+id/catalogue_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_outlet_location"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp"/>
+
 </LinearLayout>

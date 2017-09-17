@@ -1,6 +1,6 @@
 package com.algo.transact.AppConfig;
 
-import com.algo.transact.home.MainActivity;
+import com.algo.transact.home.HomeActivity;
 import com.algo.transact.home.outlet.data_beans.Item;
 import com.algo.transact.home.offers.OfferItem;
 import com.algo.transact.login.LoginActivity;
@@ -20,7 +20,7 @@ public class AppState {
 
     public static String TAG = "TRANSACT APP";
     public LoginActivity loginActivity;
-    public MainActivity mainActivity;
+    public HomeActivity homeActivity;
 
 
     private ArrayList<Item> itemsList;

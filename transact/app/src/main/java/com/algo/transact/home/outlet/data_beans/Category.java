@@ -8,12 +8,15 @@ public class Category {
 
     public int outletID;
     public String categoryName;
-    public int categoryID ;
-    public Category(int outletID, int categoryID, String categoryName) {
+    public int categoryID;
+    public String categoryLocation;
+
+    public Category(int outletID, int categoryID, String categoryName, String categoryLocation) {
 
         this.outletID = outletID;
         this.categoryName = categoryName;
         this.categoryID = categoryID;
+        this.categoryLocation = categoryLocation;
     }
 
     public String getCategoryName() {
@@ -26,5 +29,9 @@ public class Category {
 
     public int getOutletID() {
         return outletID;
+    }
+
+    public String getCategoryLocation() {
+        return categoryLocation;
     }
 }

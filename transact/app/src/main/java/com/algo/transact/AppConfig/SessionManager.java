@@ -48,7 +48,7 @@ public class SessionManager {
 
         return true;
         // Launching the login activity
-       // Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+       // Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
         //startActivity(intent);
         //finish();
 

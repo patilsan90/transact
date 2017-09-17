@@ -22,7 +22,6 @@ import com.algo.transact.AppConfig.IntentPutExtras;
 import com.algo.transact.AppConfig.IntentResultCode;
 import com.algo.transact.generic_structures.GenericAdapter;
 import com.algo.transact.generic_structures.IGenericAdapter;
-import com.algo.transact.home.outlet.SASCheckoutActivity;
 import com.algo.transact.home.outlet.data_beans.Cart;
 import com.algo.transact.home.outlet.data_beans.Item;
 import com.algo.transact.home.outlet.data_beans.Outlet;
@@ -104,7 +103,7 @@ public class MyCartFragment extends Fragment implements AdapterView.OnItemClickL
             if (cart.getCartList().size() != 0)
             {
                 Log.i("Home", "checkoutCart Clicked");
-            Intent intent = new Intent(fragment.getActivity(), SASCheckoutActivity.class);
+            Intent intent = new Intent(fragment.getActivity(), MyCartCheckoutActivity.class);
             intent.putExtra(IntentPutExtras.DATA_TYPE, IntentPutExtras.ID);
             intent.putExtra(IntentPutExtras.ID, shopID);
                 intent.putExtra(IntentPutExtras.OUTLET_OBJECT, outlet);

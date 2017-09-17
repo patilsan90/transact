@@ -19,7 +19,7 @@ import com.algo.transact.AppConfig.SessionManager;
 import com.algo.transact.R;
 import com.algo.transact.login.LoginActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity {
 
     private HomeFragment homeFragment;
     private DrawerLayout mDrawerLayout;
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.add(R.id.home_page_frame, homeFragment);
         fragmentTransaction.commit();
 
-        AppState.getInstance().mainActivity=this;
+        AppState.getInstance().homeActivity =this;
         db = new SQLiteHandler(getApplicationContext());
         session= new SessionManager(getApplicationContext());
 
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         {
             Log.i(AppState.TAG, "Logged in check");
             session.logoutUser(db,session);
-            Intent intent= new Intent(MainActivity.this, LoginActivity.class);
+            Intent intent= new Intent(HomeActivity.this, LoginActivity.class);
             startActivity(intent);
             this.finish();
         }
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
  public void logout(View v)
     {
         session.logoutUser(db, session);
-        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();
     }

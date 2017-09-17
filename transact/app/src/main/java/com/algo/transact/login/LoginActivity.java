@@ -11,7 +11,7 @@ import android.view.View;
 
 import com.algo.transact.AppConfig.SQLiteHandler;
 import com.algo.transact.AppConfig.SessionManager;
-import com.algo.transact.home.MainActivity;
+import com.algo.transact.home.HomeActivity;
 import com.facebook.CallbackManager;
 import com.facebook.login.LoginManager;
 import com.facebook.login.widget.LoginButton;
@@ -102,7 +102,7 @@ public class LoginActivity extends AppCompatActivity implements
     }
 
     void startMainActivity() {
-        Intent myIntent = new Intent(this, MainActivity.class);
+        Intent myIntent = new Intent(this, HomeActivity.class);
         myIntent.putExtra("name", "Sample name"); //Optional parameter pass parameters
         startActivity(myIntent);
         this.finish();

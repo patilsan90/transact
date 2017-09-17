@@ -1,4 +1,4 @@
-package com.algo.transact.home.outlet;
+package com.algo.transact.home.outlet.outlet_front;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,7 +23,7 @@ import com.instamojo.android.models.Order;
 
 import java.util.ArrayList;
 
-public class SASCheckoutActivity extends AppCompatActivity implements IGenericAdapter {
+public class MyCartCheckoutActivity extends AppCompatActivity implements IGenericAdapter {
 
     ListView lvcheckoutCart;
     private int shopID;

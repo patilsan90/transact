@@ -1,12 +1,10 @@
 package com.algo.transact.AppConfig;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.algo.transact.home.MainActivity;
-import com.algo.transact.login.LoginActivity;
+import com.algo.transact.home.HomeActivity;
 import com.algo.transact.login.LoginFragment;
 import com.algo.transact.login.UserDetails;
 import com.android.volley.Request;
@@ -60,7 +58,7 @@ public class Login {
                         // Create login session
                         Log.i(AppState.TAG, "Successfully logged in");
 
-                        AppState.getInstance().mainActivity.session.setLogin(true);
+                        AppState.getInstance().homeActivity.session.setLogin(true);
 
                         // Now store the user in SQLite
                        // String uid = jObj.getString("uid");
@@ -85,7 +83,7 @@ public class Login {
                                 "Welcome "+loggedInUser.displayName, Toast.LENGTH_SHORT).show();
                         // Launch main activity
                         Intent intent = new Intent(AppState.getInstance().loginActivity,
-                                MainActivity.class);
+                                HomeActivity.class);
                         AppState.getInstance().loginActivity.startActivity(intent);
                         AppState.getInstance().loginActivity.finish();
                     } else {

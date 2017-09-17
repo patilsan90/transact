@@ -41,7 +41,7 @@
             android:value="@string/facebook_app_id" />
 
         <activity
-            android:name=".home.MainActivity"
+            android:name=".home.HomeActivity"
             android:label="@string/title_activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -52,10 +52,7 @@
 
         <activity android:name=".login.LoginActivity" />
         <activity android:name=".login.VerifyMobileNoActivity" />
-        <activity
-            android:name=".home.LocateCategories"
-            android:label="Locate Categories" />
-        <activity android:name=".home.outlet.ItemCountSelectionActivity" />
+        <activity android:name=".home.outlet.outlet_front.ItemCountSelectionActivity" />
         <activity android:name=".login.EnterMobileNoActivity" />
         <activity
             android:name="com.facebook.CustomTabActivity"
@@ -69,8 +66,7 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".home.outlet.SASOffersActivity" />
-        <activity android:name=".home.outlet.SASCheckoutActivity" />
+        <activity android:name=".home.outlet.outlet_front.MyCartCheckoutActivity" />
         <activity android:name=".barcode.TestBarcodeScannerActivity">
 
             <!--
@@ -81,7 +77,6 @@
             </intent-filter>
             -->
         </activity>
-        <activity android:name=".home.outlet.ShopScannerActivity" />
         <activity android:name=".home.outlet.outlet_selection.OutletSelectorActivity" />
 
         <receiver android:name=".gps_location.GpsLocationReceiver">

@@ -48,7 +48,7 @@ public class DataRetriver {
     }*/
 
     public static Item getItemDetailsFromShop(int shopID, String itemID) {
-        SubCategory sc = new SubCategory(new Category(1, 11, null), 111, null);
+        SubCategory sc = new SubCategory(new Category(1, 11, null, "1st Floor P Wing"), 111, null);
         Item temporary_item = new Item(sc, itemID, "Example "+(++tempCount), 250, 230, Item.ITEM_QUANTITY_TYPE.GRAM,500, 1);
         return temporary_item;
     }

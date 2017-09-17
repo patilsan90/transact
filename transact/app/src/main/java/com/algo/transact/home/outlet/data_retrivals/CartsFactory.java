@@ -68,7 +68,7 @@ public class CartsFactory {
     {
         ArrayList<Item> itemList = new ArrayList<Item>();
         //  String item_id, String item_name, double actual_cost, double discounted_cost, int item_quantity
-        SubCategory sc = new SubCategory(new Category(1, 11, null), 111, null);
+        SubCategory sc = new SubCategory(new Category(1, 11, null, "1st Floor"), 111, null);
         itemList.add(new Item(sc, "23"+(temp_count++), "Refined"+shopID, 250, 230, Item.ITEM_QUANTITY_TYPE.MILLILITERS,500, 1));
 
         Outlet outlet = new Outlet(shopID, shopName, displayName, OutletType.OUTLET_TYPE.GROCERY_STORE, "HSR Sector 1, HSR Layout");

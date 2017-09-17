@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/appBackgroundColor"
-    tools:context="com.algo.transact.home.outlet.SASCheckoutActivity">
+    tools:context="com.algo.transact.home.outlet.outlet_front.MyCartCheckoutActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -1,7 +1,6 @@
 package com.algo.transact.home.outlet.outlet_front;
 
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.algo.transact.AppConfig.AppState;
@@ -18,8 +16,6 @@ import com.algo.transact.AppConfig.IntentPutExtras;
 import com.algo.transact.R;
 import com.algo.transact.generic_structures.GenericAdapterRecyclerView;
 import com.algo.transact.generic_structures.IGenericAdapterRecyclerView;
-import com.algo.transact.home.outlet.ItemViewHolder;
-import com.algo.transact.home.outlet.ListItemHeaderHolder;
 import com.algo.transact.home.outlet.data_beans.Cart;
 import com.algo.transact.home.outlet.data_beans.Item;
 import com.algo.transact.home.outlet.data_beans.Outlet;
@@ -53,8 +49,9 @@ public class CatalogueFragment extends Fragment implements IGenericAdapterRecycl
     private Outlet outlet;
     private TextView tvcataloguePlaceholder;
     private Cart currentCart;
+    private LocateCategoriesDialogue locateCategoriesDialogue;
 
-   // ProgressDialog catalogueItemsLoadingdialog;
+    // ProgressDialog catalogueItemsLoadingdialog;
     public CatalogueFragment() {
         // Required empty public constructor
     }
@@ -79,7 +76,7 @@ public class CatalogueFragment extends Fragment implements IGenericAdapterRecycl
         tvcataloguePlaceholder = (TextView) view.findViewById(R.id.catalogue_tv_placeholder);
 
        // catalogueItemsLoadingdialog = ProgressDialog.show(getActivity(), "Catalogue", "Loading...", true);
-
+        locateCategoriesDialogue = new LocateCategoriesDialogue(getActivity());
         return view;
     }
 
@@ -136,10 +133,22 @@ void initializeHashMap(ArrayList<SubCategory> sc)
         }.getClass().getEnclosingMethod().getName() + " Selected ShopID " + shopID);
 */
         if (genericAdapterRecyclerView == rvSubCategoryAdapter) {
-            SubCategory subCat = (SubCategory) list.get(position);
+            final SubCategory subCat = (SubCategory) list.get(position);
             final ListItemHeaderHolder viewHolder = (ListItemHeaderHolder) holder;
             viewHolder.tvItemName.setText(subCat.getSubCategoryName());
 
+            if(subCat.getCategoryLocation() == null)
+                viewHolder.ivLocation.setVisibility(View.INVISIBLE);
+            else if(subCat.getCategoryLocation().trim().length()==0)
+                viewHolder.ivLocation.setVisibility(View.INVISIBLE);
+            else {
+                viewHolder.ivLocation.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        locateCategoriesDialogue.showDialogue(subCat.getSubCategoryName(), subCat.getCategoryLocation());
+                    }
+                });
+            }
             Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
             }.getClass().getEnclosingMethod().getName() + " Selected ShopID " + shopID +" SubCategoryAdapter");
         } else {

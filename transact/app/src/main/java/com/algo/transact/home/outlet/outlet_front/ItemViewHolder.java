@@ -1,4 +1,4 @@
-package com.algo.transact.home.outlet;
+package com.algo.transact.home.outlet.outlet_front;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -17,6 +17,8 @@ public class ItemViewHolder extends RecyclerView.ViewHolder {
     public TextView tvItemName, tvQuantity, tvCost, tvNoOfItems;
     public ImageView ivItemImage, ivOverflow;
     public ImageView ivDecrease, ivIncrease;
+
+
 
     public View vParentView;
     IGenericAdapterRecyclerView listener;

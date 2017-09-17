@@ -10,7 +10,7 @@ public class SubCategory extends  Category{
     public String subCategoryName ;
 
     public SubCategory(Category category, int subCategoryID, String subCategoryName) {
-        super(category.outletID, category.categoryID, category.categoryName);
+        super(category.outletID, category.categoryID, category.categoryName, category.categoryLocation);
         this.subCategoryName =subCategoryName;
         this.subCategoryID = subCategoryID;
     }

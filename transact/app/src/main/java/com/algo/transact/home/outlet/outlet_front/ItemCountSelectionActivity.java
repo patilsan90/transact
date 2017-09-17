@@ -1,4 +1,4 @@
-package com.algo.transact.home.outlet;
+package com.algo.transact.home.outlet.outlet_front;
 
 
 import android.content.Intent;

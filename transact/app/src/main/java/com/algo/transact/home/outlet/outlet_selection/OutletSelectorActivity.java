@@ -97,22 +97,6 @@ private Activity activity;
         viewPager.setAdapter(adapter);
     }
 
-/*    @Override
-    public void codeScannerResult(String barcodeResult) {
-        Log.i(AppState.TAG, "In ShopScannerActivity ScannerResult " + barcodeResult);
-
-        if (requestType == IntentPutExtras.REQUEST_SELECT_SHOP)
-        {
-            Log.i(AppState.TAG, "In ShopScannerActivity ScannerResult requestType:: REQUEST_SELECT_SHOP ");
-            handleShopSelctionRequest(barcodeResult);
-        }
-        else if (requestType == IntentPutExtras.REQUEST_SELECT_ITEM_FROM_SHOP)
-        {
-            Log.i(AppState.TAG, "In ShopScannerActivity ScannerResult requestType:: REQUEST_SELECT_ITEM_FROM_SHOP ");
-            handleShopItemSelctionRequest(barcodeResult);
-        }
-    }*/
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -233,62 +217,6 @@ private Activity activity;
             }
         }
     }
-
-/*
-    private void handleShopItemSelctionRequest(String barcodeResult) {
-
-        //        Intent intent = new Intent();
-
-        String itemId = JSON_Extractor.extractShopItemIdAndVerify(barcodeResult, OutletType.SHOP, outletID);
-        Log.i(AppState.TAG, "handleShopItemSelctionRequest itemId :: "+itemId);
-
-        if(itemId != null)
-        {
-        Intent intent = new Intent(getApplicationContext(), ItemCountSelectionActivity.class);
-        intent.putExtra(IntentPutExtras.REQUEST_TYPE, IntentPutExtras.REQUEST_SELECT_ITEM_FROM_SHOP);
-        intent.putExtra(IntentPutExtras.MODULE_ID,outletID);
-        intent.putExtra(IntentPutExtras.ID,itemId);
-        //setResult(RESULT_OK, intent);
-        startActivityForResult(intent, IntentRequestResponseType.REQUEST_SELECT_ITEM_FROM_SHOP);
-        //finish();
-        }
-        else
-        {
-            Log.i(AppState.TAG, "Invalid Code, this product doesnt belong to this shop");
-            activity.runOnUiThread(new Runnable() {
-                public void run() {
-                    Toast toast = Toast.makeText(activity, "Invalid Code, this product doesnt belong to this shop", Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.CENTER_VERTICAL,0,0);
-                    toast.show();
-                }
-            });
-        }
-    }
-*/
-
-
-/*    private void handleShopSelctionRequest(String barcodeResult) {
-        JSONObject jObj = null;
-        try {
-            jObj = new JSONObject(barcodeResult);
-            String type = jObj.getString(BarcodeDetails.MODULE_TYPE);
-            int outletID = jObj.getInt(BarcodeDetails.MODULE_ID);
-            Log.i(AppState.TAG, "In ShopScannerActivity ScannerResult TYPE:: " + type);
-            Log.i(AppState.TAG, "In ShopScannerActivity ScannerResult ID:: " + outletID);
-
-            if (OutletType.SHOP.equals(type)) {
-                Intent intent = new Intent(this, OutletFront.class);
-                intent.putExtra(IntentPutExtras.REQUEST_TYPE, IntentPutExtras.REQUEST_SELECT_SHOP);
-                intent.putExtra(IntentPutExtras.ID, outletID);
-                this.startActivityForResult(intent, IntentResultCode.RESULT_OK_SHOP_SELECTION);
-                //this.startActivity(intent);
-                //setResult(RESULT_OK, intent);
-                finish();
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }*/
 
     @Override
     public void onBackPressed() {
