@@ -57,6 +57,12 @@ public class GPSTracker extends Service implements LocationListener {
         getLocation();
     }
 
+    public GPSTracker(Context context) {
+        this.mContext = context;
+        // this.activity = activity;
+        getLocation();
+    }
+
     public Location getLocation() {
         try {
             locationManager = (LocationManager) mContext
@@ -81,7 +87,7 @@ public class GPSTracker extends Service implements LocationListener {
                     Criteria criteria = new Criteria();
                     if (ActivityCompat.checkSelfPermission(mContext,
                             Manifest.permission.ACCESS_NETWORK_STATE) != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(activity, permissions, Permissions.RC_HANDLE_GPS_PERM);
+                        // ActivityCompat.requestPermissions(activity, permissions, Permissions.RC_HANDLE_GPS_PERM);
                     }
 
                     locationManager.requestLocationUpdates(
@@ -161,6 +167,7 @@ public class GPSTracker extends Service implements LocationListener {
     public Location getCurrentLocation() {
         return location;
     }
+
     /**
      * Function to get longitude
      */

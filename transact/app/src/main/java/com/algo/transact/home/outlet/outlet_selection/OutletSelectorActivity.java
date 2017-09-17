@@ -18,6 +18,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.AppConfig.IntentPutExtras;
@@ -27,7 +28,9 @@ import com.algo.transact.R;
 import com.algo.transact.barcode.BarcodeDetails;
 import com.algo.transact.barcode.BarcodeScannerFragment;
 import com.algo.transact.barcode.CodeScannerActivity;
+import com.algo.transact.generic_structures.GenericAdapter;
 import com.algo.transact.gps_location.GPSTracker;
+import com.algo.transact.home.outlet.data_retrivals.DataRetriver;
 import com.algo.transact.home.outlet.outlet_front.OutletFront;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -42,6 +45,8 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class OutletSelectorActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks {
 
@@ -59,7 +64,7 @@ public class OutletSelectorActivity extends AppCompatActivity implements View.On
 
     final static int REQUEST_LOCATION = 199;
 
-private Activity activity;
+    private Activity activity;
     private NearByOutletsListFragment outletsListFragment;
 
     @Override
@@ -67,10 +72,14 @@ private Activity activity;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outlet_selector);
 
-        fabCodeScanner = (FloatingActionButton)findViewById(R.id.outlet_fab_barcode_scanner);
+        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        }.getClass().getEnclosingMethod().getName());
+
+
+        fabCodeScanner = (FloatingActionButton) findViewById(R.id.outlet_fab_barcode_scanner);
         fabCodeScanner.setOnClickListener(this);
 
-        activity=this;
+        activity = this;
         gpsTracker = new GPSTracker(getApplicationContext(), this);
 
         enableLocation();
@@ -84,10 +93,44 @@ private Activity activity;
             }
         }
 
-            viewPager = (ViewPager) findViewById(R.id.outlet_seletor_viewpager);
-            setupViewPager(viewPager);
-            tabLayout = (TabLayout) findViewById(R.id.outlet_seletor_tabs);
-            tabLayout.setupWithViewPager(viewPager);
+        viewPager = (ViewPager) findViewById(R.id.outlet_seletor_viewpager);
+        setupViewPager(viewPager);
+        tabLayout = (TabLayout) findViewById(R.id.outlet_seletor_tabs);
+        tabLayout.setupWithViewPager(viewPager);
+
+        //requestLocation();
+    }
+
+
+    public void requestLocation() {
+        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        }.getClass().getEnclosingMethod().getName());
+        gpsTracker = new GPSTracker(getApplicationContext(), this);
+        if (gpsTracker.canGetLocation()) {
+
+            final String[] permissions = new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
+            if (ActivityCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, permissions, Permissions.RC_HANDLE_GPS_PERM);
+
+                Log.i(AppState.TAG, "In RequestPermission");
+            } else {
+                //currentGPSlocation = gpsTracker.getCurrentLocation();
+                currentGPSlocation = gpsTracker.getLocation();
+
+                if (currentGPSlocation != null) {
+                    Log.i(AppState.TAG, "Location getAltitude " + currentGPSlocation.getAltitude());
+                    Log.i(AppState.TAG, "Location getLongitude " + currentGPSlocation.getLongitude());
+                    Log.i(AppState.TAG, "Location getLatitude " + currentGPSlocation.getLatitude());
+                    Log.i(AppState.TAG, "Location getProvider " + currentGPSlocation.getProvider());
+                } else {
+                    Log.e(AppState.TAG, "Error in acquiring GPS signal");
+                    Toast.makeText(this, "Error in acquiring GPS signal, Please restart the app", Toast.LENGTH_SHORT).show();
+                }
+
+                // Toast.makeText(this, "Alt :: " + currentGPSlocation.getAltitude() + " Lon " + currentGPSlocation.getLongitude() + " Lat " + currentGPSlocation.getLatitude(), Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -101,41 +144,38 @@ private Activity activity;
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
-        }.getClass().getEnclosingMethod().getName()+" requestCode:: "+requestCode +" resultCode:: "+resultCode);
+        }.getClass().getEnclosingMethod().getName() + " requestCode:: " + requestCode + " resultCode:: " + resultCode);
 
-        if(data==null)
-        {
+        if (data == null) {
             Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
-            }.getClass().getEnclosingMethod().getName()+"  No Data Received");
+            }.getClass().getEnclosingMethod().getName() + "  No Data Received");
             return;
         }
 
-        if(requestCode == REQUEST_LOCATION)
-        {
+        if (requestCode == REQUEST_LOCATION) {
 
-            if(resultCode == Activity.RESULT_OK){
-                String result=data.getStringExtra("result");
+            if (resultCode == Activity.RESULT_OK) {
+                String result = data.getStringExtra("result");
                 Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
-                }.getClass().getEnclosingMethod().getName() + "GPS RESULT OK ::"+ result);
+                }.getClass().getEnclosingMethod().getName() + "GPS RESULT OK ::" + result);
                 outletsListFragment.populateOutletsList();
-            } if (resultCode == Activity.RESULT_CANCELED) {
-            //Write your code if there's no result
-            Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
-            }.getClass().getEnclosingMethod().getName() + "GPS RESULT CANCELED");
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Write your code if there's no result
+                Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+                }.getClass().getEnclosingMethod().getName() + "GPS RESULT CANCELED");
 
-        }
+            }
             return;
 
         }
 
-        BarcodeDetails barcodeDetails = (BarcodeDetails)data.getSerializableExtra(IntentPutExtras.CODE_OBJECT);
-       // Item newItem = (Item) data.getSerializableExtra(IntentPutExtras.NEW_ITEM_DATA);
+        BarcodeDetails barcodeDetails = (BarcodeDetails) data.getSerializableExtra(IntentPutExtras.CODE_OBJECT);
+        // Item newItem = (Item) data.getSerializableExtra(IntentPutExtras.NEW_ITEM_DATA);
 
-        switch (barcodeDetails.getActionType())
-        {
+        switch (barcodeDetails.getActionType()) {
             case OUTLET_SELECTOR:
-            case OUTLET_ITEM_SELECTOR:
-            {
+            case OUTLET_ITEM_SELECTOR: {
                 /*Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
                 }.getClass().getEnclosingMethod().getName()+"  RESPONSE_NEW_ITEM_SELECTED");
                 Intent intent = new Intent();
@@ -204,14 +244,12 @@ private Activity activity;
     }
 
 
-        @Override
+    @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
-            case R.id.outlet_fab_barcode_scanner:
-            {
+        switch (v.getId()) {
+            case R.id.outlet_fab_barcode_scanner: {
                 Intent intent = new Intent(this, CodeScannerActivity.class);
-             //   intent.putExtra(IntentPutExtras.REQUEST_TYPE, IntentPutExtras.REQUEST_SELECT_SHOP);
+                //   intent.putExtra(IntentPutExtras.REQUEST_TYPE, IntentPutExtras.REQUEST_SELECT_SHOP);
                 this.startActivityForResult(intent, IntentResultCode.TRANSACT_RESULT_OK);
                 break;
             }
@@ -221,7 +259,8 @@ private Activity activity;
     @Override
     public void onBackPressed() {
 
-        Log.i(AppState.TAG, "Class: "+ this.getClass().getSimpleName()+ " Method: "+new Object(){}.getClass().getEnclosingMethod().getName());
+        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        }.getClass().getEnclosingMethod().getName());
 /*        if (requestType == IntentPutExtras.REQUEST_SELECT_SHOP)
         {
             Intent intent = new Intent();
@@ -254,7 +293,7 @@ private Activity activity;
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         Log.i(AppState.TAG, "onConnected ......................");
-       // outletsListFragment.populateOutletsList();
+        // outletsListFragment.populateOutletsList();
     }
 
     @Override

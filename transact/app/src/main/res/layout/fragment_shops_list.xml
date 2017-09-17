@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            android:hint="Search nearby outlet" />
+            android:hint="Search nearby outlets" />
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -47,11 +47,25 @@
         android:layout_margin="10dp"
         android:divider="@null"/>
 
-    <TextView android:id="@+id/outlets_list_list_tv_placeholder"
+    <LinearLayout
+        android:id="@+id/outlets_list_list_ll_placeholder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+    <TextView
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
         android:layout_margin="15sp"
         android:text="@string/outlets_list_placeholder" />
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+
+    </LinearLayout>
 </LinearLayout>
