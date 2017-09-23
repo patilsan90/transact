@@ -21,12 +21,17 @@ public class HomeClickListener implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if(R.id.fragment_home_restaurants == v.getId())
+        switch (v.getId())
         {
-            Log.i(AppState.TAG, "Clicked on shop @ shop");
-            Intent ssaIntent = new Intent(homeFragment.getActivity(), OutletSelectorActivity.class);
-            //below line is for testing purpose
-            homeFragment.getActivity().startActivityForResult(ssaIntent, IntentResultCode.TRANSACT_REQUEST);
+            case R.id.fragment_home_restaurants:
+            {
+                Log.i(AppState.TAG, "Clicked on shop @ shop");
+                Intent ssaIntent = new Intent(homeFragment.getActivity(), OutletSelectorActivity.class);
+                //below line is for testing purpose
+                homeFragment.getActivity().startActivityForResult(ssaIntent, IntentResultCode.TRANSACT_REQUEST);
+                break;
+            }
+
         }
     }
 }

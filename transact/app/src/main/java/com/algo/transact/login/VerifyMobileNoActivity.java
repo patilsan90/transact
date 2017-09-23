@@ -11,7 +11,6 @@ import android.widget.Toast;
 import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.AppConfig.HTTPReqController;
 import com.algo.transact.AppConfig.HTTPReqURLConfig;
-import com.algo.transact.AppConfig.SQLiteHandler;
 import com.algo.transact.AppConfig.SessionManager;
 import com.algo.transact.home.HomeActivity;
 import com.algo.transact.R;
@@ -30,7 +29,6 @@ public class VerifyMobileNoActivity extends AppCompatActivity {
 
     private ProgressDialog pDialog;
     private SessionManager session;
-    private SQLiteHandler db;
     private UserDetails newUser;
 
     @Override
@@ -44,9 +42,6 @@ public class VerifyMobileNoActivity extends AppCompatActivity {
         newUser = (UserDetails) getIntent().getSerializableExtra("newUser");
         // Session manager
         session = new SessionManager(getApplicationContext());
-
-        // SQLite database handler
-        db = new SQLiteHandler(getApplicationContext());
 
         // Check if user is already logged in or not
         if (session.isLoggedIn()) {
@@ -104,7 +99,12 @@ public class VerifyMobileNoActivity extends AppCompatActivity {
         pDialog.setMessage("Registering ...");
         showDialog();
 
-        Log.i("AND_TEST", "Registering user");
+        if(newUser==null)
+            Log.i(AppState.TAG, "Registering user but User object is null");
+
+        Log.i(AppState.TAG, "Registering user Obj "+newUser);
+
+        Log.i(AppState.TAG, "Registering user");
         StringRequest strReq = new StringRequest(Request.Method.POST,
                 HTTPReqURLConfig.URL_REGISTER, new Response.Listener<String>() {
 
@@ -136,12 +136,7 @@ public class VerifyMobileNoActivity extends AppCompatActivity {
                         registeredUser.updatedAt = user.getString("updated_at");
                         Log.i(AppState.TAG, registeredUser.toString());
 
-
-                        // Inserting row in users table
-                        if (db.addUser(registeredUser))
-                            session.setLogin(true);
-                        else
-                            Log.i(AppState.TAG, "Error in creating session.");
+                        session.setLogin(true);
 
                         Toast.makeText(getApplicationContext(), "Welcome to the amazingly easy world!", Toast.LENGTH_LONG).show();
 

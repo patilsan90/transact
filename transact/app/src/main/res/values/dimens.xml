@@ -28,5 +28,11 @@
     <dimen name="home_page_smart_cards_margin">3sp</dimen>
     <dimen name="home_page_smart_cards_padding">3sp</dimen>
 
+    <dimen name="home_my_profile_horizontal_margins">25sp</dimen>
+
+    <dimen name="home_my_profile_lables_vertical_margins">3sp</dimen>
+    <dimen name="home_my_profile_fields_vertical_margins">3sp</dimen>
+    <dimen name="home_my_profile_fields_vertical_height">13sp</dimen>
+
 
 </resources>

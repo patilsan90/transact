@@ -48,10 +48,10 @@ public class RegisterUserFragment extends Fragment {
         etEmail = (AutoCompleteTextView) view.findViewById(R.id.register_user_actv_email);
         etPassword= (EditText) view.findViewById(R.id.register_user_et_password);
 
-        etName.setText("san");
-        etMobileNo.setText("9423306174");
-        etEmail.setText("san@gmail.com");
-        etPassword.setText("san");
+        etName.setText("sandeep");
+        etMobileNo.setText("9423346174");
+        etEmail.setText("sansad@gmail.com");
+        etPassword.setText("9423346174");
 
         return view;
     }
@@ -64,6 +64,7 @@ public class RegisterUserFragment extends Fragment {
             Log.i("Login","SignUp Clicked");
 
             newUser.displayName = etName.getText().toString();
+            newUser.firstName = etName.getText().toString();
             newUser.mobNo = etMobileNo.getText().toString();
             newUser.emailID = etEmail.getText().toString();
             newUser.password = etPassword.getText().toString();

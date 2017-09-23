@@ -40,11 +40,9 @@ public class SessionManager {
         return pref.getBoolean(KEY_IS_LOGGEDIN, false);
     }
 
-    public boolean logoutUser(SQLiteHandler db, SessionManager session)
+    public boolean logoutUser(SessionManager session)
     {
         session.setLogin(false);
-
-        db.deleteUsers();
 
         return true;
         // Launching the login activity

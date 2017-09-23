@@ -12,44 +12,64 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.algo.transact.AppConfig.AppState;
-import com.algo.transact.AppConfig.SQLiteHandler;
 import com.algo.transact.AppConfig.SessionManager;
 import com.algo.transact.R;
 import com.algo.transact.login.LoginActivity;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
     private HomeFragment homeFragment;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     boolean isDrawerOpen= false;
 
-    private SQLiteHandler db;
     public SessionManager session;
     private Button btLogout;
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
+    LinearLayout llProfileTab;
+    private MyProfileFragment profileFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
       //  LinearLayout ll_sat = (LinearLayout) findViewById(R.id.shop_at_shop);
        // ll_sat.setOnClickListener();
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        LinearLayout llProfileTab = (LinearLayout) findViewById(R.id.home_ll_profile);
+        llProfileTab.setOnClickListener(this);
+
+        LinearLayout llHomeTab = (LinearLayout) findViewById(R.id.home_ll_home_tab);
+        llHomeTab.setOnClickListener(this);
+        homeFragment = new HomeFragment();
+/*
+
+        fragmentManager = getFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
         homeFragment = new HomeFragment();
         fragmentTransaction.add(R.id.home_page_frame, homeFragment);
         fragmentTransaction.commit();
+*/
+
+
+        android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        //transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
+        transaction.replace(R.id.home_page_frame, homeFragment);
+        transaction.commit();
+
 
         AppState.getInstance().homeActivity =this;
-        db = new SQLiteHandler(getApplicationContext());
         session= new SessionManager(getApplicationContext());
 
         if(!session.isLoggedIn())
         {
             Log.i(AppState.TAG, "Logged in check");
-            session.logoutUser(db,session);
+            session.logoutUser(session);
             Intent intent= new Intent(HomeActivity.this, LoginActivity.class);
             startActivity(intent);
             this.finish();
@@ -102,11 +122,53 @@ public class HomeActivity extends AppCompatActivity {
 
         mDrawerLayout.openDrawer(Gravity.LEFT);
     }
- public void logout(View v)
-    {
-        session.logoutUser(db, session);
-        Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
-        startActivity(intent);
-        finish();
+
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId())
+        {
+            case R.id.home_ll_profile:
+            {
+/*
+                // fragmentManager = getFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.home_page_frame, new MyProfileFragment());
+                fragmentTransaction.commit();
+*/
+
+                // fragmentManager = getFragmentManager();
+                android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                if(profileFragment == null)
+                profileFragment = new MyProfileFragment();
+                
+                transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
+                transaction.replace(R.id.home_page_frame, profileFragment);
+                transaction.commit();
+
+                break;
+            }
+            case R.id.home_ll_home_tab:
+            {
+                Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+                }.getClass().getEnclosingMethod().getName()+"  home_ll_home_tab homeFragment");
+
+
+/*
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                fragmentTransaction.replace(R.id.home_page_frame, homeFragment);
+                fragmentTransaction.commit();
+*/
+
+                android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
+                transaction.replace(R.id.home_page_frame, homeFragment);
+                transaction.commit();
+
+                break;
+            }
+        }
     }
 }

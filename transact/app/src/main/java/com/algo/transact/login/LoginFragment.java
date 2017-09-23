@@ -12,10 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.algo.transact.AppConfig.AppState;
-import com.algo.transact.AppConfig.Login;
 import com.algo.transact.R;
 
 
@@ -46,8 +44,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         email = (EditText) view.findViewById(R.id.email);
         mobNo = (EditText) view.findViewById(R.id.password);
 
-        email.setText("a");
-        mobNo.setText("a");
+        email.setText("9423346174");
+        mobNo.setText("9423346174");
 
         pDialog = new ProgressDialog(AppState.getInstance().loginActivity);
         return view;

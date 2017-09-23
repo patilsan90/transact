@@ -1,9 +1,12 @@
-package com.algo.transact.AppConfig;
+package com.algo.transact.login;
 
 import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.algo.transact.AppConfig.AppState;
+import com.algo.transact.AppConfig.HTTPReqController;
+import com.algo.transact.AppConfig.HTTPReqURLConfig;
 import com.algo.transact.home.HomeActivity;
 import com.algo.transact.login.LoginFragment;
 import com.algo.transact.login.UserDetails;
@@ -74,11 +77,11 @@ public class Login {
                         loggedInUser.familyName = user.getString("family_name");
                         loggedInUser.createdAt = user.getString("created_at");
                         loggedInUser.updatedAt = user.getString("updated_at");
+                        loggedInUser.setUserPreferences(activity.getActivity(), user);
 
                         Log.i(AppState.TAG,"Logged in user:: "+loggedInUser.toString());
 
                         // Inserting row in users table
-                      AppState.getInstance().loginActivity.db.addUser(loggedInUser);
                         Toast.makeText(activity.getActivity(),
                                 "Welcome "+loggedInUser.displayName, Toast.LENGTH_SHORT).show();
                         // Launch main activity

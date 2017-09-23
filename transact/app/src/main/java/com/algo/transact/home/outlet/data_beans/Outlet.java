@@ -27,9 +27,8 @@ public class Outlet implements Serializable {
     public long dailyCloseTimeInMillis;
     public ArrayList<WEEKDAY> outletCloseDays;
 
-    public enum WEEKDAY
-    {SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY };
-
+    public enum WEEKDAY {SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY};
+    
     public Outlet(int outletID, String outletName, String outletDisplayName, OutletType.OUTLET_TYPE outletType, String location, int minOrder, String currency, boolean providesDelivery, float deliveryRangeInKM, long dailyOpenTimeInMillis, long dailyCloseTimeInMillis, ArrayList<WEEKDAY> outletCloseDays) {
         this.outletID = outletID;
         this.outletName = outletName;
@@ -93,13 +92,12 @@ public class Outlet implements Serializable {
         return outletCloseDays;
     }
 
-    public boolean isShopOpen()
-    {
+    public boolean isShopOpen() {
         long currentTimeInMillis = Calendar.getInstance().getTimeInMillis();
-        if(getDailyOpenTimeInMillis() == 0 && getDailyCloseTimeInMillis() == 0)
+        if (getDailyOpenTimeInMillis() == 0 && getDailyCloseTimeInMillis() == 0)
             return true;
 
-        if(getDailyOpenTimeInMillis()<= currentTimeInMillis && currentTimeInMillis <= getDailyCloseTimeInMillis())
+        if (getDailyOpenTimeInMillis() <= currentTimeInMillis && currentTimeInMillis <= getDailyCloseTimeInMillis())
             return true;
         return false;
     }

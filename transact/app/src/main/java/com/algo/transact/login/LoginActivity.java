@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
-import com.algo.transact.AppConfig.SQLiteHandler;
 import com.algo.transact.AppConfig.SessionManager;
 import com.algo.transact.home.HomeActivity;
 import com.facebook.CallbackManager;
@@ -49,7 +48,6 @@ public class LoginActivity extends AppCompatActivity implements
     private LoginButton fbloginButton;
     private FBSignIn fbSignIn;
 
-    public SQLiteHandler db;
     public SessionManager session;
 
 
@@ -76,7 +74,6 @@ public class LoginActivity extends AppCompatActivity implements
     //    if (UserAuthentication.getInstance().authenticateUser(sessionFile))
       //      startMainActivity();
 
-        db = new SQLiteHandler(getApplicationContext());
         session= new SessionManager(getApplicationContext());
 
         if(session.isLoggedIn())
