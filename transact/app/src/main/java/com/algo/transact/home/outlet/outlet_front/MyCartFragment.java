@@ -77,7 +77,7 @@ public class MyCartFragment extends Fragment implements AdapterView.OnItemClickL
        // getActivity().getIntent().getStringExtra();
 
         Log.i("Generic info "," Activity onCreate MyCartFragment ....");
-        cart = CartsFactory.getInstance().getCart(outlet);
+        cart = CartsFactory.getInstance(getActivity()).getCart(outlet);
 
         lvCartsList.setEmptyView(tvMyCartPlaceholder);
         genericAdapter = new GenericAdapter(this.getActivity(), this, lvCartsList, cart.getCartList(), R.layout.list_item_view_mycart);

@@ -1,4 +1,4 @@
-package com.algo.transact.barcode;
+package com.algo.transact.optical_code;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -12,7 +12,7 @@ import com.algo.transact.R;
 
 public class TestBarcodeScannerActivity extends AppCompatActivity implements IQRResult {
 
-    BarcodeScannerFragment barcodeScannerFragment;
+    CodeScannerFragment codeScannerFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,8 +21,8 @@ public class TestBarcodeScannerActivity extends AppCompatActivity implements IQR
 
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        barcodeScannerFragment = new BarcodeScannerFragment();
-        fragmentTransaction.add(R.id.cam_test, barcodeScannerFragment);
+        codeScannerFragment = new CodeScannerFragment();
+        fragmentTransaction.add(R.id.cam_test, codeScannerFragment);
         fragmentTransaction.commit();
     }
 

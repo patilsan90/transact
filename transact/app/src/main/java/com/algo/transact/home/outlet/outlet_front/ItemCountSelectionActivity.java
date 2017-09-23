@@ -15,9 +15,9 @@ import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.AppConfig.IntentPutExtras;
 import com.algo.transact.AppConfig.IntentResultCode;
 import com.algo.transact.R;
-import com.algo.transact.barcode.OpticalCode;
+import com.algo.transact.optical_code.OpticalCode;
 import com.algo.transact.home.outlet.data_beans.Item;
-import com.algo.transact.home.outlet.data_retrivals.DataRetriver;
+import com.algo.transact.home.outlet.data_retrivals.ShopsRetriver;
 
 
 public class ItemCountSelectionActivity extends AppCompatActivity implements View.OnClickListener{
@@ -96,7 +96,7 @@ public class ItemCountSelectionActivity extends AppCompatActivity implements Vie
            itemID = barcodeDetails.getItemId();
            shopID = barcodeDetails.getOutletId();
 
-           newItem = DataRetriver.getItemDetailsFromShop(shopID, itemID);
+           newItem = ShopsRetriver.getItemDetailsFromShop(shopID, itemID);
 
            tvItemName.setText(newItem.getItem_name());
            tvActualCost.setText("Actual Cost : "+newItem.getActual_cost());
@@ -113,7 +113,7 @@ public class ItemCountSelectionActivity extends AppCompatActivity implements Vie
    public void itemSelected(View view)
     {
     //add item to cart here
-       // Item item = DataRetriver.getItemDetailsFromShop(shopID, itemID);
+       // Item item = ShopsRetriver.getItemDetailsFromShop(shopID, itemID);
 
         //AppState.getInstance().addCartItem(temporary_item);
         Log.e(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {

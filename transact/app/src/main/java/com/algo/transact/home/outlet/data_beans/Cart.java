@@ -1,15 +1,13 @@
 package com.algo.transact.home.outlet.data_beans;
 
-import com.algo.transact.home.outlet.OutletType;
-
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by sandeep on 6/8/17.
  */
 
-public class Cart extends Outlet{
+public class Cart extends Outlet implements Serializable{
 
     public String cartCreationDateTime;
     public ArrayList<Item> cartList =new ArrayList<>();

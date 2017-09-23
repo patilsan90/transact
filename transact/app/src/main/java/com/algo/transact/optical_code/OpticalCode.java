@@ -1,12 +1,6 @@
-package com.algo.transact.barcode;
+package com.algo.transact.optical_code;
 
-import android.util.Log;
-
-import com.algo.transact.AppConfig.AppState;
-import com.algo.transact.home.outlet.OutletType;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.algo.transact.home.outlet.data_beans.Outlet;
 
 import java.io.Serializable;
 
@@ -24,7 +18,7 @@ public class OpticalCode implements Serializable {
     }
 
     private  ACT_TP at;  //Action Type
-    private OutletType.OUTLET_TYPE ot; //Outlet Type
+    private Outlet.OUTLET_TYPE ot; //Outlet Type
     private int oi;   //Outlet Id
     private String ii; //Item ID
     private String mn;  //Mobile Number
@@ -39,7 +33,7 @@ public class OpticalCode implements Serializable {
         return at;
     }
 
-    public OutletType.OUTLET_TYPE getOutletType() {
+    public Outlet.OUTLET_TYPE getOutletType() {
         return ot;
     }
 

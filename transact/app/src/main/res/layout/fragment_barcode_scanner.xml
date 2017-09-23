@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.algo.transact.barcode.BarcodeScannerFragment">
+    tools:context="com.algo.transact.optical_code.CodeScannerFragment">
 
     <SurfaceView
         android:id="@+id/barcode_scanner_sv_camera_view"

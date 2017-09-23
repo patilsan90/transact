@@ -1,4 +1,4 @@
-package com.algo.transact.gps_location;
+package com.algo.transact.gps;
 
 /**
  * Created by patilsp on 9/16/2017.

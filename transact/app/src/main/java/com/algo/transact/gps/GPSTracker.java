@@ -1,4 +1,4 @@
-package com.algo.transact.gps_location;
+package com.algo.transact.gps;
 
 
 import android.Manifest;
@@ -20,10 +20,6 @@ import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
 import com.algo.transact.AppConfig.AppState;
-import com.algo.transact.AppConfig.Permissions;
-
-import java.security.Permission;
-import java.util.ArrayList;
 
 public class GPSTracker extends Service implements LocationListener {
 

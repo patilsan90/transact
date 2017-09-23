@@ -8,7 +8,7 @@ android:fillViewport="true"
 android:scrollX="0dp"
 android:scrollY="0dp"
 android:layout_marginTop="0dp"
-tools:context="com.algo.transact.barcode.CodeScannerActivity">
+tools:context="com.algo.transact.optical_code.CodeScannerActivity">
 
     <include layout="@layout/content_main_code_scanner" />
 

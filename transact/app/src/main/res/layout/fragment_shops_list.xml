@@ -34,17 +34,13 @@
 
     </LinearLayout>
 
-  <!--  <com.algo.transact.utils.NonScrollListView
-        android:id="@+id/shops_list_lv_shops_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp" />-->
-
     <ListView
         android:id="@+id/shops_list_lv_shops_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
+        android:clipToPadding="false"
+        android:paddingBottom="100sp"
         android:divider="@null"/>
 
     <LinearLayout
@@ -53,8 +49,9 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center">
-    <TextView
 
+        <TextView
+        android:id="@+id/outlets_list_tv_placeholder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

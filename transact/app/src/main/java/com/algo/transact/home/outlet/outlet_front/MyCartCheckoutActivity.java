@@ -49,7 +49,7 @@ public class MyCartCheckoutActivity extends AppCompatActivity implements IGeneri
 
         tvCartTotal = (TextView) findViewById(R.id.cart_total);
 
-        cart = CartsFactory.getInstance().getCart(outlet);
+        cart = CartsFactory.getInstance(this).getCart(outlet);
 
         genericAdapter = new GenericAdapter(this, this, lvcheckoutCart, cart.getCartList(), R.layout.list_item_view_mycart_checkout);
 

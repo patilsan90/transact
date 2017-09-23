@@ -20,11 +20,9 @@ import com.algo.transact.AppConfig.IntentResultCode;
 import com.algo.transact.R;
 import com.algo.transact.generic_structures.GenericAdapter;
 import com.algo.transact.generic_structures.IGenericAdapter;
-import com.algo.transact.home.outlet.data_beans.Item;
 import com.algo.transact.home.outlet.outlet_front.OutletFront;
 import com.algo.transact.home.outlet.data_beans.Cart;
 import com.algo.transact.home.outlet.data_retrivals.CartsFactory;
-import com.algo.transact.home.outlet.data_retrivals.DataRetriver;
 
 import java.util.ArrayList;
 
@@ -55,7 +53,7 @@ public class IncompleteCartsListFragment extends Fragment implements IGenericAda
         tvCartsListPlaceholder = (TextView) view.findViewById(R.id.carts_list_list_tv_placeholder);
 
         lvCartsList.setEmptyView(tvCartsListPlaceholder);
-        alCartsList= DataRetriver.retriveStoredCarts();
+        alCartsList= CartsFactory.getInstance(getActivity()).getCarts();
 
         //Activity activity, IGenericAdapter listener, ListView listView, ArrayList list, int listViewItemId
         cartsListGenericAdapter= new GenericAdapter(this.getActivity(),this, lvCartsList, alCartsList,R.layout.list_item_view_incomplete_cart);
@@ -74,13 +72,13 @@ public class IncompleteCartsListFragment extends Fragment implements IGenericAda
         TextView total_order_cost = (TextView) view.findViewById(R.id.incomplete_cart_total_cost);
 
         ImageView trash = (ImageView) view.findViewById(R.id.incomplete_cart_trash);
-
         trash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // AppState.getInstance().getCartItemList().remove(index);
                 alCartsList.remove(index);
                 cartsListGenericAdapter.notifyDataSetChanged();
+                CartsFactory.getInstance(getActivity()).storeCarts();
             }
         });
 
@@ -112,7 +110,7 @@ public class IncompleteCartsListFragment extends Fragment implements IGenericAda
 
         int shopID = alCartsList.get(position).getOutletID();
 
-        CartsFactory cartsFactory = CartsFactory.getInstance();
+        CartsFactory cartsFactory = CartsFactory.getInstance(getActivity());
         Cart cart = cartsFactory.getCart(alCartsList.get(position));
         if (cart == null)
             Log.i(AppState.TAG, "onItemClick IncompleteCart  ShopID::" + shopID + " has no cart stored");

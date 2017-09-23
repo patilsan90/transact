@@ -61,7 +61,6 @@ public class UserDetails implements Serializable {
         Gson gson = new Gson();
         editor.putString(USERDETAILS, gson.toJson(this));
         editor.apply();
-
     }
 
     public static UserDetails getUserPreferences(Activity activity) {

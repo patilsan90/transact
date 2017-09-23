@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.algo.transact.barcode.TestBarcodeScannerActivity">
+    tools:context="com.algo.transact.optical_code.TestBarcodeScannerActivity">
 
     <LinearLayout
         android:id="@+id/cam_test"

@@ -2,10 +2,10 @@ package com.algo.transact.home.outlet.outlet_selection;
 
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
@@ -15,12 +15,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.AppConfig.IntentPutExtras;
@@ -29,14 +27,15 @@ import com.algo.transact.AppConfig.Permissions;
 import com.algo.transact.R;
 import com.algo.transact.generic_structures.GenericAdapter;
 import com.algo.transact.generic_structures.IGenericAdapter;
-import com.algo.transact.gps_location.GPSListener;
-import com.algo.transact.gps_location.GPSTracker;
-import com.algo.transact.gps_location.GpsLocationReceiver;
+import com.algo.transact.gps.GPSListener;
+import com.algo.transact.gps.GPSTracker;
+import com.algo.transact.gps.GpsLocationReceiver;
+import com.algo.transact.home.outlet.data_retrivals.ShopsRetriver;
 import com.algo.transact.home.outlet.outlet_front.OutletFront;
 import com.algo.transact.home.outlet.data_beans.Cart;
 import com.algo.transact.home.outlet.data_beans.Outlet;
 import com.algo.transact.home.outlet.data_retrivals.CartsFactory;
-import com.algo.transact.home.outlet.data_retrivals.DataRetriver;
+import com.algo.transact.optical_code.CodeScannerRequestType;
 
 import java.util.ArrayList;
 
@@ -53,6 +52,10 @@ public class NearByOutletsListFragment extends Fragment implements IGenericAdapt
     private LinearLayout llShopsListPlaceholder;
     private GPSTracker gpsTracker;
     Location currentGPSlocation;
+    private Outlet.OUTLET_TYPE outletRequestType;
+
+    int gps_location_try_counter;
+    private TextView tvShopsListPlaceholder;
 
     public NearByOutletsListFragment() {
         // Required empty public constructor
@@ -68,6 +71,8 @@ public class NearByOutletsListFragment extends Fragment implements IGenericAdapt
         View view = inflater.inflate(R.layout.fragment_shops_list, container, false);
         lvShopsList = (ListView) view.findViewById(R.id.shops_list_lv_shops_list);
         llShopsListPlaceholder = (LinearLayout) view.findViewById(R.id.outlets_list_list_ll_placeholder);
+        tvShopsListPlaceholder = (TextView) view.findViewById(R.id.outlets_list_tv_placeholder);
+        outletRequestType = (Outlet.OUTLET_TYPE) getActivity().getIntent().getSerializableExtra(IntentPutExtras.OUTLET_REQUEST_TYPE);
 
 
         lvShopsList.setEmptyView(llShopsListPlaceholder);
@@ -79,7 +84,7 @@ public class NearByOutletsListFragment extends Fragment implements IGenericAdapt
     }
 
      public void retrieveList() {
-        alShops10Closest = DataRetriver.retriveClosest10Shops();
+        alShops10Closest = ShopsRetriver.retriveClosest10Shops(outletRequestType);
         genericAdapter = new GenericAdapter(this.getActivity(), this, lvShopsList, alShops10Closest, R.layout.list_item_view_nearby_outlets);
 
     }
@@ -90,6 +95,12 @@ public class NearByOutletsListFragment extends Fragment implements IGenericAdapt
         // gpsTracker = new GPSTracker(getApplicationContext(), getActivity());
         gpsTracker = new GPSTracker(getApplicationContext());
 
+if(gps_location_try_counter == 15)
+{
+    /* TODO Put some different message on screen llShopsListPlaceholder */
+    tvShopsListPlaceholder.setText(" Unable to find shops nearby ");
+    return;
+}
         if (gpsTracker.canGetLocation()) {
 
     /*        final String[] permissions = new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
@@ -118,6 +129,7 @@ public class NearByOutletsListFragment extends Fragment implements IGenericAdapt
                     @Override
                     public void run() {
                         try {
+                            gps_location_try_counter ++;
                             Thread.sleep(1000);
                             //    populateOutletsList();
                         } catch (InterruptedException e) {
@@ -136,95 +148,7 @@ public class NearByOutletsListFragment extends Fragment implements IGenericAdapt
         }
     }
 
-    public void populateOutletsList2() {
-        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
-        }.getClass().getEnclosingMethod().getName());
-        // gpsTracker = new GPSTracker(getApplicationContext(), getActivity());
-        gpsTracker = new GPSTracker(getApplicationContext());
-
-        if (gpsTracker.canGetLocation()) {
-
-            final String[] permissions = new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
-            if (ActivityCompat.checkSelfPermission(getActivity(),
-                    Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(getActivity(), permissions, Permissions.RC_HANDLE_GPS_PERM);
-
-                Log.i(AppState.TAG, "In RequestPermission");
-            } else {
-                //currentGPSlocation = gpsTracker.getCurrentLocation();
-                currentGPSlocation = gpsTracker.getLocation();
-                currentGPSlocation = null;
-                if (currentGPSlocation != null) {
-                    Log.i(AppState.TAG, "Location getAltitude " + currentGPSlocation.getAltitude());
-                    Log.i(AppState.TAG, "Location getLongitude " + currentGPSlocation.getLongitude());
-                    Log.i(AppState.TAG, "Location getLatitude " + currentGPSlocation.getLatitude());
-                    Log.i(AppState.TAG, "Location getProvider " + currentGPSlocation.getProvider());
-                    alShops10Closest = DataRetriver.retriveClosest10Shops();
-                    genericAdapter = new GenericAdapter(this.getActivity(), this, lvShopsList, alShops10Closest, R.layout.list_item_view_nearby_outlets);
-
-/*                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                           // alShops10Closest = DataRetriver.retriveClosest10Shops();
-                           // genericAdapter = new GenericAdapter(this.getActivity(), this, lvShopsList, alShops10Closest, R.layout.list_item_view_nearby_outlets);
-                            try {
-                                Thread.sleep(1000);
-                                populateOutletsList();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });*/
-                } else {
-
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            // alShops10Closest = DataRetriver.retriveClosest10Shops();
-                            // genericAdapter = new GenericAdapter(this.getActivity(), this, lvShopsList, alShops10Closest, R.layout.list_item_view_nearby_outlets);
-                            populateOutletsList();
-/*
-                            try {
-
-                                Thread.sleep(1000);
-                                Log.e(AppState.TAG, "Error in acquiring GPS signal, trying one more time ");
-
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-*/
-                        }
-                    });
-
-                   /* Thread thread = new Thread() {
-                        @Override
-                        public void run() {
-                            try {
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                            Log.e(AppState.TAG, "Error in acquiring GPS signal, trying one more time ");
-                           Looper.prepare(); populateOutletsList();
-                        }
-                    };*/
-
-                    //thread.start();
-
-/*
-                        Log.e(AppState.TAG, "Error in acquiring GPS signal, trying one more time ");
-                        Toast.makeText(getActivity(), "Error in acquiring GPS signal, trying one more time", Toast.LENGTH_SHORT).show();
-*/
-
-
-                }
-
-                // Toast.makeText(this, "Alt :: " + currentGPSlocation.getAltitude() + " Lon " + currentGPSlocation.getLongitude() + " Lat " + currentGPSlocation.getLatitude(), Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-
-    @Override
+     @Override
     public View addViewItemToList(View view, Object listItem, int index) {
         TextView shop_display_name = (TextView) view.findViewById(R.id.closest_shop_shop_display_name);
         TextView shop_name = (TextView) view.findViewById(R.id.closest_shop_shop_name);
@@ -280,7 +204,7 @@ public class NearByOutletsListFragment extends Fragment implements IGenericAdapt
 
         int shopID = alShops10Closest.get(position).getOutletID();
 
-        CartsFactory cartsFactory = CartsFactory.getInstance();
+        CartsFactory cartsFactory = CartsFactory.getInstance(getActivity());
         Cart cart = cartsFactory.getCart(alShops10Closest.get(position));
         if (cart == null)
             Log.i(AppState.TAG, "onItemClick ShopList  ShopID::" + shopID + " has no cart stored");

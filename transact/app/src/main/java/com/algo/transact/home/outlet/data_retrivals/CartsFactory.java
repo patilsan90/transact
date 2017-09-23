@@ -1,89 +1,121 @@
 package com.algo.transact.home.outlet.data_retrivals;
 
-import com.algo.transact.home.outlet.OutletType;
-import com.algo.transact.home.outlet.data_beans.Cart;
-import com.algo.transact.home.outlet.data_beans.Category;
-import com.algo.transact.home.outlet.data_beans.Item;
-import com.algo.transact.home.outlet.data_beans.Outlet;
-import com.algo.transact.home.outlet.data_beans.SubCategory;
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Looper;
+import android.util.Log;
 
-import java.text.SimpleDateFormat;
+import com.algo.transact.AppConfig.AppConfig;
+import com.algo.transact.AppConfig.AppState;
+import com.algo.transact.home.outlet.data_beans.Cart;
+import com.algo.transact.home.outlet.data_beans.Outlet;
+import com.algo.transact.login.UserDetails;
+import com.google.gson.Gson;
+
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
+
+import static android.R.attr.path;
 
 /**
  * Created by sandeep on 6/8/17.
  */
 
 public class CartsFactory {
+
+    public static final String TransactCartPREFERENCES = "TranCartPref" ;
+    public static final String TransactCart = "TranCart" ;
+    private static final int MAX_CARTS = 10;
+
     private ArrayList<Cart> cartsList = new ArrayList<Cart>();
-    private static CartsFactory cartsFactory;
-    private CartsFactory()
+
+    transient private static CartsFactory cartsFactory;
+    transient private Activity activity;
+    transient File path;
+    transient File file;
+
+    private CartsFactory(Activity activity)
     {
+        this.activity = activity;
       //  cartsList =createCartsList();
+     }
+
+    public void storeCarts()
+    {
+  /*      Thread thread = new Thread() {
+            @Override
+            public void run() {
+
+                Looper.prepare();
+
+   */
+  while (cartsList.size()>MAX_CARTS)
+  {
+      cartsList.remove(0);
+      Log.i(AppState.TAG, "Class: " + cartsFactory.getClass().getSimpleName() + " Method: " + new Object() {
+      }.getClass().getEnclosingMethod().getName()+" Remove extra carts > 10 ");
+
+  }
+  SharedPreferences sharedpreferences = activity.getSharedPreferences(TransactCartPREFERENCES, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                Gson gson = new Gson();
+                editor.putString(TransactCart, gson.toJson(this));
+                editor.apply();
+                Log.i(AppState.TAG, "Class: " + cartsFactory.getClass().getSimpleName() + " Method: " + new Object() {
+                }.getClass().getEnclosingMethod().getName()+" Object Saved  "+gson.toJson(this));
+
+/*
+
+            }
+        };
+
+        thread.start();
+*/
+
     }
 
-    static int temp_count;
-    public static CartsFactory getInstance()
+    public static CartsFactory getInstance(Activity activity)
     {
-        if(cartsFactory == null)
-            cartsFactory =new CartsFactory();
-        return cartsFactory;
 
+        if(cartsFactory == null)
+        {
+            cartsFactory =new CartsFactory(activity);
+            SharedPreferences sharedpreferences = activity.getSharedPreferences(TransactCartPREFERENCES, Context.MODE_PRIVATE);
+            Gson gson = new Gson();
+            CartsFactory details =  gson.fromJson(sharedpreferences.getString(TransactCart,""), CartsFactory.class);
+            if(details!=null)
+            {
+                cartsFactory = details;
+                cartsFactory.activity = activity;
+                Log.i(AppState.TAG, "Class: " + cartsFactory.getClass().getSimpleName() + " Method: " + new Object() {
+                }.getClass().getEnclosingMethod().getName()+" GSON exists new object");
+            }
+
+
+            Log.i(AppState.TAG, "Class: " + cartsFactory.getClass().getSimpleName() + " Method: " + new Object() {
+            }.getClass().getEnclosingMethod().getName()+" Creating new object");
+        }
+
+        Log.i(AppState.TAG, "Class: " + cartsFactory.getClass().getSimpleName() + " Method: " + new Object() {
+        }.getClass().getEnclosingMethod().getName());
+
+        return cartsFactory;
     }
 
     public ArrayList<Cart> getCarts()
     {
         return cartsList;
     }
-
-    public String getShopDisplayName(int shopId)
-    {
-        for (int i = 0; i < cartsList.size(); i++) {
-            if(cartsList.get(i).getOutletID()==shopId)
-                return cartsList.get(i).getOutletDisplayName();
-        }
-        return null;
-    }
-    public String getShopName(int shopId)
-    {
-        for (int i = 0; i < cartsList.size(); i++) {
-            if(cartsList.get(i).getOutletID()==shopId)
-                return cartsList.get(i).getOutletName();
-        }
-        return null;
-    }
-
-
-/*
-    private ArrayList<Cart> createCartsList()
-    {
-        ArrayList<Cart> cartsList = new ArrayList<Cart>();
-
-        cartsList.add(createTestCart("Big B1", "Big Bazar", 1));
-        cartsList.add(createTestCart("Big B2", "Big Bazar", 2));
-
-        return cartsList;
-    }
-
-    private Cart createTestCart2(String displayName, String shopName, int shopID)
-    {
-        ArrayList<Item> itemList = new ArrayList<Item>();
-        //  String item_id, String item_name, double actual_cost, double discounted_cost, int item_quantity
-        SubCategory sc = new SubCategory(new Category(1, 11, null, "1st Floor"), 111, null);
-        itemList.add(new Item(sc, "23"+(temp_count++), "Refined"+shopID, 250, 230, Item.ITEM_QUANTITY_TYPE.MILLILITERS,500, 1));
-
-        Outlet outlet = new Outlet(shopID, shopName, displayName, OutletType.OUTLET_TYPE.GROCERY_STORE, "HSR Sector 1, HSR Layout");
-        Cart cart =new Cart(outlet);
-        //cart.outletID=shopID;
-        //cart.outletDisplayName = displayName;
-        //cart.outletName = shopName;
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd_HHmmss");
-        cart.cartCreationDateTime = sdf.toString();
-        cart.cartList= itemList;
-
-        return  cart;
-    }
-*/
 
     public Cart getCart(Outlet outlet) {
 
@@ -96,8 +128,8 @@ public class CartsFactory {
         //cart.outletDisplayName = outlet.getOutletDisplayName();
         //cart.outletName = outlet.getOutletName();
 
-        cartsList.add(cart);
-
+       // cartsList.add(cart);
+        cartsList.add(0, cart);
         return cart;
     }
 

@@ -1,4 +1,4 @@
-package com.algo.transact.barcode;
+package com.algo.transact.optical_code;
 
 /**
  * Created by sandeep on 23/7/17.

@@ -25,10 +25,11 @@ import com.algo.transact.AppConfig.IntentPutExtras;
 import com.algo.transact.AppConfig.IntentResultCode;
 import com.algo.transact.AppConfig.Permissions;
 import com.algo.transact.R;
-import com.algo.transact.barcode.BarcodeScannerFragment;
-import com.algo.transact.barcode.CodeScannerActivity;
-import com.algo.transact.barcode.OpticalCode;
-import com.algo.transact.gps_location.GPSTracker;
+import com.algo.transact.optical_code.CodeScannerFragment;
+import com.algo.transact.optical_code.CodeScannerActivity;
+import com.algo.transact.optical_code.CodeScannerRequestType;
+import com.algo.transact.optical_code.OpticalCode;
+import com.algo.transact.gps.GPSTracker;
 import com.algo.transact.home.outlet.outlet_front.OutletFront;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -52,7 +53,7 @@ public class OutletSelectorActivity extends AppCompatActivity implements View.On
     int outletID;
     TabLayout tabLayout;
     ViewPager viewPager;
-    private BarcodeScannerFragment barcodeScannerFragment;
+    private CodeScannerFragment codeScannerFragment;
     private FloatingActionButton fabCodeScanner;
 
 
@@ -180,10 +181,10 @@ public class OutletSelectorActivity extends AppCompatActivity implements View.On
                 setResult(IntentResultCode.RESULT_OK_NEW_ITEM_ADDITION, intent);
                 finish();
                 */
-
                 Intent intent = new Intent(this, OutletFront.class);
                 intent.putExtra(IntentPutExtras.DATA_TYPE, IntentPutExtras.ID);
                 intent.putExtra(IntentPutExtras.ID, barcodeDetails.getOutletId());
+
                 this.startActivityForResult(intent, IntentResultCode.TRANSACT_RESULT_OK);
 
                 //this.startActivity(intent);
@@ -245,7 +246,7 @@ public class OutletSelectorActivity extends AppCompatActivity implements View.On
         switch (v.getId()) {
             case R.id.outlet_fab_barcode_scanner: {
                 Intent intent = new Intent(this, CodeScannerActivity.class);
-                //   intent.putExtra(IntentPutExtras.REQUEST_TYPE, IntentPutExtras.REQUEST_SELECT_SHOP);
+                intent.putExtra(CodeScannerRequestType.CODE_REQUEST_TYPE,CodeScannerRequestType.REQUEST_TYPE.REQ_SELECT_OUTLET);
                 this.startActivityForResult(intent, IntentResultCode.TRANSACT_RESULT_OK);
                 break;
             }
@@ -278,7 +279,7 @@ public class OutletSelectorActivity extends AppCompatActivity implements View.On
                 break;
             }
             case Permissions.RC_HANDLE_CAMERA_PERM: {
-                barcodeScannerFragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
+                codeScannerFragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
                 ;
                 break;
             }

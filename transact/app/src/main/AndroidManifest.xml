@@ -67,7 +67,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".home.outlet.outlet_front.MyCartCheckoutActivity" />
-        <activity android:name=".barcode.TestBarcodeScannerActivity">
+        <activity android:name=".optical_code.TestBarcodeScannerActivity">
 
             <!--
             <intent-filter>
@@ -79,7 +79,7 @@
         </activity>
         <activity android:name=".home.outlet.outlet_selection.OutletSelectorActivity" />
 
-        <receiver android:name=".gps_location.GpsLocationReceiver">
+        <receiver android:name=".gps.GpsLocationReceiver">
             <intent-filter>
                 <action android:name="android.location.PROVIDERS_CHANGED" />
 
@@ -87,7 +87,7 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".barcode.CodeScannerActivity">
+        <activity android:name=".optical_code.CodeScannerActivity">
       <!--      <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

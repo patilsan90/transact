@@ -1,4 +1,4 @@
-package com.algo.transact.gps_location;
+package com.algo.transact.gps;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

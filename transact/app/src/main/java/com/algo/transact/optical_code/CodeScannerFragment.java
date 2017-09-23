@@ -1,4 +1,4 @@
-package com.algo.transact.barcode;
+package com.algo.transact.optical_code;
 
 
 import android.Manifest;
@@ -17,8 +17,6 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.AppConfig.Permissions;
@@ -29,12 +27,11 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
-import java.security.Policy;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BarcodeScannerFragment extends Fragment {
+public class CodeScannerFragment extends Fragment {
 
     // Permission request codes need to be < 256
 
@@ -44,7 +41,7 @@ public class BarcodeScannerFragment extends Fragment {
     private CameraSource cameraSource;
 
     private String previousScanResult="";
-    public BarcodeScannerFragment() {
+    public CodeScannerFragment() {
         // Required empty public constructor
     }
 

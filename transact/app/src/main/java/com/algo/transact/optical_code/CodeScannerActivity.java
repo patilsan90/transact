@@ -1,4 +1,4 @@
-package com.algo.transact.barcode;
+package com.algo.transact.optical_code;
 
 import android.Manifest;
 import android.content.Intent;
@@ -21,7 +21,6 @@ import com.algo.transact.AppConfig.IntentPutExtras;
 import com.algo.transact.AppConfig.IntentResultCode;
 import com.algo.transact.AppConfig.Permissions;
 import com.algo.transact.R;
-import com.algo.transact.login.UserDetails;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;

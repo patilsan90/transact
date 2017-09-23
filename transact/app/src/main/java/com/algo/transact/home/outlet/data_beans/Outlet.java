@@ -1,12 +1,8 @@
 package com.algo.transact.home.outlet.data_beans;
 
-import com.algo.transact.home.outlet.OutletType;
-
 import java.io.Serializable;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created by sandeep on 5/8/17.
@@ -17,7 +13,7 @@ public class Outlet implements Serializable {
     public int outletID;
     public String outletName;
     public String outletDisplayName;
-    public OutletType.OUTLET_TYPE outletType;
+    public OUTLET_TYPE outletType;
     public String location;
     public int minOrder;
     public String currency;
@@ -28,8 +24,20 @@ public class Outlet implements Serializable {
     public ArrayList<WEEKDAY> outletCloseDays;
 
     public enum WEEKDAY {SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY};
-    
-    public Outlet(int outletID, String outletName, String outletDisplayName, OutletType.OUTLET_TYPE outletType, String location, int minOrder, String currency, boolean providesDelivery, float deliveryRangeInKM, long dailyOpenTimeInMillis, long dailyCloseTimeInMillis, ArrayList<WEEKDAY> outletCloseDays) {
+
+    public enum OUTLET_TYPE
+    {
+        GROCERY_STORE,
+        GENERAL_STORE,
+        RESTAURANT,
+        VEGETABLES,
+        STATIONARY,
+        MEAT,
+        NEWSPAPERS,
+        LAUNDRY;
+    }
+
+    public Outlet(int outletID, String outletName, String outletDisplayName, OUTLET_TYPE outletType, String location, int minOrder, String currency, boolean providesDelivery, float deliveryRangeInKM, long dailyOpenTimeInMillis, long dailyCloseTimeInMillis, ArrayList<WEEKDAY> outletCloseDays) {
         this.outletID = outletID;
         this.outletName = outletName;
         this.outletDisplayName = outletDisplayName;
@@ -56,7 +64,7 @@ public class Outlet implements Serializable {
         return outletDisplayName;
     }
 
-    public OutletType.OUTLET_TYPE getOutletType() {
+    public OUTLET_TYPE getOutletType() {
         return outletType;
     }
 

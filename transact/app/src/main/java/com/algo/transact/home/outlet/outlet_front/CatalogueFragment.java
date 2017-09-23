@@ -65,7 +65,7 @@ public class CatalogueFragment extends Fragment implements IGenericAdapterRecycl
         shopID = getActivity().getIntent().getIntExtra(IntentPutExtras.ID, 0);
         outlet  = (Outlet) getActivity().getIntent().getSerializableExtra(IntentPutExtras.OUTLET_OBJECT);
 
-        currentCart = CartsFactory.getInstance().getCart(outlet);
+        currentCart = CartsFactory.getInstance(getActivity()).getCart(outlet);
 
        // Spinner catalogueMenu = (Spinner) view.findViewById(R.id.catalogue_spinner_cat_list);
 
@@ -176,7 +176,7 @@ void initializeHashMap(ArrayList<SubCategory> sc)
                     @Override
                     public void onClick(View v) {
 
-                        Cart cart = CartsFactory.getInstance().getCart(outlet);
+                        Cart cart = CartsFactory.getInstance(getActivity()).getCart(outlet);
                         int count = item.getItem_count();
                         boolean flag = false;
                         ArrayList<Item> cartlist = cart.getCartList();
@@ -207,7 +207,7 @@ void initializeHashMap(ArrayList<SubCategory> sc)
                     @Override
                     public void onClick(View v) {
 
-                        Cart cart = CartsFactory.getInstance().getCart(outlet);
+                        Cart cart = CartsFactory.getInstance(getActivity()).getCart(outlet);
                         int count = item.getItem_count();
                         ArrayList<Item> cartlist = cart.getCartList();
                         for (int i=0;i<cartlist.size();i++)

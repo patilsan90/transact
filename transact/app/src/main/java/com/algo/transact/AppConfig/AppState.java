@@ -2,7 +2,6 @@ package com.algo.transact.AppConfig;
 
 import com.algo.transact.home.HomeActivity;
 import com.algo.transact.home.outlet.data_beans.Item;
-import com.algo.transact.home.offers.OfferItem;
 import com.algo.transact.login.LoginActivity;
 
 import java.util.ArrayList;
@@ -24,7 +23,6 @@ public class AppState {
 
 
     private ArrayList<Item> itemsList;
-    private ArrayList<OfferItem> offersList;
 
     //public static boolean isMallSelected = false;
 
@@ -38,7 +36,6 @@ public class AppState {
     private AppState()
     {
         itemsList = new ArrayList<Item>();
-        offersList = new ArrayList<OfferItem>();
     }
 
     public static AppState getInstance()
@@ -59,13 +56,4 @@ public class AppState {
         return itemsList;
     }
 
-    public void addOfferItem(OfferItem cartItem)
-    {
-        offersList.add(cartItem);
     }
-    public ArrayList<OfferItem> getOfferItemList()
-    {
-        return offersList;
-    }
-
-}

@@ -19,6 +19,7 @@ public class IntentPutExtras {
 
     public static final String OUTLET_OBJECT = "OUTLET_OBJECT";
 
+    public static final String OUTLET_REQUEST_TYPE = "OUTLET_REQ_TYPE";
 
 
  /*   public static final int REQUEST_SELECT_SHOP = 1;

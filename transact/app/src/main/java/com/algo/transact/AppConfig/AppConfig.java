@@ -7,4 +7,7 @@ package com.algo.transact.AppConfig;
 public class AppConfig {
 
   public static String currency = "Rs";
+
+  public static String STORED_CARTS_FILENAME = "carts.txt";
+
 }

@@ -5,13 +5,6 @@ android:layout_height="match_parent"
 android:orientation="vertical"
 tools:context="com.algo.transact.home.outlet.outlet_selection.IncompleteCartsListFragment">
 
-<!--
-<com.algo.transact.utils.NonScrollListView
-    android:id="@+id/carts_list_lv_carts_list"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="10dp" />
--->
     <ListView
         android:id="@+id/carts_list_lv_carts_list"
         android:layout_width="match_parent"

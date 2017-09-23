@@ -26,8 +26,8 @@ import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.AppConfig.IntentPutExtras;
 import com.algo.transact.AppConfig.IntentResultCode;
 import com.algo.transact.R;
-import com.algo.transact.barcode.CodeScannerActivity;
-import com.algo.transact.barcode.OpticalCode;
+import com.algo.transact.optical_code.CodeScannerActivity;
+import com.algo.transact.optical_code.OpticalCode;
 import com.algo.transact.generic_structures.GenericAdapter;
 import com.algo.transact.generic_structures.IGenericAdapterSpinner;
 import com.algo.transact.home.outlet.data_beans.Cart;
@@ -300,31 +300,15 @@ public class OutletFront extends AppCompatActivity implements
         mDrawerLayout.openDrawer(Gravity.LEFT);
     }
 
-    /*
-    public void showMyCart(View view) {
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        }.getClass().getEnclosingMethod().getName());
 
-        if (AppState.checkProccedStatus() == false) {
-            Toast.makeText(this, "Please select mall first !!!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-
-        if (isBack == false) {
-            showCartButton.setText("Back");
-            fragmentTransaction.replace(R.id.shop_at_shop_page_frame, myCartFragment);
-            isBack = true;
-        } else {
-            showCartButton.setText("My Cart");
-            fragmentTransaction.replace(R.id.shop_at_shop_page_frame, offersFragment);
-            isBack = false;
-        }
-
-        fragmentTransaction.commit();
+        CartsFactory.getInstance(this).storeCarts();
     }
-*/
+
     public void locateCategories(View view) {
         Log.i("Home", "locateCategories Clicked");
         Intent myIntent = new Intent(this, LocateCategoriesDialogue.class);
@@ -446,7 +430,7 @@ public class OutletFront extends AppCompatActivity implements
 
             tvCartTotal = (TextView) bar.findViewById(R.id.cart_total);
 
-            Cart cart = CartsFactory.getInstance().getCart(outlet);
+            Cart cart = CartsFactory.getInstance(this).getCart(outlet);
             int noOfItems = cart.getCartList().size();
             double cart_total = 0;
             Item item;
