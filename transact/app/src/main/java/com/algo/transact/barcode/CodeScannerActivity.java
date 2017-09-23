@@ -1,9 +1,6 @@
 package com.algo.transact.barcode;
 
 import android.Manifest;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
@@ -24,10 +21,12 @@ import com.algo.transact.AppConfig.IntentPutExtras;
 import com.algo.transact.AppConfig.IntentResultCode;
 import com.algo.transact.AppConfig.Permissions;
 import com.algo.transact.R;
+import com.algo.transact.login.UserDetails;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 
@@ -43,6 +42,9 @@ public class CodeScannerActivity extends AppCompatActivity implements IQRResult{
     private String previousScanResult="";
 
     private CodeScannerActivity activity;
+
+    CodeScannerRequestType.REQUEST_TYPE codeRequestType;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +66,19 @@ public class CodeScannerActivity extends AppCompatActivity implements IQRResult{
 
         findViewById(R.id.code_scanner_sv_camera_view).getLayoutParams().height = height;
         findViewById(R.id.code_scanner_sv_camera_view).getLayoutParams().width = width;
+
+        codeRequestType = (CodeScannerRequestType.REQUEST_TYPE) getIntent().getSerializableExtra(CodeScannerRequestType.CODE_REQUEST_TYPE);
+
+        if(codeRequestType == null)
+        {
+            Log.e(AppState.TAG, "Not provided ::CodeRequestType :: "+CodeScannerRequestType.CODE_REQUEST_TYPE);
+            finish();
+        }
+        else
+        {
+            Log.i(AppState.TAG, "Requested for CodeRequestType :: "+codeRequestType);
+        }
+
 
         int rc = ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
         if (rc != PackageManager.PERMISSION_GRANTED) {
@@ -130,15 +145,25 @@ public class CodeScannerActivity extends AppCompatActivity implements IQRResult{
         Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName());
 
+        /* TODO
+         * DO code decryption of encrypted code first
+         */
+        Gson gson = new Gson();
+        final OpticalCode codeDetails =  gson.fromJson(barcodeResult, OpticalCode.class);
+
+        if( codeRequestType == CodeScannerRequestType.REQUEST_TYPE.REQ_PAY)
+        {
+            Log.i(AppState.TAG,"Do something regarding pay over here");
+            Log.i(AppState.TAG,"Optical code details : "+codeDetails);
+        }
         Intent intent = new Intent();
         int outletID = getIntent().getIntExtra(IntentPutExtras.ID, 0);
-        final BarcodeDetails codeObj = BarcodeDetails.getCodeObject(barcodeResult);
-        if(outletID!=0 && outletID != codeObj.getOutletID())
+        if(outletID!=0 && outletID != codeDetails.getOutletId())
         {
             Log.i(AppState.TAG, "Invalid Code, this product doesnt belong to this shop");
             activity.runOnUiThread(new Runnable() {
                 public void run() {
-                    Toast toast = Toast.makeText(activity, "Invalid Code, this product belongs to different "+codeObj.getOutletType(), Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(activity, "Invalid Code, this product belongs to different "+codeDetails.getOutletType(), Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.CENTER_VERTICAL,0,0);
                     toast.show();
                 }
@@ -147,11 +172,11 @@ public class CodeScannerActivity extends AppCompatActivity implements IQRResult{
         }
         intent.putExtra(IntentPutExtras.ID, outletID);
         intent.putExtra(IntentPutExtras.DATA_TYPE, IntentPutExtras.CODE_OBJECT);
-        intent.putExtra(IntentPutExtras.CODE_OBJECT, codeObj);
+        intent.putExtra(IntentPutExtras.CODE_OBJECT, codeDetails);
 
       //  intent.putExtra(IntentPutExtras.NEW_ITEM_DATA, newItem);
         setResult(IntentResultCode.TRANSACT_RESULT_OK, intent);
-        Log.i(AppState.TAG, "QRCOde Details: "+codeObj);
+        Log.i(AppState.TAG, "QRCOde Details: "+codeDetails);
         finish();
 
     }

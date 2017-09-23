@@ -1,10 +1,5 @@
 package com.algo.transact.generic_structures;
 
-import com.algo.transact.barcode.BarcodeDetails;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 /**
  * Created by patilsp on 8/7/2017.
  */

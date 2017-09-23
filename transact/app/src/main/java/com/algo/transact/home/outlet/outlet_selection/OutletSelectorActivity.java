@@ -25,12 +25,10 @@ import com.algo.transact.AppConfig.IntentPutExtras;
 import com.algo.transact.AppConfig.IntentResultCode;
 import com.algo.transact.AppConfig.Permissions;
 import com.algo.transact.R;
-import com.algo.transact.barcode.BarcodeDetails;
 import com.algo.transact.barcode.BarcodeScannerFragment;
 import com.algo.transact.barcode.CodeScannerActivity;
-import com.algo.transact.generic_structures.GenericAdapter;
+import com.algo.transact.barcode.OpticalCode;
 import com.algo.transact.gps_location.GPSTracker;
-import com.algo.transact.home.outlet.data_retrivals.DataRetriver;
 import com.algo.transact.home.outlet.outlet_front.OutletFront;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -45,8 +43,6 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class OutletSelectorActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks {
 
@@ -170,7 +166,7 @@ public class OutletSelectorActivity extends AppCompatActivity implements View.On
 
         }
 
-        BarcodeDetails barcodeDetails = (BarcodeDetails) data.getSerializableExtra(IntentPutExtras.CODE_OBJECT);
+        OpticalCode barcodeDetails = (OpticalCode) data.getSerializableExtra(IntentPutExtras.CODE_OBJECT);
         // Item newItem = (Item) data.getSerializableExtra(IntentPutExtras.NEW_ITEM_DATA);
 
         switch (barcodeDetails.getActionType()) {
@@ -187,7 +183,7 @@ public class OutletSelectorActivity extends AppCompatActivity implements View.On
 
                 Intent intent = new Intent(this, OutletFront.class);
                 intent.putExtra(IntentPutExtras.DATA_TYPE, IntentPutExtras.ID);
-                intent.putExtra(IntentPutExtras.ID, barcodeDetails.getOutletID());
+                intent.putExtra(IntentPutExtras.ID, barcodeDetails.getOutletId());
                 this.startActivityForResult(intent, IntentResultCode.TRANSACT_RESULT_OK);
 
                 //this.startActivity(intent);

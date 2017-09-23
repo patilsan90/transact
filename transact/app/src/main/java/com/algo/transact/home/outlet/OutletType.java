@@ -1,7 +1,5 @@
 package com.algo.transact.home.outlet;
 
-import com.algo.transact.barcode.BarcodeDetails;
-
 /**
  * Created by sandeep on 6/8/17.
  */

@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.algo.transact.AppConfig.AppState;
-import com.algo.transact.AppConfig.IntentRequestResponseType;
 import com.algo.transact.R;
 
 public class TestBarcodeScannerActivity extends AppCompatActivity implements IQRResult {

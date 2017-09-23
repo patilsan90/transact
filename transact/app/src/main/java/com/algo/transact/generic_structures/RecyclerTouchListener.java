@@ -6,11 +6,6 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.algo.transact.barcode.BarcodeDetails;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 /**
  * Created by patilsp on 8/7/2017.
  */

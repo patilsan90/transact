@@ -14,4 +14,5 @@ public class IntentResultCode {
     public static final int TRANSACT_REQUEST = 1;
 
 
+
 }

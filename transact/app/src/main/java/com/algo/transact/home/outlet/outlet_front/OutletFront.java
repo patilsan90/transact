@@ -26,8 +26,8 @@ import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.AppConfig.IntentPutExtras;
 import com.algo.transact.AppConfig.IntentResultCode;
 import com.algo.transact.R;
-import com.algo.transact.barcode.BarcodeDetails;
 import com.algo.transact.barcode.CodeScannerActivity;
+import com.algo.transact.barcode.OpticalCode;
 import com.algo.transact.generic_structures.GenericAdapter;
 import com.algo.transact.generic_structures.IGenericAdapterSpinner;
 import com.algo.transact.home.outlet.data_beans.Cart;
@@ -219,6 +219,7 @@ public class OutletFront extends AppCompatActivity implements
         mNameTextView.setText("XYZ");*/
 
         tvDrawerOutletName = (TextView) findViewById(R.id.outlet_front_drawer_outlet_name);
+        if(outlet.getOutletName()!=null)
         tvDrawerOutletName.setText(outlet.getOutletName());
     }
 
@@ -269,8 +270,8 @@ public class OutletFront extends AppCompatActivity implements
                 break;
             }
             case IntentPutExtras.CODE_OBJECT: {
-                BarcodeDetails details = (BarcodeDetails) data.getSerializableExtra(IntentPutExtras.CODE_OBJECT);
-                if (details.getItemID() == null) {
+                OpticalCode details = (OpticalCode) data.getSerializableExtra(IntentPutExtras.CODE_OBJECT);
+                if (details.getItemId() == null) {
                     Intent intent = new Intent(getApplicationContext(), CodeScannerActivity.class);
                     intent.putExtra(IntentPutExtras.DATA_TYPE, IntentPutExtras.ID);
                     intent.putExtra(IntentPutExtras.ID, shopID);

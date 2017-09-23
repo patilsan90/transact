@@ -23,8 +23,12 @@
     <dimen name="home_page_sections_padding">5sp</dimen>
 
 
+    <dimen name="home_page_transact_smart_cards_dimension">66sp</dimen>
+    <dimen name="home_page_transact_smart_cards_text_size">10sp</dimen>
+
     <dimen name="home_page_smart_cards_dimension">77sp</dimen>
     <dimen name="home_page_smart_cards_text_size">12sp</dimen>
+
     <dimen name="home_page_smart_cards_margin">3sp</dimen>
     <dimen name="home_page_smart_cards_padding">3sp</dimen>
 

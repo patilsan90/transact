@@ -15,7 +15,7 @@ import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.AppConfig.IntentPutExtras;
 import com.algo.transact.AppConfig.IntentResultCode;
 import com.algo.transact.R;
-import com.algo.transact.barcode.BarcodeDetails;
+import com.algo.transact.barcode.OpticalCode;
 import com.algo.transact.home.outlet.data_beans.Item;
 import com.algo.transact.home.outlet.data_retrivals.DataRetriver;
 
@@ -88,13 +88,13 @@ public class ItemCountSelectionActivity extends AppCompatActivity implements Vie
 
        if (dataType.equals(IntentPutExtras.CODE_OBJECT)) {
             Log.i(AppState.TAG, "ItemCountSelectionActivity Request Type:: " + IntentPutExtras.CODE_OBJECT);
-           BarcodeDetails barcodeDetails = (BarcodeDetails) getIntent().getSerializableExtra(IntentPutExtras.CODE_OBJECT);
+           OpticalCode barcodeDetails = (OpticalCode) getIntent().getSerializableExtra(IntentPutExtras.CODE_OBJECT);
            /*
            itemID = getIntent().getStringExtra(IntentPutExtras.MODULE_ID);
            shopID = getIntent().getIntExtra(IntentPutExtras.ID,0);
             */
-           itemID = barcodeDetails.getItemID();
-           shopID = barcodeDetails.getOutletID();
+           itemID = barcodeDetails.getItemId();
+           shopID = barcodeDetails.getOutletId();
 
            newItem = DataRetriver.getItemDetailsFromShop(shopID, itemID);
 
