@@ -17,10 +17,10 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- Allows access to the flashlight -->
-    <permission android:name="android.permission.FLASHLIGHT"
+    <permission
+        android:name="android.permission.FLASHLIGHT"
         android:permissionGroup="android.permission-group.HARDWARE_CONTROLS"
-        android:protectionLevel="normal"  />
-
+        android:protectionLevel="normal" />
 
     <meta-data
         android:name="com.google.android.gms.vision.DEPENDENCIES"
@@ -45,11 +45,11 @@
             android:label="@string/title_activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".home.outlet.outlet_front.OutletFront" />
-
         <activity android:name=".login.LoginActivity" />
         <activity android:name=".login.VerifyMobileNoActivity" />
         <activity android:name=".home.outlet.outlet_front.ItemCountSelectionActivity" />
@@ -88,12 +88,19 @@
         </receiver>
 
         <activity android:name=".optical_code.CodeScannerActivity">
-      <!--      <intent-filter>
+
+            <!--
+                <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
+        <activity android:name=".home.smart_home.SmartHomeActivity" />
+        <activity android:name=".home.smart_home.InitialOptionsActivity" />
+        <activity android:name=".home.smart_home.ScanWifiActivity" />
+        <activity android:name=".home.smart_home.ConfigureDeviceActivity"></activity>
     </application>
 
 </manifest>

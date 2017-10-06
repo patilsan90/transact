@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.algo.transact.home.smart_home.InitialOptionsActivity"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <Button
+        android:id="@+id/initial_options_buy_new_device"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15sp"
+        android:background="@color/appBarColor"
+        android:textColor="@color/appBackgroundColor"
+        android:text="Buy Smart Device"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        />
+    <Button
+        android:id="@+id/initial_options_configure_device"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15sp"
+        android:background="@color/appBarColor"
+        android:textColor="@color/appBackgroundColor"
+        android:text="Configure"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        />
+
+    <Button
+        android:id="@+id/initial_options_demo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15sp"
+        android:background="@color/appBarColor"
+        android:textColor="@color/appBackgroundColor"
+        android:text="Demo"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15sp"
+        android:textColor="#444444"
+        android:text="It takes hardly half hour to configure complete home. \n\nNote: Device will be home delivered"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        />
+
+
+
+</LinearLayout>

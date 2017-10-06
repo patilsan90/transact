@@ -16,6 +16,8 @@ import com.algo.transact.AppConfig.IntentResultCode;
 import com.algo.transact.R;
 import com.algo.transact.home.outlet.data_beans.Outlet;
 import com.algo.transact.home.outlet.outlet_selection.OutletSelectorActivity;
+import com.algo.transact.home.smart_home.InitialOptionsActivity;
+import com.algo.transact.home.smart_home.SmartHomeActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,6 +56,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         outlet_object.setOnClickListener(this);
 
         outlet_object = (LinearLayout) view.findViewById(R.id.fragment_home_laundry);
+        outlet_object.setOnClickListener(this);
+
+        outlet_object = (LinearLayout) view.findViewById(R.id.fragment_home_smart_home);
         outlet_object.setOnClickListener(this);
 
 
@@ -113,6 +118,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 this.getActivity().startActivity(intent);
                 break;
             }
+            case R.id.fragment_home_smart_home:
+            {
+
+                //Intent intent = new Intent(this.getActivity(), SmartHomeActivity.class);
+                Intent intent = new Intent(this.getActivity(), InitialOptionsActivity.class);
+                this.getActivity().startActivity(intent);
+                break;
+            }
+
+
         }
     }
 }

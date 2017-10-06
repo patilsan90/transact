@@ -1,0 +1,121 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/outlet_front_drawer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appBackgroundColor"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/appBarColor"
+        android:minHeight="100sp"
+        android:orientation="vertical"
+        android:paddingTop="20sp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3sp"
+            android:background="@null"
+            android:paddingLeft="@dimen/drawer_item_margin"
+            android:paddingTop="@dimen/drawer_item_margin"
+            android:text="Welcome To your"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#D3D3D3"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/outlet_front_drawer_outlet_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/drawer_item_margin"
+            android:layout_marginTop="@dimen/drawer_item_margin"
+            android:background="@null"
+            android:paddingBottom="@dimen/drawer_item_margin"
+            android:paddingLeft="@dimen/drawer_item_margin"
+            android:text="Smart Name"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/smart_home_drawer_tv_configure_device"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/drawer_item_margin"
+        android:layout_marginTop="@dimen/drawer_item_margin"
+        android:paddingLeft="@dimen/drawer_item_margin"
+        android:text="Configure/Add device"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:background="#DDDDDD"
+        android:paddingLeft="@dimen/drawer_item_margin" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/drawer_item_margin"
+        android:layout_marginTop="@dimen/drawer_item_margin"
+        android:paddingLeft="@dimen/drawer_item_margin"
+        android:text="Shop/lookup new device"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:background="#DDDDDD"
+        android:paddingLeft="@dimen/drawer_item_margin" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/drawer_item_margin"
+        android:layout_marginTop="@dimen/drawer_item_margin"
+        android:paddingLeft="@dimen/drawer_item_margin"
+        android:text="Offers"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:background="#DDDDDD"
+        android:paddingLeft="@dimen/drawer_item_margin" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/drawer_item_margin"
+        android:layout_marginTop="@dimen/drawer_item_margin"
+        android:paddingLeft="@dimen/drawer_item_margin"
+        android:text="Give us feedback"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:background="#DDDDDD"
+        android:paddingLeft="@dimen/drawer_item_margin" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/drawer_item_margin"
+        android:layout_marginTop="@dimen/drawer_item_margin"
+        android:paddingLeft="@dimen/drawer_item_margin"
+        android:text="About Us"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:background="#DDDDDD"
+        android:paddingLeft="@dimen/drawer_item_margin" />
+
+
+</LinearLayout>
