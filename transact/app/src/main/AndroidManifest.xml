@@ -16,6 +16,10 @@
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+
     <!-- Allows access to the flashlight -->
     <permission
         android:name="android.permission.FLASHLIGHT"
@@ -100,7 +104,7 @@
         <activity android:name=".home.smart_home.SmartHomeActivity" />
         <activity android:name=".home.smart_home.InitialOptionsActivity" />
         <activity android:name=".home.smart_home.ScanWifiActivity" />
-        <activity android:name=".home.smart_home.ConfigureDeviceActivity"></activity>
+        <activity android:name=".home.smart_home.ConfigureWifiDeviceActivity"></activity>
     </application>
 
 </manifest>

@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.algo.transact.home.smart_home.ConfigureDeviceActivity"
+    tools:context="com.algo.transact.home.smart_home.ConfigureWifiDeviceActivity"
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/configure_wifi_device_tv_wifi_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Configure details"
@@ -19,6 +20,7 @@
 
 
     <EditText
+        android:id="@+id/configure_wifi_device_wifi_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="* Enter Wi-Fi Name"
@@ -29,6 +31,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         />
     <EditText
+        android:id="@+id/configure_wifi_device_wifi_psw"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="* Enter Wi-Fi Password"
@@ -41,6 +44,7 @@
         />
 
     <EditText
+        android:id="@+id/configure_wifi_device_room_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="* Enter Room Name"
@@ -53,6 +57,7 @@
         />
 
     <EditText
+        android:id="@+id/configure_wifi_device_room_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter Room Description"
@@ -65,6 +70,7 @@
         />
 
     <Button
+        android:id="@+id/configure_wifi_device_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Save"
@@ -72,6 +78,7 @@
         android:layout_marginRight="10sp"
         android:layout_marginTop="10sp"
         android:layout_marginBottom="5sp"
+        android:onClick="saveWifiInformation"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:background="@color/appBarColor"
         android:textColor="@color/appBackgroundColor"

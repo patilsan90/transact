@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@color/appBarColor"
-        android:padding="3sp"
+        android:padding="8sp"
         android:gravity="center_vertical">
         <TextView
             android:layout_width="wrap_content"
@@ -20,18 +20,28 @@
             android:layout_weight="1"
             android:text="Select device"
             android:layout_marginLeft="10sp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/appBackgroundColor"/>
         <ImageView
             android:id="@+id/scanned_wifi_iv_refresh_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="20sp"
+            android:layout_height="20sp"
             android:src="@drawable/ic_wifi_scan_refresh"
-            android:layout_marginRight="10sp"/>
+            android:layout_marginRight="10sp"
+            android:onClick="refreshWifiList"/>
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/scanned_wifi_rv_wifi_list"
+    <ListView
+        android:id="@+id/scanned_wifi_lv_wifi_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        />
 
+    <TextView android:id="@+id/scan_wifi_tv_placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_margin="15sp"
+        android:text="Scanning for WIFI" />
 </LinearLayout>

@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.R;
 
-public class WaterIndicatorDialogue extends Dialog implements View.OnClickListener{
+public class WaterIndicatorDialogue extends BottomSheetDialog implements View.OnClickListener{
 //BottomSheetDialog
     private TextView tvUndergroundStorage;
     private TextView tvTopStorage;
@@ -49,13 +49,6 @@ public class WaterIndicatorDialogue extends Dialog implements View.OnClickListen
         Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName());
         this.show();
-
-
-        Point point = new Point();
-        getWindow().getWindowManager().getDefaultDisplay().getSize(point);
-     //   getWindow().setLayout(point.x - 100, point.y - 700);
-getWindow().setGravity(Gravity.BOTTOM);
-
 
         tvUndergroundStorage.setText(underground);
         tvTopStorage.setText(top);
