@@ -1,4 +1,4 @@
-package com.algo.transact.networksdk.service;
+package com.algo.transact.networksdk.service.service;
 
 import java.util.concurrent.TimeUnit;
 
