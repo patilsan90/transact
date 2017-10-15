@@ -1,7 +1,7 @@
 package com.algo.transact.retrofit.base;
 
-import com.algo.transact.networksdk.service.service.LogingInterceptor;
-import com.algo.transact.networksdk.service.service.RetrofitServices;
+import com.algo.transact.retrofit.service.LogingInterceptor;
+import com.algo.transact.retrofit.service.RetrofitServices;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;

@@ -1,8 +1,6 @@
 package com.algo.transact.retrofit.transactcall;
 
-import android.content.Context;
-
-import com.algo.transact.networksdk.service.TransactControllerFactory;
+import com.algo.transact.retrofit.TransactControllerFactory;
 
 /**
  * Created by Kapil on 15/10/2017.
