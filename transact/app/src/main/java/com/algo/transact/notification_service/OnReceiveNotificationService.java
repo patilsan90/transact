@@ -1,4 +1,4 @@
-package com.algo.transact.notificationservice;
+package com.algo.transact.notification_service;
 
 import android.util.Log;
 
@@ -10,8 +10,8 @@ import com.google.firebase.messaging.RemoteMessage;
  * Here we can check the type of notification by using appropriate methods.
  */
 
-public class OnReciveNotificationService extends FirebaseMessagingService {
-    private static final String TAG = OnReciveNotificationService.class.getSimpleName();
+public class OnReceiveNotificationService extends FirebaseMessagingService {
+    private static final String TAG = OnReceiveNotificationService.class.getSimpleName();
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {

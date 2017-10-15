@@ -1,4 +1,4 @@
-package com.algo.transact.notificationservice;
+package com.algo.transact.notification_service;
 
 import android.util.Log;
 
