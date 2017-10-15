@@ -1,16 +1,14 @@
 package com.algo.transact.home.smart_home;
 
 import android.content.Intent;
-import android.support.design.widget.BottomSheetDialog;
+import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,7 +21,7 @@ import com.algo.transact.home.smart_home.beans.Room;
 
 import java.util.ArrayList;
 
-public class SmartHomeActivity extends AppCompatActivity implements IGenericAdapterRecyclerView, View.OnClickListener {
+public class SmartHomeActivityBackup extends AppCompatActivity implements IGenericAdapterRecyclerView, View.OnClickListener {
 
     private RecyclerView rvRoomsList;
     private GenericAdapterRecyclerView rvRoomsAdapter;
@@ -34,7 +32,6 @@ public class SmartHomeActivity extends AppCompatActivity implements IGenericAdap
     ArrayList<Room> rooms;
     int roomCounter;
 
-    ExpandableFlowLayout expandableFlowLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,31 +42,20 @@ public class SmartHomeActivity extends AppCompatActivity implements IGenericAdap
         LinearLayout llWaterLevel = (LinearLayout) findViewById(R.id.smart_home_ll_water_level);
         llWaterLevel.setOnClickListener(this);
 
-
         TextView tvConfigureDevice = (TextView) findViewById(R.id.smart_home_drawer_tv_configure_device);
         tvConfigureDevice.setOnClickListener(this);
 
         House house = House.getHouse(123);
         rooms = house.getRooms();
 
-       // rvRoomsAdapter = new GenericAdapterRecyclerView(this, this, rvRoomsList, rooms, R.layout.rv_item_card_room, 2, true);
-
-        expandableFlowLayout= new ExpandableFlowLayout(this);
-
-
-     /*   expandableFlowLayout.addView(null);
-        expandableFlowLayout.addView(null);
-        expandableFlowLayout.addView(null);
-        expandableFlowLayout.addView(null);
-        expandableFlowLayout.addView(null);*/
-
+        rvRoomsAdapter = new GenericAdapterRecyclerView(this, this, rvRoomsList, rooms, R.layout.rv_item_card_room, 2, true);
         createDrawer();
     }
 
     @Override
     public RecyclerView.ViewHolder addRecyclerViewHolder(View itemView, GenericAdapterRecyclerView genericAdapterRecyclerView) {
         Log.i(AppState.TAG, "In addRecyclerViewHolder");
-            return new RoomViewHolder(this, itemView, this, rooms);
+            return null;//new RoomViewHolder(this, itemView, this, rooms);
     }
 
     @Override

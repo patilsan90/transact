@@ -1,20 +1,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    android:layout_width="100sp"
     android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="match_parent"
-        android:layout_height="200sp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="4sp"
         android:elevation="3dp"
         card_view:cardCornerRadius="@dimen/card_album_radius">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/card_room_ll_card_view"
+            android:layout_width="100sp"
+            android:layout_height="200sp"
             android:orientation="vertical">
 
             <TextView
@@ -36,15 +37,17 @@
                     android:background="#ddffffff"
                     android:orientation="vertical">
 
-                    <android.support.v4.widget.Space
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/card_room_rv_peripheral_list"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5sp"
                         android:layout_weight="1"/>
                     <Switch
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10sp"
-                        android:text="Main Switch"
+                        android:text="Room Switch"
                         />
 
                 </LinearLayout>

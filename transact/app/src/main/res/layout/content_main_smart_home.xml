@@ -69,13 +69,27 @@
             android:text="Main Switch"
             android:textColor="#444444" />
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+>
+
+            <LinearLayout
+                android:id="@+id/smart_home_ll_expandable_flow_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:clipToPadding="true"
+                android:paddingBottom="200sp"/>
+        </ScrollView>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/smart_home_rv_rooms_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
+
             android:clipToPadding="false"
-            android:paddingBottom="100sp"/>
+            android:paddingBottom="100sp" />
 
 
         <!--     <TextView
