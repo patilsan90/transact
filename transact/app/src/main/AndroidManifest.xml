@@ -105,6 +105,20 @@
         <activity android:name=".home.smart_home.InitialOptionsActivity" />
         <activity android:name=".home.smart_home.ScanWifiActivity" />
         <activity android:name=".home.smart_home.ConfigureWifiDeviceActivity"></activity>
+
+        //FCM Services
+        <service android:name=".notificationservice.NotificationTokenService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service android:name=".notificationservice.OnReciveNotificationService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>
