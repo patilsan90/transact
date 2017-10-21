@@ -70,17 +70,19 @@
             android:textColor="#444444" />
 
         <ScrollView
+            android:id="@+id/smart_home_sv_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
->
+            android:nestedScrollingEnabled="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
                 android:id="@+id/smart_home_ll_expandable_flow_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
                 android:clipToPadding="true"
-                android:paddingBottom="200sp"/>
+                android:orientation="vertical"
+                android:paddingBottom="200sp" />
         </ScrollView>
 
         <android.support.v7.widget.RecyclerView

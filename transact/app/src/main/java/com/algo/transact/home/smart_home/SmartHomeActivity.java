@@ -18,6 +18,7 @@ import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.R;
 import com.algo.transact.generic_structures.GenericAdapterRecyclerView;
 import com.algo.transact.generic_structures.IGenericAdapterRecyclerView;
+import com.algo.transact.home.MyProfileFragment;
 import com.algo.transact.home.smart_home.beans.House;
 import com.algo.transact.home.smart_home.beans.Room;
 
@@ -34,7 +35,6 @@ public class SmartHomeActivity extends AppCompatActivity implements IGenericAdap
     ArrayList<Room> rooms;
     int roomCounter;
 
-    ExpandableFlowLayout expandableFlowLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,16 +52,7 @@ public class SmartHomeActivity extends AppCompatActivity implements IGenericAdap
         House house = House.getHouse(123);
         rooms = house.getRooms();
 
-       // rvRoomsAdapter = new GenericAdapterRecyclerView(this, this, rvRoomsList, rooms, R.layout.rv_item_card_room, 2, true);
-
-        expandableFlowLayout= new ExpandableFlowLayout(this);
-
-
-     /*   expandableFlowLayout.addView(null);
-        expandableFlowLayout.addView(null);
-        expandableFlowLayout.addView(null);
-        expandableFlowLayout.addView(null);
-        expandableFlowLayout.addView(null);*/
+        new ExpansionManager(this, rooms);
 
         createDrawer();
     }
@@ -69,14 +60,14 @@ public class SmartHomeActivity extends AppCompatActivity implements IGenericAdap
     @Override
     public RecyclerView.ViewHolder addRecyclerViewHolder(View itemView, GenericAdapterRecyclerView genericAdapterRecyclerView) {
         Log.i(AppState.TAG, "In addRecyclerViewHolder");
-            return new RoomViewHolder(this, itemView, this, rooms);
+        return new RoomViewHolder(this, itemView, this, rooms);
     }
 
     @Override
     public void bindViewHolder(RecyclerView.ViewHolder holder, ArrayList list, int position, GenericAdapterRecyclerView genericAdapterRecyclerView) {
 
         RoomViewHolder roomViewHolder = (RoomViewHolder) holder;
-        Room room= (Room)list.get(position);
+        Room room = (Room) list.get(position);
         String roomName = (String) room.getName();
         roomViewHolder.tvRoomName.setText(roomName);
 
@@ -131,7 +122,7 @@ public class SmartHomeActivity extends AppCompatActivity implements IGenericAdap
         };
         mDrawerToggle.setDrawerIndicatorEnabled(true);
         mDrawerToggle.syncState();
-        // mDrawerLayout.setDrawerListener(mDrawerToggle); /*check if any issue comes because of addDrawerListener.*/
+        // TODO:: mDrawerLayout.setDrawerListener(mDrawerToggle); /*check if any issue comes because of addDrawerListener.*/
         mDrawerLayout.addDrawerListener(mDrawerToggle);
     }
 
@@ -145,7 +136,6 @@ public class SmartHomeActivity extends AppCompatActivity implements IGenericAdap
                 WaterIndicatorDialogue waterLevelDialogue = new WaterIndicatorDialogue(this);
                 waterLevelDialogue.showDialogue("Underground \n60 % full ", "Top \n75 % full ");
                 break;
-
 
         }
     }
