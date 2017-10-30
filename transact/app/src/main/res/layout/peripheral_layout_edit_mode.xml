@@ -17,39 +17,36 @@
             android:id="@+id/peripheral_iv_icon"
             android:layout_width="18sp"
             android:layout_height="18sp"
+            android:layout_margin="5sp"
             android:background="@null"
             android:src="@drawable/ic_bulb" />
 
-        <Switch
-            android:id="@+id/peripheral_sw_name"
+        <EditText
+            android:id="@+id/peripheral_et_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10sp"
-            android:showText="true"
+            android:layout_weight="1"
             android:text="Hall bulb"
-            android:textOff="OFF"
-            android:textOn="ON" />
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/peripheral_ll_seekbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/peripheral_tv_seekbar_text"
+        <Switch
+            android:id="@+id/peripheral_sw_on_off"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Brightness" />
-
-        <SeekBar
-            android:id="@+id/peripheral_sb_seekbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="15sp"
-            android:paddingRight="15sp" />
+            android:padding="5sp" />
     </LinearLayout>
+
+    <Spinner
+        android:id="@+id/peripheral_sp_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20sp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:padding="0dp"
+        android:spinnerMode="dropdown"
+        android:text="All Categories" />
+
+
 </LinearLayout>

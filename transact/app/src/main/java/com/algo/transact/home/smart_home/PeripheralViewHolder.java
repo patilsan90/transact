@@ -24,10 +24,10 @@ public class PeripheralViewHolder extends RecyclerView.ViewHolder {
 
     public PeripheralViewHolder(View view, IGenericAdapterRecyclerView listener) {
         super(view);
-        tvPeripheralName = (TextView) view.findViewById(R.id.peripheral_bulb_fan_sw_name);
-        ivPeripheralIcon =(ImageView) view.findViewById(R.id.peripheral_bulb_fan_iv_icon);
-        tvSeekbarText = (TextView) view.findViewById(R.id.peripheral_bulb_fan_tv_seekbar_text);
-        sbSeekBar = (SeekBar) view.findViewById(R.id.peripheral_bulb_fan_seekbar);
+        tvPeripheralName = (TextView) view.findViewById(R.id.peripheral_sw_name);
+        ivPeripheralIcon =(ImageView) view.findViewById(R.id.peripheral_iv_icon);
+        tvSeekbarText = (TextView) view.findViewById(R.id.peripheral_tv_seekbar_text);
+        sbSeekBar = (SeekBar) view.findViewById(R.id.peripheral_sb_seekbar);
         this.listener = listener;
     }
 }

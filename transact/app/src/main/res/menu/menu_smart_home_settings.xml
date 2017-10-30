@@ -1,0 +1,34 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item
+        android:id="@+id/action_set_config_device"
+        android:orderInCategory="10"
+        android:title="Configure/Add Device" />
+
+    <item
+        android:id="@+id/action_shop_device"
+        android:orderInCategory="10"
+        android:title="Shop New Device" />
+
+    <item
+        android:id="@+id/action_set_view1"
+        android:orderInCategory="10"
+        android:title="Expand View" />
+
+    <item
+        android:id="@+id/action_set_view2"
+        android:orderInCategory="10"
+        android:title="List View"/>
+
+    <item
+        android:id="@+id/action_feedback"
+        android:orderInCategory="10"
+        android:title="Give us feedback" />
+
+    <item
+        android:id="@+id/action_offer"
+        android:orderInCategory="10"
+        android:title="Offers" />
+
+</menu>

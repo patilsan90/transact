@@ -48,63 +48,37 @@
             android:label="@string/title_activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".home.outlet.outlet_front.OutletFront" />
         <activity android:name=".login.LoginActivity" />
         <activity android:name=".login.VerifyMobileNoActivity" />
         <activity android:name=".home.outlet.outlet_front.ItemCountSelectionActivity" />
         <activity android:name=".login.EnterMobileNoActivity" />
+
         <activity
             android:name="com.facebook.CustomTabActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+            android:exported="true"></activity>
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="@string/fb_login_protocol_scheme" />
-            </intent-filter>
-        </activity>
         <activity android:name=".home.outlet.outlet_front.MyCartCheckoutActivity" />
-        <activity android:name=".optical_code.TestBarcodeScannerActivity">
-
-            <!--
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
-        </activity>
+        <activity android:name=".optical_code.TestBarcodeScannerActivity"></activity>
         <activity android:name=".home.outlet.outlet_selection.OutletSelectorActivity" />
 
         <receiver android:name=".gps.GpsLocationReceiver">
             <intent-filter>
                 <action android:name="android.location.PROVIDERS_CHANGED" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
 
-        <activity android:name=".optical_code.CodeScannerActivity">
-
-            <!--
-                <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
-        </activity>
+        <activity android:name=".optical_code.CodeScannerActivity" />
         <activity android:name=".home.smart_home.SmartHomeActivity" />
         <activity android:name=".home.smart_home.InitialOptionsActivity" />
         <activity android:name=".home.smart_home.ScanWifiActivity" />
         <activity android:name=".home.smart_home.ConfigureWifiDeviceActivity" />
         <activity android:name=".home.smart_home.RelativeCheckActivity"></activity>
-    </application>
 
+    </application>
 </manifest>
