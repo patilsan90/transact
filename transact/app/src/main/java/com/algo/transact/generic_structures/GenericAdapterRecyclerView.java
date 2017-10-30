@@ -39,51 +39,46 @@ public class GenericAdapterRecyclerView extends RecyclerView.Adapter {
     private ArrayList<Boolean> alExpandState;
     private Context mContext;
     private boolean isExpandableList;
+
     public GenericAdapterRecyclerView(Context mContext, final IGenericAdapterRecyclerView listener, RecyclerView listView, final ArrayList list, int listViewItemId, int noOfColumns, final boolean isExpandableList) {
         this.mContext = mContext;
         this.list = list;
         this.listView = listView;
         this.listViewItemId = listViewItemId;
         this.listener = listener;
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(mContext, noOfColumns);
-        this.listView.setLayoutManager(mLayoutManager);
+        if (noOfColumns > 0) {
+            RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(mContext, noOfColumns);
+            this.listView.setLayoutManager(mLayoutManager);
+        }
         this.listView.addItemDecoration(new GridSpacingItemDecoration(noOfColumns, dpToPx(0), true));
         this.listView.setItemAnimator(new DefaultItemAnimator());
         this.listView.setAdapter(this);
         this.isExpandableList = isExpandableList;
         alExpandState = new ArrayList<Boolean>();
-        for (int i=0;i<list.size();i++)
+        for (int i = 0; i < list.size(); i++)
             alExpandState.add(false);
 
-/*        this.listView.addOnItemTouchListener(new RecyclerTouchListener(mContext, listView, new IClickListener() {
-
-
+        this.listView.addOnItemTouchListener(new RecyclerTouchListener(mContext, listView, new IClickListener() {
 
             @Override
             public void onClick(View view, int position) {
 
-                alExpandState.set(position, alExpandState.get(position) ? false : true);
                 listener.onRVClick(view, position, alExpandState.get(position));
-                if(isExpandableList)
-                {
-                    if(alExpandState.get(position))
+
+           /*  if (isExpandableList) {
+                    alExpandState.set(position, alExpandState.get(position) ? false : true);
+                    if (alExpandState.get(position))
                         listener.onRVExpand(view, list, position);
-                    else
-                        listener.onRVCollapsed(view, list, position);
-                }
-               // Toast.makeText(getApplicationContext(), movie.getTitle() + " is selected!", Toast.LENGTH_SHORT).show();
-                //alExpandState.get(position)
-
-
+                } */
             }
 
             @Override
             public void onLongClick(View view, int position) {
                 listener.onRVLongClick(view, position);
             }
-        }));*/
+        }));
 
-        Log.i(AppState.TAG, "::GARV:: Object creation of GenericRecyclerView Adapter from "+mContext.getClass().getSimpleName());
+        Log.i(AppState.TAG, "::GARV:: Object creation of GenericRecyclerView Adapter from " + mContext.getClass().getSimpleName());
     }
 
     @Override
@@ -91,7 +86,6 @@ public class GenericAdapterRecyclerView extends RecyclerView.Adapter {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(listViewItemId, parent, false);
 
-       // return new ItemViewHolder(itemView);
         return listener.addRecyclerViewHolder(itemView, this);
     }
 
@@ -99,8 +93,8 @@ public class GenericAdapterRecyclerView extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         listener.bindViewHolder(holder, list, position, this);
-        Log.i(AppState.TAG, "In onBindViewHolder "+position);
-        if(position==(list.size()-1))
+        Log.i(AppState.TAG, "In onBindViewHolder " + position);
+        if (position == (list.size() - 1))
             listener.rvListUpdateCompleteNotification(list, this);
 
     }

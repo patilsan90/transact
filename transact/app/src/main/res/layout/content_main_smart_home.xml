@@ -31,15 +31,17 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <ImageButton
-                    android:id="@+id/catalogue_drawer_open"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5sp"
-                    android:background="@null"
-                    android:gravity="center_vertical"
-                    android:onClick="openDrawer"
-                    android:src="@drawable/ic_action_drawer_open" />
+                <!--
+                                <ImageButton
+                                    android:id="@+id/catalogue_drawer_open"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5sp"
+                                    android:background="@null"
+                                    android:gravity="center_vertical"
+                                    android:onClick="openDrawer"
+                                    android:src="@drawable/ic_action_drawer_open" />
+                -->
 
                 <TextView
                     android:layout_width="match_parent"
@@ -63,6 +65,8 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <Switch
+            android:id="@+id/smart_home_sw_main_switch"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10sp"
@@ -73,42 +77,20 @@
             android:id="@+id/smart_home_sv_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:nestedScrollingEnabled="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
-                android:id="@+id/smart_home_ll_expandable_flow_view"
+                android:id="@+id/smart_home_ll_view_holder"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="true"
                 android:orientation="vertical"
-                android:paddingBottom="200sp" />
+                android:paddingBottom="100sp" />
         </ScrollView>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/smart_home_rv_rooms_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:clipToPadding="false"
-            android:paddingBottom="100sp" />
-
-
-        <!--     <TextView
-                 android:layout_width="match_parent"
-                 android:layout_height="?attr/actionBarSize"/>-->
     </LinearLayout>
-
-    <!--    <TextView
-            android:id="@+id/outlet_front_tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="#6495ED"
-            app:tabTextColor="#ffffff"
-            app:tabSelectedTextColor="#FFE4B5"
-            android:text="fffff"
-            />-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -117,7 +99,7 @@
         android:background="@color/appBottomBar"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="10sp">
+        android:padding="2sp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -164,6 +146,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/smart_home_ll_settings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -181,7 +164,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
 
-                android:text="Order"
+                android:text="Settings"
                 android:textColor="@color/appBottomBarTextColor" />
         </LinearLayout>
     </LinearLayout>

@@ -1,0 +1,44 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/appBarColor"
+        android:padding="10sp"
+        android:text="Create New Room"
+        android:textColor="#ffffff" />
+
+    <EditText
+        android:id="@+id/dialogue_new_room_et_room_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="5sp"
+        android:background="@color/appBackgroundColor"
+        android:hint="Enter Room Name"
+        android:paddingBottom="5sp"
+        android:paddingLeft="20sp"
+        android:paddingRight="20sp"
+        android:paddingTop="5sp"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10sp"
+        android:src="@drawable/ic_camera" />
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/appBarColor"
+        android:paddingLeft="10sp"
+        android:paddingRight="10sp"
+        android:text="Create"
+        android:textColor="@color/appBackgroundColor2" />
+</LinearLayout>

@@ -2,11 +2,13 @@ package com.algo.transact.home.smart_home.beans;
 
 import com.algo.transact.R;
 
+import java.io.Serializable;
+
 /**
  * Created by patilsp on 10/14/2017.
  */
 
-public class Peripheral {
+public class Peripheral implements Serializable{
 
     public PERIPHERAL_TYPE type;
     public String name;

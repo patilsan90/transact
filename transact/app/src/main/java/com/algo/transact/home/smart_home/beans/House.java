@@ -68,24 +68,12 @@ public class House {
         Room room5 = new Room();
         room5.name = "Kapil & Vijen Room";
 
-        Room room6 = new Room();
-        room6.name = "2 Kapil & Vijen Room";
-
-        Room room7 = new Room();
-        room7.name = "3 Kapil & Vijen Room";
-
-        Room room8 = new Room();
-        room8.name = "4 Kapil & Vijen Room";
-
 
         house.rooms.add(room1);
         house.rooms.add(room2);
         house.rooms.add(room3);
-        house.rooms.add(room4);
-        house.rooms.add(room5);
-        house.rooms.add(room6);
-        house.rooms.add(room7);
-        house.rooms.add(room8);
+        //    house.rooms.add(room4);
+        //   house.rooms.add(room5);
 
         return house;
 
