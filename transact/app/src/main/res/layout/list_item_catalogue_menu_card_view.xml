@@ -25,7 +25,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/common_ic_googleplayservices"/>
+                android:src="@drawable/common_google_signin_btn_icon_dark_normal"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
