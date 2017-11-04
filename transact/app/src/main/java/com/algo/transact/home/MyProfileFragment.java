@@ -2,12 +2,10 @@ package com.algo.transact.home;
 
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,22 +20,22 @@ import android.widget.Toast;
 import com.algo.transact.AppConfig.SessionManager;
 import com.algo.transact.R;
 import com.algo.transact.login.LoginActivity;
-import com.algo.transact.login.UserDetails;
+import com.algo.transact.login.User;
 
 import java.util.Calendar;
-import java.util.HashMap;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MyProfileFragment extends Fragment implements View.OnClickListener{
+public class MyProfileFragment extends Fragment implements View.OnClickListener {
 
 
     public MyProfileFragment() {
         // Required empty public constructor
     }
+
     private LinearLayout llprofileDetailsLayout;
 
     private EditText etFirstName;
@@ -56,7 +54,7 @@ public class MyProfileFragment extends Fragment implements View.OnClickListener{
     private RadioButton rdGenderMale;
     private RadioButton rdGenderFemale;
     private TextView tvOtpVerify;
-    UserDetails userDetails;
+    User user;
 
 
     private DatePicker datePicker;
@@ -85,9 +83,9 @@ public class MyProfileFragment extends Fragment implements View.OnClickListener{
         etEmailID = (EditText) view.findViewById(R.id.my_profile_et_email_id);
         etDob = (TextView) view.findViewById(R.id.my_profile_et_date_of_birth);
         etDob.setOnClickListener(this);
-        etDisplayName  = (EditText) view.findViewById(R.id.my_profile_et_display_name);
+        etDisplayName = (EditText) view.findViewById(R.id.my_profile_et_display_name);
         TextView tvSignOut = (TextView) view.findViewById(R.id.my_profile_tv_sign_out);
-    tvSignOut.setOnClickListener(this);
+        tvSignOut.setOnClickListener(this);
 
         tvOtpVerify = (TextView) view.findViewById(R.id.my_profile_tv_otp_verify);
 
@@ -99,26 +97,25 @@ public class MyProfileFragment extends Fragment implements View.OnClickListener{
         LinearLayout llprofileDetailsClickLayout = (LinearLayout) view.findViewById(R.id.my_profile_ll_click_details);
         llprofileDetailsClickLayout.setOnClickListener(this);
 
-        userDetails = UserDetails.getUserPreferences(this.getActivity());
+        user = User.getUserPreferences(this.getActivity());
 
-        if(userDetails.familyName!=null)
-        etFirstName.setText(""+userDetails.firstName +" "+userDetails.familyName);
-        else if(userDetails.firstName!=null)
-            etFirstName.setText(""+userDetails.firstName);
-        else if(userDetails.displayName!=null)
-            etFirstName.setText(""+userDetails.displayName);
+        if (user.familyName != null)
+            etFirstName.setText("" + user.firstName + " " + user.familyName);
+        else if (user.firstName != null)
+            etFirstName.setText("" + user.firstName);
+        else if (user.displayName != null)
+            etFirstName.setText("" + user.displayName);
 
-        if(userDetails.mobNo!=null)
-        etMobileNo.setText(""+userDetails.mobNo);
+        if (user.mobileNo != null)
+            etMobileNo.setText("" + user.mobileNo);
 
         makeDetailsInvisible();
-        session= new SessionManager(getApplicationContext());
+        session = new SessionManager(getApplicationContext());
 
         return view;
     }
 
-    public void makeDetailsVisible()
-    {
+    public void makeDetailsVisible() {
         ViewGroup.LayoutParams params = llprofileDetailsLayout.getLayoutParams();
         params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         llprofileDetailsLayout.setVisibility(View.VISIBLE);
@@ -144,28 +141,27 @@ public class MyProfileFragment extends Fragment implements View.OnClickListener{
         tvOtpVerify.setVisibility(View.VISIBLE);
     }
 
-    private void setUserDetails()
-    {
+    private void setUserDetails() {
 
 
-        if(userDetails.familyName!=null)
-        etFirstName.setText(""+userDetails.firstName);
+        if (user.familyName != null)
+            etFirstName.setText("" + user.firstName);
 
-        if(userDetails.familyName!=null)
-        etLastName.setText(""+userDetails.familyName);
+        if (user.familyName != null)
+            etLastName.setText("" + user.familyName);
 
-        if(userDetails.mobNo!=null)
-        etMobileNo.setText(""+userDetails.mobNo);
+        if (user.mobileNo != null)
+            etMobileNo.setText("" + user.mobileNo);
 
-        if(userDetails.emailID!=null)
-        etEmailID.setText(""+userDetails.emailID);
+        if (user.emailID != null)
+            etEmailID.setText("" + user.emailID);
 
-        if(userDetails.dob!=null)
-            if(userDetails.dob.trim().length()!=0)
-                etDob.setText(""+userDetails.dob);
+        if (user.dob != null)
+            if (user.dob.trim().length() != 0)
+                etDob.setText("" + user.dob);
 
-        if(userDetails.displayName!=null)
-        etDisplayName.setText(""+userDetails.displayName);
+        if (user.displayName != null)
+            etDisplayName.setText("" + user.displayName);
 
 /*
         if(SQLiteHandler.GENDER.MALE == SQLiteHandler.getGender(usersDetails.get(SQLiteHandler.KEY_GENDER_AT)))
@@ -176,8 +172,7 @@ public class MyProfileFragment extends Fragment implements View.OnClickListener{
 
     }
 
-    public void makeDetailsInvisible()
-    {
+    public void makeDetailsInvisible() {
         llprofileDetailsLayout.setVisibility(View.INVISIBLE);
         ViewGroup.LayoutParams params = llprofileDetailsLayout.getLayoutParams();
         params.height = 0;
@@ -199,45 +194,40 @@ public class MyProfileFragment extends Fragment implements View.OnClickListener{
 
         etMobileNo.setEnabled(false);
 
-        if (userDetails.familyName != null)
-            etFirstName.setText("" + userDetails.firstName + " " + userDetails.familyName);
-        else if (userDetails.firstName != null)
-            etFirstName.setText("" + userDetails.firstName);
-        else if (userDetails.displayName != null)
-            etFirstName.setText("" + userDetails.displayName);
+        if (user.familyName != null)
+            etFirstName.setText("" + user.firstName + " " + user.familyName);
+        else if (user.firstName != null)
+            etFirstName.setText("" + user.firstName);
+        else if (user.displayName != null)
+            etFirstName.setText("" + user.displayName);
 
         tvOtpVerify.setVisibility(View.INVISIBLE);
 
 
     }
 
-    public void signOut(View v)
-    {
+    public void signOut(View v) {
         session.logoutUser(session);
-        UserDetails.signOut(getActivity());
+        User.signOut(getActivity());
 
         Intent intent = new Intent(this.getActivity(), LoginActivity.class);
 
         startActivity(intent);
         getActivity().finish();
     }
+
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
-            case R.id.my_profile_tv_sign_out:
-            {
+        switch (v.getId()) {
+            case R.id.my_profile_tv_sign_out: {
                 signOut(null);
                 break;
             }
             case R.id.my_profile_ll_click_details:
-            case R.id.my_profile_tv_edit_profile:
-            {
-                if(llprofileDetailsLayout.getVisibility()== View.VISIBLE) {
+            case R.id.my_profile_tv_edit_profile: {
+                if (llprofileDetailsLayout.getVisibility() == View.VISIBLE) {
                     makeDetailsInvisible();
-                }
-                else
-                {
+                } else {
                     setUserDetails();
                     makeDetailsVisible();
 
@@ -246,30 +236,28 @@ public class MyProfileFragment extends Fragment implements View.OnClickListener{
 
                     month = calendar.get(Calendar.MONTH);
                     day = calendar.get(Calendar.DAY_OF_MONTH);
-                   // showDate(year, month+1, day);
+                    // showDate(year, month+1, day);
 
                 }
                 break;
             }
-            case R.id.my_profile_bt_save_profile:
-            {
-                ProgressDialog progress=new ProgressDialog(getActivity());
+            case R.id.my_profile_bt_save_profile: {
+                ProgressDialog progress = new ProgressDialog(getActivity());
                 progress.setMessage("wait... ");
                 progress.setTitle("Updating profile");
                 progress.show();
-                userDetails.firstName = etFirstName.getText().toString().trim();
-                userDetails.displayName =etDisplayName.getText().toString().trim();
-                userDetails.familyName =etLastName.getText().toString().trim();
-                userDetails.emailID =etEmailID.getText().toString().trim();
-                userDetails.dob=etDob.getText().toString().trim();
-                userDetails.gender = "male";
-                userDetails.setUserPreferences(getActivity());
+                user.firstName = etFirstName.getText().toString().trim();
+                user.displayName = etDisplayName.getText().toString().trim();
+                user.familyName = etLastName.getText().toString().trim();
+                user.emailID = etEmailID.getText().toString().trim();
+                user.dob = etDob.getText().toString().trim();
+                user.gender = User.GENDER.MALE;
+                user.setUserPreferences(getActivity());
                 progress.dismiss();
-                Toast.makeText(getActivity(),"Your profile is updated", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Your profile is updated", Toast.LENGTH_SHORT).show();
                 break;
             }
-            case R.id.my_profile_et_date_of_birth:
-            {
+            case R.id.my_profile_et_date_of_birth: {
                 DatePickerDialog picker = new DatePickerDialog(this.getActivity(),
                         myDateListener, year, month, day);
                 picker.show();
@@ -290,7 +278,7 @@ public class MyProfileFragment extends Fragment implements View.OnClickListener{
                     // arg1 = year
                     // arg2 = month
                     // arg3 = day
-                    showDate(arg1, arg2+1, arg3);
+                    showDate(arg1, arg2 + 1, arg3);
                 }
             };
 

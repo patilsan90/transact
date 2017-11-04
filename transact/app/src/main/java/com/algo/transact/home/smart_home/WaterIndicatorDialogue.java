@@ -1,21 +1,16 @@
 package com.algo.transact.home.smart_home;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.algo.transact.AppConfig.AppState;
+import com.algo.transact.AppConfig.AppConfig;
 import com.algo.transact.R;
 
 public class WaterIndicatorDialogue extends BottomSheetDialog implements View.OnClickListener{
@@ -33,7 +28,7 @@ public class WaterIndicatorDialogue extends BottomSheetDialog implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName());
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -46,7 +41,7 @@ public class WaterIndicatorDialogue extends BottomSheetDialog implements View.On
     }
 
     public void showDialogue(String underground, String top) {
-        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName());
         this.show();
 

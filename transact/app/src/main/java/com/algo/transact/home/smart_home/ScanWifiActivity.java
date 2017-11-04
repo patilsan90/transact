@@ -6,12 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
-import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,7 +22,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.algo.transact.AppConfig.AppState;
+import com.algo.transact.AppConfig.AppConfig;
 import com.algo.transact.AppConfig.Permissions;
 import com.algo.transact.R;
 import com.algo.transact.generic_structures.GenericAdapter;
@@ -174,7 +172,7 @@ public class ScanWifiActivity extends AppCompatActivity implements IGenericAdapt
 
 
         } else {
-            Log.i(AppState.TAG, "# Unsupported security mode: "+securityMode);
+            Log.i(AppConfig.TAG, "# Unsupported security mode: "+securityMode);
             Toast.makeText(this, "Wifi  Security Mode Unknown:: "+securityMode, Toast.LENGTH_SHORT).show();
         }
         int res = wifiManager.addNetwork(wifiConf);
@@ -224,7 +222,7 @@ public class ScanWifiActivity extends AppCompatActivity implements IGenericAdapt
                 }
             } else {
                 wifiList = wifiManager.getScanResults();
-                Log.i(AppState.TAG, "Wifi list size " + wifiList.size());
+                Log.i(AppConfig.TAG, "Wifi list size " + wifiList.size());
                 for (int i = 0; i < wifiList.size(); i++) {
                     ScanResult res = wifiList.get(i);
                     boolean devExist = false;

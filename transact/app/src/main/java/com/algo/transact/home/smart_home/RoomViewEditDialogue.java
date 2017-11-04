@@ -3,7 +3,6 @@ package com.algo.transact.home.smart_home;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
@@ -18,7 +17,7 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.algo.transact.AppConfig.AppState;
+import com.algo.transact.AppConfig.AppConfig;
 import com.algo.transact.R;
 import com.algo.transact.generic_structures.GenericAdapter;
 import com.algo.transact.generic_structures.IGenericAdapter;
@@ -48,7 +47,7 @@ public class RoomViewEditDialogue extends Dialog implements IGenericAdapter {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName());
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -68,7 +67,7 @@ public class RoomViewEditDialogue extends Dialog implements IGenericAdapter {
     }
 
     public void showDialogue(Room room, FragmentActivity activity) {
-        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName());
         this.room = room;
         this.show();
@@ -126,7 +125,7 @@ public class RoomViewEditDialogue extends Dialog implements IGenericAdapter {
 
             Room selectedRoom = alRoomsList.get(position);
             if (selectedRoom.getName().equals(newRoomString)) {
-                Log.d(AppState.TAG, "Selected, Create New Room");
+                Log.d(AppConfig.TAG, "Selected, Create New Room");
                 NewRoomDialogue roomDialogue = new NewRoomDialogue(activity);
                 roomDialogue.showDialogue();
             }

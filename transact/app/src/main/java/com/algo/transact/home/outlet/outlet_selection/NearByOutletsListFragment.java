@@ -1,14 +1,10 @@
 package com.algo.transact.home.outlet.outlet_selection;
 
 
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,10 +16,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.algo.transact.AppConfig.AppState;
+import com.algo.transact.AppConfig.AppConfig;
 import com.algo.transact.AppConfig.IntentPutExtras;
 import com.algo.transact.AppConfig.IntentResultCode;
-import com.algo.transact.AppConfig.Permissions;
 import com.algo.transact.R;
 import com.algo.transact.generic_structures.GenericAdapter;
 import com.algo.transact.generic_structures.IGenericAdapter;
@@ -35,7 +30,6 @@ import com.algo.transact.home.outlet.outlet_front.OutletFront;
 import com.algo.transact.home.outlet.data_beans.Cart;
 import com.algo.transact.home.outlet.data_beans.Outlet;
 import com.algo.transact.home.outlet.data_retrivals.CartsFactory;
-import com.algo.transact.optical_code.CodeScannerRequestType;
 
 import java.util.ArrayList;
 
@@ -90,7 +84,7 @@ public class NearByOutletsListFragment extends Fragment implements IGenericAdapt
     }
 
     public void populateOutletsList() {
-        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName());
         // gpsTracker = new GPSTracker(getApplicationContext(), getActivity());
         gpsTracker = new GPSTracker(getApplicationContext());
@@ -108,15 +102,15 @@ if(gps_location_try_counter == 15)
                     Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(getActivity(), permissions, Permissions.RC_HANDLE_GPS_PERM);
 
-                Log.i(AppState.TAG, "In RequestPermission");
+                Log.i(AppConfig.TAG, "In RequestPermission");
             } else {*/
             //currentGPSlocation = gpsTracker.getCurrentLocation();
             currentGPSlocation = gpsTracker.getLocation();
             if (currentGPSlocation != null) {
-                Log.i(AppState.TAG, "Location getAltitude " + currentGPSlocation.getAltitude());
-                Log.i(AppState.TAG, "Location getLongitude " + currentGPSlocation.getLongitude());
-                Log.i(AppState.TAG, "Location getLatitude " + currentGPSlocation.getLatitude());
-                Log.i(AppState.TAG, "Location getProvider " + currentGPSlocation.getProvider());
+                Log.i(AppConfig.TAG, "Location getAltitude " + currentGPSlocation.getAltitude());
+                Log.i(AppConfig.TAG, "Location getLongitude " + currentGPSlocation.getLongitude());
+                Log.i(AppConfig.TAG, "Location getLatitude " + currentGPSlocation.getLatitude());
+                Log.i(AppConfig.TAG, "Location getProvider " + currentGPSlocation.getProvider());
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -124,7 +118,7 @@ if(gps_location_try_counter == 15)
                     }
                 });
             } else {
-                Log.e(AppState.TAG, "Error in acquiring GPS signal, trying one more time ");
+                Log.e(AppConfig.TAG, "Error in acquiring GPS signal, trying one more time ");
                 Thread thread = new Thread() {
                     @Override
                     public void run() {
@@ -185,7 +179,7 @@ if(gps_location_try_counter == 15)
 
 
 
-        //  Log.i(AppState.TAG, "addViewItemToList  " + details.getShopDisplayName() + "  " + details.getShopName());
+        //  Log.i(AppConfig.TAG, "addViewItemToList  " + details.getShopDisplayName() + "  " + details.getShopName());
         /*ScrollView scrollView=(ScrollView)view.findViewById(R.id.shop_scanner_scrollView);
         scrollView.setScrollX(0);
         scrollView.setScrollY(0);*/
@@ -200,16 +194,16 @@ if(gps_location_try_counter == 15)
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.i(AppState.TAG, "onItemClick of ShopList ::" + position);
+        Log.i(AppConfig.TAG, "onItemClick of ShopList ::" + position);
 
         int shopID = alShops10Closest.get(position).getOutletID();
 
         CartsFactory cartsFactory = CartsFactory.getInstance(getActivity());
         Cart cart = cartsFactory.getCart(alShops10Closest.get(position));
         if (cart == null)
-            Log.i(AppState.TAG, "onItemClick ShopList  ShopID::" + shopID + " has no cart stored");
+            Log.i(AppConfig.TAG, "onItemClick ShopList  ShopID::" + shopID + " has no cart stored");
         else
-            Log.i(AppState.TAG, "onItemClick ShopList  ShopID::" + shopID + " has cart stored");
+            Log.i(AppConfig.TAG, "onItemClick ShopList  ShopID::" + shopID + " has cart stored");
 
         Intent intent = new Intent(getActivity(), OutletFront.class);
         intent.putExtra(IntentPutExtras.DATA_TYPE, IntentPutExtras.ID);

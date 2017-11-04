@@ -11,7 +11,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.algo.transact.AppConfig.AppState;
+import com.algo.transact.AppConfig.AppConfig;
 import com.algo.transact.AppConfig.IntentPutExtras;
 import com.algo.transact.AppConfig.IntentResultCode;
 import com.algo.transact.R;
@@ -87,7 +87,7 @@ public class ItemCountSelectionActivity extends AppCompatActivity implements Vie
         String dataType = getIntent().getStringExtra(IntentPutExtras.DATA_TYPE);
 
        if (dataType.equals(IntentPutExtras.CODE_OBJECT)) {
-            Log.i(AppState.TAG, "ItemCountSelectionActivity Request Type:: " + IntentPutExtras.CODE_OBJECT);
+            Log.i(AppConfig.TAG, "ItemCountSelectionActivity Request Type:: " + IntentPutExtras.CODE_OBJECT);
            OpticalCode barcodeDetails = (OpticalCode) getIntent().getSerializableExtra(IntentPutExtras.CODE_OBJECT);
            /*
            itemID = getIntent().getStringExtra(IntentPutExtras.MODULE_ID);
@@ -115,8 +115,8 @@ public class ItemCountSelectionActivity extends AppCompatActivity implements Vie
     //add item to cart here
        // Item item = ShopsRetriver.getItemDetailsFromShop(shopID, itemID);
 
-        //AppState.getInstance().addCartItem(temporary_item);
-        Log.e(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        //AppConfig.getInstance().addCartItem(temporary_item);
+        Log.e(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName()+" NewItem is null? -> "+(newItem==null));
 
         Intent intent = new Intent();

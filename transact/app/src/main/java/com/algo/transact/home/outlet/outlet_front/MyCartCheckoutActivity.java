@@ -9,7 +9,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.algo.transact.AppConfig.AppState;
+import com.algo.transact.AppConfig.AppConfig;
 import com.algo.transact.AppConfig.IntentPutExtras;
 import com.algo.transact.R;
 import com.algo.transact.generic_structures.GenericAdapter;
@@ -43,7 +43,7 @@ public class MyCartCheckoutActivity extends AppCompatActivity implements IGeneri
         shopID = getIntent().getIntExtra(IntentPutExtras.ID, 0);
         outlet  = (Outlet) getIntent().getSerializableExtra(IntentPutExtras.OUTLET_OBJECT);
 
-        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName() + " Outlet OBJ:: "+(outlet == null));
 
 
@@ -69,11 +69,11 @@ public class MyCartCheckoutActivity extends AppCompatActivity implements IGeneri
     }
 
     public void onCheckout(View v) {
-        Log.i(AppState.TAG, "Checkout cart Initiated");
+        Log.i(AppConfig.TAG, "Checkout cart Initiated");
         Order order = new Order("Tran", "1234", "San_transact", "san27deep@gmail.com", "9423306174", "11", "Trasact_san");
         order.setWebhook("http://www.futureinduction.com/webhook/");
         if (!validateOrder(order)) {
-            Log.e("App", "Order not valid");
+            Log.e("AppConfig", "Order not valid");
             return;
         }
 
@@ -85,31 +85,31 @@ public class MyCartCheckoutActivity extends AppCompatActivity implements IGeneri
             //oops order validation failed. Pinpoint the issue(s).
 
             if (!order.isValidName()) {
-                Log.e("App", "Buyer name is invalid");
+                Log.e("AppConfig", "Buyer name is invalid");
             }
 
             if (!order.isValidEmail()) {
-                Log.e("App", "Buyer email is invalid");
+                Log.e("AppConfig", "Buyer email is invalid");
             }
 
             if (!order.isValidPhone()) {
-                Log.e("App", "Buyer phone is invalid");
+                Log.e("AppConfig", "Buyer phone is invalid");
             }
 
             if (!order.isValidAmount()) {
-                Log.e("App", "Amount is invalid");
+                Log.e("AppConfig", "Amount is invalid");
             }
 
             if (!order.isValidDescription()) {
-                Log.e("App", "description is invalid");
+                Log.e("AppConfig", "description is invalid");
             }
 
             if (!order.isValidTransactionID()) {
-                Log.e("App", "Transaction ID is invalid");
+                Log.e("AppConfig", "Transaction ID is invalid");
             }
 
             if (!order.isValidRedirectURL()) {
-                Log.e("App", "Redirection URL is invalid");
+                Log.e("AppConfig", "Redirection URL is invalid");
             }
 
             if (!order.isValidWebhook()) {
@@ -146,7 +146,7 @@ public class MyCartCheckoutActivity extends AppCompatActivity implements IGeneri
         TextView total_items_view = (TextView) view.findViewById(R.id.total_items);
         total_items_view.setText("Total Items: " + item.getItem_count());
 
-  /*      Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+  /*      Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName());
     */
         return view;

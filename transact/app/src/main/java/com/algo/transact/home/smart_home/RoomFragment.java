@@ -4,7 +4,6 @@ package com.algo.transact.home.smart_home;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,16 +15,12 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.algo.transact.AppConfig.AppState;
+import com.algo.transact.AppConfig.AppConfig;
 import com.algo.transact.R;
-import com.algo.transact.home.smart_home.beans.House;
 import com.algo.transact.home.smart_home.beans.Peripheral;
 import com.algo.transact.home.smart_home.beans.Room;
-import com.google.android.gms.vision.text.Line;
 
 import java.util.ArrayList;
-
-import static com.algo.transact.home.smart_home.beans.Peripheral.PERIPHERAL_TYPE.BULB;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -156,7 +151,7 @@ public class RoomFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.room_ll_list:
-                Log.i(AppState.TAG, "Clicked on list ");
+                Log.i(AppConfig.TAG, "Clicked on list ");
                 break;
             case R.id.room_iv_edit_room:
                 RoomViewEditDialogue roomViewEditDialogue = new RoomViewEditDialogue(this.getActivity());

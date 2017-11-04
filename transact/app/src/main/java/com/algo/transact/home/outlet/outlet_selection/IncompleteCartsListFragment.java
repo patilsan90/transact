@@ -14,7 +14,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.algo.transact.AppConfig.AppConfig;
-import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.AppConfig.IntentPutExtras;
 import com.algo.transact.AppConfig.IntentResultCode;
 import com.algo.transact.R;
@@ -75,7 +74,7 @@ public class IncompleteCartsListFragment extends Fragment implements IGenericAda
         trash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // AppState.getInstance().getCartItemList().remove(index);
+                // AppConfig.getInstance().getCartItemList().remove(index);
                 alCartsList.remove(index);
                 cartsListGenericAdapter.notifyDataSetChanged();
                 CartsFactory.getInstance(getActivity()).storeCarts();
@@ -95,7 +94,7 @@ public class IncompleteCartsListFragment extends Fragment implements IGenericAda
         total_items.setText("Total Item: " + size);
         total_order_cost.setText("Total cost: " + total_cost+""+ AppConfig.currency);
 
-        //Log.i(AppState.TAG,"addViewItemToList incompleteCart "+details.getCartShopDisplayName() +"  "+details.getCartShopName());
+        //Log.i(AppConfig.TAG,"addViewItemToList incompleteCart "+details.getCartShopDisplayName() +"  "+details.getCartShopName());
         return view;
     }
 
@@ -106,16 +105,16 @@ public class IncompleteCartsListFragment extends Fragment implements IGenericAda
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.i(AppState.TAG,"onItemClick of IncompleteCart ::"+position);
+        Log.i(AppConfig.TAG,"onItemClick of IncompleteCart ::"+position);
 
         int shopID = alCartsList.get(position).getOutletID();
 
         CartsFactory cartsFactory = CartsFactory.getInstance(getActivity());
         Cart cart = cartsFactory.getCart(alCartsList.get(position));
         if (cart == null)
-            Log.i(AppState.TAG, "onItemClick IncompleteCart  ShopID::" + shopID + " has no cart stored");
+            Log.i(AppConfig.TAG, "onItemClick IncompleteCart  ShopID::" + shopID + " has no cart stored");
         else
-            Log.i(AppState.TAG, "onItemClick IncompleteCart  ShopID::" + shopID + " has cart stored");
+            Log.i(AppConfig.TAG, "onItemClick IncompleteCart  ShopID::" + shopID + " has cart stored");
 
         Intent intent = new Intent(getActivity(), OutletFront.class);
         intent.putExtra(IntentPutExtras.DATA_TYPE, IntentPutExtras.ID);
