@@ -8,7 +8,7 @@ import android.util.Log;
 import android.view.Window;
 import android.widget.TextView;
 
-import com.algo.transact.AppConfig.AppState;
+import com.algo.transact.AppConfig.AppConfig;
 import com.algo.transact.R;
 
 public class LocateCategoriesDialogue extends Dialog {
@@ -25,7 +25,7 @@ public class LocateCategoriesDialogue extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName());
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -37,7 +37,7 @@ public class LocateCategoriesDialogue extends Dialog {
 
 public void showDialogue(String category, String location)
 {
-    Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+    Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
     }.getClass().getEnclosingMethod().getName());
     this.show();
     tvTitle.setText(category);

@@ -26,7 +26,7 @@ public class HTTPReqController extends Application{
     }
     public static synchronized HTTPReqController getInstance()
     {
-        Log.i(AppState.TAG, "Check httpReqController: " + (httpReqController == null));
+        Log.i(AppConfig.TAG, "Check httpReqController: " + (httpReqController == null));
 
         return httpReqController;
     }

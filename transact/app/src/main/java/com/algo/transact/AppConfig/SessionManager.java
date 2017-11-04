@@ -32,7 +32,7 @@ public class SessionManager {
     {
         editor.putBoolean(KEY_IS_LOGGEDIN, isLoggedIn);
         editor.commit();
-        Log.d(AppState.TAG,"User login session modified");
+        Log.d(AppConfig.TAG,"User login session modified");
     }
 
     public boolean isLoggedIn()
@@ -45,10 +45,5 @@ public class SessionManager {
         session.setLogin(false);
 
         return true;
-        // Launching the login activity
-       // Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
-        //startActivity(intent);
-        //finish();
-
-    }
+     }
 }

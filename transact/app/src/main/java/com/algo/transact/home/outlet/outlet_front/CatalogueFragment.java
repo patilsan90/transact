@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.algo.transact.AppConfig.AppState;
+import com.algo.transact.AppConfig.AppConfig;
 import com.algo.transact.AppConfig.IntentPutExtras;
 import com.algo.transact.R;
 import com.algo.transact.generic_structures.GenericAdapterRecyclerView;
@@ -113,7 +113,7 @@ void initializeHashMap(ArrayList<SubCategory> sc)
 
     @Override
     public RecyclerView.ViewHolder addRecyclerViewHolder(View itemView, GenericAdapterRecyclerView genericAdapterRecyclerView) {
-   /*     Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+   /*     Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName() + " Selected ShopID " + shopID);
 */
         if (genericAdapterRecyclerView == rvSubCategoryAdapter)
@@ -129,7 +129,7 @@ void initializeHashMap(ArrayList<SubCategory> sc)
     @Override
     public void bindViewHolder(RecyclerView.ViewHolder holder, ArrayList list, int position, GenericAdapterRecyclerView genericAdapterRecyclerView) {
 
- /*      Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+ /*      Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName() + " Selected ShopID " + shopID);
 */
         if (genericAdapterRecyclerView == rvSubCategoryAdapter) {
@@ -149,11 +149,11 @@ void initializeHashMap(ArrayList<SubCategory> sc)
                     }
                 });
             }
-            Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+            Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
             }.getClass().getEnclosingMethod().getName() + " Selected ShopID " + shopID +" SubCategoryAdapter");
         } else {
             if (genericAdapterRecyclerView == rvItemsAdapter) {
-                Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+                Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
                 }.getClass().getEnclosingMethod().getName() + " Selected ShopID " + shopID +" ItemsAdapter");
                 final Item item = (Item) list.get(position);
                 final ItemViewHolder viewHolder = (ItemViewHolder) holder;
@@ -249,20 +249,20 @@ void initializeHashMap(ArrayList<SubCategory> sc)
 
     @Override
     public void onRVClick(View view, int position, Boolean state) {
-        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName() + " Selected ShopID " + shopID + " State : " + state);
     }
 
     @Override
     public void onRVLongClick(View view, int position) {
-        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName() + " Selected ShopID " + shopID);
     }
 
     ArrayList<View> expandedViewList = new ArrayList<>();
     @Override
     public void onRVExpand(View view, ArrayList list, int position, View vPrevExpanded) {
-        Log.i(AppState.TAG, " --------------------------------------------------------  Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        Log.i(AppConfig.TAG, " --------------------------------------------------------  Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName() + " Selected ShopID " + shopID + " Line Number: " + new Throwable().getStackTrace()[0].getLineNumber());
 
         rvItemsList = (RecyclerView) view.findViewById(R.id.header_rv_items_list);
@@ -275,13 +275,13 @@ void initializeHashMap(ArrayList<SubCategory> sc)
 
             if (alisExpanded.get(position) == false)
             {
-                Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+                Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
                 }.getClass().getEnclosingMethod().getName() + " Line Number: " + new Throwable().getStackTrace()[0].getLineNumber());
                 expandedViewList.add(view);
                 alisExpanded.set(position, true);
                 ArrayList<Item> alItemsList = hmCatalogueItems.get(alSubCaterory.get(position));
                 if (alItemsList == null) {
-                    Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+                    Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
                     }.getClass().getEnclosingMethod().getName() + " Category :: "+selectedCatagory +" Sub Category:: "+alSubCaterory.get(position).getSubCategoryID());
                     alItemsList = CatalogueRetriver.getCatalogueItems(shopID, selectedCatagory,alSubCaterory.get(position).getSubCategoryID());
                     hmCatalogueItems.put(alSubCaterory.get(position), alItemsList);
@@ -293,7 +293,7 @@ void initializeHashMap(ArrayList<SubCategory> sc)
             }
             else
             {
-                Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+                Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
                 }.getClass().getEnclosingMethod().getName() + " Line Number: " + new Throwable().getStackTrace()[0].getLineNumber());
                 alisExpanded.set(position, false);
                 ArrayList<SubCategory> alEmptySubCaterory = new ArrayList<>();
@@ -323,7 +323,7 @@ void initializeHashMap(ArrayList<SubCategory> sc)
 
             for (int i=0;i< size;i++)
             {
-                Log.i(AppState.TAG, "Removing Item --------------------------------------------------");
+                Log.i(AppConfig.TAG, "Removing Item --------------------------------------------------");
 
                 View rView = expandedViewList.get(i);
                 ImageView ivCollapseState = (ImageView) rView.findViewById(R.id.header_iv_indicator);
@@ -335,7 +335,7 @@ void initializeHashMap(ArrayList<SubCategory> sc)
 
             while(expandedViewList.size()>1)
             {
-                Log.i(AppState.TAG, "Removing Item ----------------------------------------------fff----");
+                Log.i(AppConfig.TAG, "Removing Item ----------------------------------------------fff----");
                 expandedViewList.remove(0);
             }
         }
@@ -356,7 +356,7 @@ public void collapseList(View view)
             int size =expandedViewList.size();
             for (int i=0;i< size;i++)
             {
-                Log.i(AppState.TAG, "Removing Item --------------------------------------------------");
+                Log.i(AppConfig.TAG, "Removing Item --------------------------------------------------");
 
                 View rView = expandedViewList.get(i);
                 ImageView ivCollapseState = (ImageView) rView.findViewById(R.id.header_iv_indicator);
@@ -371,7 +371,7 @@ public void collapseList(View view)
 
             while(expandedViewList.size()!=0)
             {
-                Log.i(AppState.TAG, "Removing Item ----------------------------------------------fff----");
+                Log.i(AppConfig.TAG, "Removing Item ----------------------------------------------fff----");
                 expandedViewList.remove(0);
                 // rvItemsList = null;
 

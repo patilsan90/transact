@@ -3,29 +3,15 @@ package com.algo.transact.home.outlet.data_retrivals;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Looper;
 import android.util.Log;
 
 import com.algo.transact.AppConfig.AppConfig;
-import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.home.outlet.data_beans.Cart;
 import com.algo.transact.home.outlet.data_beans.Outlet;
-import com.algo.transact.login.UserDetails;
 import com.google.gson.Gson;
 
-import java.io.EOFException;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
-
-import static android.R.attr.path;
 
 /**
  * Created by sandeep on 6/8/17.
@@ -62,7 +48,7 @@ public class CartsFactory {
   while (cartsList.size()>MAX_CARTS)
   {
       cartsList.remove(0);
-      Log.i(AppState.TAG, "Class: " + cartsFactory.getClass().getSimpleName() + " Method: " + new Object() {
+      Log.i(AppConfig.TAG, "Class: " + cartsFactory.getClass().getSimpleName() + " Method: " + new Object() {
       }.getClass().getEnclosingMethod().getName()+" Remove extra carts > 10 ");
 
   }
@@ -71,7 +57,7 @@ public class CartsFactory {
                 Gson gson = new Gson();
                 editor.putString(TransactCart, gson.toJson(this));
                 editor.apply();
-                Log.i(AppState.TAG, "Class: " + cartsFactory.getClass().getSimpleName() + " Method: " + new Object() {
+                Log.i(AppConfig.TAG, "Class: " + cartsFactory.getClass().getSimpleName() + " Method: " + new Object() {
                 }.getClass().getEnclosingMethod().getName()+" Object Saved  "+gson.toJson(this));
 
 /*
@@ -97,16 +83,16 @@ public class CartsFactory {
             {
                 cartsFactory = details;
                 cartsFactory.activity = activity;
-                Log.i(AppState.TAG, "Class: " + cartsFactory.getClass().getSimpleName() + " Method: " + new Object() {
+                Log.i(AppConfig.TAG, "Class: " + cartsFactory.getClass().getSimpleName() + " Method: " + new Object() {
                 }.getClass().getEnclosingMethod().getName()+" GSON exists new object");
             }
 
 
-            Log.i(AppState.TAG, "Class: " + cartsFactory.getClass().getSimpleName() + " Method: " + new Object() {
+            Log.i(AppConfig.TAG, "Class: " + cartsFactory.getClass().getSimpleName() + " Method: " + new Object() {
             }.getClass().getEnclosingMethod().getName()+" Creating new object");
         }
 
-        Log.i(AppState.TAG, "Class: " + cartsFactory.getClass().getSimpleName() + " Method: " + new Object() {
+        Log.i(AppConfig.TAG, "Class: " + cartsFactory.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName());
 
         return cartsFactory;

@@ -1,30 +1,18 @@
 package com.algo.transact.home.smart_home;
 
-import android.content.Intent;
-import android.os.Looper;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.algo.transact.AppConfig.AppState;
+import com.algo.transact.AppConfig.AppConfig;
 import com.algo.transact.R;
-import com.algo.transact.generic_structures.GenericAdapterRecyclerView;
-import com.algo.transact.generic_structures.IGenericAdapterRecyclerView;
-import com.algo.transact.home.MyProfileFragment;
 import com.algo.transact.home.smart_home.beans.House;
 import com.algo.transact.home.smart_home.beans.Room;
 
@@ -103,9 +91,9 @@ public class SmartHomeActivity extends AppCompatActivity implements View.OnClick
                 break;
             case R.id.smart_home_sw_main_switch:
                 if (swMainSwitch.isChecked()) {
-                    Log.d(AppState.TAG, "Clicked on main switch, switch ON all the peripherals");
+                    Log.d(AppConfig.TAG, "Clicked on main switch, switch ON all the peripherals");
                 } else {
-                    Log.d(AppState.TAG, "Clicked on main switch, switch OFF all the peripherals");
+                    Log.d(AppConfig.TAG, "Clicked on main switch, switch OFF all the peripherals");
                 }
                 break;
 

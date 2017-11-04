@@ -1,16 +1,12 @@
 package com.algo.transact.home.smart_home;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.R;
-import com.algo.transact.generic_structures.GenericAdapterRecyclerView;
 import com.algo.transact.generic_structures.IGenericAdapterRecyclerView;
-import com.algo.transact.home.smart_home.beans.Peripheral;
 import com.algo.transact.home.smart_home.beans.Room;
 
 import java.util.ArrayList;

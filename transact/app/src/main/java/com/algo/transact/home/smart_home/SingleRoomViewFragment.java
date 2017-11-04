@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.algo.transact.AppConfig.AppState;
+import com.algo.transact.AppConfig.AppConfig;
 import com.algo.transact.R;
 import com.algo.transact.generic_structures.GenericAdapterRecyclerView;
 import com.algo.transact.generic_structures.IGenericAdapterRecyclerView;
@@ -92,13 +92,13 @@ public class SingleRoomViewFragment extends Fragment implements IGenericAdapterR
     @Override
     public void rvListUpdateCompleteNotification(ArrayList list, GenericAdapterRecyclerView genericAdapterRecyclerView) {
         //   rvRoomsList.smoothScrollToPosition(0);
-        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName());
     }
 
     @Override
     public void onRVClick(View view, int position, Boolean collapseState) {
-        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName());
 
         Room currentRoom = alRooms.get(position);

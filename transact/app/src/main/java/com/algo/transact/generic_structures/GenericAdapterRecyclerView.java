@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.algo.transact.AppConfig.AppState;
+import com.algo.transact.AppConfig.AppConfig;
 import com.algo.transact.R;
 
 import java.util.ArrayList;
@@ -78,7 +78,7 @@ public class GenericAdapterRecyclerView extends RecyclerView.Adapter {
             }
         }));
 
-        Log.i(AppState.TAG, "::GARV:: Object creation of GenericRecyclerView Adapter from " + mContext.getClass().getSimpleName());
+        Log.i(AppConfig.TAG, "::GARV:: Object creation of GenericRecyclerView Adapter from " + mContext.getClass().getSimpleName());
     }
 
     @Override
@@ -93,7 +93,7 @@ public class GenericAdapterRecyclerView extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         listener.bindViewHolder(holder, list, position, this);
-        Log.i(AppState.TAG, "In onBindViewHolder " + position);
+        Log.i(AppConfig.TAG, "In onBindViewHolder " + position);
         if (position == (list.size() - 1))
             listener.rvListUpdateCompleteNotification(list, this);
 

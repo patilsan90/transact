@@ -9,11 +9,10 @@ import android.view.ViewParent;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
-import com.algo.transact.AppConfig.AppState;
+import com.algo.transact.AppConfig.AppConfig;
 import com.algo.transact.R;
 import com.algo.transact.home.smart_home.beans.Room;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -85,7 +84,7 @@ public class ExpansionManager implements View.OnClickListener {
         viewParentHolder.addView(linearLayout);
 
         for (i = 0; i < roomRowMapping.length; i++) {
-            Log.d(AppState.TAG, i + "  MAPPING " + roomRowMapping[i]);
+            Log.d(AppConfig.TAG, i + "  MAPPING " + roomRowMapping[i]);
         }
     }
 
@@ -125,14 +124,14 @@ public class ExpansionManager implements View.OnClickListener {
 
         if(currentRoom==(rooms.size()-1))
         {
-            Log.d(AppState.TAG,"Selected, Create New Room");
+            Log.d(AppConfig.TAG,"Selected, Create New Room");
             NewRoomDialogue roomDialogue=new NewRoomDialogue(context);
             roomDialogue.showDialogue();
             return;
         }
-        Log.d(AppState.TAG, "In Onclick  currentRoomIdxToExpand:: " + currentRoom + "  currentRowIdxToExpand:: " + currentRow);
+        Log.d(AppConfig.TAG, "In Onclick  currentRoomIdxToExpand:: " + currentRoom + "  currentRowIdxToExpand:: " + currentRow);
         for (int i = 0; i < roomRowMapping.length; i++) {
-            Log.d(AppState.TAG, i + "  MAPPING Before :: " + roomRowMapping[i]);
+            Log.d(AppConfig.TAG, i + "  MAPPING Before :: " + roomRowMapping[i]);
         }
 
         if (roomExpandStatus[currentRoom] == true) {
@@ -158,7 +157,7 @@ public class ExpansionManager implements View.OnClickListener {
 
         scrollToView(svScroll, roomsRowsList.get(roomRowMapping[currentRoom]));
         for (int i = 0; i < roomRowMapping.length; i++) {
-            Log.d(AppState.TAG, i + "  MAPPING After :: " + roomRowMapping[i]);
+            Log.d(AppConfig.TAG, i + "  MAPPING After :: " + roomRowMapping[i]);
         }
     }
 
@@ -192,7 +191,7 @@ public class ExpansionManager implements View.OnClickListener {
             } else {
                 toggleFlag = false;
             }
-            Log.i(AppState.TAG, "rowIdx " + rowIdx + "  roomIdx :: " + roomIdx);
+            Log.i(AppConfig.TAG, "rowIdx " + rowIdx + "  roomIdx :: " + roomIdx);
             roomsRowsList.get(rowIdx).addView(roomsViewsList.get(roomIdx));
             roomRowMapping[roomIdx] = rowIdx;
             roomIdx++;
@@ -213,7 +212,7 @@ public class ExpansionManager implements View.OnClickListener {
             for (int i = (currentRow); i < roomsRowsList.size(); i++)
                 roomsRowsList.get(i).removeAllViews();
 
-            Log.i(AppState.TAG, "In rearrangeAllViews  currentRoomIdxToExpand:: " + (currentRoom - 1) + "  currentRowIdxToExpand:: " + currentRow);
+            Log.i(AppConfig.TAG, "In rearrangeAllViews  currentRoomIdxToExpand:: " + (currentRoom - 1) + "  currentRowIdxToExpand:: " + currentRow);
             roomsRowsList.get(currentRow).addView(roomsViewsList.get(currentRoom - 1));
             roomRowMapping[currentRoom - 1] = currentRow;
             toggleFlag = true;
