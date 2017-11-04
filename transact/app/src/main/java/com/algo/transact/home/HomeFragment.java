@@ -4,20 +4,16 @@ package com.algo.transact.home;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.AppConfig.IntentPutExtras;
-import com.algo.transact.AppConfig.IntentResultCode;
 import com.algo.transact.R;
 import com.algo.transact.home.outlet.data_beans.Outlet;
 import com.algo.transact.home.outlet.outlet_selection.OutletSelectorActivity;
 import com.algo.transact.home.smart_home.InitialOptionsActivity;
-import com.algo.transact.home.smart_home.SmartHomeActivity;
 
 /**
  * A simple {@link Fragment} subclass.

@@ -18,7 +18,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.algo.transact.AppConfig.AppState;
+import com.algo.transact.AppConfig.AppConfig;
 import com.algo.transact.AppConfig.Permissions;
 import com.algo.transact.R;
 import com.google.android.gms.vision.CameraSource;
@@ -139,7 +139,7 @@ public class CodeScannerFragment extends Fragment {
 
     // Handles the requesting of the camera permission.
     private void requestCameraPermission() {
-        Log.w(AppState.TAG, "Camera permission is not granted. Requesting permission");
+        Log.w(AppConfig.TAG, "Camera permission is not granted. Requesting permission");
 
         final String[] permissions = new String[]{Manifest.permission.CAMERA};
 
@@ -158,7 +158,7 @@ public class CodeScannerFragment extends Fragment {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        Log.i(AppState.TAG,"onRequestPermissionsResult fragment");
+        Log.i(AppConfig.TAG,"onRequestPermissionsResult fragment");
         /* TODO
         * Call this fragments method from Actual activity onRequestPermissionsResult method, else it wont get called.
         * */
@@ -168,7 +168,7 @@ public class CodeScannerFragment extends Fragment {
             {
                 if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 {
-                    Log.i(AppState.TAG,"Setting camera resources");
+                    Log.i(AppConfig.TAG,"Setting camera resources");
                     try {
                         final String[] permissionss = new String[]{android.Manifest.permission.CAMERA};
                         if (ActivityCompat.checkSelfPermission(getActivity(),
@@ -177,7 +177,7 @@ public class CodeScannerFragment extends Fragment {
                         }
                         cameraSource.start(cameraView.getHolder());
                     } catch (IOException ie) {
-                        Log.e(AppState.TAG, "CAMERA SOURCE " + ie.getMessage());
+                        Log.e(AppConfig.TAG, "CAMERA SOURCE " + ie.getMessage());
                     }
                 }
             }

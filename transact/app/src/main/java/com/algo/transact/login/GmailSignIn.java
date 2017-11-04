@@ -3,10 +3,9 @@ package com.algo.transact.login;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.algo.transact.AppConfig.AppState;
-import com.algo.transact.server_communication.UserAuthentication;
+import com.algo.transact.AppConfig.AppConfig;
+import com.algo.transact.server_communicator.request_handler.ServerRequestHandler;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -22,12 +21,10 @@ import com.google.android.gms.common.api.Status;
 public class GmailSignIn {
 
     public static final int RC_SIGN_IN = 9001;
-    private static final String TAG = "CognitionMall";
+    private static final String TAG = AppConfig.TAG;
+    private static GoogleApiClient mGoogleApiClient;
 
-    public GmailSignIn(LoginActivity loginActivity) {
-    }
-
-    public void configure() {
+    public static void configure(LoginActivity loginActivity) {
 
         // Configure sign-in to request the user's ID, email address, and basic
 // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -37,35 +34,52 @@ public class GmailSignIn {
 
         // Build a GoogleApiClient with access to the Google Sign-In API and the
 // options specified by gso.
-        AppState.getInstance().loginActivity.mGoogleApiClient = new GoogleApiClient.Builder(AppState.getInstance().loginActivity)
-                .enableAutoManage(AppState.getInstance().loginActivity /* FragmentActivity */, AppState.getInstance().loginActivity /* OnConnectionFailedListener */)
+        mGoogleApiClient = new GoogleApiClient.Builder(loginActivity)
+                .enableAutoManage(loginActivity /* FragmentActivity */, loginActivity /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
     }
 
-/* This function receives click event from button. */
-    public void signinByGmail() {
+    /* This function receives click event from button. */
+    public static void signinByGmail(LoginActivity activity) {
         Log.i(TAG, "gmail sign in started");
 
-        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(AppState.getInstance().loginActivity.mGoogleApiClient);
-        AppState.getInstance().loginActivity.startActivityForResult(signInIntent, RC_SIGN_IN);
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        activity.startActivityForResult(signInIntent, RC_SIGN_IN);
 
-
-        Log.i(TAG, "Session created successfully");
     }
 
-/* This function is called after onActivityResult. */
+
+    /* This function is called after onActivityResult. */
     // [START handleSignInResult]
-    public void handleSignInResult(GoogleSignInResult result) {
+    public static void handleSignInResult(GoogleSignInResult result, LoginActivity activity) {
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
-            Log.i(TAG, "Gmail sign in successful");
+            Log.i(TAG, "Gmail sign in successfull");
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
-            // mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
-            //updateUI(true);
 
-            verifyGmailSignin(acct);
+            String displayName = acct.getDisplayName();
+            String familyName = acct.getFamilyName();
+            String givenName = acct.getGivenName();
+            String email = acct.getEmail();
+            Uri photoURL = acct.getPhotoUrl();
+
+            User signInUser = new User();
+            signInUser.displayName = displayName;
+            signInUser.familyName = familyName;
+            signInUser.firstName = givenName;
+            signInUser.emailID = email;
+
+            if (photoURL != null)
+                signInUser.profilePhotoURL = photoURL.toString();
+
+            signInUser.loginType = User.LOGIN_OTIONS.GMAIL;
+
+            Log.i(TAG, "Gmail sign in successfull User " + signInUser);
+            ServerRequestHandler.login(signInUser, activity);
+
+
         } else {
             Log.i(TAG, "Gmail sign out, unauthentic");
 
@@ -75,41 +89,9 @@ public class GmailSignIn {
     }
     // [END handleSignInResult]
 
-    public boolean verifyGmailSignin(GoogleSignInAccount acct) {
-        String displayName = acct.getDisplayName();
-        String familyName = acct.getFamilyName();
-        String givenName = acct.getGivenName();
-        String email = acct.getEmail();
-        Uri photoURL = acct.getPhotoUrl();
-
-        Toast.makeText(AppState.getInstance().loginActivity, "Welcome " + displayName, Toast.LENGTH_SHORT).show();
-
-        UserDetails signInUser = new UserDetails();
-        signInUser.displayName = displayName;
-        signInUser.familyName = familyName;
-        signInUser.firstName = givenName;
-        signInUser.emailID = email;
-        signInUser.profilePhotoURL = photoURL.toString();
-        signInUser.loggedInUsing = UserDetails.LOGIN_OTIONS.GMAIL;
-        AppState.getInstance().loginActivity.sessionInfo = signInUser;
-        Log.i(AppState.TAG, "Creating session using GMAIL credentials");
-
-        if (UserAuthentication.getInstance().verifyMobileNumber(signInUser) != null) {
-            if (AppState.getInstance().loginActivity.writeSessionFile(signInUser))
-                AppState.getInstance().loginActivity.startMainActivity();
-        } else {
-            Intent myIntent = new Intent(AppState.getInstance().loginActivity, EnterMobileNoActivity.class);
-            myIntent.putExtra("name", "Sample name"); //Optional parameter pass parameters
-            AppState.getInstance().loginActivity.startActivity(myIntent);
-        }
-
-        return true;
-
-    }
-
     // [START signOut]
-    public void signOutFromGmail() {
-        Auth.GoogleSignInApi.signOut(AppState.getInstance().loginActivity.mGoogleApiClient).setResultCallback(
+    public static void signOutFromGmail() {
+        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
                 new ResultCallback<Status>() {
                     @Override
                     public void onResult(Status status) {

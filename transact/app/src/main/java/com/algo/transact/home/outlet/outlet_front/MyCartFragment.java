@@ -17,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.algo.transact.AppConfig.AppConfig;
-import com.algo.transact.AppConfig.AppState;
 import com.algo.transact.AppConfig.IntentPutExtras;
 import com.algo.transact.AppConfig.IntentResultCode;
 import com.algo.transact.generic_structures.GenericAdapter;
@@ -67,7 +66,7 @@ public class MyCartFragment extends Fragment implements AdapterView.OnItemClickL
         shopID = getActivity().getIntent().getIntExtra(IntentPutExtras.ID, 0);
         outlet  = (Outlet) getActivity().getIntent().getSerializableExtra(IntentPutExtras.OUTLET_OBJECT);
 
-        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName() + "Selected ShopID "+shopID);
 
   //      lvCartsList.addFooterView(view.findViewById(R.id.my_cart_checkout));
@@ -107,7 +106,7 @@ public class MyCartFragment extends Fragment implements AdapterView.OnItemClickL
             intent.putExtra(IntentPutExtras.DATA_TYPE, IntentPutExtras.ID);
             intent.putExtra(IntentPutExtras.ID, shopID);
                 intent.putExtra(IntentPutExtras.OUTLET_OBJECT, outlet);
-                Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+                Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
                 }.getClass().getEnclosingMethod().getName() + " Outlet OBJ:: "+(outlet == null));
 
                 //this.startActivityForResult(intent, IntentResultCode.RESULT_OK_SHOP_SELECTION);
@@ -140,7 +139,7 @@ public class MyCartFragment extends Fragment implements AdapterView.OnItemClickL
     @Override
     public View addViewItemToList(final View view, Object listItem, final int index) {
 
-        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName() + "Selected ShopID " + shopID);
 
         Item cartItem =(Item) listItem;
@@ -170,7 +169,7 @@ public class MyCartFragment extends Fragment implements AdapterView.OnItemClickL
         trashCartItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // AppState.getInstance().getCartItemList().remove(index);
+               // AppConfig.getInstance().getCartItemList().remove(index);
 
                 Item item = cart.getCartList().get(index);
                 item.setItem_count(0);
@@ -185,7 +184,7 @@ public class MyCartFragment extends Fragment implements AdapterView.OnItemClickL
         decreaseCartItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Item item = AppState.getInstance().getCartItemList().get(index);
+                //Item item = AppConfig.getInstance().getCartItemList().get(index);
                 Item item = cart.getCartList().get(index);
                 if (item.getItem_count() > 1) {
                     item.decreaseItem_count();
@@ -207,7 +206,7 @@ public class MyCartFragment extends Fragment implements AdapterView.OnItemClickL
         });
 
 
-        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName());
 
         return view;
@@ -232,7 +231,7 @@ public class MyCartFragment extends Fragment implements AdapterView.OnItemClickL
         tvCartTotal.setText("Cart Total: " + cart_total+" Rs.");
 */
 
-        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName()+" adding new item");
 
     }
