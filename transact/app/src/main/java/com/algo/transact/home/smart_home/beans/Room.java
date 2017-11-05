@@ -8,19 +8,36 @@ import java.util.ArrayList;
  */
 
 public class Room implements Serializable {
-    int id;
-    public String name;
-    ArrayList<Peripheral> peripherals = new ArrayList<>();
+    int room_id;
+    public String room_name;
 
-    public int getId() {
-        return id;
+    ArrayList<Peripheral> al_peripheralsQuickAccess = new ArrayList<>();
+
+    ArrayList<Peripheral> al_peripherals = new ArrayList<>();
+
+    public int getRoom_id() {
+        return room_id;
     }
 
-    public String getName() {
-        return name;
+    public String getRoom_name() {
+        return room_name;
     }
 
-    public ArrayList<Peripheral> getPeripherals() {
-        return peripherals;
+    public ArrayList<Peripheral> getAl_peripherals() {
+        return al_peripherals;
     }
+
+    public ArrayList<Peripheral> getAl_peripheralsQuickAccess() {
+        return al_peripheralsQuickAccess;
+    }
+
+    public Room() {
+    }
+
+    public Room(int room_id, String room_name, ArrayList<Peripheral> al_peripherals) {
+        this.room_id = room_id;
+        this.room_name = room_name;
+        this.al_peripherals = al_peripherals;
+    }
+
 }

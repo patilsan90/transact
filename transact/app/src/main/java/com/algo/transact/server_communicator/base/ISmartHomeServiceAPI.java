@@ -1,0 +1,46 @@
+package com.algo.transact.server_communicator.base;
+
+import com.algo.transact.home.smart_home.beans.House;
+import com.algo.transact.home.smart_home.beans.Peripheral;
+import com.algo.transact.home.smart_home.beans.Room;
+import com.algo.transact.login.User;
+
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
+import retrofit2.http.POST;
+import retrofit2.http.Part;
+
+/**
+ * Created by Kapil on 15/10/2017.
+ */
+
+public interface ISmartHomeServiceAPI {
+    @Headers({
+            "Content-Type: application/json"
+    })
+
+    @POST("/smart_home/get_house")
+    Call<House> getHouse(@Body User user);
+
+    @POST("/smart_home/get_peripherals")
+    Call<ArrayList<Peripheral>> getPeripherals(@Body Room room);
+
+    @POST("/smart_home/get_water_level_peripherals")
+    Call<ArrayList<Peripheral>> getWaterLevelPeripherals(@Body House house);
+
+    @POST("/smart_home/get_peripheral_status")
+    Call<Peripheral> getPeripheralStatus(@Body Peripheral peripheral);
+
+    @POST("/smart_home/create_new_room")
+    Call<Room> creatNewRoom(@Body Room room);
+
+    @Multipart
+    @POST("/smart_home/update_peripheral_status")
+    Call<Peripheral> updatePeripheralStatus(@Part("room") Room room,
+                                            @Part("peripheral") Peripheral peripheral);
+
+}

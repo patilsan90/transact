@@ -1,5 +1,6 @@
 package com.algo.transact.server_communicator.base;
 
+import com.algo.transact.home.smart_home.beans.House;
 import com.algo.transact.login.User;
 
 import retrofit2.Call;
@@ -11,7 +12,7 @@ import retrofit2.http.POST;
  * Created by Kapil on 15/10/2017.
  */
 
-public interface IServiceAPI {
+public interface ILoginServiceAPI {
     @Headers({
             "Content-Type: application/json"
     })

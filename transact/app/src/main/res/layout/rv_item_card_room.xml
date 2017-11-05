@@ -53,10 +53,12 @@
                         android:layout_weight="1" />
 
                     <Switch
+                        android:id="@+id/card_room_sw_room_switch"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_margin="3sp"
+                        android:text="Switch"
                         android:gravity="center" />
                 </LinearLayout>
             </LinearLayout>

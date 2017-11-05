@@ -21,52 +21,14 @@
         android:background="@color/appBarColor"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <TextView
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/dialogue_water_rv_water_level_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="Water level"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:layout_weight="1"
+        android:scrollbars="horizontal" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:padding="10dp"
-        android:orientation="horizontal">
-        <ImageView
-            android:layout_width="50sp"
-            android:layout_height="50sp"
-            android:src="@drawable/water_level" />
-        <TextView
-            android:id="@+id/dialogue_water_underground_storage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="level"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:padding="10dp"
-        android:orientation="horizontal">
-        <ImageView
-            android:layout_width="50sp"
-            android:layout_height="50sp"
-            android:src="@drawable/water_level" />
-        <TextView
-            android:id="@+id/dialogue_water_top_storage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="level"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"

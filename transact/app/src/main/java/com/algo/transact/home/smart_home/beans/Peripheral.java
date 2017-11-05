@@ -8,16 +8,17 @@ import java.io.Serializable;
  * Created by patilsp on 10/14/2017.
  */
 
-public class Peripheral implements Serializable{
+public class Peripheral extends Room implements Serializable{
 
+    private int peripheral_id;
     public PERIPHERAL_TYPE type;
-    public String name;
+    public String peripheral_name;
     public Status status;
     public int value;
 
     public Peripheral(PERIPHERAL_TYPE type, String name, Status status, int value) {
         this.type = type;
-        this.name = name;
+        this.peripheral_name = name;
         this.status = status;
         this.value = value;
     }
@@ -31,14 +32,24 @@ public class Peripheral implements Serializable{
         BULB,
         FAN,
         FRIDGE,
+        ROOM_SWITCH,
+        MAIN_SWITCH,
         BELL,
         UNDERGROUND_WATER_TANK,
         TERRES_WATER_TANK,
         CAMERA
     }
 
+    public int getPeripheral_id() {
+        return peripheral_id;
+    }
+
     public PERIPHERAL_TYPE getType() {
         return type;
+    }
+
+    public String getPeripheral_name() {
+        return peripheral_name;
     }
 
     public Status getStatus() {
@@ -49,8 +60,24 @@ public class Peripheral implements Serializable{
         return value;
     }
 
-    public String getName() {
-        return name;
+    public void setPeripheral_id(int peripheral_id) {
+        this.peripheral_id = peripheral_id;
+    }
+
+    public void setType(PERIPHERAL_TYPE type) {
+        this.type = type;
+    }
+
+    public void setPeripheral_name(String peripheral_name) {
+        this.peripheral_name = peripheral_name;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
     }
 
     public static int getPeripheralIcon(PERIPHERAL_TYPE type) {
@@ -77,9 +104,12 @@ public class Peripheral implements Serializable{
             case CAMERA:
                 return R.drawable.ic_bulb;
 
-            default:
+            case ROOM_SWITCH:
+                return R.drawable.ic_room_switch;
 
+            default:
                 return R.drawable.ic_bulb;
+
         }
     }
 

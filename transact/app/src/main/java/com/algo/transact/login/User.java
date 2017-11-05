@@ -95,8 +95,8 @@ public class User implements Serializable {
 
         SharedPreferences sharedpreferences = activity.getSharedPreferences(TransactPREFERENCES, Context.MODE_PRIVATE);
         Gson gson = new Gson();
-        User details = gson.fromJson(sharedpreferences.getString(USERDETAILS, ""), User.class);
-        return details;
+        User user = gson.fromJson(sharedpreferences.getString(USERDETAILS, ""), User.class);
+        return user;
     }
 
     public void setUserPreferences(Activity activity, JSONObject jsonUserObject) {

@@ -5,7 +5,7 @@ import android.util.Log;
 import com.algo.transact.AppConfig.AppConfig;
 import com.algo.transact.login.User;
 import com.algo.transact.server_communicator.base.ServerConfiguration;
-import com.algo.transact.server_communicator.base.IServiceAPI;
+import com.algo.transact.server_communicator.base.ILoginServiceAPI;
 import com.algo.transact.server_communicator.listener.ILoginListener;
 
 import retrofit2.Call;
@@ -22,21 +22,21 @@ public class LoginController {
 
     public static void login(User user, final ILoginListener listener) {
         ServerConfiguration.LoggerSet();
-        IServiceAPI retrofitServices = ServerConfiguration.retrofit.create(IServiceAPI.class);
+        ILoginServiceAPI retrofitServices = ServerConfiguration.retrofit.create(ILoginServiceAPI.class);
         Call<User> loginCall = retrofitServices.login(user);
         loginCall.enqueue(new LoginCallback(listener));
     }
 
     public static void register(User user, final ILoginListener listener) {
         ServerConfiguration.LoggerSet();
-        IServiceAPI retrofitServices = ServerConfiguration.retrofit.create(IServiceAPI.class);
+        ILoginServiceAPI retrofitServices = ServerConfiguration.retrofit.create(ILoginServiceAPI.class);
         Call<User> loginCall = retrofitServices.register(user);
         loginCall.enqueue(new LoginCallback(listener));
     }
 
     public static void updateProfile(User user, final ILoginListener listener) {
         ServerConfiguration.LoggerSet();
-        IServiceAPI retrofitServices = ServerConfiguration.retrofit.create(IServiceAPI.class);
+        ILoginServiceAPI retrofitServices = ServerConfiguration.retrofit.create(ILoginServiceAPI.class);
         Call<User> loginCall = retrofitServices.updateProfile(user);
         loginCall.enqueue(new LoginCallback(listener));
     }
