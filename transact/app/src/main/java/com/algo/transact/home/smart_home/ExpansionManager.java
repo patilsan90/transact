@@ -11,6 +11,7 @@ import android.widget.ScrollView;
 
 import com.algo.transact.AppConfig.AppConfig;
 import com.algo.transact.R;
+import com.algo.transact.home.smart_home.beans.House;
 import com.algo.transact.home.smart_home.beans.Room;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class ExpansionManager implements View.OnClickListener {
     private final ScrollView svScroll;
     SmartHomeActivity context;
 
+    House house;
     ArrayList<Room> rooms;
     private int prevExpandedViewIndex = -1;
     ArrayList<LinearLayout> roomsViewsList = new ArrayList<>();
@@ -36,12 +38,10 @@ public class ExpansionManager implements View.OnClickListener {
     public static ArrayList<LinearLayout> llRoomsReferences;
     private static String newRoomString = "Add New Room";
 
-    public ExpansionManager(SmartHomeActivity context, ArrayList<Room> rooms) {
+    public ExpansionManager(SmartHomeActivity context, House house) {
         this.context = context;
-        this.rooms = rooms;
-        Room newRoom = new Room();
-        newRoom.name = newRoomString;
-        rooms.add(newRoom);
+        this.house=house;
+        this.rooms=house.getAl_rooms();
 
         viewParentHolder = (LinearLayout) context.findViewById(R.id.smart_home_ll_view_holder);
         svScroll = (ScrollView) context.findViewById(R.id.smart_home_sv_scroll_view);

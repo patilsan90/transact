@@ -1,5 +1,12 @@
 package com.algo.transact.home.smart_home.beans;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import com.algo.transact.login.User;
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 
 /**
@@ -7,18 +14,22 @@ import java.util.ArrayList;
  */
 
 public class House {
+
+    private static final String HOMEDETAILS = "SmartHome";
+    private static final String TransactPREFERENCES = "TranPref";
+
     int id;
-    String name;
+    String house_name;
     int owner_id;
     String authentication_code;
-    ArrayList<Room> rooms = new ArrayList<>();
+    ArrayList<Room> al_rooms = new ArrayList<>();
 
     public int getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getHouse_name() {
+        return house_name;
     }
 
     public int getOwner_id() {
@@ -29,54 +40,44 @@ public class House {
         return authentication_code;
     }
 
-    public ArrayList<Room> getRooms() {
-        return rooms;
+    public ArrayList<Room> getAl_rooms() {
+        return al_rooms;
     }
 
-    public static House getHouse(int owner_id) {
-        /* TODO
-         * Check whether house is already stored.
-         * if stored in local memory retrieve from their
-         *
-         */
-        House house = new House();
-        house.name = "Sanjeevan House";
-        house.id = 123;
-        house.owner_id = owner_id;
-        house.rooms = new ArrayList<>();
+    public void setId(int id) {
+        this.id = id;
+    }
 
-        Room room1 = new Room();
-        room1.name = "Hall";
+    public void setHouse_name(String house_name) {
+        this.house_name = house_name;
+    }
 
+    public void setOwner_id(int owner_id) {
+        this.owner_id = owner_id;
+    }
 
-        room1.peripherals.add(new Peripheral(Peripheral.PERIPHERAL_TYPE.BULB, "BULB 1", Peripheral.Status.ON, 100));
-        room1.peripherals.add(new Peripheral(Peripheral.PERIPHERAL_TYPE.FRIDGE, "Fridge", Peripheral.Status.ON, 0));
-        room1.peripherals.add(new Peripheral(Peripheral.PERIPHERAL_TYPE.FAN, "Fan", Peripheral.Status.ON, 100));
-        room1.peripherals.add(new Peripheral(Peripheral.PERIPHERAL_TYPE.BULB, "BULB 2", Peripheral.Status.ON, 100));
-        room1.peripherals.add(new Peripheral(Peripheral.PERIPHERAL_TYPE.BULB, "BULB 3", Peripheral.Status.ON, 100));
-        room1.peripherals.add(new Peripheral(Peripheral.PERIPHERAL_TYPE.BULB, "BULB 4", Peripheral.Status.ON, 100));
+    public void setAuthentication_code(String authentication_code) {
+        this.authentication_code = authentication_code;
+    }
 
-        Room room2 = new Room();
-        room2.name = "Kitchen";
+    public void setAl_rooms(ArrayList<Room> al_rooms) {
+        this.al_rooms = al_rooms;
+    }
 
-        Room room3 = new Room();
-        room3.name = "Sans Room";
+    public static House getUserPreferences(Activity activity) {
 
-        Room room4 = new Room();
-        room4.name = "Govinds Room";
-
-        Room room5 = new Room();
-        room5.name = "Kapil & Vijen Room";
-
-
-        house.rooms.add(room1);
-        house.rooms.add(room2);
-        house.rooms.add(room3);
-        //    house.rooms.add(room4);
-        //   house.rooms.add(room5);
-
+        SharedPreferences sharedpreferences = activity.getSharedPreferences(TransactPREFERENCES, Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        House house = gson.fromJson(sharedpreferences.getString(HOMEDETAILS, ""), House.class);
         return house;
+    }
 
+    public void setUserPreferences(Activity activity) {
 
+        SharedPreferences sharedpreferences = activity.getSharedPreferences(TransactPREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        Gson gson = new Gson();
+        editor.putString(HOMEDETAILS, gson.toJson(this));
+        editor.apply();
     }
 }

@@ -78,7 +78,6 @@
         <activity android:name=".home.smart_home.InitialOptionsActivity" />
         <activity android:name=".home.smart_home.ScanWifiActivity" />
         <activity android:name=".home.smart_home.ConfigureWifiDeviceActivity" />
-        <activity android:name=".home.smart_home.RelativeCheckActivity"></activity>
 
     </application>
 </manifest>

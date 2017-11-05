@@ -54,11 +54,10 @@ public class RoomViewEditDialogue extends Dialog implements IGenericAdapter {
 
         setContentView(R.layout.dialogue_room_view_edit);
 
-        House house = House.getHouse(123);
-        alRoomsList = house.getRooms();
+        alRoomsList = SmartHomeActivity.house.getAl_rooms();
 
         Room newRoom = new Room();
-        newRoom.name = newRoomString;
+        newRoom.room_name = newRoomString;
         alRoomsList.add(newRoom);
 
         etRoomName = (EditText) findViewById(R.id.dialogue_room_view_et_room_name);
@@ -72,8 +71,8 @@ public class RoomViewEditDialogue extends Dialog implements IGenericAdapter {
         this.room = room;
         this.show();
         this.activity = activity;
-        new GenericAdapter(activity, this, lvPeripherals, room.getPeripherals(), R.layout.peripheral_layout_edit_mode);
-        etRoomName.setText(room.getName());
+        new GenericAdapter(activity, this, lvPeripherals, room.getAl_peripherals(), R.layout.peripheral_layout_edit_mode);
+        etRoomName.setText(room.getRoom_name());
 
     }
 
@@ -87,7 +86,7 @@ public class RoomViewEditDialogue extends Dialog implements IGenericAdapter {
         Switch swOnOff = (Switch) view.findViewById(R.id.peripheral_sw_on_off);
         Spinner spRoomsList = (Spinner) view.findViewById(R.id.peripheral_sp_spinner);
         ivIcon.setImageResource(per.getPeripheralIcon(per.getType()));
-        etPerName.setText(per.getName());
+        etPerName.setText(per.getPeripheral_name());
         swOnOff.setEnabled(per.getStatus() == Peripheral.Status.ON ? true : false);
 
         IGenericAdapterSpinner spinnerListener = new SpinnerListener();
@@ -111,7 +110,7 @@ public class RoomViewEditDialogue extends Dialog implements IGenericAdapter {
         public View addViewItemToList(View view, Object listItem, int index) {
             Room room = (Room) listItem;
             TextView tvRoomName = (TextView) view.findViewById(R.id.spinner_rooms_tv_room_name);
-            tvRoomName.setText(room.getName());
+            tvRoomName.setText(room.getRoom_name());
             return view;
         }
 
@@ -124,7 +123,7 @@ public class RoomViewEditDialogue extends Dialog implements IGenericAdapter {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
             Room selectedRoom = alRoomsList.get(position);
-            if (selectedRoom.getName().equals(newRoomString)) {
+            if (selectedRoom.getRoom_name().equals(newRoomString)) {
                 Log.d(AppConfig.TAG, "Selected, Create New Room");
                 NewRoomDialogue roomDialogue = new NewRoomDialogue(activity);
                 roomDialogue.showDialogue();
