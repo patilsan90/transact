@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 public class Room implements Serializable {
     public static int ROOM_ID_NOT_REQUIRED = -10;
+    public static int CREATE_NEW_ROOM = -11;
+
     private int room_id;
     private int house_id;
     private String room_name;

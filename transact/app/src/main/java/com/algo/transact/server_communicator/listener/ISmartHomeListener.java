@@ -27,4 +27,7 @@ public interface ISmartHomeListener {
 
     void onSuccess(ResponseStatus status);
 
+    void onCreateRoom(Room room);
+
+
 }

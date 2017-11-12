@@ -34,6 +34,7 @@
 
 
     <Button
+        android:id="@+id/dialogue_new_room_bt_create"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/appBarColor"
