@@ -48,7 +48,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10sp"
                     android:text="Smart Home"
+                    android:layout_weight="1"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
+                <ImageView
+                    android:id="@+id/smart_home_iv_settings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10sp"
+                    android:layout_marginRight="5sp"
+                    android:src="@drawable/ic_settings_popup"/>
             </LinearLayout>
 
 
@@ -146,7 +154,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/smart_home_ll_settings"
+            android:id="@+id/smart_home_ll_alexa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -164,7 +172,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
 
-                android:text="Settings"
+                android:text="Alexa Start"
                 android:textColor="@color/appBottomBarTextColor" />
         </LinearLayout>
     </LinearLayout>

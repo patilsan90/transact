@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -53,8 +54,11 @@ public class SmartHomeActivity extends AppCompatActivity implements View.OnClick
         LinearLayout llWaterLevel = (LinearLayout) findViewById(R.id.smart_home_ll_water_level);
         llWaterLevel.setOnClickListener(this);
 
-        LinearLayout llSettings = (LinearLayout) findViewById(R.id.smart_home_ll_settings);
-        llSettings.setOnClickListener(this);
+        LinearLayout llAlexa = (LinearLayout) findViewById(R.id.smart_home_ll_alexa);
+        llAlexa.setOnClickListener(this);
+
+        ImageView ivSettings = (ImageView) findViewById(R.id.smart_home_iv_settings);
+        ivSettings.setOnClickListener(this);
 
         swMainSwitch = (Switch) findViewById(R.id.smart_home_sw_main_switch);
         swMainSwitch.setOnClickListener(this);
@@ -72,20 +76,15 @@ public class SmartHomeActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
-public void updateAllRooms()
-    {
-        if(SHRequestHandler.getInstance().roomFragment==null)
-        {
+    public void updateAllRooms() {
+        if (SHRequestHandler.getInstance().roomFragment == null) {
             displayRoomsViewWithThread();
-        }
-        else {
+        } else {
             try {
                 for (int i = 0; i < SHRequestHandler.getInstance().roomFragment.size(); i++) {
                     SHRequestHandler.getInstance().roomFragment.get(i).UpdateRoomView();
                 }
-            }
-            catch (NullPointerException e)
-            {
+            } catch (NullPointerException e) {
 
             }
         }
@@ -94,7 +93,7 @@ public void updateAllRooms()
     @Override
     protected void onStart() {
         super.onStart();
-       // updateAllRooms();
+        // updateAllRooms();
         if (SmartHomeStore.getSHStore(this) != null) {
             //displayRoomsView();
             displayRoomsViewWithThread();
@@ -163,8 +162,7 @@ public void updateAllRooms()
         if (pDialog.isShowing())
             pDialog.dismiss();
     }
-
-
+    
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -175,8 +173,11 @@ public void updateAllRooms()
                 //SHRequestHandler.getWaterLevelPeripherals(SmartHomeStore.getSHStore(this).getHouse(), SHRequestHandler.RECENT_LISTENER.WATER_INDICATOR_DIALOGUE);
                 break;
 
-            case R.id.smart_home_ll_settings:
+            case R.id.smart_home_iv_settings:
                 showSettingsMenu(v);
+                break;
+            case R.id.smart_home_ll_alexa:
+
                 break;
 
             case R.id.smart_home_sw_main_switch:
@@ -200,28 +201,29 @@ public void updateAllRooms()
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_set_view1:
-                Toast.makeText(this, "Setting Expand view", Toast.LENGTH_SHORT).show();
+            case R.id.action_switch_view:
                 llViewHolder.removeAllViews();
                 SmartHomeConfig smartHomeConfig = new SmartHomeConfig();
-                smartHomeConfig.setDefaultView(EXPAND_VIEW);
-                smartHomeConfig.setUserPreferences(this);
+                if (SmartHomeConfig.getUserPreferences(this).getDefaultView() == EXPAND_VIEW) {
+                    //llViewHolder.removeAllViews();
+                    smartHomeConfig = new SmartHomeConfig();
+                    smartHomeConfig.setDefaultView(LIST_VIEW);
+                    smartHomeConfig.setUserPreferences(this);
 
-                new ExpansionManager(this, SmartHomeStore.getSHStore(this));
-                return true;
-            case R.id.action_set_view2:
-                Toast.makeText(this, "Setting single view", Toast.LENGTH_SHORT).show();
-                llViewHolder.removeAllViews();
-                smartHomeConfig = new SmartHomeConfig();
-                smartHomeConfig.setDefaultView(LIST_VIEW);
-                smartHomeConfig.setUserPreferences(this);
+                    SingleRoomViewFragment singleRoomViewFragment = new SingleRoomViewFragment();
+                    android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    //transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
+                    transaction.replace(R.id.smart_home_ll_view_holder, singleRoomViewFragment, LinearLayout.class.getName());
+                    transaction.commit();
 
-                SingleRoomViewFragment singleRoomViewFragment = new SingleRoomViewFragment();
-                android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                //transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
-                transaction.replace(R.id.smart_home_ll_view_holder, singleRoomViewFragment, LinearLayout.class.getName());
-                transaction.commit();
+                } else {
+                    smartHomeConfig.setDefaultView(EXPAND_VIEW);
+                    smartHomeConfig.setUserPreferences(this);
+                    new ExpansionManager(this, SmartHomeStore.getSHStore(this));
+
+                }
                 return true;
+
             default:
         }
         return false;

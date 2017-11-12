@@ -12,14 +12,9 @@
         android:title="Shop New Device" />
 
     <item
-        android:id="@+id/action_set_view1"
+        android:id="@+id/action_switch_view"
         android:orderInCategory="10"
-        android:title="Expand View" />
-
-    <item
-        android:id="@+id/action_set_view2"
-        android:orderInCategory="10"
-        android:title="List View"/>
+        android:title="Switch View" />
 
     <item
         android:id="@+id/action_feedback"
@@ -30,5 +25,10 @@
         android:id="@+id/action_offer"
         android:orderInCategory="10"
         android:title="Offers" />
+
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="10"
+        android:title="Settings" />
 
 </menu>
