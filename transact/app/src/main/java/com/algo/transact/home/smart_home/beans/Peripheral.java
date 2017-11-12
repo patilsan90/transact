@@ -8,19 +8,27 @@ import java.io.Serializable;
  * Created by patilsp on 10/14/2017.
  */
 
-public class Peripheral extends Room implements Serializable{
+public class Peripheral implements Serializable {
+    public static int ROOM_SWITCH_ID = -1;
+    public static int HOUSE_SWITCH_ID = -2;
 
-    private int peripheral_id;
-    public PERIPHERAL_TYPE type;
-    public String peripheral_name;
-    public Status status;
-    public int value;
 
-    public Peripheral(PERIPHERAL_TYPE type, String name, Status status, int value) {
-        this.type = type;
-        this.peripheral_name = name;
-        this.status = status;
-        this.value = value;
+    private int per_id;
+    private int room_id;
+    private PERIPHERAL_TYPE per_type;
+    private String per_name;
+    private Status per_status;
+    private int per_value;
+    private boolean per_is_in_quick_access;
+
+    public Peripheral(int per_id, int room_id, PERIPHERAL_TYPE per_type, String per_name, Status per_status, int per_value, boolean per_is_in_quick_access) {
+        this.per_id = per_id;
+        this.room_id = room_id;
+        this.per_type = per_type;
+        this.per_name = per_name;
+        this.per_status = per_status;
+        this.per_value = per_value;
+        this.per_is_in_quick_access = per_is_in_quick_access;
     }
 
     public enum Status {
@@ -40,45 +48,62 @@ public class Peripheral extends Room implements Serializable{
         CAMERA
     }
 
-    public int getPeripheral_id() {
-        return peripheral_id;
+    public boolean isPer_is_in_quick_access() {
+        return per_is_in_quick_access;
     }
 
-    public PERIPHERAL_TYPE getType() {
-        return type;
+    public void setPer_is_in_quick_access(boolean per_is_in_quick_access) {
+        this.per_is_in_quick_access = per_is_in_quick_access;
     }
 
-    public String getPeripheral_name() {
-        return peripheral_name;
+    public int getPer_id() {
+        return per_id;
     }
 
-    public Status getStatus() {
-        return status;
+    public void setPer_id(int per_id) {
+        this.per_id = per_id;
     }
 
-    public int getValue() {
-        return value;
+    public int getRoom_id() {
+        return room_id;
     }
 
-    public void setPeripheral_id(int peripheral_id) {
-        this.peripheral_id = peripheral_id;
+    public void setRoom_id(int room_id) {
+        this.room_id = room_id;
     }
 
-    public void setType(PERIPHERAL_TYPE type) {
-        this.type = type;
+    public PERIPHERAL_TYPE getPer_type() {
+        return per_type;
     }
 
-    public void setPeripheral_name(String peripheral_name) {
-        this.peripheral_name = peripheral_name;
+    public void setPer_type(PERIPHERAL_TYPE per_type) {
+        this.per_type = per_type;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public String getPer_name() {
+        return per_name;
     }
 
-    public void setValue(int value) {
-        this.value = value;
+    public void setPer_name(String per_name) {
+        this.per_name = per_name;
     }
+
+    public Status getPer_status() {
+        return per_status;
+    }
+
+    public void setPer_status(Status per_status) {
+        this.per_status = per_status;
+    }
+
+    public int getPer_value() {
+        return per_value;
+    }
+
+    public void setPer_value(int per_value) {
+        this.per_value = per_value;
+    }
+
 
     public static int getPeripheralIcon(PERIPHERAL_TYPE type) {
         switch (type) {
@@ -124,5 +149,18 @@ public class Peripheral extends Room implements Serializable{
             default:
                 return null;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Peripheral{" +
+                "per_id=" + per_id +
+                ", room_id=" + room_id +
+                ", per_type=" + per_type +
+                ", per_name='" + per_name + '\'' +
+                ", per_status=" + per_status +
+                ", per_value=" + per_value +
+                ", per_is_in_quick_access=" + per_is_in_quick_access +
+                '}';
     }
 }

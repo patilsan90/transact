@@ -5,30 +5,30 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.algo.transact.AppConfig.AppConfig;
 import com.algo.transact.R;
 import com.algo.transact.generic_structures.GenericAdapterRecyclerView;
 import com.algo.transact.generic_structures.IGenericAdapterRecyclerView;
-import com.algo.transact.home.smart_home.beans.House;
 import com.algo.transact.home.smart_home.beans.Peripheral;
+import com.algo.transact.home.smart_home.beans.SmartHomeCollector;
+import com.algo.transact.home.smart_home.beans.SmartHomeStore;
+import com.algo.transact.home.smart_home.holders.WaterLevelHolder;
 import com.algo.transact.server_communicator.listener.ISmartHomeListener;
 import com.algo.transact.server_communicator.request_handler.ServerRequestHandler;
 
 import java.util.ArrayList;
 
-public class WaterIndicatorDialogue extends BottomSheetDialog implements View.OnClickListener, ISmartHomeListener, IGenericAdapterRecyclerView{
+public class WaterIndicatorDialogue extends BottomSheetDialog implements View.OnClickListener, IGenericAdapterRecyclerView{
 //BottomSheetDialog
 
     private ArrayList<Peripheral> waterLevelPeripherals = new ArrayList<>();
-    private RecyclerView rvWaterLevelList;
+    public RecyclerView rvWaterLevelList;
     private ProgressDialog pDialog;
 
     public WaterIndicatorDialogue(@NonNull Context context) {
@@ -46,6 +46,7 @@ public class WaterIndicatorDialogue extends BottomSheetDialog implements View.On
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialogue_water_level_indicator);
 
+        SHRequestHandler.registerUser(this);
         LinearLayout llWaterLevel = (LinearLayout) findViewById(R.id.water_level_ll);
         llWaterLevel.setOnClickListener(this);
 
@@ -56,21 +57,16 @@ public class WaterIndicatorDialogue extends BottomSheetDialog implements View.On
 
         pDialog = new ProgressDialog(this.getContext());
 
-        // showDialogue();
     }
 
-    public void showDialogue() {
+    public void showDialogue(ArrayList<Peripheral> alPeripherals) {
         Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName());
         this.show();
-        showProgressDialog();
-        House house =new House();
-        house.setId(SmartHomeActivity.house.getId());
-        house.setAl_rooms(null);
-        house.setOwner_id(SmartHomeActivity.house.getOwner_id());
-        house.setAuthentication_code(SmartHomeActivity.house.getAuthentication_code());
-        house.setHouse_name(SmartHomeActivity.house.getHouse_name());
-        ServerRequestHandler.getWaterLevelPeripherals(house, this);
+     //   showProgressDialog();
+     //   SHRequestHandler.getWaterLevelPeripherals(SmartHomeStore.getSHStore(this.getOwnerActivity()).getHouse(), SHRequestHandler.RECENT_LISTENER.WATER_INDICATOR_DIALOGUE);
+
+        new GenericAdapterRecyclerView(this.getContext(), this, this.rvWaterLevelList, alPeripherals, R.layout.rv_item_water_level, 1, false);
     }
 
     private void showProgressDialog() {
@@ -93,28 +89,6 @@ public class WaterIndicatorDialogue extends BottomSheetDialog implements View.On
     }
 
     @Override
-    public void onGetHouse(House house) {
-
-    }
-
-    @Override
-    public void onGetPeripherals(ArrayList<Peripheral> alPeripherals) {
-
-        new GenericAdapterRecyclerView(this.getContext(), this, rvWaterLevelList, alPeripherals, R.layout.rv_item_water_level, 1, false);
-
-    }
-
-    @Override
-    public void updatePeripheralStatus(Peripheral peripheral) {
-
-    }
-
-    @Override
-    public void onFailure() {
-
-    }
-
-    @Override
     public RecyclerView.ViewHolder addRecyclerViewHolder(View itemView, GenericAdapterRecyclerView genericAdapterRecyclerView) {
         return new WaterLevelHolder(itemView);
     }
@@ -123,12 +97,12 @@ public class WaterIndicatorDialogue extends BottomSheetDialog implements View.On
     public void bindViewHolder(RecyclerView.ViewHolder holder, ArrayList list, int position, GenericAdapterRecyclerView genericAdapterRecyclerView) {
         final WaterLevelHolder wlViewHolder = (WaterLevelHolder) holder;
         Peripheral per = (Peripheral) list.get(position);
-        if(per.getType() == Peripheral.PERIPHERAL_TYPE.UNDERGROUND_WATER_TANK)
-            wlViewHolder.water_level_tv_level.setText("Underground Tank "+per.getValue()+"% Full");
+        if(per.getPer_type() == Peripheral.PERIPHERAL_TYPE.UNDERGROUND_WATER_TANK)
+            wlViewHolder.water_level_tv_level.setText("Underground Tank "+per.getPer_value()+"% Full");
         else
-            wlViewHolder.water_level_tv_level.setText("Terrace Tank "+per.getValue()+"% Full");
-
+            wlViewHolder.water_level_tv_level.setText("Terrace Tank "+per.getPer_value()+"% Full");
     }
+
 
     @Override
     public void rvListUpdateCompleteNotification(ArrayList list, GenericAdapterRecyclerView genericAdapterRecyclerView) {

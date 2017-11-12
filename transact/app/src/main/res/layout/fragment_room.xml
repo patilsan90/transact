@@ -65,7 +65,23 @@
                     android:layout_weight="1"
                     android:background="#ddffffff"
                     android:orientation="vertical">
+                    <Switch
+                        android:id="@+id/room_fragment_sw_switch_all_per"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:padding="5sp"
+                        android:text="Room Switch"
+                        />
 
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/room_fragment_rv_peripheral_list"
+                        android:layout_width="match_parent"
+                        android:scrollbars="none"
+                        android:nestedScrollingEnabled="false"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:paddingBottom="1sp"/>
                     <LinearLayout
                         android:id="@+id/room_fragment_ll_peripheral_list"
                         android:layout_width="match_parent"

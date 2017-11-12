@@ -2,8 +2,10 @@ package com.algo.transact.home.smart_home;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,26 +19,42 @@ import android.widget.Toast;
 
 import com.algo.transact.AppConfig.AppConfig;
 import com.algo.transact.R;
+import com.algo.transact.generic_structures.GenericAdapterRecyclerView;
+import com.algo.transact.generic_structures.IGenericAdapterRecyclerView;
 import com.algo.transact.home.smart_home.beans.House;
 import com.algo.transact.home.smart_home.beans.Peripheral;
 import com.algo.transact.home.smart_home.beans.Room;
+import com.algo.transact.home.smart_home.beans.SmartHomeCollector;
+import com.algo.transact.home.smart_home.beans.SmartHomeStore;
+import com.algo.transact.home.smart_home.holders.PeripheralViewHolder;
 import com.algo.transact.server_communicator.listener.ISmartHomeListener;
 import com.algo.transact.server_communicator.request_handler.ServerRequestHandler;
 
 import java.util.ArrayList;
 
+import static com.algo.transact.AppConfig.IntentPutExtras.SMART_HOME_ROOM_INDEX;
+import static com.algo.transact.AppConfig.IntentPutExtras.SMART_HOME_ROOM_OBJ;
+import static com.algo.transact.home.smart_home.SHRequestHandler.RECENT_LISTENER.ROOM_FRAGEMENT;
+import static com.algo.transact.home.smart_home.SHRequestHandler.RECENT_LISTENER.SMART_HOME_ACTIVITY;
+import static com.algo.transact.home.smart_home.beans.Room.ROOM_ID_NOT_REQUIRED;
+
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RoomFragment extends Fragment implements View.OnClickListener, ISmartHomeListener {
+public class RoomFragment extends Fragment implements View.OnClickListener, IGenericAdapterRecyclerView {
 
-    private Room room;
+    public Room room;
 
     private Context context;
     public static String roomBundle = "room";
+    public static String roomIndexBundle = "roomIndex";
 
 
-    private ArrayList<View> alvPeriperals = new ArrayList<>();
+    protected int roomIndex;
+
+    public ArrayList<View> alvPeriperals = new ArrayList<>();
+
+    public ArrayList<Peripheral> alPeriperals = new ArrayList<>();
 
     public RoomFragment() {
         // Required empty public constructor
@@ -44,6 +62,9 @@ public class RoomFragment extends Fragment implements View.OnClickListener, ISma
 
     RoomFragment fragment;
     private static String newRoomString = "Add New Room";
+    private Switch swSwitchAllPer;
+
+    LinearLayout llPeripheralList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,11 +74,26 @@ public class RoomFragment extends Fragment implements View.OnClickListener, ISma
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             room = (Room) bundle.getSerializable(roomBundle);
+            roomIndex = bundle.getInt(roomIndexBundle);
         }
-        fragment = this;
-        View view = inflater.inflate(R.layout.fragment_room, container, false);
-        LinearLayout llPeripheralList = (LinearLayout) view.findViewById(R.id.room_fragment_ll_peripheral_list);
 
+
+        if (SHRequestHandler.getInstance().roomFragment == null) {
+            SHRequestHandler.getInstance().roomFragment = new ArrayList<>();
+            int noOfRooms = SmartHomeStore.getSHStore(getActivity()).getAlRooms().size();
+            for (int i = 0; i < noOfRooms; i++)
+                SHRequestHandler.getInstance().roomFragment.add(new RoomFragment());
+        }
+
+        SHRequestHandler.registerRoom(this, roomIndex);
+
+        fragment = this;
+        //SHRequestHandler.registerUser(this);
+
+        View view = inflater.inflate(R.layout.fragment_room, container, false);
+        llPeripheralList = (LinearLayout) view.findViewById(R.id.room_fragment_ll_peripheral_list);
+        swSwitchAllPer = (Switch) view.findViewById(R.id.room_fragment_sw_switch_all_per);
+        swSwitchAllPer.setOnClickListener(this);
         TextView tvRoomName = (TextView) view.findViewById(R.id.card_room_tv_room_name);
         tvRoomName.setText(room.getRoom_name());
 
@@ -66,7 +102,6 @@ public class RoomFragment extends Fragment implements View.OnClickListener, ISma
             ViewGroup.LayoutParams lp = ivAddNewRoom.getLayoutParams();
             lp.height = 0;
         }
-
 
         LinearLayout llList = (LinearLayout) view.findViewById(R.id.room_ll_list);
         llList.setOnClickListener(this);
@@ -77,59 +112,63 @@ public class RoomFragment extends Fragment implements View.OnClickListener, ISma
 /*        LinearLayout expandView = new LinearLayout(getActivity());
         expandView.setOrientation(LinearLayout.VERTICAL);
         expandView.setPadding(10,10,10,10);*/
+        fetchAllPeripherals();
 
-        ArrayList<Peripheral> peripheralsQuckAccess = room.getAl_peripheralsQuickAccess();
-    if(peripheralsQuckAccess!=null) {
-        for (int i = 0; i < peripheralsQuckAccess.size(); i++) {
-            llPeripheralList.addView(bindViewHolder(peripheralsQuckAccess.get(i)));
-        }
-    }
-        ArrayList<Peripheral> peripherals = room.getAl_peripherals();
+        Log.d(AppConfig.TAG, "Room Creation :: " + room + "    roomIndex:: " + roomIndex);
+        Log.i(AppConfig.TAG, room + "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        }.getClass().getEnclosingMethod().getName());
 
-        for (int i = 0; i < peripherals.size(); i++) {
-            llPeripheralList.addView(bindViewHolder(peripherals.get(i)));
+        llPeripheralList.removeAllViews();
+        for (int i = 0; i < alPeriperals.size(); i++) {
+            llPeripheralList.addView(bindViewHolder(alPeriperals.get(i)));
         }
+
+/*
+        RecyclerView rvPeripheralsList= (RecyclerView)view.findViewById(R.id.room_fragment_rv_peripheral_list);
+        new GenericAdapterRecyclerView(this.getContext(),this,rvPeripheralsList,alPeriperals,R.layout.peripheral_layout,1,false);
+*/
         return view;
     }
 
     void updatePeripheralView(View vPeripheral, final Peripheral per, boolean isCreatingView) {
 
         ImageView ivPeripheralIcon = (ImageView) vPeripheral.findViewById(R.id.peripheral_iv_icon);
-        ivPeripheralIcon.setImageResource(per.getPeripheralIcon(per.getType()));
+        ivPeripheralIcon.setImageResource(per.getPeripheralIcon(per.getPer_type()));
 
         final Switch swPeripheralNameAndOnOff = (Switch) vPeripheral.findViewById(R.id.peripheral_sw_name);
-        swPeripheralNameAndOnOff.setText(per.getPeripheral_name());
-        swPeripheralNameAndOnOff.setChecked(per.getStatus() == Peripheral.Status.ON ? true : false);
+        swPeripheralNameAndOnOff.setText(per.getPer_name());
+        swPeripheralNameAndOnOff.setChecked(per.getPer_status() == Peripheral.Status.ON ? true : false);
 
-        if(isCreatingView == true) {
+        if (isCreatingView == true) {
             swPeripheralNameAndOnOff.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, swPeripheralNameAndOnOff.isChecked() + "  Clicked on ON/OFF switch " + per.getPeripheral_name(), Toast.LENGTH_SHORT).show();
-                    per.setStatus(swPeripheralNameAndOnOff.isChecked() ? Peripheral.Status.ON : Peripheral.Status.OFF);
-                    Room refRoom = new Room(room.getRoom_id(), room.getRoom_name(), null);
-                    ServerRequestHandler.updatePeripheralStatus(refRoom, per, fragment);
-
+                    Toast.makeText(context, swPeripheralNameAndOnOff.isChecked() + "  Clicked on ON/OFF switch " + per.getPer_name(), Toast.LENGTH_SHORT).show();
+                    per.setPer_status(swPeripheralNameAndOnOff.isChecked() ? Peripheral.Status.ON : Peripheral.Status.OFF);
+                    SHRequestHandler.updatePeripheralStatus(room, per, ROOM_FRAGEMENT);
                 }
             });
         }
-        switch (per.getType()) {
+        switch (per.getPer_type()) {
             case BULB:
             case FAN:
                 TextView tvSeekbarText = (TextView) vPeripheral.findViewById(R.id.peripheral_tv_seekbar_text);
-                tvSeekbarText.setText(per.getSeekbarText(per.getType()));
+                tvSeekbarText.setText(per.getSeekbarText(per.getPer_type()));
 
                 SeekBar sbSeekBar = (SeekBar) vPeripheral.findViewById(R.id.peripheral_sb_seekbar);
-                sbSeekBar.setProgress(per.getValue());
-                if(isCreatingView == true) {
+                sbSeekBar.setProgress(per.getPer_value());
+                if (per.getPer_status() == Peripheral.Status.OFF)
+                    sbSeekBar.setProgress(0);
+
+                if (isCreatingView == true) {
                     sbSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
                         @Override
                         public void onStopTrackingTouch(SeekBar seekBar) {
-                            per.setValue(seekBar.getProgress());
-                            Toast.makeText(context, seekBar.getProgress() + " On Stop Seekbar ::" + per.getPeripheral_name(), Toast.LENGTH_SHORT).show();
-                            Room refRoom = new Room(room.getRoom_id(), room.getRoom_name(), null);
-                            ServerRequestHandler.updatePeripheralStatus(refRoom, per, fragment);
+                            per.setPer_value(seekBar.getProgress());
+                            Toast.makeText(context, seekBar.getProgress() + " On Stop Seekbar ::" + per.getPer_name(), Toast.LENGTH_SHORT).show();
+                            //Room refRoom = new Room(room.getRoom_id(), room.getRoom_name(), null);
+                            SHRequestHandler.updatePeripheralStatus(room, per, ROOM_FRAGEMENT);
 
                         }
 
@@ -158,13 +197,17 @@ public class RoomFragment extends Fragment implements View.OnClickListener, ISma
                 break;
             default:
                 break;
-
         }
     }
+
+
 
     public View bindViewHolder(final Peripheral per) {
         LayoutInflater inflater = (LayoutInflater) this.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View vPeripheral = inflater.inflate(R.layout.peripheral_layout, null);
+        Log.i(AppConfig.TAG, " bind Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        }.getClass().getEnclosingMethod().getName() +" :: Per "+per.getPer_name());
+
         alvPeriperals.add(vPeripheral);
 
         updatePeripheralView(vPeripheral, per, true);
@@ -183,6 +226,7 @@ public class RoomFragment extends Fragment implements View.OnClickListener, ISma
         lp.height = 0;
         llSeekbar.setLayoutParams(lp);
     }
+
     private void hideMainNameSwitchLayout(View vPeripheral) {
 
         LinearLayout llSeekbar = (LinearLayout) vPeripheral.findViewById(R.id.peripheral_ll_name_switch_view);
@@ -198,54 +242,201 @@ public class RoomFragment extends Fragment implements View.OnClickListener, ISma
                 Log.i(AppConfig.TAG, "Clicked on list ");
                 break;
             case R.id.room_iv_edit_room:
-                RoomViewEditDialogue roomViewEditDialogue = new RoomViewEditDialogue(this.getActivity());
-                roomViewEditDialogue.showDialogue(room, this.getActivity());
+                Log.i(AppConfig.TAG, "-- Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+                }.getClass().getEnclosingMethod().getName());
+                //RoomViewEditDialogue roomViewEditDialogue = new RoomViewEditDialogue(this.getActivity());
+                //roomViewEditDialogue.showDialogue(room, roomIndex, this.getActivity());
+
+                Intent intent = new Intent(this.getActivity(), EditRoomActivity.class);
+                intent.putExtra(SMART_HOME_ROOM_OBJ, room);
+                intent.putExtra(SMART_HOME_ROOM_INDEX, roomIndex);
+                startActivity(intent);
+                break;
+
+            case R.id.room_fragment_sw_switch_all_per:
+                Peripheral peripheral = new Peripheral(Peripheral.ROOM_SWITCH_ID, room.getRoom_id(),
+                        Peripheral.PERIPHERAL_TYPE.ROOM_SWITCH, "ROOM_SWITCH",
+                        swSwitchAllPer.isChecked() ? Peripheral.Status.ON : Peripheral.Status.OFF,
+                        0, true);
+                SHRequestHandler.updatePeripheralStatus(room, peripheral, ROOM_FRAGEMENT);
+                break;
             default:
                 break;
         }
     }
 
-    @Override
-    public void onGetHouse(House house) {
+    void fetchAllPeripherals() {
 
-    }
+        alPeriperals = new ArrayList<>();
 
-    @Override
-    public void onGetPeripherals(ArrayList<Peripheral> alPeripherals) {
-    }
+        int totalPeripherals = SmartHomeStore.getSHStore(this.getActivity()).getAlQuickAccessRoomsPeripherals().get(roomIndex).size();
 
-    @Override
-    public void updatePeripheralStatus(Peripheral peripheral) {
-        Log.d(AppConfig.TAG, " updatePeripheralStatus :: " + peripheral);
-
-        ArrayList<Peripheral> peripheralsQuckAccess = room.getAl_peripheralsQuickAccess();
-
-        boolean isQuickOption = false;
-
-        if(peripheralsQuckAccess!=null) {
-            for (int i = 0; i < peripheralsQuckAccess.size(); i++) {
-                if (peripheral.getPeripheral_id() == peripheralsQuckAccess.get(i).getPeripheral_id()) {
-                    isQuickOption = true;
-                    updatePeripheralView(alvPeriperals.get(i), peripheral, false);
-                    break;
-                }
+        for (int i = 0; i < totalPeripherals; i++) {
+            if (room.getRoom_id() == SmartHomeStore.getSHStore(this.getActivity()).getAlQuickAccessRoomsPeripherals().get(roomIndex).get(i).getRoom_id()) {
+                alPeriperals.add(SmartHomeStore.getSHStore(this.getActivity()).getAlQuickAccessRoomsPeripherals().get(roomIndex).get(i));
             }
         }
 
-        if (isQuickOption == false) {
-            ArrayList<Peripheral> peripherals = room.getAl_peripherals();
+        for (int i = 0; i < alPeriperals.size(); i++) {
+            llPeripheralList.addView(bindViewHolder(alPeriperals.get(i)));
+        }
 
-            for (int i = 0; i < peripherals.size(); i++) {
-                if (peripheral.getPeripheral_id() == peripherals.get(i).getPeripheral_id()) {
-                    updatePeripheralView(alvPeriperals.get(i), peripheral, false);
-                    break;
+        totalPeripherals = SmartHomeStore.getSHStore(this.getActivity()).getAlRoomsPeripherals().get(roomIndex).size();
+
+        for (int i = 0; i < totalPeripherals; i++) {
+            if (room.getRoom_id() == SmartHomeStore.getSHStore(this.getActivity()).getAlRoomsPeripherals().get(roomIndex).get(i).getRoom_id()) {
+                alPeriperals.add(SmartHomeStore.getSHStore(this.getActivity()).getAlRoomsPeripherals().get(roomIndex).get(i));
+            }
+        }
+        Log.i(AppConfig.TAG, "FetchAllPeripherals:: " + alPeriperals);
+    }
+
+    public void updatePeripheral(Peripheral peripheral) {
+
+        Log.d(AppConfig.TAG, "Room updatePeripheral :: " + room + "    roomIndex:: " + roomIndex);
+
+        fetchAllPeripherals();
+
+        Log.i(AppConfig.TAG, peripheral + " SWITCH-- Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        }.getClass().getEnclosingMethod().getName());
+
+        Log.i(AppConfig.TAG, "FetchAllPeripherals:: " + alPeriperals);
+
+        if (peripheral.getPer_type() == Peripheral.PERIPHERAL_TYPE.ROOM_SWITCH) {
+            Log.i(AppConfig.TAG, alvPeriperals.size() + "AlP:: ROOM_SWITCH-- Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+            }.getClass().getEnclosingMethod().getName());
+            switchAllPeripherals(peripheral.getPer_status());
+        }
+        else
+        {
+            for (int i = 0; i < alPeriperals.size(); i++) {
+                if (peripheral.getPer_id() == alPeriperals.get(i).getPer_id()) {
+                    alPeriperals.set(i, peripheral);
+                    this.updatePeripheralView(this.alvPeriperals.get(i), alPeriperals.get(i), false);
                 }
             }
         }
     }
 
-    @Override
-    public void onFailure() {
+    public void switchAllPeripherals(Peripheral.Status per_status) {
+        for (int i = 0; i < alPeriperals.size(); i++) {
+            alPeriperals.get(i).setPer_status(per_status);
+            this.updatePeripheralView(this.alvPeriperals.get(i), alPeriperals.get(i), false);
+        }
 
     }
+
+    public void UpdateRoomView() {
+
+        fetchAllPeripherals();
+
+        llPeripheralList.removeAllViews();
+
+        for (int i = 0; i < alPeriperals.size(); i++) {
+          //  this.updatePeripheralView(this.alvPeriperals.get(i), alPeriperals.get(i), false);
+            llPeripheralList.addView(bindViewHolder(alPeriperals.get(i)));
+        }
+    }
+
+    @Override
+    public RecyclerView.ViewHolder addRecyclerViewHolder(View itemView, GenericAdapterRecyclerView genericAdapterRecyclerView) {
+        return new PeripheralViewHolder(itemView, this);
+    }
+
+    @Override
+    public void bindViewHolder(RecyclerView.ViewHolder holder, ArrayList list, int position, GenericAdapterRecyclerView genericAdapterRecyclerView) {
+        updatePeripheralViewRV(holder,(Peripheral) list.get(position),true);
+    }
+    void updatePeripheralViewRV(RecyclerView.ViewHolder holder, final Peripheral per, boolean isCreatingView) {
+
+        PeripheralViewHolder viewHolder =(PeripheralViewHolder)holder;
+        ImageView ivPeripheralIcon = (ImageView) viewHolder.ivPeripheralIcon;
+        ivPeripheralIcon.setImageResource(per.getPeripheralIcon(per.getPer_type()));
+
+        final Switch swPeripheralNameAndOnOff = (Switch) viewHolder.swPeripheralName;
+        swPeripheralNameAndOnOff.setText(per.getPer_name());
+        swPeripheralNameAndOnOff.setChecked(per.getPer_status() == Peripheral.Status.ON ? true : false);
+
+        if (isCreatingView == true) {
+            swPeripheralNameAndOnOff.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context, swPeripheralNameAndOnOff.isChecked() + "  Clicked on ON/OFF switch " + per.getPer_name(), Toast.LENGTH_SHORT).show();
+                    per.setPer_status(swPeripheralNameAndOnOff.isChecked() ? Peripheral.Status.ON : Peripheral.Status.OFF);
+                    SHRequestHandler.updatePeripheralStatus(room, per, ROOM_FRAGEMENT);
+                }
+            });
+        }
+        switch (per.getPer_type()) {
+            case BULB:
+            case FAN:
+                TextView tvSeekbarText = (TextView) viewHolder.tvSeekbarText;
+                tvSeekbarText.setText(per.getSeekbarText(per.getPer_type()));
+
+                SeekBar sbSeekBar = (SeekBar) viewHolder.sbSeekBar;//vPeripheral.findViewById(R.id.peripheral_sb_seekbar);
+                sbSeekBar.setProgress(per.getPer_value());
+                if (per.getPer_status() == Peripheral.Status.OFF)
+                    sbSeekBar.setProgress(0);
+
+                if (isCreatingView == true) {
+                    sbSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+                        @Override
+                        public void onStopTrackingTouch(SeekBar seekBar) {
+                            per.setPer_value(seekBar.getProgress());
+                            Toast.makeText(context, seekBar.getProgress() + " On Stop Seekbar ::" + per.getPer_name(), Toast.LENGTH_SHORT).show();
+                            //Room refRoom = new Room(room.getRoom_id(), room.getRoom_name(), null);
+                            SHRequestHandler.updatePeripheralStatus(room, per, ROOM_FRAGEMENT);
+
+                        }
+
+                        @Override
+                        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                        }
+
+                        @Override
+                        public void onStartTrackingTouch(SeekBar seekBar) {
+                        }
+
+                    });
+                }
+                break;
+
+            case FRIDGE:
+               // hideSeekbarLayout(vPeripheral);
+                break;
+            case ROOM_SWITCH:
+              //  hideSeekbarLayout(vPeripheral);
+                break;
+            case UNDERGROUND_WATER_TANK:
+            case TERRES_WATER_TANK:
+              //  hideSeekbarLayout(vPeripheral);
+              //  hideMainNameSwitchLayout(vPeripheral);
+                break;
+            default:
+                break;
+        }
+    }
+
+
+    @Override
+    public void rvListUpdateCompleteNotification(ArrayList list, GenericAdapterRecyclerView genericAdapterRecyclerView) {
+
+    }
+
+    @Override
+    public void onRVClick(View view, int position, Boolean collapseState) {
+
+    }
+
+    @Override
+    public void onRVLongClick(View view, int position) {
+
+    }
+
+    @Override
+    public void onRVExpand(View view, ArrayList list, int position, View rvPrevExpanded) {
+
+    }
+
 }

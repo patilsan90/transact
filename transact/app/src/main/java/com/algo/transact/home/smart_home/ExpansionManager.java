@@ -13,6 +13,8 @@ import com.algo.transact.AppConfig.AppConfig;
 import com.algo.transact.R;
 import com.algo.transact.home.smart_home.beans.House;
 import com.algo.transact.home.smart_home.beans.Room;
+import com.algo.transact.home.smart_home.beans.SmartHomeCollector;
+import com.algo.transact.home.smart_home.beans.SmartHomeStore;
 
 import java.util.ArrayList;
 
@@ -27,7 +29,6 @@ public class ExpansionManager implements View.OnClickListener {
     private final ScrollView svScroll;
     SmartHomeActivity context;
 
-    House house;
     ArrayList<Room> rooms;
     private int prevExpandedViewIndex = -1;
     ArrayList<LinearLayout> roomsViewsList = new ArrayList<>();
@@ -38,10 +39,10 @@ public class ExpansionManager implements View.OnClickListener {
     public static ArrayList<LinearLayout> llRoomsReferences;
     private static String newRoomString = "Add New Room";
 
-    public ExpansionManager(SmartHomeActivity context, House house) {
+    public ExpansionManager(SmartHomeActivity context, SmartHomeStore smStore) {
         this.context = context;
-        this.house=house;
-        this.rooms=house.getAl_rooms();
+        //this.homeCollector = homeCollector;
+        this.rooms = SmartHomeStore.getSHStore(context).getAlRooms();
 
         viewParentHolder = (LinearLayout) context.findViewById(R.id.smart_home_ll_view_holder);
         svScroll = (ScrollView) context.findViewById(R.id.smart_home_sv_scroll_view);
@@ -52,7 +53,7 @@ public class ExpansionManager implements View.OnClickListener {
         roomExpandStatus = new boolean[rooms.size()];
         roomRowMapping = new int[rooms.size()];
 
-        llRoomsReferences=new ArrayList<>(rooms.size());
+        llRoomsReferences = new ArrayList<>(rooms.size());
 
         for (int i = 0; i < rooms.size(); i++)
             roomExpandStatus[i] = false;
@@ -107,12 +108,14 @@ public class ExpansionManager implements View.OnClickListener {
 
         Bundle bundle = new Bundle();
         bundle.putSerializable(RoomFragment.roomBundle, rooms.get(index));
+        bundle.putInt(RoomFragment.roomIndexBundle,index);
         roomFragment.setArguments(bundle);
 
         android.support.v4.app.FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();
         //transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
         transaction.add(linearLayout.getId(), roomFragment, LinearLayout.class.getName());
-        transaction.commit();
+        //transaction.commit();
+        transaction.commitAllowingStateLoss();
         return linearLayout;
     }
 
@@ -122,10 +125,9 @@ public class ExpansionManager implements View.OnClickListener {
         int currentRow = (v.getId() - 10) / 2;
         //int currentRow = roomRowMapping[currentRoom];
 
-        if(currentRoom==(rooms.size()-1))
-        {
-            Log.d(AppConfig.TAG,"Selected, Create New Room");
-            NewRoomDialogue roomDialogue=new NewRoomDialogue(context);
+        if (currentRoom == (rooms.size() - 1)) {
+            Log.d(AppConfig.TAG, "Selected, Create New Room");
+            NewRoomDialogue roomDialogue = new NewRoomDialogue(context);
             roomDialogue.showDialogue();
             return;
         }

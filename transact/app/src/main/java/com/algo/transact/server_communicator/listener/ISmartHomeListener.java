@@ -2,7 +2,10 @@ package com.algo.transact.server_communicator.listener;
 
 import com.algo.transact.home.smart_home.beans.House;
 import com.algo.transact.home.smart_home.beans.Peripheral;
+import com.algo.transact.home.smart_home.beans.Room;
+import com.algo.transact.home.smart_home.beans.SmartHomeCollector;
 import com.algo.transact.login.User;
+import com.algo.transact.server_communicator.base.ResponseStatus;
 
 import java.util.ArrayList;
 
@@ -12,12 +15,16 @@ import java.util.ArrayList;
 
 public interface ISmartHomeListener {
 
-    void onGetHouse(House house);
+    void onGetHouse(SmartHomeCollector collector);
 
     void onGetPeripherals(ArrayList<Peripheral> alPeripherals);
 
-    void updatePeripheralStatus(Peripheral peripheral);
+    void onUpdatePeripheralStatus(Peripheral peripheral);
+
+    void onUpdatePeripherals(ResponseStatus responseStatus);
 
     void onFailure();
+
+    void onSuccess(ResponseStatus status);
 
 }

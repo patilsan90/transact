@@ -37,16 +37,28 @@
             android:padding="5sp" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20sp"
+        android:gravity="center_vertical">
     <Spinner
         android:id="@+id/peripheral_sp_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20sp"
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:padding="0dp"
         android:spinnerMode="dropdown"
         android:text="All Categories" />
 
-
+    <CheckBox
+        android:id="@+id/peripheral_cb_quick_access"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5sp"
+        android:background="#ffffff"
+        android:text="Quick Access"/>
+    </LinearLayout>
 </LinearLayout>

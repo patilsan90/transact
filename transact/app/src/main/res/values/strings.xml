@@ -49,5 +49,6 @@
     <string name="catalogue_list_placeholder"> We are going to add items in this category very soon, \n\n Sorry for inconvenience caused</string>
 
     <string name="my_cart_placeholder">Your cart is empty \n\n Please add some items using QR/BAR code scanner \n or \nCatalogue list</string>
+    <string name="title_activity_edit_room">EditRoomActivity</string>
 
 </resources>

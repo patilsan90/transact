@@ -1,4 +1,4 @@
-package com.algo.transact.home.smart_home;
+package com.algo.transact.home.smart_home.holders;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -15,7 +15,7 @@ import com.algo.transact.generic_structures.IGenericAdapterRecyclerView;
 
 public class PeripheralViewHolder extends RecyclerView.ViewHolder {
 
-    public TextView tvPeripheralName;
+    public TextView swPeripheralName;
     public ImageView ivPeripheralIcon;
     public TextView tvSeekbarText;
     public SeekBar sbSeekBar;
@@ -24,7 +24,7 @@ public class PeripheralViewHolder extends RecyclerView.ViewHolder {
 
     public PeripheralViewHolder(View view, IGenericAdapterRecyclerView listener) {
         super(view);
-        tvPeripheralName = (TextView) view.findViewById(R.id.peripheral_sw_name);
+        swPeripheralName = (TextView) view.findViewById(R.id.peripheral_sw_name);
         ivPeripheralIcon =(ImageView) view.findViewById(R.id.peripheral_iv_icon);
         tvSeekbarText = (TextView) view.findViewById(R.id.peripheral_tv_seekbar_text);
         sbSeekBar = (SeekBar) view.findViewById(R.id.peripheral_sb_seekbar);

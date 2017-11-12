@@ -20,12 +20,14 @@ import com.algo.transact.AppConfig.IntentPutExtras;
 import com.algo.transact.AppConfig.IntentResultCode;
 import com.algo.transact.AppConfig.SessionManager;
 import com.algo.transact.R;
+import com.algo.transact.login.LoginFragment;
 import com.algo.transact.optical_code.CodeScannerActivity;
 import com.algo.transact.optical_code.CodeScannerRequestType;
 import com.algo.transact.optical_code.OpticalCode;
 import com.algo.transact.home.outlet.data_beans.Outlet;
 import com.algo.transact.home.outlet.outlet_front.OutletFront;
 import com.algo.transact.login.LoginActivity;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 
@@ -59,6 +61,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         FloatingActionButton fabCodeScanner = (FloatingActionButton) findViewById(R.id.home_fab_code_scanner);
         fabCodeScanner.setOnClickListener(this);
 
+        Log.d(AppConfig.TAG,"Token ::" + FirebaseInstanceId.getInstance().getToken());
         homeFragment = new HomeFragment();
 
 /*
