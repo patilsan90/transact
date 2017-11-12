@@ -23,6 +23,7 @@ import static com.algo.transact.home.smart_home.SHRequestHandler.RECENT_LISTENER
 import static com.algo.transact.home.smart_home.SHRequestHandler.RECENT_LISTENER.SMART_HOME_ACTIVITY;
 import static com.algo.transact.home.smart_home.SHRequestHandler.RECENT_LISTENER.WATER_INDICATOR_DIALOGUE;
 import static com.algo.transact.home.smart_home.beans.Peripheral.HOUSE_SWITCH_ID;
+import static com.algo.transact.home.smart_home.beans.Peripheral.ROOM_SWITCH_ID;
 
 /**
  * Created by patilsp on 11/7/2017.
@@ -169,7 +170,14 @@ public class SHRequestHandler implements ISmartHomeListener {
                         roomFragment.get(i).switchAllPeripherals(peripheral.getPer_status());
                 }
                 break;
-
+            case SINGLE_ROOM_VIEW_FRAGMENT:
+                //for (int i = 0; i < SmartHomeStore.getSHStore(smartHomeActivity).getAlRooms().size(); i++)
+                if (peripheral.getPer_id() == ROOM_SWITCH_ID) {
+                    for (int i = 0; i < SmartHomeStore.getSHStore(smartHomeActivity).getAlRooms().size(); i++)
+                        if (peripheral.getRoom_id() == SmartHomeStore.getSHStore(smartHomeActivity).getAlRooms().get(i).getRoom_id())
+                            roomFragment.get(i).switchAllPeripherals(peripheral.getPer_status());
+                }
+                break;
         }
     }
 
