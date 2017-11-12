@@ -104,10 +104,6 @@ public class EditRoomActivity extends AppCompatActivity implements IGenericAdapt
         alRooms.add(new Room(ROOM_ID_NOT_REQUIRED, 1, "Select Different Room"));
         alRooms.addAll(SmartHomeStore.getSHStore(this).getAlRooms());
 
-
-        //Removing new Room from local list
-        alRooms.remove(alRooms.size() - 1);
-
         alRoomsList = alRooms;
 
         ArrayList<Peripheral> alPer = new ArrayList<>();

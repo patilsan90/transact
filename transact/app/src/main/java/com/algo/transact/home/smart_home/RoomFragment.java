@@ -87,6 +87,7 @@ public class RoomFragment extends Fragment implements View.OnClickListener, IGen
                 SHRequestHandler.getInstance().roomFragment.add(new RoomFragment());
         }
 
+
         SHRequestHandler.registerRoom(this, roomIndex);
 
         fragment = this;
@@ -126,17 +127,18 @@ public class RoomFragment extends Fragment implements View.OnClickListener, IGen
 /*        LinearLayout expandView = new LinearLayout(getActivity());
         expandView.setOrientation(LinearLayout.VERTICAL);
         expandView.setPadding(10,10,10,10);*/
-        fetchAllPeripherals();
+        if (room.getRoom_id() != ROOM_ID_NOT_REQUIRED) {
+            fetchAllPeripherals();
 
-        Log.d(AppConfig.TAG, "Room Creation :: " + room + "    roomIndex:: " + roomIndex);
-        Log.i(AppConfig.TAG, room + "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
-        }.getClass().getEnclosingMethod().getName());
+            Log.d(AppConfig.TAG, "Room Creation :: " + room + "    roomIndex:: " + roomIndex);
+            Log.i(AppConfig.TAG, room + "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+            }.getClass().getEnclosingMethod().getName());
 
-        llPeripheralList.removeAllViews();
-        for (int i = 0; i < alPeriperals.size(); i++) {
-            llPeripheralList.addView(bindViewHolder(alPeriperals.get(i)));
+            llPeripheralList.removeAllViews();
+            for (int i = 0; i < alPeriperals.size(); i++) {
+                llPeripheralList.addView(bindViewHolder(alPeriperals.get(i)));
+            }
         }
-
 /*
         RecyclerView rvPeripheralsList= (RecyclerView)view.findViewById(R.id.room_fragment_rv_peripheral_list);
         new GenericAdapterRecyclerView(this.getContext(),this,rvPeripheralsList,alPeriperals,R.layout.peripheral_layout,1,false);

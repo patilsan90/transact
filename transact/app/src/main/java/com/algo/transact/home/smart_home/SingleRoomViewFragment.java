@@ -25,6 +25,8 @@ import com.algo.transact.server_communicator.request_handler.ServerRequestHandle
 
 import java.util.ArrayList;
 
+import static com.algo.transact.home.smart_home.beans.Room.ROOM_ID_NOT_REQUIRED;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -50,7 +52,10 @@ public class SingleRoomViewFragment extends Fragment implements IGenericAdapterR
 
         fragment=this;
         SHRequestHandler.registerUser(this);
-        alRooms = SmartHomeStore.getSHStore(this.getActivity()).getAlRooms();
+        alRooms=new ArrayList<>();
+        alRooms.addAll(SmartHomeStore.getSHStore(this.getActivity()).getAlRooms());
+        Room newRoom = new Room(ROOM_ID_NOT_REQUIRED, SmartHomeStore.getSHStore(getActivity()).getHouse().getHouse_id(), newRoomString);
+        alRooms.add(newRoom);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.HORIZONTAL, false);
         rvRoomsList.setLayoutManager(layoutManager);

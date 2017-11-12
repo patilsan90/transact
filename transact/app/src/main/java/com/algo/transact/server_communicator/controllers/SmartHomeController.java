@@ -50,7 +50,7 @@ public class SmartHomeController {
         });
     }
 
-     public static void getPeripherals(Room room, final ISmartHomeListener listener) {
+    public static void getPeripherals(Room room, final ISmartHomeListener listener) {
         ServerConfiguration.LoggerSet();
         ISmartHomeServiceAPI retrofitServices = ServerConfiguration.retrofit.create(ISmartHomeServiceAPI.class);
         Call<ArrayList<Peripheral>> call = retrofitServices.getPeripherals(room);
@@ -155,6 +155,25 @@ public class SmartHomeController {
 
             @Override
             public void onFailure(Call<ResponseStatus> call, Throwable t) {
+                listener.onFailure();
+            }
+        });
+    }
+
+    public static void addNewRoom(Room room, final ISmartHomeListener listener) {
+
+        ServerConfiguration.LoggerSet();
+        ISmartHomeServiceAPI retrofitServices = ServerConfiguration.retrofit.create(ISmartHomeServiceAPI.class);
+        Call<Room> call = retrofitServices.addNewRoom(room);
+        call.enqueue(new Callback<Room>() {
+            @Override
+            public void onResponse(Call<Room> call, Response<Room> response) {
+                if (response.isSuccessful())
+                    listener.onCreateRoom(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Room> call, Throwable t) {
                 listener.onFailure();
             }
         });

@@ -55,4 +55,7 @@ public interface ISmartHomeServiceAPI {
 
     @POST("/smart_home/update_room")
     Call<ResponseStatus> updateRoom(@Body Room room);
+
+    @POST("/smart_home/add_new_room")
+    Call<Room> addNewRoom(@Body Room room);
 }

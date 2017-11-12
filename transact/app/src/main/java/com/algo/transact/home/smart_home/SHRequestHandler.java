@@ -20,6 +20,7 @@ import com.algo.transact.server_communicator.listener.ISmartHomeListener;
 import java.util.ArrayList;
 
 import static com.algo.transact.home.smart_home.SHRequestHandler.RECENT_LISTENER.EDIT_ROOM_ACTIVITY;
+import static com.algo.transact.home.smart_home.SHRequestHandler.RECENT_LISTENER.NEW_ROOM_DIALOGUE;
 import static com.algo.transact.home.smart_home.SHRequestHandler.RECENT_LISTENER.SMART_HOME_ACTIVITY;
 import static com.algo.transact.home.smart_home.SHRequestHandler.RECENT_LISTENER.WATER_INDICATOR_DIALOGUE;
 import static com.algo.transact.home.smart_home.beans.Peripheral.HOUSE_SWITCH_ID;
@@ -39,7 +40,8 @@ public class SHRequestHandler implements ISmartHomeListener {
         EDIT_ROOM_ACTIVITY,
 
         SINGLE_ROOM_VIEW_FRAGMENT,
-        WATER_INDICATOR_DIALOGUE
+        WATER_INDICATOR_DIALOGUE,
+        NEW_ROOM_DIALOGUE
     }
 
     public SmartHomeActivity smartHomeActivity;
@@ -47,6 +49,7 @@ public class SHRequestHandler implements ISmartHomeListener {
     public SingleRoomViewFragment singleRoomViewFragment;
     public WaterIndicatorDialogue waterIndicatorDialogue;
     public EditRoomActivity editRoomActivity;
+    public NewRoomDialogue newRoomDialogue;
 
     private static SHRequestHandler controller = new SHRequestHandler();
 
@@ -63,7 +66,13 @@ public class SHRequestHandler implements ISmartHomeListener {
 
     public static void registerRoom(RoomFragment roomFragment, int index) {
         Log.i(AppConfig.TAG, (counter++) + " -- Total registered room fragments :: " + controller.roomFragment.size());
-        controller.roomFragment.set(index, roomFragment);
+
+        try {
+            controller.roomFragment.set(index, roomFragment);
+        } catch (IndexOutOfBoundsException e) {
+            controller.roomFragment.add(index, roomFragment);
+        }
+
     }
 
     public static void registerUser(Object obj) {
@@ -75,6 +84,8 @@ public class SHRequestHandler implements ISmartHomeListener {
             controller.waterIndicatorDialogue = (WaterIndicatorDialogue) obj;
         else if (obj instanceof EditRoomActivity)
             controller.editRoomActivity = (EditRoomActivity) obj;
+        else if (obj instanceof NewRoomDialogue)
+            controller.newRoomDialogue = (NewRoomDialogue) obj;
     }
 
 
@@ -114,6 +125,11 @@ public class SHRequestHandler implements ISmartHomeListener {
         SmartHomeController.updateRoom(room, controller);
     }
 
+    public static void addNewRoom(Room room, RECENT_LISTENER recentListener) {
+        controller.listener = recentListener;
+        SmartHomeController.addNewRoom(room, controller);
+    }
+
     /*
     *
     * Response Methods Below
@@ -127,15 +143,23 @@ public class SHRequestHandler implements ISmartHomeListener {
         }.getClass().getEnclosingMethod().getName());
 
         boolean isCreateView = false;
+        int prevRoomCount = 0;
         if (SmartHomeStore.getSHStore(smartHomeActivity) == null)
             isCreateView = true;
+        else
+            prevRoomCount = SmartHomeStore.getSHStore(smartHomeActivity).getAlRooms().size();
 
         smartHomeActivity.CollectorToStoreConverter(collector);
         if (listener == SMART_HOME_ACTIVITY) {
             if (isCreateView == true)
                 smartHomeActivity.displayRoomsViewWithThread();
             else {
-                smartHomeActivity.updateAllRooms();
+                int newRoomCount = SmartHomeStore.getSHStore(smartHomeActivity).getAlRooms().size();
+                if (newRoomCount == prevRoomCount)
+                    smartHomeActivity.updateAllRooms();
+                else
+                    smartHomeActivity.displayRoomsViewWithThread();
+
                 /*for(int i=0;i<controller.roomFragment.size();i++)
                 {
                     controller.roomFragment.get(i).UpdateRoomView();
@@ -209,6 +233,13 @@ public class SHRequestHandler implements ISmartHomeListener {
                 editRoomActivity.updateRoomDetails();
             }
         }
+    }
+
+    @Override
+    public void onCreateRoom(Room room) {
+        Log.i(AppConfig.TAG, "Adding New Room:: " + room);
+        newRoomDialogue.updateRoomsList(smartHomeActivity, room);
+        smartHomeActivity.displayRoomsViewWithThread();
     }
 
 }

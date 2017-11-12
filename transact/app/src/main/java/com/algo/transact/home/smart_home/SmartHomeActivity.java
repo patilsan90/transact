@@ -234,8 +234,8 @@ public class SmartHomeActivity extends AppCompatActivity implements View.OnClick
 
         homeCollector.saveSHCollector(this);
 
-        Room newRoom = new Room(ROOM_ID_NOT_REQUIRED, homeCollector.getHouse().getHouse_id(), newRoomString);
-        homeCollector.getAlRooms().add(newRoom);
+        //      Room newRoom = new Room(ROOM_ID_NOT_REQUIRED, homeCollector.getHouse().getHouse_id(), newRoomString);
+//        homeCollector.getAlRooms().add(newRoom);
 
         smStore.setHouse(homeCollector.getHouse());
         smStore.setAlRooms(homeCollector.getAlRooms());

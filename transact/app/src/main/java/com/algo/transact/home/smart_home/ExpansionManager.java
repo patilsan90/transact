@@ -18,6 +18,8 @@ import com.algo.transact.home.smart_home.beans.SmartHomeStore;
 
 import java.util.ArrayList;
 
+import static com.algo.transact.home.smart_home.beans.Room.ROOM_ID_NOT_REQUIRED;
+
 /**
  * Created by patilsp on 10/17/2017.
  */
@@ -42,7 +44,12 @@ public class ExpansionManager implements View.OnClickListener {
     public ExpansionManager(SmartHomeActivity context, SmartHomeStore smStore) {
         this.context = context;
         //this.homeCollector = homeCollector;
-        this.rooms = SmartHomeStore.getSHStore(context).getAlRooms();
+        rooms=new ArrayList<>();
+        this.rooms.addAll(SmartHomeStore.getSHStore(context).getAlRooms());
+
+        Room newRoom = new Room(ROOM_ID_NOT_REQUIRED, SmartHomeStore.getSHStore(context).getHouse().getHouse_id(), newRoomString);
+        rooms.add(newRoom);
+
 
         viewParentHolder = (LinearLayout) context.findViewById(R.id.smart_home_ll_view_holder);
         svScroll = (ScrollView) context.findViewById(R.id.smart_home_sv_scroll_view);
