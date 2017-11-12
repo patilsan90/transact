@@ -25,6 +25,7 @@ import com.algo.transact.home.smart_home.beans.House;
 import com.algo.transact.home.smart_home.beans.Peripheral;
 import com.algo.transact.home.smart_home.beans.Room;
 import com.algo.transact.home.smart_home.beans.SmartHomeCollector;
+import com.algo.transact.home.smart_home.beans.SmartHomeConfig;
 import com.algo.transact.home.smart_home.beans.SmartHomeStore;
 import com.algo.transact.home.smart_home.holders.PeripheralViewHolder;
 import com.algo.transact.server_communicator.listener.ISmartHomeListener;
@@ -32,6 +33,7 @@ import com.algo.transact.server_communicator.request_handler.ServerRequestHandle
 
 import java.util.ArrayList;
 
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static com.algo.transact.AppConfig.IntentPutExtras.SMART_HOME_ROOM_INDEX;
 import static com.algo.transact.AppConfig.IntentPutExtras.SMART_HOME_ROOM_OBJ;
 import static com.algo.transact.home.smart_home.SHRequestHandler.RECENT_LISTENER.ROOM_FRAGEMENT;
@@ -93,7 +95,19 @@ public class RoomFragment extends Fragment implements View.OnClickListener, IGen
         View view = inflater.inflate(R.layout.fragment_room, container, false);
         llPeripheralList = (LinearLayout) view.findViewById(R.id.room_fragment_ll_peripheral_list);
         swSwitchAllPer = (Switch) view.findViewById(R.id.room_fragment_sw_switch_all_per);
-        swSwitchAllPer.setOnClickListener(this);
+        if (SmartHomeConfig.getUserPreferences(this.getActivity()).getDefaultView() == SmartHomeConfig.VIEW.EXPAND_VIEW) {
+            swSwitchAllPer.setOnClickListener(this);
+            ViewGroup.LayoutParams lp = swSwitchAllPer.getLayoutParams();
+            lp.height = WRAP_CONTENT;
+            swSwitchAllPer.setLayoutParams(lp);
+
+        } else {
+            swSwitchAllPer.setVisibility(View.INVISIBLE);
+            ViewGroup.LayoutParams lp = swSwitchAllPer.getLayoutParams();
+            lp.height = 0;
+            swSwitchAllPer.setLayoutParams(lp);
+        }
+
         TextView tvRoomName = (TextView) view.findViewById(R.id.card_room_tv_room_name);
         tvRoomName.setText(room.getRoom_name());
 
@@ -201,12 +215,11 @@ public class RoomFragment extends Fragment implements View.OnClickListener, IGen
     }
 
 
-
     public View bindViewHolder(final Peripheral per) {
         LayoutInflater inflater = (LayoutInflater) this.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View vPeripheral = inflater.inflate(R.layout.peripheral_layout, null);
         Log.i(AppConfig.TAG, " bind Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
-        }.getClass().getEnclosingMethod().getName() +" :: Per "+per.getPer_name());
+        }.getClass().getEnclosingMethod().getName() + " :: Per " + per.getPer_name());
 
         alvPeriperals.add(vPeripheral);
 
@@ -306,9 +319,7 @@ public class RoomFragment extends Fragment implements View.OnClickListener, IGen
             Log.i(AppConfig.TAG, alvPeriperals.size() + "AlP:: ROOM_SWITCH-- Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
             }.getClass().getEnclosingMethod().getName());
             switchAllPeripherals(peripheral.getPer_status());
-        }
-        else
-        {
+        } else {
             for (int i = 0; i < alPeriperals.size(); i++) {
                 if (peripheral.getPer_id() == alPeriperals.get(i).getPer_id()) {
                     alPeriperals.set(i, peripheral);
@@ -333,7 +344,7 @@ public class RoomFragment extends Fragment implements View.OnClickListener, IGen
         llPeripheralList.removeAllViews();
 
         for (int i = 0; i < alPeriperals.size(); i++) {
-          //  this.updatePeripheralView(this.alvPeriperals.get(i), alPeriperals.get(i), false);
+            //  this.updatePeripheralView(this.alvPeriperals.get(i), alPeriperals.get(i), false);
             llPeripheralList.addView(bindViewHolder(alPeriperals.get(i)));
         }
     }
@@ -345,11 +356,12 @@ public class RoomFragment extends Fragment implements View.OnClickListener, IGen
 
     @Override
     public void bindViewHolder(RecyclerView.ViewHolder holder, ArrayList list, int position, GenericAdapterRecyclerView genericAdapterRecyclerView) {
-        updatePeripheralViewRV(holder,(Peripheral) list.get(position),true);
+        updatePeripheralViewRV(holder, (Peripheral) list.get(position), true);
     }
+
     void updatePeripheralViewRV(RecyclerView.ViewHolder holder, final Peripheral per, boolean isCreatingView) {
 
-        PeripheralViewHolder viewHolder =(PeripheralViewHolder)holder;
+        PeripheralViewHolder viewHolder = (PeripheralViewHolder) holder;
         ImageView ivPeripheralIcon = (ImageView) viewHolder.ivPeripheralIcon;
         ivPeripheralIcon.setImageResource(per.getPeripheralIcon(per.getPer_type()));
 
@@ -403,15 +415,15 @@ public class RoomFragment extends Fragment implements View.OnClickListener, IGen
                 break;
 
             case FRIDGE:
-               // hideSeekbarLayout(vPeripheral);
+                // hideSeekbarLayout(vPeripheral);
                 break;
             case ROOM_SWITCH:
-              //  hideSeekbarLayout(vPeripheral);
+                //  hideSeekbarLayout(vPeripheral);
                 break;
             case UNDERGROUND_WATER_TANK:
             case TERRES_WATER_TANK:
-              //  hideSeekbarLayout(vPeripheral);
-              //  hideMainNameSwitchLayout(vPeripheral);
+                //  hideSeekbarLayout(vPeripheral);
+                //  hideMainNameSwitchLayout(vPeripheral);
                 break;
             default:
                 break;

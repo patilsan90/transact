@@ -162,7 +162,7 @@ public class SmartHomeActivity extends AppCompatActivity implements View.OnClick
         if (pDialog.isShowing())
             pDialog.dismiss();
     }
-    
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
