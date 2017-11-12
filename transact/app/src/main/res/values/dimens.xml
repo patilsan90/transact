@@ -37,6 +37,7 @@
     <dimen name="home_my_profile_lables_vertical_margins">3sp</dimen>
     <dimen name="home_my_profile_fields_vertical_margins">3sp</dimen>
     <dimen name="home_my_profile_fields_vertical_height">13sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 
 
 </resources>

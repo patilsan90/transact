@@ -5,8 +5,8 @@
     android:id="@+id/water_level_ll"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:background="@drawable/dialog_background_inset"
+    android:orientation="vertical"
 
     tools:context="com.algo.transact.home.outlet.outlet_front.LocateCategoriesDialogue">
 
@@ -14,13 +14,12 @@
         android:id="@+id/dialogue_locate_cat_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/appBarColor"
+        android:gravity="center"
         android:padding="16dp"
         android:text="Water Level"
-        android:gravity="center"
-        android:textColor="#FFFFFF"
-        android:background="@color/appBarColor"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FFFFFF" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/dialogue_water_rv_water_level_list"
@@ -28,7 +27,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:scrollbars="horizontal" />
-
 
     <TextView
         android:layout_width="match_parent"

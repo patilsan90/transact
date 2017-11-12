@@ -3,6 +3,7 @@ package com.algo.transact.server_communicator.base;
 import com.algo.transact.home.smart_home.beans.House;
 import com.algo.transact.home.smart_home.beans.Peripheral;
 import com.algo.transact.home.smart_home.beans.Room;
+import com.algo.transact.home.smart_home.beans.SmartHomeCollector;
 import com.algo.transact.login.User;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public interface ISmartHomeServiceAPI {
     })
 
     @POST("/smart_home/get_house")
-    Call<House> getHouse(@Body User user);
+    Call<SmartHomeCollector> getHouse(@Body User user);
 
     @POST("/smart_home/get_peripherals")
     Call<ArrayList<Peripheral>> getPeripherals(@Body Room room);
@@ -38,9 +39,20 @@ public interface ISmartHomeServiceAPI {
     @POST("/smart_home/create_new_room")
     Call<Room> creatNewRoom(@Body Room room);
 
+/*
     @Multipart
     @POST("/smart_home/update_peripheral_status")
     Call<Peripheral> updatePeripheralStatus(@Part("room") Room room,
                                             @Part("peripheral") Peripheral peripheral);
+*/
 
+    @POST("/smart_home/update_peripheral_status")
+    Call<Peripheral> updatePeripheralStatus(@Body Peripheral peripheral);
+
+
+    @POST("/smart_home/update_peripherals")
+    Call<ResponseStatus> updatePeripherals(@Body ArrayList<Peripheral> alPeripherals);
+
+    @POST("/smart_home/update_room")
+    Call<ResponseStatus> updateRoom(@Body Room room);
 }

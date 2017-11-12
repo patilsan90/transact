@@ -9,6 +9,8 @@ import com.algo.transact.server_communicator.controllers.SmartHomeController;
 import com.algo.transact.server_communicator.listener.ILoginListener;
 import com.algo.transact.server_communicator.listener.ISmartHomeListener;
 
+import java.util.ArrayList;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
@@ -31,6 +33,7 @@ public class ServerRequestHandler{
         LoginController.updateProfile(user, listener);
     }
 
+
     public static void getHouse(User user, ISmartHomeListener listener) {
         SmartHomeController.getHouse(user, listener);
     }
@@ -52,6 +55,11 @@ public class ServerRequestHandler{
     public static void getPeripheralStatus(Peripheral peripheral, ISmartHomeListener listener)
     {
         SmartHomeController.getPeripheralStatus(peripheral, listener);
+    }
+
+    public static void updatePeripherals(ArrayList<Peripheral> alPeripherals, final ISmartHomeListener listener)
+    {
+        SmartHomeController.updatePeripherals(alPeripherals, listener);
     }
 
 }

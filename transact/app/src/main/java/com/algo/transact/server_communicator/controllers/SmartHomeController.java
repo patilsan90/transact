@@ -6,8 +6,10 @@ import com.algo.transact.AppConfig.AppConfig;
 import com.algo.transact.home.smart_home.beans.House;
 import com.algo.transact.home.smart_home.beans.Peripheral;
 import com.algo.transact.home.smart_home.beans.Room;
+import com.algo.transact.home.smart_home.beans.SmartHomeCollector;
 import com.algo.transact.login.User;
 import com.algo.transact.server_communicator.base.ISmartHomeServiceAPI;
+import com.algo.transact.server_communicator.base.ResponseStatus;
 import com.algo.transact.server_communicator.base.ServerConfiguration;
 import com.algo.transact.server_communicator.listener.ISmartHomeListener;
 
@@ -28,10 +30,10 @@ public class SmartHomeController {
     public static void getHouse(User user, final ISmartHomeListener listener) {
         ServerConfiguration.LoggerSet();
         ISmartHomeServiceAPI retrofitServices = ServerConfiguration.retrofit.create(ISmartHomeServiceAPI.class);
-        Call<House> call = retrofitServices.getHouse(user);
-        call.enqueue(new Callback<House>() {
+        Call<SmartHomeCollector> call = retrofitServices.getHouse(user);
+        call.enqueue(new Callback<SmartHomeCollector>() {
             @Override
-            public void onResponse(Call<House> call, Response<House> response) {
+            public void onResponse(Call<SmartHomeCollector> call, Response<SmartHomeCollector> response) {
                 Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
                 }.getClass().getEnclosingMethod().getName());
                 if (response.isSuccessful())
@@ -39,7 +41,7 @@ public class SmartHomeController {
             }
 
             @Override
-            public void onFailure(Call<House> call, Throwable t) {
+            public void onFailure(Call<SmartHomeCollector> call, Throwable t) {
                 Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
                 }.getClass().getEnclosingMethod().getName());
 
@@ -84,17 +86,15 @@ public class SmartHomeController {
         });
     }
 
-
     public static void updatePeripheralStatus(Room room, Peripheral peripheral, final ISmartHomeListener listener) {
         ServerConfiguration.LoggerSet();
         ISmartHomeServiceAPI retrofitServices = ServerConfiguration.retrofit.create(ISmartHomeServiceAPI.class);
-        Call<Peripheral> call = retrofitServices.updatePeripheralStatus(room, peripheral);
+        Call<Peripheral> call = retrofitServices.updatePeripheralStatus(peripheral);
         call.enqueue(new Callback<Peripheral>() {
             @Override
             public void onResponse(Call<Peripheral> call, Response<Peripheral> response) {
                 if (response.isSuccessful())
-                    listener.updatePeripheralStatus(response.body());
-
+                    listener.onUpdatePeripheralStatus(response.body());
             }
 
             @Override
@@ -112,7 +112,7 @@ public class SmartHomeController {
             @Override
             public void onResponse(Call<Peripheral> call, Response<Peripheral> response) {
                 if (response.isSuccessful())
-                    listener.updatePeripheralStatus(response.body());
+                    listener.onUpdatePeripheralStatus(response.body());
             }
 
             @Override
@@ -122,4 +122,41 @@ public class SmartHomeController {
         });
     }
 
+    public static void updatePeripherals(ArrayList<Peripheral> alPeripherals, final ISmartHomeListener listener) {
+
+        ServerConfiguration.LoggerSet();
+        ISmartHomeServiceAPI retrofitServices = ServerConfiguration.retrofit.create(ISmartHomeServiceAPI.class);
+        Call<ResponseStatus> call = retrofitServices.updatePeripherals(alPeripherals);
+        call.enqueue(new Callback<ResponseStatus>() {
+            @Override
+            public void onResponse(Call<ResponseStatus> call, Response<ResponseStatus> response) {
+                if (response.isSuccessful())
+                    listener.onUpdatePeripherals(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ResponseStatus> call, Throwable t) {
+                listener.onFailure();
+            }
+        });
+    }
+
+    public static void updateRoom(Room room, final ISmartHomeListener listener) {
+
+        ServerConfiguration.LoggerSet();
+        ISmartHomeServiceAPI retrofitServices = ServerConfiguration.retrofit.create(ISmartHomeServiceAPI.class);
+        Call<ResponseStatus> call = retrofitServices.updateRoom(room);
+        call.enqueue(new Callback<ResponseStatus>() {
+            @Override
+            public void onResponse(Call<ResponseStatus> call, Response<ResponseStatus> response) {
+                if (response.isSuccessful())
+                    listener.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ResponseStatus> call, Throwable t) {
+                listener.onFailure();
+            }
+        });
+    }
 }
