@@ -101,13 +101,14 @@ public class ExpansionManager implements View.OnClickListener {
         linearLayout.setOnClickListener(this);
         llRoomsReferences.add(linearLayout);
         linearLayout.setId(index + 10);
-        linearLayout.setPadding(5, 5, 5, 5);
+        linearLayout.setPadding(20, 5, 5, 5);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         LinearLayout.LayoutParams linearParams = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        linearParams.width = window_width / 2 - 10;
-        linearParams.height = window_width / 2 + 30;
+        linearParams.width = window_width / 2-15;
+        linearParams.height = window_width / 2+30;
+        //linearLayout.layout(30,30,30,30);
         //linearParams.height=200;
         linearLayout.setLayoutParams(linearParams);
 
@@ -276,7 +277,7 @@ public class ExpansionManager implements View.OnClickListener {
         LinearLayout.LayoutParams linearParams = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        linearParams.width = window_width / 2 - 10;
+        linearParams.width = window_width / 2 - 15;
         linearParams.height = window_width / 2 + 30;
         //linearParams.height=200;
         llPrevExpanded.setLayoutParams(linearParams);

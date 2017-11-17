@@ -135,14 +135,18 @@ public class RoomFragment extends Fragment implements View.OnClickListener, IGen
             }.getClass().getEnclosingMethod().getName());
 
             llPeripheralList.removeAllViews();
+/*
             for (int i = 0; i < alPeriperals.size(); i++) {
                 llPeripheralList.addView(bindViewHolder(alPeriperals.get(i)));
             }
-        }
-/*
+*/
+
+
         RecyclerView rvPeripheralsList= (RecyclerView)view.findViewById(R.id.room_fragment_rv_peripheral_list);
         new GenericAdapterRecyclerView(this.getContext(),this,rvPeripheralsList,alPeriperals,R.layout.peripheral_layout,1,false);
-*/
+
+
+        }
         return view;
     }
 
@@ -284,6 +288,13 @@ public class RoomFragment extends Fragment implements View.OnClickListener, IGen
 
         alPeriperals = new ArrayList<>();
 
+
+        Log.i(AppConfig.TAG,"fetchAllPeripherals ::"+room);
+        Log.i(AppConfig.TAG,"fetchAllPeripherals ::"+roomIndex);
+
+        if(room.getRoom_id()==ROOM_ID_NOT_REQUIRED)
+            return;
+
         int totalPeripherals = SmartHomeStore.getSHStore(this.getActivity()).getAlQuickAccessRoomsPeripherals().get(roomIndex).size();
 
         for (int i = 0; i < totalPeripherals; i++) {
@@ -308,9 +319,14 @@ public class RoomFragment extends Fragment implements View.OnClickListener, IGen
 
     public void updatePeripheral(Peripheral peripheral) {
 
+        Log.d(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        }.getClass().getEnclosingMethod().getName());
+
         Log.d(AppConfig.TAG, "Room updatePeripheral :: " + room + "    roomIndex:: " + roomIndex);
 
         fetchAllPeripherals();
+
+        //UpdateRoomView();
 
         Log.i(AppConfig.TAG, peripheral + " SWITCH-- Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName());
@@ -318,7 +334,7 @@ public class RoomFragment extends Fragment implements View.OnClickListener, IGen
         Log.i(AppConfig.TAG, "FetchAllPeripherals:: " + alPeriperals);
 
         if (peripheral.getPer_type() == Peripheral.PERIPHERAL_TYPE.ROOM_SWITCH) {
-            Log.i(AppConfig.TAG, alvPeriperals.size() + "AlP:: ROOM_SWITCH-- Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+            Log.i(AppConfig.TAG, alvPeriperals.size() + ":: AlP:: ROOM_SWITCH-- Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
             }.getClass().getEnclosingMethod().getName());
             switchAllPeripherals(peripheral.getPer_status());
         } else {

@@ -13,6 +13,7 @@
         android:elevation="3dp"
         card_view:cardCornerRadius="@dimen/card_album_radius">
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -59,42 +60,46 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/bedroom">
 
-                <LinearLayout
+                <android.support.v4.widget.NestedScrollView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:background="#ddffffff"
                     android:orientation="vertical">
-                    <Switch
-                        android:id="@+id/room_fragment_sw_switch_all_per"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:checked="true"
-                        android:padding="5sp"
-                        android:text="Room Switch"
-                        />
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/room_fragment_rv_peripheral_list"
-                        android:layout_width="match_parent"
-                        android:scrollbars="none"
-                        android:nestedScrollingEnabled="false"
-                        android:layout_height="wrap_content"
-                        android:clipToPadding="false"
-                        android:paddingBottom="1sp"/>
                     <LinearLayout
-                        android:id="@+id/room_fragment_ll_peripheral_list"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical" />
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:orientation="vertical">
 
-                    <Switch
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10sp"
-                        android:text="Room Switch" />
+                        <Switch
+                            android:id="@+id/room_fragment_sw_switch_all_per"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:padding="5sp"
+                            android:text="Room Switch" />
 
-                </LinearLayout>
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/room_fragment_rv_peripheral_list"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:clipToPadding="false"
+                            android:nestedScrollingEnabled="false"
+                            android:paddingBottom="1sp"
+                            android:scrollbars="none" />
+
+
+                        <LinearLayout
+                            android:id="@+id/room_fragment_ll_peripheral_list"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical" />
+
+                    </LinearLayout>
+                </android.support.v4.widget.NestedScrollView>
             </LinearLayout>
         </LinearLayout>
 

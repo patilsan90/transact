@@ -1,6 +1,7 @@
 package com.algo.transact.home.smart_home;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Looper;
 import android.os.PersistableBundle;
 import android.support.v4.app.NotificationCompatSideChannelService;
@@ -23,6 +24,7 @@ import com.algo.transact.home.smart_home.beans.Room;
 import com.algo.transact.home.smart_home.beans.SmartHomeCollector;
 import com.algo.transact.home.smart_home.beans.SmartHomeConfig;
 import com.algo.transact.home.smart_home.beans.SmartHomeStore;
+import com.algo.transact.home.smart_home.settings.SettingsActivity;
 import com.algo.transact.login.User;
 import com.algo.transact.server_communicator.request_handler.ServerRequestHandler;
 
@@ -224,48 +226,13 @@ public class SmartHomeActivity extends AppCompatActivity implements View.OnClick
                 }
                 return true;
 
+            case R.id.action_settings:
+                Intent intent=new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                break;
             default:
         }
         return false;
-    }
-
-    public void CollectorToStoreConverter(SmartHomeCollector homeCollector) {
-        SmartHomeStore smStore = new SmartHomeStore();
-
-        homeCollector.saveSHCollector(this);
-
-        //      Room newRoom = new Room(ROOM_ID_NOT_REQUIRED, homeCollector.getHouse().getHouse_id(), newRoomString);
-//        homeCollector.getAlRooms().add(newRoom);
-
-        smStore.setHouse(homeCollector.getHouse());
-        smStore.setAlRooms(homeCollector.getAlRooms());
-        // smStore.setAlRoomsPeripherals(homeCollector.getAlPeripherals());
-
-        Log.i(AppConfig.TAG, "Collector " + homeCollector);
-        int totalRooms = homeCollector.getAlRooms().size();
-        int totalPeripherals = homeCollector.getAlPeripherals().size();
-
-        for (int j = 0; j < totalRooms; j++) {
-            smStore.getAlRoomsPeripherals().add(new ArrayList<Peripheral>());
-            smStore.getAlQuickAccessRoomsPeripherals().add(new ArrayList<Peripheral>());
-        }
-
-        for (int i = 0; i < totalPeripherals; i++) {
-            Peripheral per = homeCollector.getAlPeripherals().get(i);
-            for (int j = 0; j < totalRooms; j++) {
-                if (per.getRoom_id() == smStore.getAlRooms().get(j).getRoom_id()) {
-                    if (per.isPer_is_in_quick_access()) {
-                        ArrayList<Peripheral> alPeripherals = smStore.getAlQuickAccessRoomsPeripherals().get(j);
-                        alPeripherals.add(new Peripheral(per.getPer_id(), per.getRoom_id(), per.getPer_type(), per.getPer_name(), per.getPer_status(), per.getPer_value(), per.isPer_is_in_quick_access()));
-                    } else {
-                        ArrayList<Peripheral> alPeripherals = smStore.getAlRoomsPeripherals().get(j);
-                        alPeripherals.add(new Peripheral(per.getPer_id(), per.getRoom_id(), per.getPer_type(), per.getPer_name(), per.getPer_status(), per.getPer_value(), per.isPer_is_in_quick_access()));
-                    }
-                }
-            }
-        }
-
-        smStore.saveShStore(this);
     }
 
 }

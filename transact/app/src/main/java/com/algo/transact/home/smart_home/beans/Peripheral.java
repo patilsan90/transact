@@ -20,6 +20,8 @@ public class Peripheral implements Serializable {
     private Status per_status;
     private int per_value;
     private boolean per_is_in_quick_access;
+    private String per_phy_id;
+    private int parent_device_id;
 
     public Peripheral(int per_id, int room_id, PERIPHERAL_TYPE per_type, String per_name, Status per_status, int per_value, boolean per_is_in_quick_access) {
         this.per_id = per_id;

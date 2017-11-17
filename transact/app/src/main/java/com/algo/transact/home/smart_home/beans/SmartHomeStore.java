@@ -19,23 +19,67 @@ public class SmartHomeStore {
     private static final String TransactPREFERENCES = "TranPref";
 
     private House house;
-    private ArrayList<Room> alRooms=new ArrayList<>();
-    private ArrayList<ArrayList<Peripheral>> alRoomsPeripherals=new ArrayList<>();
-    private ArrayList<ArrayList<Peripheral>> alQuickAccessRoomsPeripherals=new ArrayList<>();
+    private ArrayList<Room> alRooms = new ArrayList<>();
+    private ArrayList<ArrayList<Peripheral>> alRoomsPeripherals = new ArrayList<>();
+    private ArrayList<ArrayList<Peripheral>> alQuickAccessRoomsPeripherals = new ArrayList<>();
+
+    private ArrayList<Device> alDevices = new ArrayList<>();
+    private ArrayList<SHUser> alUsers = new ArrayList<>();
+
+    private ArrayList<Peripheral> alAllPeripherals=new ArrayList<>();
 
     private static SmartHomeStore shStore;
 
+
+    public static Room getRoom(Device dev) {
+        if (shStore == null) {
+            Log.e(AppConfig.TAG, "Error, SHStore is not initialized, ");
+            return null;
+        }
+
+        for (int i = 0; i < shStore.getAlRooms().size(); i++) {
+            if (shStore.getAlRooms().get(i).getDevice_id() == dev.getDevice_id() && !shStore.getAlRooms().get(i).is_emulated_room()) {
+                return shStore.getAlRooms().get(i);
+            }
+        }
+        return null;
+    }
+
     public static SmartHomeStore getSHStore(Activity activity) {
 
-        if(shStore==null)
-            shStore=getUserPreferences(activity);
+        if (shStore == null)
+            shStore = getUserPreferences(activity);
 
         return shStore;
     }
 
-    public void saveShStore( Activity activity) {
+    public ArrayList<Peripheral> getAlAllPeripherals() {
+        return alAllPeripherals;
+    }
+
+    public void setAlAllPeripherals(ArrayList<Peripheral> alAllPeripherals) {
+        this.alAllPeripherals = alAllPeripherals;
+    }
+
+    public void setAlDevices(ArrayList<Device> alDevices) {
+        this.alDevices = alDevices;
+    }
+
+    public void setAlUsers(ArrayList<SHUser> alUsers) {
+        this.alUsers = alUsers;
+    }
+
+    public void saveShStore(Activity activity) {
         SmartHomeStore.shStore = this;
         setUserPreferences(activity);
+    }
+
+    public ArrayList<Device> getAlDevices() {
+        return alDevices;
+    }
+
+    public ArrayList<SHUser> getAlUsers() {
+        return alUsers;
     }
 
     public House getHouse() {

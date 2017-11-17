@@ -6,6 +6,7 @@ import com.algo.transact.AppConfig.AppConfig;
 import com.algo.transact.home.smart_home.beans.House;
 import com.algo.transact.home.smart_home.beans.Peripheral;
 import com.algo.transact.home.smart_home.beans.Room;
+import com.algo.transact.home.smart_home.beans.SHUser;
 import com.algo.transact.home.smart_home.beans.SmartHomeCollector;
 import com.algo.transact.login.User;
 import com.algo.transact.server_communicator.base.ISmartHomeServiceAPI;
@@ -178,4 +179,43 @@ public class SmartHomeController {
             }
         });
     }
+
+    public static void addSHUser(SHUser user, final ISmartHomeListener listener) {
+
+        ServerConfiguration.LoggerSet();
+        ISmartHomeServiceAPI retrofitServices = ServerConfiguration.retrofit.create(ISmartHomeServiceAPI.class);
+        Call<SHUser> call = retrofitServices.addSHUser(user);
+        call.enqueue(new Callback<SHUser>() {
+            @Override
+            public void onResponse(Call<SHUser> call, Response<SHUser> response) {
+                if (response.isSuccessful())
+                    listener.onSHUserAdd(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<SHUser> call, Throwable t) {
+                listener.onFailure();
+            }
+        });
+    }
+
+    public static void removeSHUser(SHUser user, final ISmartHomeListener listener) {
+
+        ServerConfiguration.LoggerSet();
+        ISmartHomeServiceAPI retrofitServices = ServerConfiguration.retrofit.create(ISmartHomeServiceAPI.class);
+        Call<SHUser> call = retrofitServices.removeSHUser(user);
+        call.enqueue(new Callback<SHUser>() {
+            @Override
+            public void onResponse(Call<SHUser> call, Response<SHUser> response) {
+                if (response.isSuccessful())
+                    listener.onSHUserRemove(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<SHUser> call, Throwable t) {
+                listener.onFailure();
+            }
+        });
+    }
+
 }
