@@ -20,11 +20,20 @@ public class SmartHomeCollector {
     private static final String HOMEDETAILS = "SmartHome";
     private static final String TransactPREFERENCES = "TranPrefCollector";
 
-    private static String newRoomString = "Add New Room";
-
     private House house;
     private ArrayList<Room> alRooms;
     private ArrayList<Peripheral> alPeripherals;
+
+    private ArrayList<Device> alDevices;
+    private ArrayList<SHUser> alUsers;
+
+    public ArrayList<Device> getAlDevices() {
+        return alDevices;
+    }
+
+    public ArrayList<SHUser> getAlUsers() {
+        return alUsers;
+    }
 
     public House getHouse() {
         return house;
@@ -59,47 +68,34 @@ public class SmartHomeCollector {
                 '}';
     }
 
-    public static SmartHomeCollector getSHCollector(Activity activity) {
-
-        SharedPreferences sharedpreferences = activity.getSharedPreferences(TransactPREFERENCES, Context.MODE_PRIVATE);
-        Gson gson = new Gson();
-        SmartHomeCollector smartHomeCollector = gson.fromJson(sharedpreferences.getString(HOMEDETAILS, ""), SmartHomeCollector.class);
-        return smartHomeCollector;
-    }
-
-    public void saveSHCollector(Activity activity) {
-
-        SharedPreferences sharedpreferences = activity.getSharedPreferences(TransactPREFERENCES, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-        Gson gson = new Gson();
-        editor.putString(HOMEDETAILS, gson.toJson(this));
-        editor.apply();
-    }
-
 
     public static void CollectorToStoreConverter(SmartHomeCollector homeCollector, Activity activity) {
         SmartHomeStore smStore = new SmartHomeStore();
 
-        homeCollector.saveSHCollector(activity);
-
-   //     Room newRoom = new Room(ROOM_ID_NOT_REQUIRED, homeCollector.getHouse().getHouse_id(), newRoomString);
-    //    homeCollector.getAlRooms().add(newRoom);
-
         smStore.setHouse(homeCollector.getHouse());
         smStore.setAlRooms(homeCollector.getAlRooms());
+        smStore.setAlAllPeripherals(homeCollector.getAlPeripherals());
+
         // smStore.setAlRoomsPeripherals(homeCollector.getAlPeripherals());
+
 
         Log.i(AppConfig.TAG, "Collector " + homeCollector);
         int totalRooms = homeCollector.getAlRooms().size();
-        int totalPeripherals = homeCollector.getAlPeripherals().size();
+
+
+        smStore.setAlDevices(homeCollector.getAlDevices());
+        smStore.setAlUsers(homeCollector.getAlUsers());
+        smStore.setAlRoomsPeripherals(new ArrayList<ArrayList<Peripheral>>());
+        smStore.setAlQuickAccessRoomsPeripherals(new ArrayList<ArrayList<Peripheral>>());
 
         for (int j = 0; j < totalRooms; j++) {
             smStore.getAlRoomsPeripherals().add(new ArrayList<Peripheral>());
             smStore.getAlQuickAccessRoomsPeripherals().add(new ArrayList<Peripheral>());
         }
 
+        int totalPeripherals = smStore.getAlAllPeripherals().size();
         for (int i = 0; i < totalPeripherals; i++) {
-            Peripheral per = homeCollector.getAlPeripherals().get(i);
+            Peripheral per = smStore.getAlAllPeripherals().get(i);
             for (int j = 0; j < totalRooms; j++) {
                 if (per.getRoom_id() == smStore.getAlRooms().get(j).getRoom_id()) {
                     if (per.isPer_is_in_quick_access()) {

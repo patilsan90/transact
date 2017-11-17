@@ -77,8 +77,8 @@ public class NewRoomDialogue extends Dialog implements View.OnClickListener {
 
         Log.i(AppConfig.TAG, "New Room:: " + room);
 
-        SmartHomeCollector.getSHCollector(activity).getAlRooms().add(room);
-        SmartHomeCollector.getSHCollector(activity).saveSHCollector(activity);
+       // SmartHomeCollector.getSHCollector(activity).getAlRooms().add(room);
+       // SmartHomeCollector.getSHCollector(activity).saveSHCollector(activity);
 
         SmartHomeStore.getSHStore(activity).getAlRooms().add(room);
         SmartHomeStore.getSHStore(activity).getAlQuickAccessRoomsPeripherals().add(new ArrayList<Peripheral>());

@@ -3,6 +3,7 @@ package com.algo.transact.server_communicator.base;
 import com.algo.transact.home.smart_home.beans.House;
 import com.algo.transact.home.smart_home.beans.Peripheral;
 import com.algo.transact.home.smart_home.beans.Room;
+import com.algo.transact.home.smart_home.beans.SHUser;
 import com.algo.transact.home.smart_home.beans.SmartHomeCollector;
 import com.algo.transact.login.User;
 
@@ -58,4 +59,14 @@ public interface ISmartHomeServiceAPI {
 
     @POST("/smart_home/add_new_room")
     Call<Room> addNewRoom(@Body Room room);
+
+    @POST("/smart_home/remove_user_sh_access")
+    Call<SHUser> removeSHUser(@Body SHUser user);
+
+    @POST("/smart_home/add_user_sh_access")
+    Call<SHUser> addSHUser(@Body SHUser user);
+
+
+
+
 }

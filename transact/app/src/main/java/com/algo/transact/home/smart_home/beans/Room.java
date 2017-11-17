@@ -10,23 +10,29 @@ import java.util.ArrayList;
 public class Room implements Serializable {
     public static int ROOM_ID_NOT_REQUIRED = -10;
     public static int CREATE_NEW_ROOM = -11;
+    public static int DEVICE_ID_NOT_REQUIRED = -111;
 
     private int room_id;
     private int house_id;
     private String room_name;
+    private int device_id;
+    private boolean is_emulated_room;
 
     public Room(int room_id, int house_id, String room_name) {
         this.room_id = room_id;
         this.house_id = house_id;
         this.room_name = room_name;
+        is_emulated_room = true;
+        device_id = DEVICE_ID_NOT_REQUIRED;
     }
 
-    public static int getRoomIdNotRequired() {
-        return ROOM_ID_NOT_REQUIRED;
+
+    public int getDevice_id() {
+        return device_id;
     }
 
-    public static void setRoomIdNotRequired(int roomIdNotRequired) {
-        ROOM_ID_NOT_REQUIRED = roomIdNotRequired;
+    public boolean is_emulated_room() {
+        return is_emulated_room;
     }
 
     public int getRoom_id() {
@@ -59,6 +65,8 @@ public class Room implements Serializable {
                 "room_id=" + room_id +
                 ", house_id=" + house_id +
                 ", room_name='" + room_name + '\'' +
+                ", device_id=" + device_id +
+                ", is_emulated_room=" + is_emulated_room +
                 '}';
     }
 }

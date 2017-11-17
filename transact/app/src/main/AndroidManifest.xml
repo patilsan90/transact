@@ -80,7 +80,8 @@
         <activity
             android:name=".home.smart_home.EditRoomActivity"
             android:label="@string/title_activity_edit_room"
-            android:theme="@style/NoActionBarTheme"></activity>
+            android:theme="@style/NoActionBarTheme" />
+        <activity android:name=".home.smart_home.settings.SettingsActivity"></activity>
     </application>
 
 </manifest>

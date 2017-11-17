@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServerConfiguration {
 
-    private static String BASE_URL = "http://192.168.1.4:8090";
+    private static String BASE_URL = "http://192.168.1.5:8090";
 
     private static OkHttpClient client;
 

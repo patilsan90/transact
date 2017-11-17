@@ -263,23 +263,25 @@ public class EditRoomActivity extends AppCompatActivity implements IGenericAdapt
 
     }
 
-    public void updateSmartHomeCollector() {
-        SmartHomeCollector collector = SmartHomeCollector.getSHCollector(this);
+    public void updateSmartHomeStore() {
+       // SmartHomeCollector collector = SmartHomeCollector.getSHCollector(this);
 
-        int cSize = collector.getAlPeripherals().size();
+        SmartHomeStore shStore=SmartHomeStore.getSHStore(this);
+
         int eSize = alEditedPeripherals.size();
-        for (int i = 0; i < cSize; i++) {
-            Peripheral cPer = collector.getAlPeripherals().get(i);
+        for (int i = 0; i < shStore.getAlAllPeripherals().size(); i++) {
+            Peripheral cPer = shStore.getAlAllPeripherals().get(i);
             for (int j = 0; j < eSize; j++) {
                 if (cPer.getPer_id() == alEditedPeripherals.get(j).getPer_id()) {
-                    collector.getAlPeripherals().set(i, alEditedPeripherals.get(j));
+                    shStore.getAlAllPeripherals().set(i, alEditedPeripherals.get(j));
                 }
             }
         }
 
-        collector.saveSHCollector(this);
+       // collector.saveSHCollector(this);
 
-        SmartHomeCollector.CollectorToStoreConverter(collector, this);
+        //SmartHomeCollector.CollectorToStoreConverter(collector, this);
+        shStore.saveShStore(this);
         Toast.makeText(this, "Successfully Updated", Toast.LENGTH_SHORT).show();
         this.finish();
     }
@@ -289,12 +291,12 @@ public class EditRoomActivity extends AppCompatActivity implements IGenericAdapt
         Log.d(AppConfig.TAG, " Updating room :: " + room);
 
 
-        ArrayList<Room> alRooms = SmartHomeCollector.getSHCollector(this).getAlRooms();
+        ArrayList<Room> alRooms = SmartHomeStore.getSHStore(this).getAlRooms();
         for (int i = 0; i < alRooms.size(); i++)
             if (alRooms.get(i).getRoom_id() == room.getRoom_id())
                 alRooms.set(i, room);
 
-        SmartHomeCollector.getSHCollector(this).saveSHCollector(this);
+       // SmartHomeCollector.getSHCollector(this).saveSHCollector(this);
 
         SmartHomeStore shStore = SmartHomeStore.getSHStore(this);
         alRooms = shStore.getAlRooms();

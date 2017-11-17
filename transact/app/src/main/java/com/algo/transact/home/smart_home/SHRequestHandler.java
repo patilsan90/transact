@@ -10,8 +10,10 @@ import com.algo.transact.generic_structures.GenericAdapterRecyclerView;
 import com.algo.transact.home.smart_home.beans.House;
 import com.algo.transact.home.smart_home.beans.Peripheral;
 import com.algo.transact.home.smart_home.beans.Room;
+import com.algo.transact.home.smart_home.beans.SHUser;
 import com.algo.transact.home.smart_home.beans.SmartHomeCollector;
 import com.algo.transact.home.smart_home.beans.SmartHomeStore;
+import com.algo.transact.home.smart_home.settings.SettingsActivity;
 import com.algo.transact.login.User;
 import com.algo.transact.server_communicator.base.ResponseStatus;
 import com.algo.transact.server_communicator.controllers.SmartHomeController;
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 
 import static com.algo.transact.home.smart_home.SHRequestHandler.RECENT_LISTENER.EDIT_ROOM_ACTIVITY;
 import static com.algo.transact.home.smart_home.SHRequestHandler.RECENT_LISTENER.NEW_ROOM_DIALOGUE;
+import static com.algo.transact.home.smart_home.SHRequestHandler.RECENT_LISTENER.SETTINGS_ACTIVITY;
 import static com.algo.transact.home.smart_home.SHRequestHandler.RECENT_LISTENER.SMART_HOME_ACTIVITY;
 import static com.algo.transact.home.smart_home.SHRequestHandler.RECENT_LISTENER.WATER_INDICATOR_DIALOGUE;
 import static com.algo.transact.home.smart_home.beans.Peripheral.HOUSE_SWITCH_ID;
@@ -34,14 +37,15 @@ public class SHRequestHandler implements ISmartHomeListener {
 
     RECENT_LISTENER listener;
 
-    enum RECENT_LISTENER {
+
+    public enum RECENT_LISTENER {
         SMART_HOME_ACTIVITY,
         ROOM_FRAGEMENT,
         EDIT_ROOM_ACTIVITY,
-
         SINGLE_ROOM_VIEW_FRAGMENT,
         WATER_INDICATOR_DIALOGUE,
-        NEW_ROOM_DIALOGUE
+        NEW_ROOM_DIALOGUE,
+        SETTINGS_ACTIVITY
     }
 
     public SmartHomeActivity smartHomeActivity;
@@ -50,6 +54,7 @@ public class SHRequestHandler implements ISmartHomeListener {
     public WaterIndicatorDialogue waterIndicatorDialogue;
     public EditRoomActivity editRoomActivity;
     public NewRoomDialogue newRoomDialogue;
+    private SettingsActivity settingsActivity;
 
     private static SHRequestHandler controller = new SHRequestHandler();
 
@@ -86,6 +91,9 @@ public class SHRequestHandler implements ISmartHomeListener {
             controller.editRoomActivity = (EditRoomActivity) obj;
         else if (obj instanceof NewRoomDialogue)
             controller.newRoomDialogue = (NewRoomDialogue) obj;
+        else if (obj instanceof SettingsActivity)
+            controller.settingsActivity = (SettingsActivity) obj;
+
     }
 
 
@@ -130,6 +138,16 @@ public class SHRequestHandler implements ISmartHomeListener {
         SmartHomeController.addNewRoom(room, controller);
     }
 
+    public static void addSHUser(SHUser user, RECENT_LISTENER recentListener) {
+        controller.listener = recentListener;
+        SmartHomeController.addSHUser(user, controller);
+    }
+
+    public static void removeSHUser(SHUser user, RECENT_LISTENER recentListener) {
+        controller.listener = recentListener;
+        SmartHomeController.removeSHUser(user, controller);
+    }
+
     /*
     *
     * Response Methods Below
@@ -149,16 +167,16 @@ public class SHRequestHandler implements ISmartHomeListener {
         else
             prevRoomCount = SmartHomeStore.getSHStore(smartHomeActivity).getAlRooms().size();
 
-        smartHomeActivity.CollectorToStoreConverter(collector);
+        SmartHomeCollector.CollectorToStoreConverter(collector, smartHomeActivity);
         if (listener == SMART_HOME_ACTIVITY) {
             if (isCreateView == true)
                 smartHomeActivity.displayRoomsViewWithThread();
             else {
                 int newRoomCount = SmartHomeStore.getSHStore(smartHomeActivity).getAlRooms().size();
-                if (newRoomCount == prevRoomCount)
+               /* if (newRoomCount == prevRoomCount)
                     smartHomeActivity.updateAllRooms();
-                else
-                    smartHomeActivity.displayRoomsViewWithThread();
+                else*/
+                smartHomeActivity.displayRoomsViewWithThread();
 
                 /*for(int i=0;i<controller.roomFragment.size();i++)
                 {
@@ -209,7 +227,7 @@ public class SHRequestHandler implements ISmartHomeListener {
     public void onUpdatePeripherals(ResponseStatus responseStatus) {
         if (listener == EDIT_ROOM_ACTIVITY) {
             if (responseStatus.getResponse() == ResponseStatus.RESPONSE.e_PERIPHERALS_LIST_UPDATED_SUCCESSFULLY) {
-                editRoomActivity.updateSmartHomeCollector();
+                editRoomActivity.updateSmartHomeStore();
             }
         }
     }
@@ -240,6 +258,16 @@ public class SHRequestHandler implements ISmartHomeListener {
         Log.i(AppConfig.TAG, "Adding New Room:: " + room);
         newRoomDialogue.updateRoomsList(smartHomeActivity, room);
         smartHomeActivity.displayRoomsViewWithThread();
+    }
+
+    @Override
+    public void onSHUserAdd(SHUser user) {
+        settingsActivity.userAdded(user);
+    }
+
+    @Override
+    public void onSHUserRemove(SHUser user) {
+        settingsActivity.userRemoved(user);
     }
 
 }
