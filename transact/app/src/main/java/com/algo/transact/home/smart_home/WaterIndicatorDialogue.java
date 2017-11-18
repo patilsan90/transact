@@ -16,11 +16,8 @@ import com.algo.transact.R;
 import com.algo.transact.generic_structures.GenericAdapterRecyclerView;
 import com.algo.transact.generic_structures.IGenericAdapterRecyclerView;
 import com.algo.transact.home.smart_home.beans.Peripheral;
-import com.algo.transact.home.smart_home.beans.SmartHomeCollector;
-import com.algo.transact.home.smart_home.beans.SmartHomeStore;
 import com.algo.transact.home.smart_home.holders.WaterLevelHolder;
-import com.algo.transact.server_communicator.listener.ISmartHomeListener;
-import com.algo.transact.server_communicator.request_handler.ServerRequestHandler;
+import com.algo.transact.server_communicator.request_handler.SmartHomeRequestHandler;
 
 import java.util.ArrayList;
 
@@ -46,7 +43,7 @@ public class WaterIndicatorDialogue extends BottomSheetDialog implements View.On
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialogue_water_level_indicator);
 
-        SHRequestHandler.registerUser(this);
+        SmartHomeRequestHandler.registerUser(this);
         LinearLayout llWaterLevel = (LinearLayout) findViewById(R.id.water_level_ll);
         llWaterLevel.setOnClickListener(this);
 
@@ -64,7 +61,7 @@ public class WaterIndicatorDialogue extends BottomSheetDialog implements View.On
         }.getClass().getEnclosingMethod().getName());
         this.show();
      //   showProgressDialog();
-     //   SHRequestHandler.getWaterLevelPeripherals(SmartHomeStore.getSHStore(this.getOwnerActivity()).getHouse(), SHRequestHandler.RECENT_LISTENER.WATER_INDICATOR_DIALOGUE);
+     //   SmartHomeRequestHandler.getWaterLevelPeripherals(SmartHomeStore.getSHStore(this.getOwnerActivity()).getHouse(), SmartHomeRequestHandler.RECENT_LISTENER.WATER_INDICATOR_DIALOGUE);
 
         new GenericAdapterRecyclerView(this.getContext(), this, this.rvWaterLevelList, alPeripherals, R.layout.rv_item_water_level, 1, false);
     }

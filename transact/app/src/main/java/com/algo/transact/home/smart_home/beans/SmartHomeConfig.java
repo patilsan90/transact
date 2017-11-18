@@ -3,7 +3,6 @@ package com.algo.transact.home.smart_home.beans;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.view.View;
 
 import com.google.gson.Gson;
 

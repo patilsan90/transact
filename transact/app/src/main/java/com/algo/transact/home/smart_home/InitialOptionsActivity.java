@@ -1,14 +1,12 @@
 package com.algo.transact.home.smart_home;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.algo.transact.AppConfig.IntentPutExtras;
 import com.algo.transact.R;
-import com.algo.transact.home.outlet.data_beans.Outlet;
 
 public class InitialOptionsActivity extends AppCompatActivity implements View.OnClickListener{
 

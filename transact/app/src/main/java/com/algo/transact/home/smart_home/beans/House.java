@@ -1,14 +1,5 @@
 package com.algo.transact.home.smart_home.beans;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
-
-import com.algo.transact.login.User;
-import com.google.gson.Gson;
-
-import java.util.ArrayList;
-
 /**
  * Created by patilsp on 10/14/2017.
  */

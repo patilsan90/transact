@@ -25,11 +25,11 @@ import com.algo.transact.generic_structures.IGenericAdapter;
 import com.algo.transact.gps.GPSListener;
 import com.algo.transact.gps.GPSTracker;
 import com.algo.transact.gps.GpsLocationReceiver;
-import com.algo.transact.home.outlet.data_retrivals.ShopsRetriver;
-import com.algo.transact.home.outlet.outlet_front.OutletFront;
 import com.algo.transact.home.outlet.data_beans.Cart;
 import com.algo.transact.home.outlet.data_beans.Outlet;
 import com.algo.transact.home.outlet.data_retrivals.CartsFactory;
+import com.algo.transact.home.outlet.data_retrivals.ShopsRetriver;
+import com.algo.transact.home.outlet.outlet_front.OutletFront;
 
 import java.util.ArrayList;
 

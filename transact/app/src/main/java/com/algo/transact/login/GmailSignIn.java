@@ -5,7 +5,7 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.algo.transact.AppConfig.AppConfig;
-import com.algo.transact.server_communicator.request_handler.ServerRequestHandler;
+import com.algo.transact.server_communicator.request_handler.LoginRequestHandler;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -77,7 +77,7 @@ public class GmailSignIn {
             signInUser.loginType = User.LOGIN_OTIONS.GMAIL;
 
             Log.i(TAG, "Gmail sign in successfull User " + signInUser);
-            ServerRequestHandler.login(signInUser, activity);
+            LoginRequestHandler.login(signInUser, activity);
 
 
         } else {

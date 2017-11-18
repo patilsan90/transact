@@ -11,9 +11,7 @@ import android.widget.ScrollView;
 
 import com.algo.transact.AppConfig.AppConfig;
 import com.algo.transact.R;
-import com.algo.transact.home.smart_home.beans.House;
 import com.algo.transact.home.smart_home.beans.Room;
-import com.algo.transact.home.smart_home.beans.SmartHomeCollector;
 import com.algo.transact.home.smart_home.beans.SmartHomeStore;
 
 import java.util.ArrayList;
