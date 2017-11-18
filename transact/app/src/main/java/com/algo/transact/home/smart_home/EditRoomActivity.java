@@ -1,26 +1,18 @@
 package com.algo.transact.home.smart_home;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,19 +23,17 @@ import com.algo.transact.generic_structures.GenericAdapter;
 import com.algo.transact.generic_structures.GenericAdapterRecyclerView;
 import com.algo.transact.generic_structures.IGenericAdapterRecyclerView;
 import com.algo.transact.generic_structures.IGenericAdapterSpinner;
-import com.algo.transact.home.outlet.data_beans.Outlet;
-import com.algo.transact.home.smart_home.beans.House;
 import com.algo.transact.home.smart_home.beans.Peripheral;
 import com.algo.transact.home.smart_home.beans.Room;
-import com.algo.transact.home.smart_home.beans.SmartHomeCollector;
 import com.algo.transact.home.smart_home.beans.SmartHomeStore;
 import com.algo.transact.home.smart_home.holders.EditPeripheralHolder;
+import com.algo.transact.server_communicator.request_handler.SmartHomeRequestHandler;
 
 import java.util.ArrayList;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static com.algo.transact.home.smart_home.SHRequestHandler.RECENT_LISTENER.EDIT_ROOM_ACTIVITY;
 import static com.algo.transact.home.smart_home.beans.Room.ROOM_ID_NOT_REQUIRED;
+import static com.algo.transact.server_communicator.request_handler.SmartHomeRequestHandler.RECENT_LISTENER.EDIT_ROOM_ACTIVITY;
 
 public class EditRoomActivity extends AppCompatActivity implements IGenericAdapterRecyclerView, View.OnClickListener {
 
@@ -78,7 +68,7 @@ public class EditRoomActivity extends AppCompatActivity implements IGenericAdapt
         roomIndex = getIntent().getIntExtra(IntentPutExtras.SMART_HOME_ROOM_INDEX, 0);
         room = (Room) getIntent().getSerializableExtra(IntentPutExtras.SMART_HOME_ROOM_OBJ);
 
-        SHRequestHandler.registerUser(this);
+        SmartHomeRequestHandler.registerUser(this);
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         // setContentView(R.layout.dialogue_room_view_edit);
@@ -153,7 +143,7 @@ public class EditRoomActivity extends AppCompatActivity implements IGenericAdapt
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.dialogue_room_view_bt_save) {
-            //ServerRequestHandler.
+            //LoginRequestHandler.
             alEditedPeripherals = new ArrayList<>();
 
             int totalPer = alPeripheralsLocal.size();
@@ -173,12 +163,12 @@ public class EditRoomActivity extends AppCompatActivity implements IGenericAdapt
             boolean isModified = false;
             if (roomName.length() != 0 && !roomName.equals(room.getRoom_name())) {
                 room.setRoom_name(roomName);
-                SHRequestHandler.updateRoom(room, EDIT_ROOM_ACTIVITY);
+                SmartHomeRequestHandler.updateRoom(room, EDIT_ROOM_ACTIVITY);
                 isModified = true;
             }
 
             if (alEditedPeripherals.size() > 0) {
-                SHRequestHandler.updatePeripherals(alEditedPeripherals, EDIT_ROOM_ACTIVITY);
+                SmartHomeRequestHandler.updatePeripherals(alEditedPeripherals, EDIT_ROOM_ACTIVITY);
                 isModified = true;
             }
             if (isModified)
@@ -236,7 +226,7 @@ public class EditRoomActivity extends AppCompatActivity implements IGenericAdapt
         editPeripheralHolder.swOnOff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SHRequestHandler.updatePeripheralStatus(room, per.peripheral, EDIT_ROOM_ACTIVITY);
+                SmartHomeRequestHandler.updatePeripheralStatus(room, per.peripheral, EDIT_ROOM_ACTIVITY);
             }
         });
         IGenericAdapterSpinner spinnerListener = new SpinnerListener(per.peripheral, position);
@@ -277,6 +267,7 @@ public class EditRoomActivity extends AppCompatActivity implements IGenericAdapt
                 }
             }
         }
+
         int totalRooms = shStore.getAlRooms().size();
         for (int i = 0; i < shStore.getAlAllPeripherals().size(); i++) {
             Peripheral per = shStore.getAlAllPeripherals().get(i);
@@ -352,7 +343,7 @@ public class EditRoomActivity extends AppCompatActivity implements IGenericAdapt
             Room room = (Room) listItem;
             tvRoomName = (TextView) view.findViewById(R.id.spinner_rooms_tv_room_name);
             tvRoomName.setText(room.getRoom_name());
-            //ServerRequestHandler.updatePeripheralInformation(room, peripheral, listener);
+            //LoginRequestHandler.updatePeripheralInformation(room, peripheral, listener);
 
             return view;
         }

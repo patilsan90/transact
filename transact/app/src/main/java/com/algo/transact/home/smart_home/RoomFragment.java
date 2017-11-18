@@ -15,30 +15,25 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.algo.transact.AppConfig.AppConfig;
 import com.algo.transact.R;
 import com.algo.transact.generic_structures.GenericAdapterRecyclerView;
 import com.algo.transact.generic_structures.IGenericAdapterRecyclerView;
-import com.algo.transact.home.smart_home.beans.House;
 import com.algo.transact.home.smart_home.beans.Peripheral;
 import com.algo.transact.home.smart_home.beans.Room;
-import com.algo.transact.home.smart_home.beans.SmartHomeCollector;
 import com.algo.transact.home.smart_home.beans.SmartHomeConfig;
 import com.algo.transact.home.smart_home.beans.SmartHomeStore;
 import com.algo.transact.home.smart_home.holders.PeripheralViewHolder;
-import com.algo.transact.server_communicator.listener.ISmartHomeListener;
-import com.algo.transact.server_communicator.request_handler.ServerRequestHandler;
+import com.algo.transact.server_communicator.request_handler.SmartHomeRequestHandler;
 
 import java.util.ArrayList;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static com.algo.transact.AppConfig.IntentPutExtras.SMART_HOME_ROOM_INDEX;
 import static com.algo.transact.AppConfig.IntentPutExtras.SMART_HOME_ROOM_OBJ;
-import static com.algo.transact.home.smart_home.SHRequestHandler.RECENT_LISTENER.ROOM_FRAGEMENT;
-import static com.algo.transact.home.smart_home.SHRequestHandler.RECENT_LISTENER.SMART_HOME_ACTIVITY;
 import static com.algo.transact.home.smart_home.beans.Room.ROOM_ID_NOT_REQUIRED;
+import static com.algo.transact.server_communicator.request_handler.SmartHomeRequestHandler.RECENT_LISTENER.ROOM_FRAGEMENT;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -83,18 +78,18 @@ public class RoomFragment extends Fragment implements View.OnClickListener, IGen
         }
 
 
-        if (SHRequestHandler.getInstance().roomFragment == null) {
-            SHRequestHandler.getInstance().roomFragment = new ArrayList<>();
+        if (SmartHomeRequestHandler.getInstance().roomFragment == null) {
+            SmartHomeRequestHandler.getInstance().roomFragment = new ArrayList<>();
             int noOfRooms = SmartHomeStore.getSHStore(getActivity()).getAlRooms().size();
             for (int i = 0; i < noOfRooms; i++)
-                SHRequestHandler.getInstance().roomFragment.add(new RoomFragment());
+                SmartHomeRequestHandler.getInstance().roomFragment.add(new RoomFragment());
         }
 
 
-        SHRequestHandler.registerRoom(this, roomIndex);
+        SmartHomeRequestHandler.registerRoom(this, roomIndex);
 
         fragment = this;
-        //SHRequestHandler.registerUser(this);
+        //SmartHomeRequestHandler.registerUser(this);
 
         View view = inflater.inflate(R.layout.fragment_room, container, false);
         llPeripheralList = (LinearLayout) view.findViewById(R.id.room_fragment_ll_peripheral_list);
@@ -166,9 +161,9 @@ public class RoomFragment extends Fragment implements View.OnClickListener, IGen
             swPeripheralNameAndOnOff.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, swPeripheralNameAndOnOff.isChecked() + "  Clicked on ON/OFF switch " + per.getPer_name(), Toast.LENGTH_SHORT).show();
+                   /* Toast.makeText(context, swPeripheralNameAndOnOff.isChecked() + "  Clicked on ON/OFF switch " + per.getPer_name(), Toast.LENGTH_SHORT).show();*/
                     per.setPer_status(swPeripheralNameAndOnOff.isChecked() ? Peripheral.Status.ON : Peripheral.Status.OFF);
-                    SHRequestHandler.updatePeripheralStatus(room, per, ROOM_FRAGEMENT);
+                    SmartHomeRequestHandler.updatePeripheralStatus(room, per, ROOM_FRAGEMENT);
                 }
             });
         }
@@ -189,9 +184,9 @@ public class RoomFragment extends Fragment implements View.OnClickListener, IGen
                         @Override
                         public void onStopTrackingTouch(SeekBar seekBar) {
                             per.setPer_value(seekBar.getProgress());
-                            Toast.makeText(context, seekBar.getProgress() + " On Stop Seekbar ::" + per.getPer_name(), Toast.LENGTH_SHORT).show();
+                            /*Toast.makeText(context, seekBar.getProgress() + " On Stop Seekbar ::" + per.getPer_name(), Toast.LENGTH_SHORT).show();*/
                             //Room refRoom = new Room(room.getRoom_id(), room.getRoom_name(), null);
-                            SHRequestHandler.updatePeripheralStatus(room, per, ROOM_FRAGEMENT);
+                            SmartHomeRequestHandler.updatePeripheralStatus(room, per, ROOM_FRAGEMENT);
 
                         }
 
@@ -257,10 +252,10 @@ public class RoomFragment extends Fragment implements View.OnClickListener, IGen
     private void hideMainNameSwitchLayout(View vPeripheral, LinearLayout llnameView) {
         LinearLayout llnameSwitchView;
 
-        if(vPeripheral!=null)
+        if (vPeripheral != null)
             llnameSwitchView = (LinearLayout) vPeripheral.findViewById(R.id.peripheral_ll_name_switch_view);
         else
-            llnameSwitchView=llnameView;
+            llnameSwitchView = llnameView;
 
         ViewGroup.LayoutParams lp = llnameSwitchView.getLayoutParams();
         lp.height = 0;
@@ -290,7 +285,7 @@ public class RoomFragment extends Fragment implements View.OnClickListener, IGen
                         Peripheral.PERIPHERAL_TYPE.ROOM_SWITCH, "ROOM_SWITCH",
                         swSwitchAllPer.isChecked() ? Peripheral.Status.ON : Peripheral.Status.OFF,
                         0, true);
-                SHRequestHandler.updatePeripheralStatus(room, peripheral, ROOM_FRAGEMENT);
+                SmartHomeRequestHandler.updatePeripheralStatus(room, peripheral, ROOM_FRAGEMENT);
                 break;
             default:
                 break;
@@ -414,9 +409,9 @@ public class RoomFragment extends Fragment implements View.OnClickListener, IGen
             swPeripheralNameAndOnOff.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, swPeripheralNameAndOnOff.isChecked() + "  Clicked on ON/OFF switch " + per.getPer_name(), Toast.LENGTH_SHORT).show();
+                   /* Toast.makeText(context, swPeripheralNameAndOnOff.isChecked() + "  Clicked on ON/OFF switch " + per.getPer_name(), Toast.LENGTH_SHORT).show();*/
                     per.setPer_status(swPeripheralNameAndOnOff.isChecked() ? Peripheral.Status.ON : Peripheral.Status.OFF);
-                    SHRequestHandler.updatePeripheralStatus(room, per, ROOM_FRAGEMENT);
+                    SmartHomeRequestHandler.updatePeripheralStatus(room, per, ROOM_FRAGEMENT);
                 }
             });
         }
@@ -437,9 +432,9 @@ public class RoomFragment extends Fragment implements View.OnClickListener, IGen
                         @Override
                         public void onStopTrackingTouch(SeekBar seekBar) {
                             per.setPer_value(seekBar.getProgress());
-                            Toast.makeText(context, seekBar.getProgress() + " On Stop Seekbar ::" + per.getPer_name(), Toast.LENGTH_SHORT).show();
+                           /* Toast.makeText(context, seekBar.getProgress() + " On Stop Seekbar ::" + per.getPer_name(), Toast.LENGTH_SHORT).show();*/
                             //Room refRoom = new Room(room.getRoom_id(), room.getRoom_name(), null);
-                            SHRequestHandler.updatePeripheralStatus(room, per, ROOM_FRAGEMENT);
+                            SmartHomeRequestHandler.updatePeripheralStatus(room, per, ROOM_FRAGEMENT);
 
                         }
 
@@ -464,7 +459,7 @@ public class RoomFragment extends Fragment implements View.OnClickListener, IGen
             case UNDERGROUND_WATER_TANK:
             case TERRES_WATER_TANK:
                 hideSeekbarLayout(null, viewHolder.llHideSeekBar);
-                  hideMainNameSwitchLayout(null, viewHolder.llHideNameView);
+                hideMainNameSwitchLayout(null, viewHolder.llHideNameView);
                 break;
             default:
                 break;

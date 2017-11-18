@@ -7,10 +7,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Switch;
-import android.widget.TextView;
 
 import com.algo.transact.R;
-import com.algo.transact.home.smart_home.beans.Peripheral;
 
 /**
  * Created by patilsp on 8/7/2017.

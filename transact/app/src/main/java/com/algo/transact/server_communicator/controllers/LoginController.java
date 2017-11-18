@@ -4,8 +4,8 @@ import android.util.Log;
 
 import com.algo.transact.AppConfig.AppConfig;
 import com.algo.transact.login.User;
-import com.algo.transact.server_communicator.base.ServerConfiguration;
 import com.algo.transact.server_communicator.base.ILoginServiceAPI;
+import com.algo.transact.server_communicator.base.ServerConfiguration;
 import com.algo.transact.server_communicator.listener.ILoginListener;
 
 import retrofit2.Call;

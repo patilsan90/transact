@@ -1,29 +1,28 @@
 package com.algo.transact.home.smart_home.settings;
 
 import android.app.ProgressDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.algo.transact.R;
 import com.algo.transact.generic_structures.GenericAdapterRecyclerView;
 import com.algo.transact.generic_structures.IGenericAdapterRecyclerView;
-import com.algo.transact.home.smart_home.SHRequestHandler;
 import com.algo.transact.home.smart_home.beans.Device;
 import com.algo.transact.home.smart_home.beans.Room;
 import com.algo.transact.home.smart_home.beans.SHUser;
 import com.algo.transact.home.smart_home.beans.SmartHomeStore;
 import com.algo.transact.home.smart_home.settings.holders.DeviceHolder;
 import com.algo.transact.home.smart_home.settings.holders.RegisteredUserHolder;
+import com.algo.transact.server_communicator.request_handler.SmartHomeRequestHandler;
 
 import java.util.ArrayList;
 
-import static com.algo.transact.home.smart_home.SHRequestHandler.RECENT_LISTENER.SETTINGS_ACTIVITY;
+import static com.algo.transact.server_communicator.request_handler.SmartHomeRequestHandler.RECENT_LISTENER.SETTINGS_ACTIVITY;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -46,7 +45,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         activity = this;
 
-        SHRequestHandler.registerUser(this);
+        SmartHomeRequestHandler.registerUser(this);
         etNewUserMobile = (EditText) findViewById(R.id.settings_et_new_user_mobile);
         btSave = (Button) findViewById(R.id.settings_bt_add);
         btSave.setOnClickListener(new View.OnClickListener() {
@@ -57,7 +56,7 @@ public class SettingsActivity extends AppCompatActivity {
                     SHUser user = new SHUser();
                     user.setHouse_id(SmartHomeStore.getSHStore(activity).getHouse().getHouse_id());
                     user.setMobile_number(newMobileNo);
-                    SHRequestHandler.addSHUser(user, SETTINGS_ACTIVITY);
+                    SmartHomeRequestHandler.addSHUser(user, SETTINGS_ACTIVITY);
                     showProgressDialog();
                 } else
                     Toast.makeText(activity, "Please enter mobile number to add", Toast.LENGTH_SHORT).show();
@@ -112,7 +111,7 @@ public class SettingsActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     activity.user = user;
                     showProgressDialog();
-                    SHRequestHandler.removeSHUser(user, SETTINGS_ACTIVITY);
+                    SmartHomeRequestHandler.removeSHUser(user, SETTINGS_ACTIVITY);
                 }
             });
         }

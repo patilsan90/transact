@@ -16,8 +16,8 @@ import com.algo.transact.AppConfig.AppConfig;
 import com.algo.transact.R;
 import com.algo.transact.home.smart_home.beans.Peripheral;
 import com.algo.transact.home.smart_home.beans.Room;
-import com.algo.transact.home.smart_home.beans.SmartHomeCollector;
 import com.algo.transact.home.smart_home.beans.SmartHomeStore;
+import com.algo.transact.server_communicator.request_handler.SmartHomeRequestHandler;
 
 import java.util.ArrayList;
 
@@ -36,7 +36,7 @@ public class NewRoomDialogue extends Dialog implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SHRequestHandler.registerUser(this);
+        SmartHomeRequestHandler.registerUser(this);
         Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName());
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -64,7 +64,7 @@ public class NewRoomDialogue extends Dialog implements View.OnClickListener {
             String roomName = etRoomName.getText().toString().trim();
             if (roomName != null && roomName.length() > 0) {
                 room = new Room(CREATE_NEW_ROOM, SmartHomeStore.getSHStore(getOwnerActivity()).getHouse().getHouse_id(), roomName);
-                SHRequestHandler.addNewRoom(room, SHRequestHandler.RECENT_LISTENER.NEW_ROOM_DIALOGUE);
+                SmartHomeRequestHandler.addNewRoom(room, SmartHomeRequestHandler.RECENT_LISTENER.NEW_ROOM_DIALOGUE);
             } else
                 Toast.makeText(this.getContext(), "Room name is necessary", Toast.LENGTH_SHORT).show();
         }

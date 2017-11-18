@@ -1,16 +1,11 @@
 package com.algo.transact.home.smart_home.beans;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.algo.transact.AppConfig.AppConfig;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
-
-import static com.algo.transact.home.smart_home.beans.Room.ROOM_ID_NOT_REQUIRED;
 
 /**
  * Created by patilsp on 11/5/2017.

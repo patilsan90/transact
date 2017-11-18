@@ -1,12 +1,15 @@
-package com.algo.transact.home.smart_home;
+package com.algo.transact.server_communicator.request_handler;
 
-import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.algo.transact.AppConfig.AppConfig;
-import com.algo.transact.R;
-import com.algo.transact.generic_structures.GenericAdapterRecyclerView;
+import com.algo.transact.home.smart_home.EditRoomActivity;
+import com.algo.transact.home.smart_home.NewRoomDialogue;
+import com.algo.transact.home.smart_home.RoomFragment;
+import com.algo.transact.home.smart_home.SingleRoomViewFragment;
+import com.algo.transact.home.smart_home.SmartHomeActivity;
+import com.algo.transact.home.smart_home.WaterIndicatorDialogue;
 import com.algo.transact.home.smart_home.beans.House;
 import com.algo.transact.home.smart_home.beans.Peripheral;
 import com.algo.transact.home.smart_home.beans.Room;
@@ -21,19 +24,17 @@ import com.algo.transact.server_communicator.listener.ISmartHomeListener;
 
 import java.util.ArrayList;
 
-import static com.algo.transact.home.smart_home.SHRequestHandler.RECENT_LISTENER.EDIT_ROOM_ACTIVITY;
-import static com.algo.transact.home.smart_home.SHRequestHandler.RECENT_LISTENER.NEW_ROOM_DIALOGUE;
-import static com.algo.transact.home.smart_home.SHRequestHandler.RECENT_LISTENER.SETTINGS_ACTIVITY;
-import static com.algo.transact.home.smart_home.SHRequestHandler.RECENT_LISTENER.SMART_HOME_ACTIVITY;
-import static com.algo.transact.home.smart_home.SHRequestHandler.RECENT_LISTENER.WATER_INDICATOR_DIALOGUE;
 import static com.algo.transact.home.smart_home.beans.Peripheral.HOUSE_SWITCH_ID;
 import static com.algo.transact.home.smart_home.beans.Peripheral.ROOM_SWITCH_ID;
+import static com.algo.transact.server_communicator.request_handler.SmartHomeRequestHandler.RECENT_LISTENER.EDIT_ROOM_ACTIVITY;
+import static com.algo.transact.server_communicator.request_handler.SmartHomeRequestHandler.RECENT_LISTENER.SMART_HOME_ACTIVITY;
+import static com.algo.transact.server_communicator.request_handler.SmartHomeRequestHandler.RECENT_LISTENER.WATER_INDICATOR_DIALOGUE;
 
 /**
  * Created by patilsp on 11/7/2017.
  */
 
-public class SHRequestHandler implements ISmartHomeListener {
+public class SmartHomeRequestHandler implements ISmartHomeListener {
 
     RECENT_LISTENER listener;
 
@@ -56,14 +57,14 @@ public class SHRequestHandler implements ISmartHomeListener {
     public NewRoomDialogue newRoomDialogue;
     private SettingsActivity settingsActivity;
 
-    private static SHRequestHandler controller = new SHRequestHandler();
+    private static SmartHomeRequestHandler controller = new SmartHomeRequestHandler();
 
-    SHRequestHandler() {
+    SmartHomeRequestHandler() {
     }
 
-    public static SHRequestHandler getInstance() {
+    public static SmartHomeRequestHandler getInstance() {
         if (controller == null)
-            controller = new SHRequestHandler();
+            controller = new SmartHomeRequestHandler();
         return controller;
     }
 

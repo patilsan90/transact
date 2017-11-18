@@ -17,11 +17,9 @@ import com.algo.transact.generic_structures.GenericAdapterRecyclerView;
 import com.algo.transact.generic_structures.IGenericAdapterRecyclerView;
 import com.algo.transact.home.smart_home.beans.Peripheral;
 import com.algo.transact.home.smart_home.beans.Room;
-import com.algo.transact.home.smart_home.beans.SmartHomeCollector;
 import com.algo.transact.home.smart_home.beans.SmartHomeStore;
 import com.algo.transact.home.smart_home.holders.RoomViewHolder;
-import com.algo.transact.server_communicator.listener.ISmartHomeListener;
-import com.algo.transact.server_communicator.request_handler.ServerRequestHandler;
+import com.algo.transact.server_communicator.request_handler.SmartHomeRequestHandler;
 
 import java.util.ArrayList;
 
@@ -51,7 +49,7 @@ public class SingleRoomViewFragment extends Fragment implements IGenericAdapterR
         rvRoomsList = (RecyclerView) view.findViewById(R.id.single_room_view_rv_rooms_list);
 
         fragment=this;
-        SHRequestHandler.registerUser(this);
+        SmartHomeRequestHandler.registerUser(this);
         alRooms=new ArrayList<>();
         alRooms.addAll(SmartHomeStore.getSHStore(this.getActivity()).getAlRooms());
         Room newRoom = new Room(ROOM_ID_NOT_REQUIRED, SmartHomeStore.getSHStore(getActivity()).getHouse().getHouse_id(), newRoomString);
@@ -94,7 +92,7 @@ public class SingleRoomViewFragment extends Fragment implements IGenericAdapterR
             @Override
             public void onClick(View v) {
                 Peripheral per =new Peripheral(Peripheral.ROOM_SWITCH_ID,room.getRoom_id(), Peripheral.PERIPHERAL_TYPE.ROOM_SWITCH,"ROOM_SWITCH",roomViewHolder.swRoomSwitch.isChecked() ? Peripheral.Status.ON : Peripheral.Status.OFF,0,true);
-                SHRequestHandler.updatePeripheralStatus(room, per, SHRequestHandler.RECENT_LISTENER.SINGLE_ROOM_VIEW_FRAGMENT);
+                SmartHomeRequestHandler.updatePeripheralStatus(room, per, SmartHomeRequestHandler.RECENT_LISTENER.SINGLE_ROOM_VIEW_FRAGMENT);
             }
         });
         if (room.getRoom_name().equals(newRoomString)) {

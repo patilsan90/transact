@@ -1,7 +1,5 @@
 package com.algo.transact.home.smart_home.beans;
 
-import com.algo.transact.R;
-
 import java.io.Serializable;
 
 /**

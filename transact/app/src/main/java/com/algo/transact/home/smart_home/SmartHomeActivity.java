@@ -2,11 +2,10 @@ package com.algo.transact.home.smart_home;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Looper;
 import android.os.PersistableBundle;
-import android.support.v4.app.NotificationCompatSideChannelService;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.MenuInflater;
@@ -15,25 +14,21 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
-import android.widget.Toast;
 
 import com.algo.transact.AppConfig.AppConfig;
 import com.algo.transact.R;
 import com.algo.transact.home.smart_home.beans.Peripheral;
 import com.algo.transact.home.smart_home.beans.Room;
-import com.algo.transact.home.smart_home.beans.SmartHomeCollector;
 import com.algo.transact.home.smart_home.beans.SmartHomeConfig;
 import com.algo.transact.home.smart_home.beans.SmartHomeStore;
 import com.algo.transact.home.smart_home.settings.SettingsActivity;
 import com.algo.transact.login.User;
-import com.algo.transact.server_communicator.request_handler.ServerRequestHandler;
+import com.algo.transact.server_communicator.request_handler.SmartHomeRequestHandler;
 
-import java.util.ArrayList;
-
-import static com.algo.transact.home.smart_home.SHRequestHandler.RECENT_LISTENER.SMART_HOME_ACTIVITY;
 import static com.algo.transact.home.smart_home.beans.Room.ROOM_ID_NOT_REQUIRED;
 import static com.algo.transact.home.smart_home.beans.SmartHomeConfig.VIEW.EXPAND_VIEW;
 import static com.algo.transact.home.smart_home.beans.SmartHomeConfig.VIEW.LIST_VIEW;
+import static com.algo.transact.server_communicator.request_handler.SmartHomeRequestHandler.RECENT_LISTENER.SMART_HOME_ACTIVITY;
 
 public class SmartHomeActivity extends AppCompatActivity implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
@@ -52,7 +47,7 @@ public class SmartHomeActivity extends AppCompatActivity implements View.OnClick
 
         context = this;
 
-        SHRequestHandler.registerUser(this);
+        SmartHomeRequestHandler.registerUser(this);
         LinearLayout llWaterLevel = (LinearLayout) findViewById(R.id.smart_home_ll_water_level);
         llWaterLevel.setOnClickListener(this);
 
@@ -68,7 +63,7 @@ public class SmartHomeActivity extends AppCompatActivity implements View.OnClick
         llViewHolder = (LinearLayout) findViewById(R.id.smart_home_ll_view_holder);
 
 
-        SHRequestHandler.getHouse(User.getUserPreferences(this), SMART_HOME_ACTIVITY);
+        SmartHomeRequestHandler.getHouse(User.getUserPreferences(this), SMART_HOME_ACTIVITY);
 
 
         if (SmartHomeConfig.getUserPreferences(this) == null) {
@@ -79,12 +74,12 @@ public class SmartHomeActivity extends AppCompatActivity implements View.OnClick
     }
 
     public void updateAllRooms() {
-        if (SHRequestHandler.getInstance().roomFragment == null) {
+        if (SmartHomeRequestHandler.getInstance().roomFragment == null) {
             displayRoomsViewWithThread();
         } else {
             try {
-                for (int i = 0; i < SHRequestHandler.getInstance().roomFragment.size(); i++) {
-                    SHRequestHandler.getInstance().roomFragment.get(i).UpdateRoomView();
+                for (int i = 0; i < SmartHomeRequestHandler.getInstance().roomFragment.size(); i++) {
+                    SmartHomeRequestHandler.getInstance().roomFragment.get(i).UpdateRoomView();
                 }
             } catch (NullPointerException e) {
 
@@ -170,9 +165,9 @@ public class SmartHomeActivity extends AppCompatActivity implements View.OnClick
         switch (v.getId()) {
             case R.id.smart_home_ll_water_level:
                 showProgressDialog();
-                SHRequestHandler.getWaterLevelPeripherals(SmartHomeStore.getSHStore(this).getHouse(), SHRequestHandler.RECENT_LISTENER.WATER_INDICATOR_DIALOGUE);
+                SmartHomeRequestHandler.getWaterLevelPeripherals(SmartHomeStore.getSHStore(this).getHouse(), SmartHomeRequestHandler.RECENT_LISTENER.WATER_INDICATOR_DIALOGUE);
 
-                //SHRequestHandler.getWaterLevelPeripherals(SmartHomeStore.getSHStore(this).getHouse(), SHRequestHandler.RECENT_LISTENER.WATER_INDICATOR_DIALOGUE);
+                //SmartHomeRequestHandler.getWaterLevelPeripherals(SmartHomeStore.getSHStore(this).getHouse(), SmartHomeRequestHandler.RECENT_LISTENER.WATER_INDICATOR_DIALOGUE);
                 break;
 
             case R.id.smart_home_iv_settings:
@@ -193,7 +188,7 @@ public class SmartHomeActivity extends AppCompatActivity implements View.OnClick
                         Peripheral.PERIPHERAL_TYPE.MAIN_SWITCH, "MAIN_SWITCH",
                         swMainSwitch.isChecked() ? Peripheral.Status.ON : Peripheral.Status.OFF,
                         0, true);
-                SHRequestHandler.updatePeripheralStatus(new Room(ROOM_ID_NOT_REQUIRED, SmartHomeStore.getSHStore(this).getHouse().getHouse_id(), ""), peripheral, SMART_HOME_ACTIVITY);
+                SmartHomeRequestHandler.updatePeripheralStatus(new Room(ROOM_ID_NOT_REQUIRED, SmartHomeStore.getSHStore(this).getHouse().getHouse_id(), ""), peripheral, SMART_HOME_ACTIVITY);
                 break;
 
         }

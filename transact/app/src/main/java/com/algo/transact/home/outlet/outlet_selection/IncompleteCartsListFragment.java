@@ -19,9 +19,9 @@ import com.algo.transact.AppConfig.IntentResultCode;
 import com.algo.transact.R;
 import com.algo.transact.generic_structures.GenericAdapter;
 import com.algo.transact.generic_structures.IGenericAdapter;
-import com.algo.transact.home.outlet.outlet_front.OutletFront;
 import com.algo.transact.home.outlet.data_beans.Cart;
 import com.algo.transact.home.outlet.data_retrivals.CartsFactory;
+import com.algo.transact.home.outlet.outlet_front.OutletFront;
 
 import java.util.ArrayList;
 

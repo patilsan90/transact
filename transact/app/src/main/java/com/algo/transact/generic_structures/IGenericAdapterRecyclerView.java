@@ -2,7 +2,6 @@ package com.algo.transact.generic_structures;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.AdapterView;
 
 import java.util.ArrayList;
 

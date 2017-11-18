@@ -1,6 +1,5 @@
 package com.algo.transact.server_communicator.base;
 
-import com.algo.transact.home.smart_home.beans.House;
 import com.algo.transact.login.User;
 
 import retrofit2.Call;
