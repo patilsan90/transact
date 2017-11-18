@@ -58,6 +58,9 @@ public class RoomFragment extends Fragment implements View.OnClickListener, IGen
 
     public ArrayList<Peripheral> alPeriperals = new ArrayList<>();
 
+    private final boolean isRVList = true;
+    private GenericAdapterRecyclerView rvPeriperalsAdapter;
+
     public RoomFragment() {
         // Required empty public constructor
     }
@@ -130,21 +133,21 @@ public class RoomFragment extends Fragment implements View.OnClickListener, IGen
         if (room.getRoom_id() != ROOM_ID_NOT_REQUIRED) {
             fetchAllPeripherals();
 
+            Log.d(AppConfig.TAG, "*******************Room Creation*******************");
             Log.d(AppConfig.TAG, "Room Creation :: " + room + "    roomIndex:: " + roomIndex);
+
             Log.i(AppConfig.TAG, room + "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
             }.getClass().getEnclosingMethod().getName());
 
             llPeripheralList.removeAllViews();
-/*
-            for (int i = 0; i < alPeriperals.size(); i++) {
-                llPeripheralList.addView(bindViewHolder(alPeriperals.get(i)));
+            if (!isRVList) {
+                for (int i = 0; i < alPeriperals.size(); i++) {
+                    llPeripheralList.addView(bindViewHolder(alPeriperals.get(i)));
+                }
+            } else {
+                RecyclerView rvPeripheralsList = (RecyclerView) view.findViewById(R.id.room_fragment_rv_peripheral_list);
+                rvPeriperalsAdapter = new GenericAdapterRecyclerView(this.getContext(), this, rvPeripheralsList, alPeriperals, R.layout.peripheral_layout, 1, false);
             }
-*/
-
-
-        RecyclerView rvPeripheralsList= (RecyclerView)view.findViewById(R.id.room_fragment_rv_peripheral_list);
-        new GenericAdapterRecyclerView(this.getContext(),this,rvPeripheralsList,alPeriperals,R.layout.peripheral_layout,1,false);
-
 
         }
         return view;
@@ -205,15 +208,15 @@ public class RoomFragment extends Fragment implements View.OnClickListener, IGen
                 break;
 
             case FRIDGE:
-                hideSeekbarLayout(vPeripheral);
+                hideSeekbarLayout(vPeripheral, null);
                 break;
             case ROOM_SWITCH:
-                hideSeekbarLayout(vPeripheral);
+                hideSeekbarLayout(vPeripheral, null);
                 break;
             case UNDERGROUND_WATER_TANK:
             case TERRES_WATER_TANK:
-                hideSeekbarLayout(vPeripheral);
-                hideMainNameSwitchLayout(vPeripheral);
+                hideSeekbarLayout(vPeripheral, null);
+                hideMainNameSwitchLayout(vPeripheral, null);
                 break;
             default:
                 break;
@@ -238,20 +241,30 @@ public class RoomFragment extends Fragment implements View.OnClickListener, IGen
         return vPeripheral;
     }
 
-    private void hideSeekbarLayout(View vPeripheral) {
+    private void hideSeekbarLayout(View vPeripheral, LinearLayout llSbar) {
 
-        LinearLayout llSeekbar = (LinearLayout) vPeripheral.findViewById(R.id.peripheral_ll_seekbar);
+        LinearLayout llSeekbar;
+        if (vPeripheral != null)
+            llSeekbar = (LinearLayout) vPeripheral.findViewById(R.id.peripheral_ll_seekbar);
+        else
+            llSeekbar = llSbar;
+
         ViewGroup.LayoutParams lp = llSeekbar.getLayoutParams();
         lp.height = 0;
         llSeekbar.setLayoutParams(lp);
     }
 
-    private void hideMainNameSwitchLayout(View vPeripheral) {
+    private void hideMainNameSwitchLayout(View vPeripheral, LinearLayout llnameView) {
+        LinearLayout llnameSwitchView;
 
-        LinearLayout llSeekbar = (LinearLayout) vPeripheral.findViewById(R.id.peripheral_ll_name_switch_view);
-        ViewGroup.LayoutParams lp = llSeekbar.getLayoutParams();
+        if(vPeripheral!=null)
+            llnameSwitchView = (LinearLayout) vPeripheral.findViewById(R.id.peripheral_ll_name_switch_view);
+        else
+            llnameSwitchView=llnameView;
+
+        ViewGroup.LayoutParams lp = llnameSwitchView.getLayoutParams();
         lp.height = 0;
-        llSeekbar.setLayoutParams(lp);
+        llnameSwitchView.setLayoutParams(lp);
     }
 
     @Override
@@ -289,14 +302,13 @@ public class RoomFragment extends Fragment implements View.OnClickListener, IGen
         alPeriperals = new ArrayList<>();
 
 
-        Log.i(AppConfig.TAG,"fetchAllPeripherals ::"+room);
-        Log.i(AppConfig.TAG,"fetchAllPeripherals ::"+roomIndex);
+        Log.i(AppConfig.TAG, "fetchAllPeripherals ::" + room);
+        Log.i(AppConfig.TAG, "fetchAllPeripherals ::" + roomIndex);
 
-        if(room.getRoom_id()==ROOM_ID_NOT_REQUIRED)
+        if (room.getRoom_id() == ROOM_ID_NOT_REQUIRED)
             return;
 
         int totalPeripherals = SmartHomeStore.getSHStore(this.getActivity()).getAlQuickAccessRoomsPeripherals().get(roomIndex).size();
-
         for (int i = 0; i < totalPeripherals; i++) {
             if (room.getRoom_id() == SmartHomeStore.getSHStore(this.getActivity()).getAlQuickAccessRoomsPeripherals().get(roomIndex).get(i).getRoom_id()) {
                 alPeriperals.add(SmartHomeStore.getSHStore(this.getActivity()).getAlQuickAccessRoomsPeripherals().get(roomIndex).get(i));
@@ -326,44 +338,55 @@ public class RoomFragment extends Fragment implements View.OnClickListener, IGen
 
         fetchAllPeripherals();
 
-        //UpdateRoomView();
-
         Log.i(AppConfig.TAG, peripheral + " SWITCH-- Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName());
 
         Log.i(AppConfig.TAG, "FetchAllPeripherals:: " + alPeriperals);
-
         if (peripheral.getPer_type() == Peripheral.PERIPHERAL_TYPE.ROOM_SWITCH) {
-            Log.i(AppConfig.TAG, alvPeriperals.size() + ":: AlP:: ROOM_SWITCH-- Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+            Log.i(AppConfig.TAG, alvPeriperals.size() + " :: ROOM_SWITCH-- Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
             }.getClass().getEnclosingMethod().getName());
             switchAllPeripherals(peripheral.getPer_status());
         } else {
             for (int i = 0; i < alPeriperals.size(); i++) {
                 if (peripheral.getPer_id() == alPeriperals.get(i).getPer_id()) {
                     alPeriperals.set(i, peripheral);
-                    this.updatePeripheralView(this.alvPeriperals.get(i), alPeriperals.get(i), false);
+                    if (isRVList) {
+                        rvPeriperalsAdapter.notifyDataSetChanged();
+                    } else {
+                        this.updatePeripheralView(this.alvPeriperals.get(i), alPeriperals.get(i), false);
+                    }
                 }
             }
         }
+
+
     }
 
     public void switchAllPeripherals(Peripheral.Status per_status) {
         for (int i = 0; i < alPeriperals.size(); i++) {
             alPeriperals.get(i).setPer_status(per_status);
-            this.updatePeripheralView(this.alvPeriperals.get(i), alPeriperals.get(i), false);
+            if (!isRVList) {
+                this.updatePeripheralView(this.alvPeriperals.get(i), alPeriperals.get(i), false);
+            }
         }
-
+        if (isRVList) {
+            rvPeriperalsAdapter.notifyDataSetChanged();
+        }
     }
 
     public void UpdateRoomView() {
 
         fetchAllPeripherals();
 
-        llPeripheralList.removeAllViews();
+        if (isRVList) {
+            rvPeriperalsAdapter.notifyDataSetChanged();
+        } else {
+            llPeripheralList.removeAllViews();
 
-        for (int i = 0; i < alPeriperals.size(); i++) {
-            //  this.updatePeripheralView(this.alvPeriperals.get(i), alPeriperals.get(i), false);
-            llPeripheralList.addView(bindViewHolder(alPeriperals.get(i)));
+            for (int i = 0; i < alPeriperals.size(); i++) {
+                //  this.updatePeripheralView(this.alvPeriperals.get(i), alPeriperals.get(i), false);
+                llPeripheralList.addView(bindViewHolder(alPeriperals.get(i)));
+            }
         }
     }
 
@@ -433,15 +456,15 @@ public class RoomFragment extends Fragment implements View.OnClickListener, IGen
                 break;
 
             case FRIDGE:
-                // hideSeekbarLayout(vPeripheral);
+                hideSeekbarLayout(null, viewHolder.llHideSeekBar);
                 break;
             case ROOM_SWITCH:
-                //  hideSeekbarLayout(vPeripheral);
+                hideSeekbarLayout(null, viewHolder.llHideSeekBar);
                 break;
             case UNDERGROUND_WATER_TANK:
             case TERRES_WATER_TANK:
-                //  hideSeekbarLayout(vPeripheral);
-                //  hideMainNameSwitchLayout(vPeripheral);
+                hideSeekbarLayout(null, viewHolder.llHideSeekBar);
+                  hideMainNameSwitchLayout(null, viewHolder.llHideNameView);
                 break;
             default:
                 break;

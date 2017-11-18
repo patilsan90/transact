@@ -277,6 +277,21 @@ public class EditRoomActivity extends AppCompatActivity implements IGenericAdapt
                 }
             }
         }
+        int totalRooms = shStore.getAlRooms().size();
+        for (int i = 0; i < shStore.getAlAllPeripherals().size(); i++) {
+            Peripheral per = shStore.getAlAllPeripherals().get(i);
+            for (int j = 0; j < totalRooms; j++) {
+                if (per.getRoom_id() == shStore.getAlRooms().get(j).getRoom_id()) {
+                    if (per.isPer_is_in_quick_access()) {
+                        ArrayList<Peripheral> alPeripherals = shStore.getAlQuickAccessRoomsPeripherals().get(j);
+                        alPeripherals.add(new Peripheral(per.getPer_id(), per.getRoom_id(), per.getPer_type(), per.getPer_name(), per.getPer_status(), per.getPer_value(), per.isPer_is_in_quick_access()));
+                    } else {
+                        ArrayList<Peripheral> alPeripherals = shStore.getAlRoomsPeripherals().get(j);
+                        alPeripherals.add(new Peripheral(per.getPer_id(), per.getRoom_id(), per.getPer_type(), per.getPer_name(), per.getPer_status(), per.getPer_value(), per.isPer_is_in_quick_access()));
+                    }
+                }
+            }
+        }
 
        // collector.saveSHCollector(this);
 
