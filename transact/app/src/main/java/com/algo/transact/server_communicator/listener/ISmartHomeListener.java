@@ -32,5 +32,4 @@ public interface ISmartHomeListener {
 
     void onSHUserRemove(SHUser user);
 
-
 }

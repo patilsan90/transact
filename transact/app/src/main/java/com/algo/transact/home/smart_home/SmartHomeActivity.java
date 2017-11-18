@@ -21,6 +21,7 @@ import com.algo.transact.home.smart_home.beans.Peripheral;
 import com.algo.transact.home.smart_home.beans.Room;
 import com.algo.transact.home.smart_home.beans.SmartHomeConfig;
 import com.algo.transact.home.smart_home.beans.SmartHomeStore;
+import com.algo.transact.home.smart_home.module_configuration.ScanWifiActivity;
 import com.algo.transact.home.smart_home.settings.SettingsActivity;
 import com.algo.transact.login.User;
 import com.algo.transact.server_communicator.request_handler.SmartHomeRequestHandler;
@@ -224,6 +225,9 @@ public class SmartHomeActivity extends AppCompatActivity implements View.OnClick
             case R.id.action_settings:
                 Intent intent=new Intent(this, SettingsActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.action_set_config_device:
+                this.startActivity(new Intent(this, ScanWifiActivity.class));
                 break;
             default:
         }

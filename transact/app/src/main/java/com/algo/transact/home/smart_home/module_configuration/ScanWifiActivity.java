@@ -1,4 +1,4 @@
-package com.algo.transact.home.smart_home;
+package com.algo.transact.home.smart_home.module_configuration;
 
 import android.Manifest;
 import android.content.BroadcastReceiver;
@@ -39,11 +39,13 @@ public class ScanWifiActivity extends AppCompatActivity implements IGenericAdapt
     StringBuilder sb = new StringBuilder();
     private GenericAdapter genericAdapterWifiList;
     private ArrayList<ScanResult> foundWifiList;
-
     private boolean isExpectedDeviceConnected = false;
     WifiConfiguration wifiConf = new WifiConfiguration();
 
-    public static String connectedWifiSSID=": ";
+    public static String connectedWifiSSID = ": ";
+    private String smartHomeDeviceName = "SmartHome";
+    private String smartHomeDevicePsw = "transactsmarthome";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,11 +54,11 @@ public class ScanWifiActivity extends AppCompatActivity implements IGenericAdapt
         ListView lvWifiList = (ListView) findViewById(R.id.scanned_wifi_lv_wifi_list);
         TextView tvscanWifiPlaceholder = (TextView) findViewById(R.id.scan_wifi_tv_placeholder);
 
-          lvWifiList.setEmptyView(tvscanWifiPlaceholder);
+        lvWifiList.setEmptyView(tvscanWifiPlaceholder);
         foundWifiList = new ArrayList<>();
         genericAdapterWifiList = new GenericAdapter(this, this, lvWifiList, foundWifiList, R.layout.list_item_view_wifi);
 
-// Initiate wifi service manager
+        // Initiate wifi service manager
         wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
         // Check for wifi is disabled
@@ -116,7 +118,7 @@ public class ScanWifiActivity extends AppCompatActivity implements IGenericAdapt
         ScanResult res = (ScanResult) listItem;
         TextView item_view = (TextView) view.findViewById(R.id.wifi_tv_wifi_name);
         ImageView iView = (ImageView) view.findViewById(R.id.wifi_iv_wifi_type);
-        if (res.SSID.contains("Techies"))
+        if (res.SSID.contains(smartHomeDeviceName))
             iView.setImageResource(R.drawable.ic_wifi_signal_smart);
 
         item_view.setText("" + res.SSID);
@@ -130,36 +132,40 @@ public class ScanWifiActivity extends AppCompatActivity implements IGenericAdapt
 
     public void wifiConnected() {
         if (isExpectedDeviceConnected) {
-            Toast.makeText(this, "Wifi Network connected", Toast.LENGTH_SHORT).show();
-            unregisterReceiver(receiverWifi);
-            Intent intent = new Intent(this, ConfigureWifiDeviceActivity.class);
-            this.startActivity(intent);
-            this.finish();
+            if (connectedWifiSSID.contains(smartHomeDeviceName)) {
+                // Toast.makeText(this, "Wifi Network connected", Toast.LENGTH_SHORT).show();
+                unregisterReceiver(receiverWifi);
+                Intent intent = new Intent(this, ConfigureWifiDeviceActivity.class);
+                this.startActivity(intent);
+                this.finish();
+            }
         }
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        ScanResult targetWifi = wifiList.get(position);
-        Toast.makeText(this,"Wifi:: "+targetWifi.SSID+"   "+targetWifi.capabilities, Toast.LENGTH_SHORT).show();
+        ScanResult targetWifi = foundWifiList.get(position);
+        // Toast.makeText(this, "Wifi:: " + targetWifi.SSID + "   " + targetWifi.capabilities+" Total found :: "+foundWifiList.size(), Toast.LENGTH_SHORT).show();
 
-        String psw="dontaskpassword1";
-        String securityMode=getScanResultSecurity(targetWifi);
+        String securityMode = getScanResultSecurity(targetWifi);
         wifiConf.SSID = "\"" + targetWifi.SSID + "\"";
         if (securityMode.equalsIgnoreCase("OPEN")) {
-            Toast.makeText(this, "Wifi  Security Mode OPEN", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Wifi  Security Mode OPEN", Toast.LENGTH_SHORT).show();
+            Log.i(AppConfig.TAG, "# Wifi  Security Mode OPEN: " + securityMode);
             wifiConf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
 
         } else if (securityMode.equalsIgnoreCase("WEP")) {
-            Toast.makeText(this, "Wifi  Security Mode WEP", Toast.LENGTH_SHORT).show();
-            wifiConf.wepKeys[0] = "\"" + psw + "\"";
+            // Toast.makeText(this, "Wifi  Security Mode WEP", Toast.LENGTH_SHORT).show();
+            Log.i(AppConfig.TAG, "# Wifi  Security Mode WEP: " + securityMode);
+            wifiConf.wepKeys[0] = "\"" + smartHomeDevicePsw + "\"";
             wifiConf.wepTxKeyIndex = 0;
             wifiConf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
             wifiConf.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
 
         } else if (securityMode.equalsIgnoreCase("PSK")) {
-            Toast.makeText(this, "Wifi  Security Mode PSK", Toast.LENGTH_SHORT).show();
-            wifiConf.preSharedKey = "\"" + psw + "\"";
+            // Toast.makeText(this, "Wifi  Security Mode PSK", Toast.LENGTH_SHORT).show();
+            Log.i(AppConfig.TAG, "# Wifi  Security Mode PSK: " + securityMode);
+            wifiConf.preSharedKey = "\"" + smartHomeDevicePsw + "\"";
             wifiConf.hiddenSSID = true;
             wifiConf.status = WifiConfiguration.Status.ENABLED;
             wifiConf.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
@@ -170,13 +176,13 @@ public class ScanWifiActivity extends AppCompatActivity implements IGenericAdapt
             wifiConf.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
             wifiConf.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
 
-
         } else {
-            Log.i(AppConfig.TAG, "# Unsupported security mode: "+securityMode);
-            Toast.makeText(this, "Wifi  Security Mode Unknown:: "+securityMode, Toast.LENGTH_SHORT).show();
+            Log.i(AppConfig.TAG, "# Unsupported security mode: " + securityMode);
+            // Toast.makeText(this, "Wifi  Security Mode Unknown:: " + securityMode, Toast.LENGTH_SHORT).show();
         }
         int res = wifiManager.addNetwork(wifiConf);
-        Toast.makeText(this, "Wifi  ID :: "+res, Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this, "Wifi  ID :: " + res, Toast.LENGTH_SHORT).show();
+        Log.i(AppConfig.TAG, "# Wifi  ID :: " + res);
         wifiManager.disconnect();
         wifiManager.enableNetwork(res, true);
         wifiManager.reconnect();
@@ -187,7 +193,7 @@ public class ScanWifiActivity extends AppCompatActivity implements IGenericAdapt
     public String getScanResultSecurity(ScanResult scanResult) {
 
         final String cap = scanResult.capabilities;
-        final String[] securityModes = { "WEP", "PSK", "EAP" };
+        final String[] securityModes = {"WEP", "PSK", "EAP"};
 
         for (int i = securityModes.length - 1; i >= 0; i--) {
             if (cap.contains(securityModes[i])) {
@@ -218,7 +224,7 @@ public class ScanWifiActivity extends AppCompatActivity implements IGenericAdapt
                     wifiConnected();
 
                 } else if ((netInfo.getDetailedState() == (NetworkInfo.DetailedState.DISCONNECTED))) {
-                   // Toast.makeText(c, "Wifi Network not connected", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(c, "Wifi Network not connected", Toast.LENGTH_SHORT).show();
                 }
             } else {
                 wifiList = wifiManager.getScanResults();
@@ -233,8 +239,10 @@ public class ScanWifiActivity extends AppCompatActivity implements IGenericAdapt
                         }
                     }
                     if (!devExist) {
-                        foundWifiList.add(res);
-                        genericAdapterWifiList.notifyDataSetChanged();
+                        if (res.SSID.contains(smartHomeDeviceName)) {
+                            foundWifiList.add(res);
+                            genericAdapterWifiList.notifyDataSetChanged();
+                        }
                     }
                 }
 

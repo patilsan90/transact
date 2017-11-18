@@ -8,6 +8,7 @@ import com.algo.transact.home.smart_home.beans.Peripheral;
 import com.algo.transact.home.smart_home.beans.Room;
 import com.algo.transact.home.smart_home.beans.SHUser;
 import com.algo.transact.home.smart_home.beans.SmartHomeCollector;
+import com.algo.transact.home.smart_home.module_configuration.DeviceConfiguration;
 import com.algo.transact.login.User;
 import com.algo.transact.server_communicator.base.ISmartHomeServiceAPI;
 import com.algo.transact.server_communicator.base.ResponseStatus;
@@ -19,6 +20,8 @@ import java.util.ArrayList;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by patilsp on 11/2/2017.
@@ -213,6 +216,31 @@ public class SmartHomeController {
 
             @Override
             public void onFailure(Call<SHUser> call, Throwable t) {
+                listener.onFailure();
+            }
+        });
+    }
+
+    public static void deviceConfigure(DeviceConfiguration configuration, final ISmartHomeListener listener) {
+
+         final Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(DeviceConfiguration.CONFIG_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(ServerConfiguration.LoggerSet())
+                .build();
+
+        ServerConfiguration.LoggerSet();
+        ISmartHomeServiceAPI retrofitServices = retrofit.create(ISmartHomeServiceAPI.class);
+        Call<ResponseStatus> call = retrofitServices.deviceConfigure(configuration);
+        call.enqueue(new Callback<ResponseStatus>() {
+            @Override
+            public void onResponse(Call<ResponseStatus> call, Response<ResponseStatus> response) {
+                if (response.isSuccessful())
+                    listener.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ResponseStatus> call, Throwable t) {
                 listener.onFailure();
             }
         });

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.algo.transact.R;
+import com.algo.transact.home.smart_home.module_configuration.ScanWifiActivity;
 
 public class InitialOptionsActivity extends AppCompatActivity implements View.OnClickListener{
 

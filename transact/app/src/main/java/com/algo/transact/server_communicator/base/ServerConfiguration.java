@@ -34,4 +34,8 @@ public class ServerConfiguration {
                 .build();
         return client;
     }
+
+    public static String getBaseUrl() {
+        return BASE_URL;
+    }
 }
