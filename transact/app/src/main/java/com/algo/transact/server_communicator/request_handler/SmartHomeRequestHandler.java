@@ -16,6 +16,8 @@ import com.algo.transact.home.smart_home.beans.Room;
 import com.algo.transact.home.smart_home.beans.SHUser;
 import com.algo.transact.home.smart_home.beans.SmartHomeCollector;
 import com.algo.transact.home.smart_home.beans.SmartHomeStore;
+import com.algo.transact.home.smart_home.module_configuration.ConfigureWifiDeviceActivity;
+import com.algo.transact.home.smart_home.module_configuration.DeviceConfiguration;
 import com.algo.transact.home.smart_home.settings.SettingsActivity;
 import com.algo.transact.login.User;
 import com.algo.transact.server_communicator.base.ResponseStatus;
@@ -26,6 +28,7 @@ import java.util.ArrayList;
 
 import static com.algo.transact.home.smart_home.beans.Peripheral.HOUSE_SWITCH_ID;
 import static com.algo.transact.home.smart_home.beans.Peripheral.ROOM_SWITCH_ID;
+import static com.algo.transact.server_communicator.request_handler.SmartHomeRequestHandler.RECENT_LISTENER.DEVICE_CONFIGURATION;
 import static com.algo.transact.server_communicator.request_handler.SmartHomeRequestHandler.RECENT_LISTENER.EDIT_ROOM_ACTIVITY;
 import static com.algo.transact.server_communicator.request_handler.SmartHomeRequestHandler.RECENT_LISTENER.SMART_HOME_ACTIVITY;
 import static com.algo.transact.server_communicator.request_handler.SmartHomeRequestHandler.RECENT_LISTENER.WATER_INDICATOR_DIALOGUE;
@@ -39,6 +42,7 @@ public class SmartHomeRequestHandler implements ISmartHomeListener {
     RECENT_LISTENER listener;
 
 
+
     public enum RECENT_LISTENER {
         SMART_HOME_ACTIVITY,
         ROOM_FRAGEMENT,
@@ -46,7 +50,8 @@ public class SmartHomeRequestHandler implements ISmartHomeListener {
         SINGLE_ROOM_VIEW_FRAGMENT,
         WATER_INDICATOR_DIALOGUE,
         NEW_ROOM_DIALOGUE,
-        SETTINGS_ACTIVITY
+        SETTINGS_ACTIVITY,
+        DEVICE_CONFIGURATION
     }
 
     public SmartHomeActivity smartHomeActivity;
@@ -56,6 +61,7 @@ public class SmartHomeRequestHandler implements ISmartHomeListener {
     public EditRoomActivity editRoomActivity;
     public NewRoomDialogue newRoomDialogue;
     private SettingsActivity settingsActivity;
+    private ConfigureWifiDeviceActivity configureWifiDeviceActivity;
 
     private static SmartHomeRequestHandler controller = new SmartHomeRequestHandler();
 
@@ -94,9 +100,10 @@ public class SmartHomeRequestHandler implements ISmartHomeListener {
             controller.newRoomDialogue = (NewRoomDialogue) obj;
         else if (obj instanceof SettingsActivity)
             controller.settingsActivity = (SettingsActivity) obj;
+        else if (obj instanceof ConfigureWifiDeviceActivity)
+            controller.configureWifiDeviceActivity = (ConfigureWifiDeviceActivity) obj;
 
     }
-
 
     public static void getHouse(User user, RECENT_LISTENER recentListener) {
         controller.listener = recentListener;
@@ -147,6 +154,11 @@ public class SmartHomeRequestHandler implements ISmartHomeListener {
     public static void removeSHUser(SHUser user, RECENT_LISTENER recentListener) {
         controller.listener = recentListener;
         SmartHomeController.removeSHUser(user, controller);
+    }
+
+    public static void deviceConfigure(DeviceConfiguration configuration, RECENT_LISTENER recentListener) {
+        controller.listener = recentListener;
+        SmartHomeController.deviceConfigure(configuration, controller);
     }
 
     /*
@@ -251,6 +263,9 @@ public class SmartHomeRequestHandler implements ISmartHomeListener {
             if (status.getResponse() == ResponseStatus.RESPONSE.e_ROOM_INFORMATION_UPDATED_SUCCESSFULLY) {
                 editRoomActivity.updateRoomDetails();
             }
+        } else if (listener == DEVICE_CONFIGURATION) {
+            Log.i(AppConfig.TAG, "DEVICE_CONFIGURATION *********  " + status);
+            configureWifiDeviceActivity.saveMACAddress(status.getMessage());
         }
     }
 

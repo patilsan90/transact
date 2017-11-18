@@ -5,6 +5,7 @@ import com.algo.transact.home.smart_home.beans.Peripheral;
 import com.algo.transact.home.smart_home.beans.Room;
 import com.algo.transact.home.smart_home.beans.SHUser;
 import com.algo.transact.home.smart_home.beans.SmartHomeCollector;
+import com.algo.transact.home.smart_home.module_configuration.DeviceConfiguration;
 import com.algo.transact.login.User;
 
 import java.util.ArrayList;
@@ -48,7 +49,6 @@ public interface ISmartHomeServiceAPI {
     @POST("/smart_home/update_peripheral_status")
     Call<Peripheral> updatePeripheralStatus(@Body Peripheral peripheral);
 
-
     @POST("/smart_home/update_peripherals")
     Call<ResponseStatus> updatePeripherals(@Body ArrayList<Peripheral> alPeripherals);
 
@@ -64,7 +64,8 @@ public interface ISmartHomeServiceAPI {
     @POST("/smart_home/add_user_sh_access")
     Call<SHUser> addSHUser(@Body SHUser user);
 
-
+    @POST("/smart_home/device/configure")
+    Call<ResponseStatus> deviceConfigure(@Body DeviceConfiguration configuration);
 
 
 }

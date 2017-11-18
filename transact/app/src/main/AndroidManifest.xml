@@ -75,8 +75,8 @@
         <activity android:name=".optical_code.CodeScannerActivity" />
         <activity android:name=".home.smart_home.SmartHomeActivity" />
         <activity android:name=".home.smart_home.InitialOptionsActivity" />
-        <activity android:name=".home.smart_home.ScanWifiActivity" />
-        <activity android:name=".home.smart_home.ConfigureWifiDeviceActivity" />
+        <activity android:name=".home.smart_home.module_configuration.ScanWifiActivity" />
+        <activity android:name=".home.smart_home.module_configuration.ConfigureWifiDeviceActivity" />
         <activity
             android:name=".home.smart_home.EditRoomActivity"
             android:label="@string/title_activity_edit_room"

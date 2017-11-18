@@ -1,87 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.algo.transact.home.smart_home.ConfigureWifiDeviceActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.algo.transact.home.smart_home.module_configuration.ConfigureWifiDeviceActivity">
 
     <TextView
         android:id="@+id/configure_wifi_device_tv_wifi_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Configure details"
-        android:padding="10sp"
-        android:textColor="@color/appBackgroundColor"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_marginBottom="10sp"
         android:background="@color/appBarColor"
-        android:layout_marginBottom="10sp"/>
-
+        android:padding="10sp"
+        android:text="Configure wifi details to connect to"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/appBackgroundColor" />
 
     <EditText
         android:id="@+id/configure_wifi_device_wifi_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="* Enter Wi-Fi Name"
+        android:layout_marginBottom="5sp"
         android:layout_marginLeft="10sp"
         android:layout_marginRight="10sp"
         android:layout_marginTop="5sp"
-        android:layout_marginBottom="5sp"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        />
+        android:hint="* Enter Wi-Fi Name"
+        android:text="Techies2.4"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
     <EditText
         android:id="@+id/configure_wifi_device_wifi_psw"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="5sp"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp"
+        android:layout_marginTop="5sp"
         android:hint="* Enter Wi-Fi Password"
-        android:layout_marginLeft="10sp"
-        android:layout_marginRight="10sp"
-        android:layout_marginTop="5sp"
-        android:layout_marginBottom="5sp"
         android:inputType="textPassword"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        />
+        android:text="passwordis1to8"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <EditText
-        android:id="@+id/configure_wifi_device_room_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="* Enter Room Name"
-        android:layout_marginLeft="10sp"
-        android:layout_marginRight="10sp"
-        android:layout_marginTop="5sp"
-        android:layout_marginBottom="5sp"
-        android:maxLines="1"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        />
 
-    <EditText
-        android:id="@+id/configure_wifi_device_room_desc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter Room Description"
-        android:layout_marginLeft="10sp"
-        android:layout_marginRight="10sp"
-        android:layout_marginTop="5sp"
-        android:layout_marginBottom="5sp"
-        android:minLines="2"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        />
+    <!--
+        <EditText
+            android:id="@+id/configure_wifi_device_house_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="* Enter House Name"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp"
+            android:layout_marginTop="5sp"
+            android:layout_marginBottom="5sp"
+            android:maxLines="1"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            />
+
+        <EditText
+            android:id="@+id/configure_wifi_device_room_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="* Enter Room Name"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp"
+            android:layout_marginTop="5sp"
+            android:layout_marginBottom="5sp"
+            android:maxLines="1"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            />
+
+        <EditText
+            android:id="@+id/configure_wifi_device_room_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Room Description"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp"
+            android:layout_marginTop="5sp"
+            android:layout_marginBottom="5sp"
+            android:minLines="2"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            />
+    -->
 
     <Button
-        android:id="@+id/configure_wifi_device_save"
+        android:id="@+id/configure_wifi_device_save_configuration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save"
+        android:layout_marginBottom="5sp"
         android:layout_marginLeft="10sp"
         android:layout_marginRight="10sp"
         android:layout_marginTop="10sp"
-        android:layout_marginBottom="5sp"
-        android:onClick="saveWifiInformation"
-        android:textAppearance="?android:attr/textAppearanceMedium"
         android:background="@color/appBarColor"
-        android:textColor="@color/appBackgroundColor"
-        />
+        android:text="Save Configuration"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/appBackgroundColor" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5sp"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp"
+        android:layout_marginTop="20sp"
+        android:text="Note: Enter local/home wifi details to which this device will connect."
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#AAAAAA" />
 
 </LinearLayout>
