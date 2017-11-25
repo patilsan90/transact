@@ -2,6 +2,7 @@ package com.algo.transact.notification_service;
 
 import android.util.Log;
 
+import com.algo.transact.AppConfig.AppConfig;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -11,7 +12,7 @@ import com.google.firebase.messaging.RemoteMessage;
  */
 
 public class OnReceiveNotificationService extends FirebaseMessagingService {
-    private static final String TAG = OnReceiveNotificationService.class.getSimpleName();
+    private static final String TAG = AppConfig.TAG;//OnReceiveNotificationService.class.getSimpleName();
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {

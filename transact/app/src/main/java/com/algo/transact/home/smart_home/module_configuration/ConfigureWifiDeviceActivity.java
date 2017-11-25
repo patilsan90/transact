@@ -72,7 +72,7 @@ public class ConfigureWifiDeviceActivity extends AppCompatActivity {
         DeviceConfiguration configuration = new DeviceConfiguration();
         configuration.setWifi_name(etWifiName.getText().toString().trim());
         configuration.setWifi_psw(etWifiPsw.getText().toString().trim());
-        configuration.setTransact_server_url(ServerConfiguration.getBaseUrl());
+        configuration.setTransact_server_url(ServerConfiguration.getBaseUrlSmartHome());
 
         User user = User.getUserPreferences(this);
         configuration.setOwner_id(user.getMobileNo());

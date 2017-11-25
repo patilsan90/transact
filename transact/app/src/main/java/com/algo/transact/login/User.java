@@ -63,6 +63,9 @@ public class User implements Serializable {
     @SerializedName("gender")
     public GENDER gender;
 
+    @SerializedName("notification_token")
+    String notification_token;
+
     private static User details;
 
     public String sessionID;
