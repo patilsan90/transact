@@ -116,8 +116,11 @@ public class ConfigureWifiDeviceActivity extends AppCompatActivity {
     }
 
     public void saveMACAddress(String deviceMACAddress) {
-        hideProgressDialog();
+
         Log.i(AppConfig.TAG, "************* Configured device Mac ID :: " + deviceMACAddress);
-        Toast.makeText(this, "Congratulations, device configured ::", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Congratulations, device configured successfully", Toast.LENGTH_LONG).show();
+        //SmartHomeRequestHandler.registerDeviceMacAddr(deviceMACAddress, DEVICE_CONFIGURATION);
+        hideProgressDialog();
+        this.finish();
     }
 }
