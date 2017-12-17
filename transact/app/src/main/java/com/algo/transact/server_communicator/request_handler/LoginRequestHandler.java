@@ -8,7 +8,7 @@ import com.algo.transact.server_communicator.listener.ILoginListener;
  * Created by Kapil on 15/10/2017.
  */
 
-public class ServerRequestHandler {
+public class LoginRequestHandler {
 
     public static void login(User user, ILoginListener listener) {
         LoginController.login(user, listener);
@@ -21,6 +21,4 @@ public class ServerRequestHandler {
     public static void updateProfile(User user, ILoginListener listener) {
         LoginController.updateProfile(user, listener);
     }
-
-
 }

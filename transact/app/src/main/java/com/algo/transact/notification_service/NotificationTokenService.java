@@ -2,6 +2,7 @@ package com.algo.transact.notification_service;
 
 import android.util.Log;
 
+import com.algo.transact.AppConfig.AppConfig;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
@@ -11,7 +12,7 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
  */
 
 public class NotificationTokenService extends FirebaseInstanceIdService {
-    private static final String TAG = NotificationTokenService.class.getSimpleName();
+    private static final String TAG = AppConfig.TAG;// NotificationTokenService.class.getSimpleName();
 
     @Override
     public void onTokenRefresh() {

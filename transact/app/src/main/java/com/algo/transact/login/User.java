@@ -63,6 +63,9 @@ public class User implements Serializable {
     @SerializedName("gender")
     public GENDER gender;
 
+    @SerializedName("notification_token")
+    String notification_token;
+
     private static User details;
 
     public String sessionID;
@@ -95,8 +98,8 @@ public class User implements Serializable {
 
         SharedPreferences sharedpreferences = activity.getSharedPreferences(TransactPREFERENCES, Context.MODE_PRIVATE);
         Gson gson = new Gson();
-        User details = gson.fromJson(sharedpreferences.getString(USERDETAILS, ""), User.class);
-        return details;
+        User user = gson.fromJson(sharedpreferences.getString(USERDETAILS, ""), User.class);
+        return user;
     }
 
     public void setUserPreferences(Activity activity, JSONObject jsonUserObject) {

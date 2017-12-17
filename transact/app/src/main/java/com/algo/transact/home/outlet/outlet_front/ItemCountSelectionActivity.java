@@ -2,8 +2,8 @@ package com.algo.transact.home.outlet.outlet_front;
 
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,9 +15,9 @@ import com.algo.transact.AppConfig.AppConfig;
 import com.algo.transact.AppConfig.IntentPutExtras;
 import com.algo.transact.AppConfig.IntentResultCode;
 import com.algo.transact.R;
-import com.algo.transact.optical_code.OpticalCode;
 import com.algo.transact.home.outlet.data_beans.Item;
 import com.algo.transact.home.outlet.data_retrivals.ShopsRetriver;
+import com.algo.transact.optical_code.OpticalCode;
 
 
 public class ItemCountSelectionActivity extends AppCompatActivity implements View.OnClickListener{

@@ -13,7 +13,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServerConfiguration {
 
-    private static String BASE_URL = "http://192.168.1.7:8080";
+    private static String BASE_URL = "http://192.168.1.4:8090";
+    private static String BASE_URL_SMART_HOME = BASE_URL+"/smart_home";
 
     private static OkHttpClient client;
 
@@ -33,5 +34,13 @@ public class ServerConfiguration {
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .build();
         return client;
+    }
+
+    public static String getBaseUrl() {
+        return BASE_URL;
+    }
+
+    public static String getBaseUrlSmartHome() {
+        return BASE_URL_SMART_HOME;
     }
 }

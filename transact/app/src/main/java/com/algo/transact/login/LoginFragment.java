@@ -1,12 +1,12 @@
 package com.algo.transact.login;
 
 
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +19,7 @@ import com.algo.transact.AppConfig.SessionManager;
 import com.algo.transact.R;
 import com.algo.transact.home.HomeActivity;
 import com.algo.transact.server_communicator.listener.ILoginListener;
-import com.algo.transact.server_communicator.request_handler.ServerRequestHandler;
+import com.algo.transact.server_communicator.request_handler.LoginRequestHandler;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -89,7 +89,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener, ILo
 
             user.password = password;
             user.loginType = User.LOGIN_OTIONS.OTHER;
-            ServerRequestHandler.login(user, this);
+            LoginRequestHandler.login(user, this);
         } else {
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

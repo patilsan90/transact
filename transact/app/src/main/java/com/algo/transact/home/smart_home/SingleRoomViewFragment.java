@@ -15,10 +15,15 @@ import com.algo.transact.AppConfig.AppConfig;
 import com.algo.transact.R;
 import com.algo.transact.generic_structures.GenericAdapterRecyclerView;
 import com.algo.transact.generic_structures.IGenericAdapterRecyclerView;
-import com.algo.transact.home.smart_home.beans.House;
+import com.algo.transact.home.smart_home.beans.Peripheral;
 import com.algo.transact.home.smart_home.beans.Room;
+import com.algo.transact.home.smart_home.beans.SmartHomeStore;
+import com.algo.transact.home.smart_home.holders.RoomViewHolder;
+import com.algo.transact.server_communicator.request_handler.SmartHomeRequestHandler;
 
 import java.util.ArrayList;
+
+import static com.algo.transact.home.smart_home.beans.Room.ROOM_ID_NOT_REQUIRED;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,7 +33,7 @@ public class SingleRoomViewFragment extends Fragment implements IGenericAdapterR
     LinearLayout llRoomHolder;
     RecyclerView rvRoomsList;
     private ArrayList<Room> alRooms;
-
+    SingleRoomViewFragment fragment;
     public SingleRoomViewFragment() {
         // Required empty public constructor
     }
@@ -43,29 +48,30 @@ public class SingleRoomViewFragment extends Fragment implements IGenericAdapterR
         llRoomHolder = (LinearLayout) view.findViewById(R.id.single_room_view_ll_room_holder);
         rvRoomsList = (RecyclerView) view.findViewById(R.id.single_room_view_rv_rooms_list);
 
-
-        House house = House.getHouse(123);
-        alRooms = house.getRooms();
-
-        Room newRoom = new Room();
-        newRoom.name = newRoomString;
+        fragment=this;
+        SmartHomeRequestHandler.registerUser(this);
+        alRooms=new ArrayList<>();
+        alRooms.addAll(SmartHomeStore.getSHStore(this.getActivity()).getAlRooms());
+        Room newRoom = new Room(ROOM_ID_NOT_REQUIRED, SmartHomeStore.getSHStore(getActivity()).getHouse().getHouse_id(), newRoomString);
         alRooms.add(newRoom);
-
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.HORIZONTAL, false);
         rvRoomsList.setLayoutManager(layoutManager);
 
         GenericAdapterRecyclerView rvRoomViewHolderAdapter = new GenericAdapterRecyclerView(this.getContext(), this, rvRoomsList, alRooms, R.layout.rv_item_card_room, -1, false);
 
-        RoomFragment roomFragment = new RoomFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(RoomFragment.roomBundle, alRooms.get(0));
-        roomFragment.setArguments(bundle);
+        if(alRooms.size()>0) {
+            RoomFragment roomFragment = new RoomFragment();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(RoomFragment.roomBundle, alRooms.get(0));
+            bundle.putInt(RoomFragment.roomIndexBundle, 0);
+            roomFragment.setArguments(bundle);
 
-        android.support.v4.app.FragmentTransaction transaction = this.getActivity().getSupportFragmentManager().beginTransaction();
-        //transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
-        transaction.add(R.id.single_room_view_ll_room_holder, roomFragment, LinearLayout.class.getName());
-        transaction.commit();
+            android.support.v4.app.FragmentTransaction transaction = this.getActivity().getSupportFragmentManager().beginTransaction();
+            //transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
+            transaction.add(R.id.single_room_view_ll_room_holder, roomFragment, LinearLayout.class.getName());
+            transaction.commit();
+        }
         return view;
     }
 
@@ -76,11 +82,20 @@ public class SingleRoomViewFragment extends Fragment implements IGenericAdapterR
 
     @Override
     public void bindViewHolder(RecyclerView.ViewHolder holder, ArrayList list, int position, GenericAdapterRecyclerView genericAdapterRecyclerView) {
-        RoomViewHolder roomViewHolder = (RoomViewHolder) holder;
-        Room room = (Room) list.get(position);
-        String roomName = (String) room.getName();
+        final RoomViewHolder roomViewHolder = (RoomViewHolder) holder;
+        final Room room = (Room) list.get(position);
+        String roomName = (String) room.getRoom_name();
         roomViewHolder.tvRoomName.setText(roomName);
-        if (room.getName().equals(newRoomString)) {
+        roomViewHolder.swRoomSwitch.setChecked(true);
+
+        roomViewHolder.swRoomSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Peripheral per =new Peripheral(Peripheral.ROOM_SWITCH_ID,room.getRoom_id(), Peripheral.PERIPHERAL_TYPE.ROOM_SWITCH,"ROOM_SWITCH",roomViewHolder.swRoomSwitch.isChecked() ? Peripheral.Status.ON : Peripheral.Status.OFF,0,true);
+                SmartHomeRequestHandler.updatePeripheralStatus(room, per, SmartHomeRequestHandler.RECENT_LISTENER.SINGLE_ROOM_VIEW_FRAGMENT);
+            }
+        });
+        if (room.getRoom_name().equals(newRoomString)) {
             roomViewHolder.ivAddNewRoom.setVisibility(View.VISIBLE);
         } else {
             ViewGroup.LayoutParams lp = roomViewHolder.ivAddNewRoom.getLayoutParams();
@@ -102,13 +117,14 @@ public class SingleRoomViewFragment extends Fragment implements IGenericAdapterR
         }.getClass().getEnclosingMethod().getName());
 
         Room currentRoom = alRooms.get(position);
-        if (currentRoom.getName().equals(newRoomString)) {
+        if (currentRoom.getRoom_name().equals(newRoomString)) {
             NewRoomDialogue roomDialogue = new NewRoomDialogue(getActivity());
             roomDialogue.showDialogue();
         } else {
             RoomFragment roomFragment = new RoomFragment();
             Bundle bundle = new Bundle();
             bundle.putSerializable(RoomFragment.roomBundle, alRooms.get(position));
+            bundle.putInt(RoomFragment.roomIndexBundle,position);
             roomFragment.setArguments(bundle);
 
             android.support.v4.app.FragmentTransaction transaction = this.getActivity().getSupportFragmentManager().beginTransaction();
@@ -120,11 +136,15 @@ public class SingleRoomViewFragment extends Fragment implements IGenericAdapterR
 
     @Override
     public void onRVLongClick(View view, int position) {
-
+        Log.d(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        }.getClass().getEnclosingMethod().getName());
     }
 
     @Override
     public void onRVExpand(View view, ArrayList list, int position, View rvPrevExpanded) {
+        Log.d(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        }.getClass().getEnclosingMethod().getName());
 
     }
+
 }

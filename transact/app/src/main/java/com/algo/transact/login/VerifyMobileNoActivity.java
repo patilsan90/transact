@@ -9,10 +9,10 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.algo.transact.AppConfig.SessionManager;
-import com.algo.transact.home.HomeActivity;
 import com.algo.transact.R;
+import com.algo.transact.home.HomeActivity;
 import com.algo.transact.server_communicator.listener.ILoginListener;
-import com.algo.transact.server_communicator.request_handler.ServerRequestHandler;
+import com.algo.transact.server_communicator.request_handler.LoginRequestHandler;
 
 public class VerifyMobileNoActivity extends AppCompatActivity implements ILoginListener {
 
@@ -47,7 +47,7 @@ public class VerifyMobileNoActivity extends AppCompatActivity implements ILoginL
         boolean otpSuccess = true;// this assignment is for testing purpose
 
         if (otpSuccess) {
-            ServerRequestHandler.register(newUser, this);
+            LoginRequestHandler.register(newUser, this);
         } else {
             Toast.makeText(getApplicationContext(),
                     "Please enter valid OTP!", Toast.LENGTH_LONG)

@@ -11,7 +11,7 @@ import retrofit2.http.POST;
  * Created by Kapil on 15/10/2017.
  */
 
-public interface IServiceAPI {
+public interface ILoginServiceAPI {
     @Headers({
             "Content-Type: application/json"
     })

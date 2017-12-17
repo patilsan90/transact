@@ -5,7 +5,7 @@ import android.util.Log;
 
 import com.algo.transact.AppConfig.AppConfig;
 import com.algo.transact.server_communicator.listener.ILoginListener;
-import com.algo.transact.server_communicator.request_handler.ServerRequestHandler;
+import com.algo.transact.server_communicator.request_handler.LoginRequestHandler;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -94,7 +94,7 @@ public class FBSignIn {
                             signInUser.loginType = User.LOGIN_OTIONS.FB;
                             // signInUser.countryCode = "+91";
                             Log.i(TAG, "FB SIgn in :: " + signInUser);
-                            ServerRequestHandler.login(signInUser, listener);
+                            LoginRequestHandler.login(signInUser, listener);
                             return bundle;
                         } catch (JSONException e) {
                             Log.d(TAG, "Error parsing JSON");
