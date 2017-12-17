@@ -5,6 +5,7 @@ import com.algo.transact.home.smart_home.beans.Peripheral;
 import com.algo.transact.home.smart_home.beans.Room;
 import com.algo.transact.home.smart_home.beans.SHUser;
 import com.algo.transact.home.smart_home.beans.SmartHomeCollector;
+import com.algo.transact.home.smart_home.module_configuration.ConfigStatus;
 import com.algo.transact.home.smart_home.module_configuration.DeviceConfiguration;
 import com.algo.transact.login.User;
 
@@ -23,6 +24,9 @@ public interface ISmartHomeServiceAPI {
     @Headers({
             "Content-Type: application/json"
     })
+
+    @POST("/smart_home/has_house")
+    Call<ResponseStatus> hasHouse(@Body User user);
 
     @POST("/smart_home/get_house")
     Call<SmartHomeCollector> getHouse(@Body User user);
@@ -64,8 +68,8 @@ public interface ISmartHomeServiceAPI {
     @POST("/smart_home/add_user_sh_access")
     Call<SHUser> addSHUser(@Body SHUser user);
 
-    @POST("/smart_home/device/configure")
-    Call<ResponseStatus> deviceConfigure(@Body DeviceConfiguration configuration);
 
+    @POST("/smart_home/device/configure")
+    Call<ConfigStatus> deviceConfigure(@Body DeviceConfiguration configuration);
 
 }

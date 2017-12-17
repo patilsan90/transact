@@ -63,9 +63,7 @@ public class SmartHomeActivity extends AppCompatActivity implements View.OnClick
         swMainSwitch.setChecked(true);
         llViewHolder = (LinearLayout) findViewById(R.id.smart_home_ll_view_holder);
 
-
         SmartHomeRequestHandler.getHouse(User.getUserPreferences(this), SMART_HOME_ACTIVITY);
-
 
         if (SmartHomeConfig.getUserPreferences(this) == null) {
             SmartHomeConfig smartHomeConfig = new SmartHomeConfig();
@@ -223,7 +221,7 @@ public class SmartHomeActivity extends AppCompatActivity implements View.OnClick
                 return true;
 
             case R.id.action_settings:
-                Intent intent=new Intent(this, SettingsActivity.class);
+                Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 break;
             case R.id.action_set_config_device:

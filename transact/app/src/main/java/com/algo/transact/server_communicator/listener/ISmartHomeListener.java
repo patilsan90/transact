@@ -4,6 +4,7 @@ import com.algo.transact.home.smart_home.beans.Peripheral;
 import com.algo.transact.home.smart_home.beans.Room;
 import com.algo.transact.home.smart_home.beans.SHUser;
 import com.algo.transact.home.smart_home.beans.SmartHomeCollector;
+import com.algo.transact.home.smart_home.module_configuration.ConfigStatus;
 import com.algo.transact.server_communicator.base.ResponseStatus;
 
 import java.util.ArrayList;
@@ -31,5 +32,7 @@ public interface ISmartHomeListener {
     void onSHUserAdd(SHUser user);
 
     void onSHUserRemove(SHUser user);
+
+    void onDeviceConfiguration(ConfigStatus statusInfo);
 
 }
