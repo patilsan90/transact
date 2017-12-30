@@ -4,8 +4,6 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-import java.util.logging.Logger;
-
 /**
  * Created by Sandeep Patil on 16/4/17.
  */

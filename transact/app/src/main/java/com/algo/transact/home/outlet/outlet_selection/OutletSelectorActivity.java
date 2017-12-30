@@ -20,17 +20,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.algo.transact.AppConfig.AppState;
+import com.algo.transact.AppConfig.AppConfig;
 import com.algo.transact.AppConfig.IntentPutExtras;
 import com.algo.transact.AppConfig.IntentResultCode;
 import com.algo.transact.AppConfig.Permissions;
 import com.algo.transact.R;
-import com.algo.transact.optical_code.CodeScannerFragment;
-import com.algo.transact.optical_code.CodeScannerActivity;
-import com.algo.transact.optical_code.CodeScannerRequestType;
-import com.algo.transact.optical_code.OpticalCode;
 import com.algo.transact.gps.GPSTracker;
 import com.algo.transact.home.outlet.outlet_front.OutletFront;
+import com.algo.transact.optical_code.CodeScannerActivity;
+import com.algo.transact.optical_code.CodeScannerFragment;
+import com.algo.transact.optical_code.CodeScannerRequestType;
+import com.algo.transact.optical_code.OpticalCode;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -69,7 +69,7 @@ public class OutletSelectorActivity extends AppCompatActivity implements View.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outlet_selector);
 
-        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName());
 
 
@@ -100,7 +100,7 @@ public class OutletSelectorActivity extends AppCompatActivity implements View.On
 
 
     public void requestLocation() {
-        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName());
         gpsTracker = new GPSTracker(getApplicationContext(), this);
         if (gpsTracker.canGetLocation()) {
@@ -110,18 +110,18 @@ public class OutletSelectorActivity extends AppCompatActivity implements View.On
                     Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, permissions, Permissions.RC_HANDLE_GPS_PERM);
 
-                Log.i(AppState.TAG, "In RequestPermission");
+                Log.i(AppConfig.TAG, "In RequestPermission");
             } else {
                 //currentGPSlocation = gpsTracker.getCurrentLocation();
                 currentGPSlocation = gpsTracker.getLocation();
 
                 if (currentGPSlocation != null) {
-                    Log.i(AppState.TAG, "Location getAltitude " + currentGPSlocation.getAltitude());
-                    Log.i(AppState.TAG, "Location getLongitude " + currentGPSlocation.getLongitude());
-                    Log.i(AppState.TAG, "Location getLatitude " + currentGPSlocation.getLatitude());
-                    Log.i(AppState.TAG, "Location getProvider " + currentGPSlocation.getProvider());
+                    Log.i(AppConfig.TAG, "Location getAltitude " + currentGPSlocation.getAltitude());
+                    Log.i(AppConfig.TAG, "Location getLongitude " + currentGPSlocation.getLongitude());
+                    Log.i(AppConfig.TAG, "Location getLatitude " + currentGPSlocation.getLatitude());
+                    Log.i(AppConfig.TAG, "Location getProvider " + currentGPSlocation.getProvider());
                 } else {
-                    Log.e(AppState.TAG, "Error in acquiring GPS signal");
+                    Log.e(AppConfig.TAG, "Error in acquiring GPS signal");
                     Toast.makeText(this, "Error in acquiring GPS signal, Please restart the app", Toast.LENGTH_SHORT).show();
                 }
 
@@ -140,11 +140,11 @@ public class OutletSelectorActivity extends AppCompatActivity implements View.On
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName() + " requestCode:: " + requestCode + " resultCode:: " + resultCode);
 
         if (data == null) {
-            Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+            Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
             }.getClass().getEnclosingMethod().getName() + "  No Data Received");
             return;
         }
@@ -153,13 +153,13 @@ public class OutletSelectorActivity extends AppCompatActivity implements View.On
 
             if (resultCode == Activity.RESULT_OK) {
                 String result = data.getStringExtra("result");
-                Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+                Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
                 }.getClass().getEnclosingMethod().getName() + "GPS RESULT OK ::" + result);
                 outletsListFragment.populateOutletsList();
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 //Write your code if there's no result
-                Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+                Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
                 }.getClass().getEnclosingMethod().getName() + "GPS RESULT CANCELED");
 
             }
@@ -173,7 +173,7 @@ public class OutletSelectorActivity extends AppCompatActivity implements View.On
         switch (barcodeDetails.getActionType()) {
             case OUTLET_SELECTOR:
             case OUTLET_ITEM_SELECTOR: {
-                /*Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+                /*Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
                 }.getClass().getEnclosingMethod().getName()+"  RESPONSE_NEW_ITEM_SELECTED");
                 Intent intent = new Intent();
                 intent.putExtra(IntentPutExtras.REQUEST_TYPE, IntentPutExtras.RESPONSE_NEW_ITEM_SELECTED);
@@ -256,7 +256,7 @@ public class OutletSelectorActivity extends AppCompatActivity implements View.On
     @Override
     public void onBackPressed() {
 
-        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName());
 /*        if (requestType == IntentPutExtras.REQUEST_SELECT_SHOP)
         {
@@ -269,11 +269,11 @@ public class OutletSelectorActivity extends AppCompatActivity implements View.On
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        Log.i(AppState.TAG, "onRequestPermissionsResult");
+        Log.i(AppConfig.TAG, "onRequestPermissionsResult");
         switch (requestCode) {
             case Permissions.RC_HANDLE_GPS_PERM: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Log.i(AppState.TAG, "Reading current location");
+                    Log.i(AppConfig.TAG, "Reading current location");
                     //   currentGPSlocation = locationManager.getCurrentLocation();
                 }
                 break;
@@ -289,13 +289,13 @@ public class OutletSelectorActivity extends AppCompatActivity implements View.On
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        Log.i(AppState.TAG, "onConnected ......................");
+        Log.i(AppConfig.TAG, "onConnected ......................");
         // outletsListFragment.populateOutletsList();
     }
 
     @Override
     public void onConnectionSuspended(int i) {
-        Log.i(AppState.TAG, "onConnectionSuspended .................");
+        Log.i(AppConfig.TAG, "onConnectionSuspended .................");
 
     }
 

@@ -12,7 +12,7 @@
                 android:id="@+id/catalogue_menu_item_image"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_cast_on_light"
+                android:src="@drawable/quantum_ic_cast_white_36"
                 android:layout_marginRight="10sp"
                 android:layout_marginLeft="10sp"
                 android:textAppearance="?android:attr/textAppearanceMedium"/>

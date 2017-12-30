@@ -1,33 +1,43 @@
 {
   "project_info": {
-    "project_number": "584874469176",
-    "project_id": "cognitionmall"
+    "project_number": "589823206088",
+    "firebase_url": "https://transactssh.firebaseio.com",
+    "project_id": "transactssh",
+    "storage_bucket": "transactssh.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:584874469176:android:92c3619e10e345a9",
+        "mobilesdk_app_id": "1:589823206088:android:6245c213fca9fcfb",
         "android_client_info": {
           "package_name": "com.algo.transact"
         }
       },
       "oauth_client": [
         {
-          "client_id": "584874469176-ib0ahj9vlp6hj2eule4q56875gop466o.apps.googleusercontent.com",
+          "client_id": "589823206088-rf7g65ph3trhk3rnnv5j0c9m1up8pfqu.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.algo.transact",
-            "certificate_hash": "65ea988e17f1b168e42fed2b962d17730bae4b8a"
+            "certificate_hash": "f316400e6958ff1fe5ee7c6913ad0de990c3a1c1"
           }
         },
         {
-          "client_id": "584874469176-3m68rasv3rfujopsjfpjuta83mfdr15o.apps.googleusercontent.com",
+          "client_id": "589823206088-77rqkls4dsm9juonc1imusgsn5hbc1uo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.algo.transact",
+            "certificate_hash": "f3b06775d1184bce0ee0d114e550f19b88a77f13"
+          }
+        },
+        {
+          "client_id": "589823206088-9ikjerlr2gs328irri0t1qj9t9p09sn4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB76cyhcynDAGHuQivXl9_ySkWwb4qnVbs"
+          "current_key": "AIzaSyCOuyNnfX0A0OUa-JANLyRI1Wfm0uutUQA"
         }
       ],
       "services": {
@@ -35,11 +45,16 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "589823206088-9ikjerlr2gs328irri0t1qj9t9p09sn4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }

@@ -7,7 +7,7 @@
     tools:context="com.algo.transact.login.LoginFragment">
 
     <AutoCompleteTextView
-        android:id="@+id/email"
+        android:id="@+id/login_tv_user_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/prompt_email_or_num"
@@ -16,7 +16,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/login_tv_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/prompt_password"

@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 
-import com.algo.transact.AppConfig.AppState;
+import com.algo.transact.AppConfig.AppConfig;
 
 import java.util.ArrayList;
 
@@ -37,7 +37,7 @@ public class GenericAdapter extends BaseAdapter {
         this.listener = listener;
         this.listView.setAdapter(this);
         this.listView.setOnItemClickListener(this.listener);
-        Log.i(AppState.TAG, " Object creation of Generic Adapter from "+activity.getClass().getSimpleName());
+        Log.i(AppConfig.TAG, " Object creation of Generic Adapter from "+activity.getClass().getSimpleName());
 
     }
 
@@ -49,7 +49,7 @@ public class GenericAdapter extends BaseAdapter {
         this.spinnerListener = listener;
         this.spinnerView.setAdapter(this);
         this.spinnerView.setOnItemSelectedListener(listener);
-        Log.i(AppState.TAG, " Object creation of Generic Adapter from "+activity.getClass());
+        Log.i(AppConfig.TAG, " Object creation of Generic Adapter from "+activity.getClass());
 
     }
 
@@ -61,7 +61,7 @@ public class GenericAdapter extends BaseAdapter {
     @Override
     public Object getItem(int position) {
 
-        Log.i(AppState.TAG, "In getItem "+position);
+        Log.i(AppConfig.TAG, "In getItem "+position);
         if(position==(list.size()-1))
            listener.listUpdateCompleteNotification(list, this);
 

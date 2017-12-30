@@ -4,10 +4,10 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.Display;
@@ -16,7 +16,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.Toast;
 
-import com.algo.transact.AppConfig.AppState;
+import com.algo.transact.AppConfig.AppConfig;
 import com.algo.transact.AppConfig.IntentPutExtras;
 import com.algo.transact.AppConfig.IntentResultCode;
 import com.algo.transact.AppConfig.Permissions;
@@ -70,12 +70,12 @@ public class CodeScannerActivity extends AppCompatActivity implements IQRResult{
 
         if(codeRequestType == null)
         {
-            Log.e(AppState.TAG, "Not provided ::CodeRequestType :: "+CodeScannerRequestType.CODE_REQUEST_TYPE);
+            Log.e(AppConfig.TAG, "Not provided ::CodeRequestType :: "+CodeScannerRequestType.CODE_REQUEST_TYPE);
             finish();
         }
         else
         {
-            Log.i(AppState.TAG, "Requested for CodeRequestType :: "+codeRequestType);
+            Log.i(AppConfig.TAG, "Requested for CodeRequestType :: "+codeRequestType);
         }
 
 
@@ -141,7 +141,7 @@ public class CodeScannerActivity extends AppCompatActivity implements IQRResult{
 
     @Override
     public void codeScannerResult(String barcodeResult) {
-        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName());
 
         /* TODO
@@ -152,14 +152,14 @@ public class CodeScannerActivity extends AppCompatActivity implements IQRResult{
 
         if( codeRequestType == CodeScannerRequestType.REQUEST_TYPE.REQ_PAY)
         {
-            Log.i(AppState.TAG,"Do something regarding pay over here");
-            Log.i(AppState.TAG,"Optical code details : "+codeDetails);
+            Log.i(AppConfig.TAG,"Do something regarding pay over here");
+            Log.i(AppConfig.TAG,"Optical code details : "+codeDetails);
         }
         Intent intent = new Intent();
         int outletID = getIntent().getIntExtra(IntentPutExtras.ID, 0);
         if(outletID!=0 && outletID != codeDetails.getOutletId())
         {
-            Log.i(AppState.TAG, "Invalid Code, this product doesnt belong to this shop");
+            Log.i(AppConfig.TAG, "Invalid Code, this product doesnt belong to this shop");
             activity.runOnUiThread(new Runnable() {
                 public void run() {
                     Toast toast = Toast.makeText(activity, "Invalid Code, this product belongs to different "+codeDetails.getOutletType(), Toast.LENGTH_SHORT);
@@ -175,14 +175,14 @@ public class CodeScannerActivity extends AppCompatActivity implements IQRResult{
 
       //  intent.putExtra(IntentPutExtras.NEW_ITEM_DATA, newItem);
         setResult(IntentResultCode.TRANSACT_RESULT_OK, intent);
-        Log.i(AppState.TAG, "QRCOde Details: "+codeDetails);
+        Log.i(AppConfig.TAG, "QRCOde Details: "+codeDetails);
         finish();
 
     }
 
     // Handles the requesting of the camera permission.
     private void requestCameraPermission() {
-        Log.w(AppState.TAG, "Camera permission is not granted. Requesting permission");
+        Log.w(AppConfig.TAG, "Camera permission is not granted. Requesting permission");
 
         final String[] permissions = new String[]{Manifest.permission.CAMERA};
 
@@ -195,8 +195,8 @@ public class CodeScannerActivity extends AppCompatActivity implements IQRResult{
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        Log.i(AppState.TAG,"onRequestPermissionsResult fragment");
-        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        Log.i(AppConfig.TAG,"onRequestPermissionsResult fragment");
+        Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName());
 
         /* TODO
@@ -208,7 +208,7 @@ public class CodeScannerActivity extends AppCompatActivity implements IQRResult{
             {
                 if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 {
-                    Log.i(AppState.TAG,"Setting camera resources");
+                    Log.i(AppConfig.TAG,"Setting camera resources");
                     try {
                         final String[] permissionss = new String[]{android.Manifest.permission.CAMERA};
                         if (ActivityCompat.checkSelfPermission(this,
@@ -217,7 +217,7 @@ public class CodeScannerActivity extends AppCompatActivity implements IQRResult{
                         }
                         cameraSource.start(cameraView.getHolder());
                     } catch (IOException ie) {
-                        Log.e(AppState.TAG, "CAMERA SOURCE " + ie.getMessage());
+                        Log.e(AppConfig.TAG, "CAMERA SOURCE " + ie.getMessage());
                     }
                 }
             }

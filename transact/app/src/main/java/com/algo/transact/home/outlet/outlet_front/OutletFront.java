@@ -22,12 +22,10 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.algo.transact.AppConfig.AppState;
+import com.algo.transact.AppConfig.AppConfig;
 import com.algo.transact.AppConfig.IntentPutExtras;
 import com.algo.transact.AppConfig.IntentResultCode;
 import com.algo.transact.R;
-import com.algo.transact.optical_code.CodeScannerActivity;
-import com.algo.transact.optical_code.OpticalCode;
 import com.algo.transact.generic_structures.GenericAdapter;
 import com.algo.transact.generic_structures.IGenericAdapterSpinner;
 import com.algo.transact.home.outlet.data_beans.Cart;
@@ -36,15 +34,14 @@ import com.algo.transact.home.outlet.data_beans.Item;
 import com.algo.transact.home.outlet.data_beans.Outlet;
 import com.algo.transact.home.outlet.data_retrivals.CartsFactory;
 import com.algo.transact.home.outlet.data_retrivals.CatalogueRetriver;
-import com.algo.transact.login.LoginActivity;
-import com.facebook.login.LoginManager;
+import com.algo.transact.optical_code.CodeScannerActivity;
+import com.algo.transact.optical_code.OpticalCode;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,28 +102,28 @@ public class OutletFront extends AppCompatActivity implements
         //  nscScroll.smoothScrollTo(0,0);
         myCartFragment = new MyCartFragment();
         //  offersFragment = new OffersFragment();
-        Log.i(AppState.TAG, " Activity onCreate OutletFront");
+        Log.i(AppConfig.TAG, " Activity onCreate OutletFront");
 
         dataType = getIntent().getStringExtra(IntentPutExtras.DATA_TYPE);
         shopID = getIntent().getIntExtra(IntentPutExtras.ID, 0);
 
         outlet = (Outlet) getIntent().getSerializableExtra(IntentPutExtras.OUTLET_OBJECT);
 
-        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName() + " Outlet OBJ:: " + (outlet == null));
 
 
-/*        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+/*        Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName() + " Calling sequence is wrong "+shopID);*/
 
-        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName() + "Selected ShopID " + shopID);
 
 
         /*if (requestType.equals(IntentPutExtras.REQUEST_SELECT_SHOP)) {
             shopID = getIntent().getIntExtra(IntentPutExtras.ID, 0);
         } else {
-            Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+            Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
             }.getClass().getEnclosingMethod().getName() + " Calling sequence is wrong");
             this.finish();
         }*/
@@ -235,9 +232,9 @@ public class OutletFront extends AppCompatActivity implements
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.i(AppState.TAG, "onActivityResult Outlet");
+        Log.i(AppConfig.TAG, "onActivityResult Outlet");
         if (resultCode == IntentResultCode.TRANSACT_RESULT_CANCEL) {
-            Log.e(AppState.TAG, "Error in OnActivityResult of OutletFront RequestCode: " + requestCode + " Outlet Selection cancelled");
+            Log.e(AppConfig.TAG, "Error in OnActivityResult of OutletFront RequestCode: " + requestCode + " Outlet Selection cancelled");
             this.finish();
             return;
         }
@@ -251,20 +248,20 @@ public class OutletFront extends AppCompatActivity implements
         switch (dataType) {
             /* case IntentPutExtras.REQUEST_SELECT_SHOP: {
                 shopID = data.getIntExtra(IntentPutExtras.ID,0);
-                Log.i(AppState.TAG, "onActivityResult OutletFront SelectedShopID " + shopID);
+                Log.i(AppConfig.TAG, "onActivityResult OutletFront SelectedShopID " + shopID);
                 break;
             }*/
 
             case IntentPutExtras.NEW_ITEM_DATA: {
                 if (data != null) {
                     Item newItem = (Item) data.getSerializableExtra(IntentPutExtras.NEW_ITEM_DATA);
-                    Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+                    Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
                     }.getClass().getEnclosingMethod().getName() + "REQUEST_SELECT_ITEM_FROM_SHOP adding new item");
                     if (newItem != null) {
                         viewPager.setCurrentItem(1, true);
                         myCartFragment.addItemToCart(newItem);
                     } else
-                        Log.e(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+                        Log.e(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
                         }.getClass().getEnclosingMethod().getName() + "Item is null... oo");
                 }
                 break;
@@ -287,14 +284,14 @@ public class OutletFront extends AppCompatActivity implements
                 break;
             }
             default:
-//                Log.e(AppState.TAG, String.format(getString(R.string.barcode_error_format), CommonStatusCodes.getStatusCodeString(resultCode)));
-                Log.e(AppState.TAG, "Error in Outlet Default onActivityResult");
+//                Log.e(AppConfig.TAG, String.format(getString(R.string.barcode_error_format), CommonStatusCodes.getStatusCodeString(resultCode)));
+                Log.e(AppConfig.TAG, "Error in Outlet Default onActivityResult");
                 break;
         }
     }
 
     public void openDrawer(View v) {
-        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName());
 
         mDrawerLayout.openDrawer(Gravity.LEFT);
@@ -303,7 +300,7 @@ public class OutletFront extends AppCompatActivity implements
     @Override
     protected void onStop() {
         super.onStop();
-        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName());
 
         CartsFactory.getInstance(this).storeCarts();
@@ -321,23 +318,6 @@ public class OutletFront extends AppCompatActivity implements
         // An unresolvable error has occurred and Google APIs (including Sign-In) will not
         // be available.
         Log.d(TAG, "onConnectionFailed:" + connectionResult);
-    }
-
-    public void logout(View view) {
-        Log.i("Home", "Logout clicked");
-
-        File sessionFile = new File(AppState.sessionFile);
-        if (sessionFile.exists()) {
-            signOutFromGmail();
-            LoginManager.getInstance().logOut();
-            Log.i("Home", "Logout, file exists, deleting");
-            sessionFile.delete();
-            Intent myIntent = new Intent(this, LoginActivity.class);
-            startActivity(myIntent);
-            this.finish();
-        } else {
-            Log.i("Home", "Logout, file does not exists, its a error case");
-        }
     }
 
     @Override
@@ -362,7 +342,7 @@ public class OutletFront extends AppCompatActivity implements
                 break;
             }
             case R.id.catalogue_location:
-                Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+                Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
                 }.getClass().getEnclosingMethod().getName() + "  Show catalogue location click event");
                 locateCategoriesDialogue.showDialogue(alCaterory.get(selectedCategoryIndex).getCategoryName(), alCaterory.get(selectedCategoryIndex).getCategoryLocation());
                 break;
@@ -373,13 +353,13 @@ public class OutletFront extends AppCompatActivity implements
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName());
     }
 
     @Override
     public void onPageSelected(int position) {
-        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName());
 
     }
@@ -387,7 +367,7 @@ public class OutletFront extends AppCompatActivity implements
 
     @Override
     public void onPageScrollStateChanged(int state) {
-        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName() + "  Current Item:: " + viewPager.getCurrentItem());
 
         switch (viewPager.getCurrentItem()) {
@@ -457,13 +437,13 @@ public class OutletFront extends AppCompatActivity implements
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName());
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName() + " position ::" + position);
 
         selectedCategoryIndex = position;
@@ -483,14 +463,14 @@ public class OutletFront extends AppCompatActivity implements
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        Log.i(AppState.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
+        Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName());
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Log.i(AppState.TAG, "onBackPressed of OutletFront");
+        Log.i(AppConfig.TAG, "onBackPressed of OutletFront");
 
     }
 

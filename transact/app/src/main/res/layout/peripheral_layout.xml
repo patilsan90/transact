@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="2sp"
+    android:background="@null"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/peripheral_ll_name_switch_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/peripheral_iv_icon"
+            android:layout_width="18sp"
+            android:layout_height="18sp"
+            android:background="@null"
+            android:src="@drawable/ic_bulb" />
+
+        <Switch
+            android:id="@+id/peripheral_sw_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10sp"
+            android:showText="true"
+            android:text="Hall bulb"
+            android:textOff="OFF"
+            android:textOn="ON" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/peripheral_ll_seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/peripheral_tv_seekbar_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Brightness" />
+
+        <SeekBar
+            android:id="@+id/peripheral_sb_seekbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15sp"
+            android:paddingRight="15sp" />
+    </LinearLayout>
+</LinearLayout>

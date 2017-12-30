@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="2sp"
+    android:background="@null"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/peripheral_iv_icon"
+            android:layout_width="18sp"
+            android:layout_height="18sp"
+            android:layout_margin="5sp"
+            android:background="@null"
+            android:src="@drawable/ic_bulb" />
+
+        <EditText
+            android:id="@+id/peripheral_et_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10sp"
+            android:layout_weight="1"
+            android:text="Hall bulb"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <Switch
+            android:id="@+id/peripheral_sw_on_off"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20sp"
+        android:gravity="center_vertical">
+    <Spinner
+        android:id="@+id/peripheral_sp_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:padding="0dp"
+        android:spinnerMode="dropdown"
+        android:text="All Categories" />
+
+    <CheckBox
+        android:id="@+id/peripheral_cb_quick_access"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5sp"
+        android:background="#ffffff"
+        android:text="Quick Access"/>
+    </LinearLayout>
+</LinearLayout>
