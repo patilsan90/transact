@@ -24,6 +24,8 @@ public class User implements Serializable {
     private static final String USERDETAILS = "User";
     private static final String TransactPREFERENCES = "TranPref";
 
+    int user_id;
+
     @SerializedName("display_name")
     public String displayName = ""; // For ex: Sandeep Patil
 
