@@ -1,10 +1,9 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/code_scanner_ll_qr_scanner"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,6 +11,7 @@
         android:background="@color/appBackgroundColor"
         android:gravity="center"
         android:orientation="vertical">
+
         <LinearLayout
             android:id="@+id/main_action_bar"
             android:layout_width="match_parent"
@@ -36,11 +36,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="#ffffff"
                 android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:text="Transact"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Transact" />
+                android:textColor="#ffffff" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -69,21 +69,20 @@
         <FrameLayout
             android:id="@+id/home_page_frame"
             android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
 
         <LinearLayout
             android:id="@+id/bottom_menu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#ffffff"
+            android:background="@color/home_page_bottom_background_color"
             android:gravity="center_vertical"
             android:orientation="horizontal"
+            android:paddingBottom="3dp"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:paddingTop="3dp"
-            android:paddingBottom="3dp"
-            >
+            android:paddingTop="3dp">
 
             <LinearLayout
                 android:id="@+id/home_ll_home_tab"
@@ -97,21 +96,20 @@
                 android:paddingRight="5dp">
 
                 <TextView
+                    android:id="@+id/content_main_home_tv_home"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/ic_home" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/ic_icon_home"
                     android:gravity="center"
                     android:text="Home"
+                    android:textSize="@dimen/app_text_size_normal"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/home_page_text_color_focus"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/home_ll_favourites"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -119,28 +117,24 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                >
+                android:paddingRight="5dp">
 
                 <TextView
+                    android:id="@+id/content_main_home_tv_favourites"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/ic_nearby" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/ic_favourites"
                     android:gravity="center"
                     android:text="Favourite"
+                    android:textSize="@dimen/app_text_size_normal"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/home_page_text_color_normal"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <View
                 android:layout_width="65sp"
-                android:layout_height="0sp"
-                />
+                android:layout_height="0sp" />
 
             <LinearLayout
                 android:id="@+id/home_ll_profile"
@@ -151,26 +145,23 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-
-                >
+                android:paddingRight="5dp">
 
                 <TextView
+                    android:id="@+id/content_main_home_tv_profile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/ic_profile" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/ic_profile"
                     android:gravity="center"
                     android:text="Profile"
+                    android:textSize="@dimen/app_text_size_normal"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/home_page_text_color_normal"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/home_ll_updates"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -178,22 +169,18 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-
-                >
+                android:paddingRight="5dp">
 
                 <TextView
+                    android:id="@+id/content_main_home_tv_updates"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/ic_notifications" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/ic_updates"
                     android:gravity="center"
                     android:text="Updates"
+                    android:textSize="@dimen/app_text_size_normal"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/home_page_text_color_normal"
                     android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
@@ -205,9 +192,8 @@
         android:layout_height="65sp"
         android:layout_gravity="bottom|center"
         android:padding="0sp"
-        app:backgroundTint="@color/appBarColor"
         android:src="@drawable/ic_qrcode"
-        />
+        app:backgroundTint="@color/appBarColor" />
 
 
 </android.support.design.widget.CoordinatorLayout>

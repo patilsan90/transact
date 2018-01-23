@@ -6,7 +6,7 @@
     <color name="appBackgroundColor">#EBEBEB</color>
     <color name="appBackgroundColor2">#FFFFFF</color>
 
-    <color name="appBarColor">#6495ED</color>
+    <color name="appBarColor">#2691E1</color>
     <color name="appBarColor2">#FFFFFF</color>
 
     <color name="appBottomBar">#1C1C1C</color>
@@ -17,10 +17,13 @@
         <color name="appBarColor">#075391</color>
     -->
 
-  <!--  <color name="appBarColor">#085B9F</color>-->
+    <!--  <color name="appBarColor">#085B9F</color>-->
 
-    <color name="textColor">#6495ED</color>
+    <color name="home_page_text_color_focus">#6495ED</color>
+    <color name="home_page_text_color_normal">#6F6F6F</color>
+    <color name="home_page_bottom_background_color">#1C1C1C</color>
 
     <color name="home_page_smart_cards_text_color">#000000</color>
+    <color name="home_page_white_color">#FFFFFF</color>
     <color name="transparent">#00000000</color>
 </resources>

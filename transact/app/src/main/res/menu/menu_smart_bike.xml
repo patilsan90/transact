@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.algo.transact.home.smart_bike.ConfigureBikeActivity">
+    <item
+        android:id="@+id/action_add_favourite"
+        android:orderInCategory="100"
+        android:title="@string/menu_smart_bike_change_owner" />
+
+    <item
+        android:id="@+id/action_play_next"
+        android:orderInCategory="101"
+        android:title="@string/menu_smart_bike_analysis_report" />
+</menu>

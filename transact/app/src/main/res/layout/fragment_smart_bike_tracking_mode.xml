@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="@dimen/home_page_smart_cards_padding_top"
+        android:paddingTop="@dimen/home_page_smart_cards_padding_top"
+        android:text="@string/fragment_smart_bike_set_resolution"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/home_page_smart_cards_padding_top"
+        android:paddingTop="@dimen/home_page_smart_cards_padding_top"
+        android:weightSum="2">
+
+        <RadioButton
+            android:id="@+id/fragment_smart_bike_tracking_mode_checkbox_seconds"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/fragment_smart_bike_checkbox_in_seconds"
+            android:textSize="15sp" />
+
+        <RadioButton
+            android:id="@+id/fragment_smart_bike_tracking_mode_checkbox_minutes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/fragment_smart_bike_checkbox_in_minutes"
+            android:textSize="15sp" />
+
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/home_page_smart_cards_padding_top"
+        android:paddingTop="@dimen/home_page_smart_cards_padding_top">
+
+        <EditText
+            android:id="@+id/fragment_smart_bike_tracking_mode_time_interval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/button_margin"
+            android:gravity="center_vertical"
+            android:padding="@dimen/home_page_smart_cards_padding"
+            android:hint="Enter Seconds"
+            android:background="@android:color/transparent"
+            android:inputType="number"
+            android:maxLength="4"
+            android:textSize="15sp"
+            android:maxLines="1"
+            android:minWidth="40dp" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/fragment_smart_bike_tracking_mode_button_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:background="@drawable/button_background"
+        android:text="@string/button_start"
+        android:textSize="12sp"
+        android:textColor="@color/home_page_white_color" />
+    </RelativeLayout>
+
+</LinearLayout>

@@ -28,6 +28,7 @@ tools:context="com.algo.transact.optical_code.CodeScannerActivity">
             android:src="@mipmap/ic_gallery"/>
 
         <ImageView
+            android:id="@+id/activity_code_scanner_im_flash"
             android:layout_gravity="right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

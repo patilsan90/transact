@@ -1,9 +1,13 @@
 package com.algo.transact.optical_code;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
+import android.hardware.Camera;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -14,6 +18,8 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.algo.transact.AppConfig.AppConfig;
@@ -29,7 +35,7 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 
-public class CodeScannerActivity extends AppCompatActivity implements IQRResult{
+public class CodeScannerActivity extends AppCompatActivity implements IQRResult, View.OnClickListener {
 
     // Permission request codes need to be < 256
 
@@ -38,9 +44,12 @@ public class CodeScannerActivity extends AppCompatActivity implements IQRResult{
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
 
-    private String previousScanResult="";
+    private String previousScanResult = "";
 
     private CodeScannerActivity activity;
+    private ImageView imageView_flash;
+    private CameraManager camera;
+    String cameraId;
 
     CodeScannerRequestType.REQUEST_TYPE codeRequestType;
 
@@ -48,10 +57,17 @@ public class CodeScannerActivity extends AppCompatActivity implements IQRResult{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_code_scanner);
-
+        imageView_flash = findViewById(R.id.activity_code_scanner_im_flash);
         cameraView = (SurfaceView) findViewById(R.id.code_scanner_sv_camera_view);
         activity = this;
         iQRResult = (IQRResult) this;
+        camera = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+
+        try {
+             cameraId = camera.getCameraIdList()[0];
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
+        }
         barcodeDetector =
                 new BarcodeDetector.Builder(this)
                         .setBarcodeFormats(Barcode.ALL_FORMATS)
@@ -72,10 +88,8 @@ public class CodeScannerActivity extends AppCompatActivity implements IQRResult{
         {
             Log.e(AppConfig.TAG, "Not provided ::CodeRequestType :: "+CodeScannerRequestType.CODE_REQUEST_TYPE);
             finish();
-        }
-        else
-        {
-            Log.i(AppConfig.TAG, "Requested for CodeRequestType :: "+codeRequestType);
+        } else {
+            Log.i(AppConfig.TAG, "Requested for CodeRequestType :: " + codeRequestType);
         }
 
 
@@ -98,9 +112,7 @@ public class CodeScannerActivity extends AppCompatActivity implements IQRResult{
                 if (ActivityCompat.checkSelfPermission(activity,
                         android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(activity, permissions, Permissions.RC_HANDLE_CAMERA_PERM);
-                }
-                else
-                {
+                } else {
                     try {
                         cameraSource.start(cameraView.getHolder());
                     } catch (IOException e) {
@@ -136,6 +148,8 @@ public class CodeScannerActivity extends AppCompatActivity implements IQRResult{
                 }
             }
         });
+
+        imageView_flash.setOnClickListener(this);
     }
 
 
@@ -148,22 +162,20 @@ public class CodeScannerActivity extends AppCompatActivity implements IQRResult{
          * DO code decryption of encrypted code first
          */
         Gson gson = new Gson();
-        final OpticalCode codeDetails =  gson.fromJson(barcodeResult, OpticalCode.class);
+        final OpticalCode codeDetails = gson.fromJson(barcodeResult, OpticalCode.class);
 
-        if( codeRequestType == CodeScannerRequestType.REQUEST_TYPE.REQ_PAY)
-        {
-            Log.i(AppConfig.TAG,"Do something regarding pay over here");
-            Log.i(AppConfig.TAG,"Optical code details : "+codeDetails);
+        if (codeRequestType == CodeScannerRequestType.REQUEST_TYPE.REQ_PAY) {
+            Log.i(AppConfig.TAG, "Do something regarding pay over here");
+            Log.i(AppConfig.TAG, "Optical code details : " + codeDetails);
         }
         Intent intent = new Intent();
         int outletID = getIntent().getIntExtra(IntentPutExtras.ID, 0);
-        if(outletID!=0 && outletID != codeDetails.getOutletId())
-        {
+        if (outletID != 0 && outletID != codeDetails.getOutletId()) {
             Log.i(AppConfig.TAG, "Invalid Code, this product doesnt belong to this shop");
             activity.runOnUiThread(new Runnable() {
                 public void run() {
-                    Toast toast = Toast.makeText(activity, "Invalid Code, this product belongs to different "+codeDetails.getOutletType(), Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.CENTER_VERTICAL,0,0);
+                    Toast toast = Toast.makeText(activity, "Invalid Code, this product belongs to different " + codeDetails.getOutletType(), Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
                     toast.show();
                 }
             });
@@ -173,9 +185,9 @@ public class CodeScannerActivity extends AppCompatActivity implements IQRResult{
         intent.putExtra(IntentPutExtras.DATA_TYPE, IntentPutExtras.CODE_OBJECT);
         intent.putExtra(IntentPutExtras.CODE_OBJECT, codeDetails);
 
-      //  intent.putExtra(IntentPutExtras.NEW_ITEM_DATA, newItem);
+        //  intent.putExtra(IntentPutExtras.NEW_ITEM_DATA, newItem);
         setResult(IntentResultCode.TRANSACT_RESULT_OK, intent);
-        Log.i(AppConfig.TAG, "QRCOde Details: "+codeDetails);
+        Log.i(AppConfig.TAG, "QRCOde Details: " + codeDetails);
         finish();
 
     }
@@ -195,20 +207,17 @@ public class CodeScannerActivity extends AppCompatActivity implements IQRResult{
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        Log.i(AppConfig.TAG,"onRequestPermissionsResult fragment");
+        Log.i(AppConfig.TAG, "onRequestPermissionsResult fragment");
         Log.i(AppConfig.TAG, "Class: " + this.getClass().getSimpleName() + " Method: " + new Object() {
         }.getClass().getEnclosingMethod().getName());
 
         /* TODO
         * Call this fragments method from Actual activity onRequestPermissionsResult method, else it wont get called.
         * */
-        switch (requestCode)
-        {
-            case Permissions.RC_HANDLE_CAMERA_PERM:
-            {
-                if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                {
-                    Log.i(AppConfig.TAG,"Setting camera resources");
+        switch (requestCode) {
+            case Permissions.RC_HANDLE_CAMERA_PERM: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.i(AppConfig.TAG, "Setting camera resources");
                     try {
                         final String[] permissionss = new String[]{android.Manifest.permission.CAMERA};
                         if (ActivityCompat.checkSelfPermission(this,
@@ -225,4 +234,19 @@ public class CodeScannerActivity extends AppCompatActivity implements IQRResult{
     }
 
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.activity_code_scanner_im_flash:
+                boolean isFlashAvailable = this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+                if (isFlashAvailable) {
+                    Log.d("TAG", "Flash Available");
+                    try {
+                        camera.setTorchMode(cameraId, true);
+                    } catch (CameraAccessException e) {
+                        e.printStackTrace();
+                    }
+                }
+        }
+    }
 }
