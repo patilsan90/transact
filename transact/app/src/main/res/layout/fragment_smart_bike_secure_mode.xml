@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="@dimen/home_page_smart_cards_padding_top"
+        android:paddingTop="@dimen/home_page_smart_cards_padding_top"
+        android:text="@string/fragment_smart_bike_set_time"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/home_page_smart_cards_padding_top"
+        android:paddingTop="@dimen/home_page_smart_cards_padding_top">
+
+        <TextView
+            android:id="@+id/fragment_smart_bike_secure_mode_edittext_start_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:hint="Start Time "
+            android:inputType="none"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/fragment_smart_bike_secure_mode_tv_to"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_smart_bike_secure_mode_edittext_start_time"
+            android:gravity="center_horizontal"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:text="@string/fragment_smart_bike_textview_to"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/fragment_smart_bike_secure_mode_edittext_end_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_below="@+id/fragment_smart_bike_secure_mode_tv_to"
+            android:hint="End Time"
+            android:inputType="none"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <Button
+        android:id="@+id/fragment_smart_bike_secure_mode_button_set"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:background="@drawable/button_background"
+        android:gravity="center"
+        android:paddingBottom="@dimen/home_page_smart_cards_padding_top"
+        android:paddingTop="@dimen/home_page_smart_cards_padding_top"
+        android:text="@string/fragment_smart_bike_button_set"
+        android:textColor="@color/home_page_white_color"
+        android:textSize="12sp" />
+
+    </RelativeLayout>
+
+</LinearLayout>

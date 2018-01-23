@@ -50,5 +50,23 @@
 
     <string name="my_cart_placeholder">Your cart is empty \n\n Please add some items using QR/BAR code scanner \n or \nCatalogue list</string>
     <string name="title_activity_edit_room">EditRoomActivity</string>
+    <string name="activity_smart_bike">Smart Bike</string>
+    <string name="menu_smart_bike_change_owner">Change Owner</string>
+    <string name="menu_smart_bike_analysis_report">Analysis Report</string>
+    <string name="activity_smart_bike_device_mode">Device Mode</string>
+    <string name="fragment_smart_bike_set_resolution">Set Resolution</string>
+    <string name="fragment_smart_bike_checkbox_in_seconds">In Seconds</string>
+    <string name="activity_smart_bike_tracking_mode">Tracking Mode</string>
+    <string name="activity_smart_bike_secure_mode">Anti-Theft Mode</string>
+    <string name="activity_smart_bike_device_off_mode">None (OFF)</string>
+    <string name="fragment_smart_bike_tracking_mode_textview_time">sec</string>
+    <string name="fragment_smart_bike_checkbox_in_minutes">In Minutes</string>
+    <string name="button_start">Start</string>
+    <string name="fragment_smart_bike_set_time">Set Time</string>
+    <string name="fragment_smart_bike_textview_to">To</string>
+    <string name="fragment_smart_bike_button_set">Set</string>
+    <string name="activity_smart_bike_change_owner">Change Owner</string>
+    <string name="activity_smart_bike_analysis">Analysis</string>
+    <string name="activity_smart_bike_share_location">Share Location</string>
 
 </resources>

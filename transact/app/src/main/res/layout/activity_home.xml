@@ -7,8 +7,7 @@
     <FrameLayout
         android:id="@+id/mainContent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
 
         <android.support.design.widget.CoordinatorLayout
@@ -31,19 +30,21 @@
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:weightSum="10">
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginBottom="@dimen/drawer_item_margin"
-            android:background="#2F4F4F"
+            android:layout_weight="4"
+            android:background="@color/appBarColor"
             android:paddingBottom="@dimen/drawer_item_margin"
             android:paddingLeft="@dimen/drawer_item_margin"
             android:paddingTop="@dimen/drawer_item_margin"
             android:text="User Name"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#D3D3D3"
+            android:textColor="@color/home_page_white_color"
             android:textStyle="bold" />
 
         <RelativeLayout
@@ -55,7 +56,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:shadowColor="@color/colorAccent"
                 android:text="Wallet Balance"
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -64,7 +65,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:shadowColor="@color/colorAccent"
                 android:text="0 Rs."
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -80,32 +81,6 @@
             android:text="My Orders"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="#111" />
-
-        <RelativeLayout
-            android:id="@+id/payback"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/drawer_item_margin">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:shadowColor="@color/colorAccent"
-                android:text="Payback Points"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#111" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:shadowColor="@color/colorAccent"
-                android:text="100"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#111"
-                android:textStyle="bold" />
-        </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -138,7 +113,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/drawer_item_margin"
-            android:onClick="logout"
             android:shadowColor="@color/colorAccent"
             android:text="Logout"
             android:textAppearance="?android:attr/textAppearanceSmall"

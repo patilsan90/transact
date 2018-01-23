@@ -4,6 +4,7 @@ import android.app.Application;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.algo.transact.Utils.TransactFonts;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -23,6 +24,7 @@ public class HTTPReqController extends Application{
     public void onCreate() {
         super.onCreate();
         httpReqController = this;
+        TransactFonts.overrideFont(getApplicationContext(), "SERIF", "arial.ttf");
     }
     public static synchronized HTTPReqController getInstance()
     {
